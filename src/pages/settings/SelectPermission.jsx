@@ -46,17 +46,17 @@ const SelectPermission = () => {
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="">
           <tr>
-            <th className="px-6 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
-            <th className="px-6 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-4 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
+            <th className="px-4 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               View
             </th>
-            <th className="px-6 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-4 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Create
             </th>
-            <th className="px-6 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-4 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Edit
             </th>
-            <th className="px-6 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-4 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Approval
             </th>
           </tr>
@@ -65,12 +65,12 @@ const SelectPermission = () => {
           {permissions.map(({ label }, rowIndex) => (
             <tr key={rowIndex}>
               {/* Text in the first columpermissions */}
-              <td className="px-6 py-2 whitespace-nowrap text-sm font-medium text-gray-900">
+              <td className="px-4 py-2 whitespace-nowrap text-sm font-medium text-gray-900">
                 {label}
               </td>
               {/* Toggle switches in the rest of the columns */}
               {[1, 2, 3, 4].map((_, colIndex) => (
-                <td key={colIndex} className="px-6 py-2 text-center">
+                <td key={colIndex} className="px-4 py-2 text-center">
                   <ToggleSwitch
                     isOn={toggleState[rowIndex][colIndex]}
                     handleToggle={() => handleToggleChange(rowIndex, colIndex)}

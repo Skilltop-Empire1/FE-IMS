@@ -7,7 +7,7 @@ import StaffTable from './StaffTable'
 function Settings() {
   return (
     <div>
-      <TitleBar />
+      <TitleBar title="Owner Settings-Users" />
       <StaffTable />
       <RolesPermissionsCard />
     </div>

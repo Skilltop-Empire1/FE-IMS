@@ -42,6 +42,18 @@ function SideBar() {
       </div>
       <div className=" px-2 flex flex-col gap-1">
         <Link
+          to="/app/staff"
+          className={clsx(
+            'group px-10 py-2 text-sm text-gray-100 items-center flex gap-2 hover:bg-imsDarkPurple/60 hover:text-white rounded-sm',
+            {
+              'bg-imsDarkPurple': pathname == `/app/staff`,
+            },
+          )}
+        >
+          <PlusCircleIcon size={14} />
+          <span>Add Staff</span>
+        </Link>
+        <Link
           to={``}
           className={clsx(
             'group px-10 py-2 text-sm text-gray-100 items-center flex gap-2 hover:bg-imsDarkPurple/60 hover:text-white rounded-sm',

@@ -9,6 +9,7 @@ import Products from './pages/products/Products'
 import SalesRecord from './pages/salesRecord/SalesRecord'
 import Settings from './pages/settings/Settings'
 import Stores from './pages/stores/Stores'
+import Staff from './pages/staff/Staff'
 
 const router = createBrowserRouter([
   { path: '/', element: <Login /> },
@@ -27,6 +28,7 @@ const router = createBrowserRouter([
       { path: 'settings', element: <Settings /> },
       { path: 'stores', element: <Stores /> },
       { path: 'categories', element: <Categories /> },
+      { path: 'staff', element: <Staff /> },
     ],
   },
 ])

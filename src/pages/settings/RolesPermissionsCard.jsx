@@ -2,7 +2,7 @@ import { PencilIcon } from 'lucide-react'
 import React, { useState } from 'react'
 import SelectPermission from './SelectPermission'
 
-const RolesPermissionsCard = () => {
+const RolesPermissionsCard = ({ showExport = true }) => {
   // State to store the currently selected role
   const [selectedRole, setSelectedRole] = useState(roles[0].label)
 
@@ -40,16 +40,18 @@ const RolesPermissionsCard = () => {
         </div>
       </div>
 
-      <div className="flex flex-col gap-4 bg-gray-100 rounded-lg px-8 py-10">
+      <div className="flex flex-col gap-4 bg-gray-100 rounded-lg px-4 py-10">
         <div className="flex items-center gap-2">
           <span className="text-2xl font-bold">Permissions</span>
           <PencilIcon size={18} />
         </div>
         <div className="flex flex-col gap-4">
           <SelectPermission />
-          <button className="self-end py-1 px-6 bg-imsPurple text-white rounded-full">
-            Export
-          </button>
+          {showExport && (
+            <button className="self-end py-1 px-6 bg-imsPurple text-white rounded-full">
+              Export
+            </button>
+          )}
         </div>
       </div>
     </div>

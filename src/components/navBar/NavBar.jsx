@@ -1,5 +1,5 @@
 import React from 'react'
-import Notification from '../../assets/notification'
+import Notification from '../../assets/Notification'
 import SettingSvg from '../../assets/SettingSvg'
 import IconSvg from '../../assets/IconSvg'
 

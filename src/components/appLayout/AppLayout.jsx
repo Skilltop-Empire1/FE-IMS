@@ -12,17 +12,11 @@ function AppLayout() {
       <div className={style.appContainer}>
         <NavBar />
         <div className={style.main}>
-          <div className="w-full min-h-[100vh] bg-white text-gray-800">
-            <NavBar />
-          </div>
+          <SideBar />
 
-          <div className="border h-full w-full flex gap-2">
-            <SideBar />
-
-            <Main>
-              <Outlet />
-            </Main>
-          </div>
+          <Main>
+            <Outlet />
+          </Main>
         </div>
       </div>
     </>

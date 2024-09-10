@@ -5,10 +5,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 :root {
+
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 }
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -16,10 +18,10 @@
 
   font-family: 'Inter', sans-serif;
 
-  /* display: flex;
+  display: flex;
   place-items: center;
   min-width: 320px;
-  min-height: 100vh; */
+  min-height: 100vh;
 }
 
 h1 {
@@ -32,6 +34,21 @@ a {
   text-decoration: none;
 }
 
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+} 
+
 li {
   list-style: none;
 }
+

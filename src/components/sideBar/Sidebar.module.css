@@ -1,0 +1,19 @@
+.navContainer {
+  background-color: #7d2ce0;
+  height: 100vh;
+  width: 250px;
+  padding-left: 65px;
+  padding-top: 53px;
+  padding-bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.navContainer li {
+  margin-bottom: 14px;
+}
+
+.navContainer a {
+  color: #f4f3f3;
+}

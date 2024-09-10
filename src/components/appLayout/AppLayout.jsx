@@ -4,13 +4,16 @@ import SideBar from '../sideBar/SideBar'
 import { Outlet } from 'react-router-dom'
 import Main from '../main/Main'
 
+import style from './AppLayout.module.css'
+
 function AppLayout() {
   return (
     <>
-      <div>
+      <div className={style.appContainer}>
         <NavBar />
-        <div>
+        <div className={style.main}>
           <SideBar />
+
           <Main>
             <Outlet />
           </Main>

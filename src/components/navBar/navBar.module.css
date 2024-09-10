@@ -1,0 +1,21 @@
+.navContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 11px;
+}
+
+.navContainer ul {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.leftNavs li {
+  margin-right: 90px;
+}
+
+.rightNavs li {
+  margin-left: 18px;
+}

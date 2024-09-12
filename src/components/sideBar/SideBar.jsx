@@ -1,6 +1,19 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import Button from '../button/Button'
 import style from './Sidebar.module.css'
+import {
+  Home,
+  Box,
+  Tag,
+  Store,
+  FileText,
+  User,
+  Settings,
+  PlusCircle,
+  LogOut,
+  UserPlus,
+} from 'lucide-react'
 
 function SideBar() {
   return (
@@ -9,11 +22,13 @@ function SideBar() {
         <li>
           <NavLink
             to="/app"
+            end
             className={({ isActive }) =>
               isActive ? style.activeLink : undefined
             }
           >
-            Home
+            <Home className={style.iconStyle} />
+            <span>Home</span>
           </NavLink>
         </li>
         <li>
@@ -23,7 +38,8 @@ function SideBar() {
               isActive ? style.activeLink : undefined
             }
           >
-            Products
+            <Box className={style.iconStyle} />
+            <span>Products</span>
           </NavLink>
         </li>
         <li>
@@ -33,7 +49,8 @@ function SideBar() {
               isActive ? style.activeLink : undefined
             }
           >
-            Categories
+            <Tag className={style.iconStyle} />
+            <span>Categories</span>
           </NavLink>
         </li>
         <li>
@@ -43,17 +60,19 @@ function SideBar() {
               isActive ? style.activeLink : undefined
             }
           >
-            Stores
+            <Store className={style.iconStyle} />
+            <span>Stores</span>
           </NavLink>
         </li>
         <li>
           <NavLink
-            to="/app/salesRecord"
+            to="/app/salesRecords"
             className={({ isActive }) =>
               isActive ? style.activeLink : undefined
             }
           >
-            Sales Record
+            <FileText className={style.iconStyle} />
+            <span>Sales Record</span>
           </NavLink>
         </li>
         <li>
@@ -63,7 +82,8 @@ function SideBar() {
               isActive ? style.activeLink : undefined
             }
           >
-            Accounts
+            <User className={style.iconStyle} />
+            <span>Accounts</span>
           </NavLink>
         </li>
         <li>
@@ -73,11 +93,23 @@ function SideBar() {
               isActive ? style.activeLink : undefined
             }
           >
-            Settings
+            <Settings className={style.iconStyle} />
+            <span>Settings</span>
           </NavLink>
         </li>
       </ul>
       <ul>
+        <li>
+          <NavLink
+            to="/app/addUser"
+            className={({ isActive }) =>
+              isActive ? style.activeLink : undefined
+            }
+          >
+            <UserPlus className={style.iconStyle} />
+            <span>Add User</span>
+          </NavLink>
+        </li>
         <li>
           <NavLink
             to="/app/addProduct"
@@ -85,18 +117,12 @@ function SideBar() {
               isActive ? style.activeLink : undefined
             }
           >
-            Add Product
+            <PlusCircle className={style.iconStyle} />
+            <span>Add Product</span>
           </NavLink>
         </li>
-        <li>
-          <NavLink
-            to="/logout"
-            className={({ isActive }) =>
-              isActive ? style.activeLink : undefined
-            }
-          >
-            Logout
-          </NavLink>
+        <li className={style.logout}>
+          <Button className={style.logoutButton} buttonName="Logout" />
         </li>
       </ul>
     </nav>

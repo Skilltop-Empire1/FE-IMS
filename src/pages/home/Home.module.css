@@ -1,0 +1,42 @@
+.header {
+  margin-bottom: 36px;
+}
+
+.header h3 {
+  font-size: 29px;
+  font-weight: 700;
+  line-height: 44px;
+  text-align: left;
+}
+.cardsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 957px;
+  height: 152px;
+  top: 180px;
+  left: 26px;
+  padding: 6px 390px 6px 6px;
+  gap: 0px;
+  border-radius: 8px;
+  opacity: 0px;
+  background-color: #f2f0f3;
+}
+.saleAndCatgoryContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin-top: 24px;
+}
+
+.stockStatusAndStoreList {
+  display: flex;
+  flex-direction: row;
+  margin-top: 19px;
+}
+
+.btn {
+  margin-top: 19px;
+  text-align: right;
+}

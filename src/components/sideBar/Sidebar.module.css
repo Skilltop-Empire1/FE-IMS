@@ -1,6 +1,6 @@
 .navContainer {
   background-color: #7d2ce0;
-  height: 100vh;
+  max-height: max-content;
   width: 250px;
   padding-left: 65px;
   padding-top: 53px;
@@ -16,4 +16,38 @@
 
 .navContainer a {
   color: #f4f3f3;
+  display: flex;
+  gap: 10px;
+}
+
+.iconStyle {
+  width: 20px;
+  height: 20px;
+  color: white;
+}
+
+.activeLink {
+  display: rela;
+  width: 150px;
+  height: 46px;
+  top: 148px;
+  left: -12px;
+  padding: 10px;
+  border-radius: 0px 8px 8px 0px;
+  opacity: 0px;
+  background-color: #4b03a3;
+}
+
+.logout {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  margin-top: 40px;
+}
+
+.logoutButton {
+  background-color: #7d2ce0 !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  color: #fff !important;
 }

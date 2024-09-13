@@ -20,7 +20,7 @@ function SideBar() {
   const { pathname } = useLocation()
   console.log({ pathname })
   return (
-    <div className="w-72 h-[calc(100vh-4.2rem)] mt-16 max-h-screen bg-imsPurple flex flex-col justify-between py-10 fixed">
+    <div className="w-72 h-[calc(100vh-4.2rem)] mt-20 max-h-screen bg-imsPurple flex flex-col justify-between py-10 fixed">
       <div className=" px-2 flex flex-col gap-1">
         {routes.map(({ path, label, icon }, index) => {
           return (

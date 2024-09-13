@@ -38,13 +38,13 @@ const StaffInviteForm = () => {
         <div className="mt-6 flex justify-center gap-4">
           <button
             type="submit"
-            className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-full text-white bg-imsPurple hover:bg-imsDarkPurple focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-imsLightPurple"
+            className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-imsPurple hover:bg-imsDarkPurple focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-imsLightPurple"
           >
-            Invite
+            Send Invite
           </button>
           <button
             type="reset"
-            className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-full text-black bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-imsLightPurple"
+            className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-imsLightPurple"
           >
             Cancel
           </button>

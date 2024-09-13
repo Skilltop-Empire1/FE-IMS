@@ -26,3 +26,10 @@
 .rightNavs li {
   margin-left: 18px;
 }
+
+.navContainer img {
+  max-height: 40px; /* Adjust this value as needed to fit the nav bar height */
+  width: auto; /* Maintain aspect ratio */
+  height: auto; /* Maintain aspect ratio */
+  object-fit: contain; /* Ensure image is contained within the element */
+}

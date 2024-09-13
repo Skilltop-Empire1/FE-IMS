@@ -2,6 +2,7 @@ import React from 'react'
 import Notification from '../../assets/Notification'
 import SettingSvg from '../../assets/SettingSvg'
 import IconSvg from '../../assets/IconSvg'
+import imsLogo from '../../assets/ims-logo.png' // Import the image
 
 import style from './navBar.module.css'
 
@@ -10,7 +11,8 @@ function NavBar() {
     <nav className={style.navContainer}>
       <ul className={style.leftNavs}>
         <li>
-          <img src="" alt="product-name" />
+          <img src={imsLogo} alt="Product Logo" />{' '}
+          {/* Use the imported image variable */}
         </li>
         <li>
           <input type="text" placeholder="Search" />

@@ -32,6 +32,10 @@ a {
   text-decoration: none;
 }
 
+input {
+  outline: none;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

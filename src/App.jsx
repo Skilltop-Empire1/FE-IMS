@@ -15,15 +15,15 @@ import Staff from './pages/staff/Staff'
 
 
 const router = createBrowserRouter([
-  { path: '/app', element: <Login /> },
+  { path: '/', element: <Login /> },
   { path: 'signup', element: <Signup /> },
   {
-    path: '/',
+    path: '/app',
     element: <AppLayout />,
     children: [
-      {  element: <Home /> },
+      { index: true, element: <Home /> },
       { path: 'accounts', element: <Account /> },
-      { index: true, element: <Products /> },
+      { path: 'products', element: <Products /> },
       { path: 'sales-records', element: <SalesRecord /> },
       { path: 'settings', element: <Settings /> },
       { path: 'stores', element: <Stores /> },

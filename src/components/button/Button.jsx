@@ -1,12 +1,14 @@
 import React from 'react'
 import style from './Button.module.css'
 
-function Button({ buttonName, onClick, className = '' }) {
+function Button({ buttonName, onClick, className = '',direction }) {
   const btnClassName = `${style.buttonName} ${className}`
   return (
-    <button className={btnClassName} onClick={onClick}>
-      {buttonName}
-    </button>
+    <a href={direction}>
+      <button className={btnClassName} onClick={onClick}>
+        {buttonName}
+      </button>
+    </a>
   )
 }
 

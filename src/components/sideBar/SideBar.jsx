@@ -101,13 +101,13 @@ function SideBar() {
       <ul>
         <li>
           <NavLink
-            to="/app/addUser"
+            to="/app/addStaff"
             className={({ isActive }) =>
               isActive ? style.activeLink : undefined
             }
           >
             <UserPlus className={style.iconStyle} />
-            <span>Add User</span>
+            <span>Add Staff</span>
           </NavLink>
         </li>
         <li>

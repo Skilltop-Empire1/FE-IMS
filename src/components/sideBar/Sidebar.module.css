@@ -1,13 +1,14 @@
 .navContainer {
   background-color: #7d2ce0;
-  max-height: max-content;
+  height: 100%;
   width: 250px;
   padding-left: 65px;
-  padding-top: 53px;
+  padding-top: 15px;
   padding-bottom: 60px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: fixed;
 }
 
 .navContainer li {

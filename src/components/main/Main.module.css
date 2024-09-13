@@ -1,3 +1,7 @@
 .mainContainer {
-  padding: 5px 0 28px 34px;
+  padding: 5px 34px 70px 34px;
+  margin-left: 250px;
+  width: calc(100%-250px);
+  overflow-y: auto;
+  height: 100vh;
 }

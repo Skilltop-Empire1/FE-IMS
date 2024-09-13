@@ -12,6 +12,7 @@ import Stores from './pages/stores/Stores'
 import NotFound from './pages/notFound/NotFound'
 import AddProduct from './pages/addProduct/AddProduct'
 import Staff from './pages/staff/Staff'
+import AddStaff from './pages/addStaff/AddStaff'
 
 const router = createBrowserRouter([
   { path: '/', element: <Login /> },
@@ -29,6 +30,7 @@ const router = createBrowserRouter([
       { path: 'categories', element: <Categories /> },
       { path: 'addProduct', element: <AddProduct /> },
       { path: 'staff', element: <Staff /> },
+      { path: 'addStaff', element: <AddStaff /> },
     ],
   },
   { path: '*', element: <NotFound /> },

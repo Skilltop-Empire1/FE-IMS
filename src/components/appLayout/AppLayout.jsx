@@ -12,7 +12,9 @@ function AppLayout() {
       <div className={style.appContainer}>
         <NavBar />
         <div className={style.main}>
-          <SideBar />
+          <div>
+            <SideBar />
+          </div>
 
           <Main>
             <Outlet />

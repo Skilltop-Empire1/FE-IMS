@@ -16,6 +16,13 @@
   font-family: Inter, sans-serif;
 }
 
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;

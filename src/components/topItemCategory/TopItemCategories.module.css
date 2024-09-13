@@ -1,0 +1,63 @@
+.container {
+  width: 368px;
+  height: 252px;
+  left: 611px;
+  border-radius: 11.08px;
+  background-color: #f4f3f3;
+  box-shadow: 0px 0px 1px 0px #171a1f12;
+  box-shadow: 0px 0px 2px 0px #171a1f1f;
+  padding: 16px;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.header :first-child {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 28px;
+  text-align: left;
+}
+
+.header :last-child {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  text-align: left;
+  color: #bdc1ca;
+}
+
+.cardContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  padding: 20px;
+}
+
+.topItemCategoryCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 82px;
+  height: 81px;
+  top: 61px;
+  left: 55px;
+  padding: 26px;
+  gap: 0px;
+  border-radius: 6px;
+  opacity: 0px;
+  background-color: #e5d5f9;
+  box-shadow: 0px 0px 1px 0px #171a1f12;
+  box-shadow: 0px 0px 2px 0px #171a1f1f;
+}
+
+.topItemCategoryCard p {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 42px;
+  text-align: center;
+  color: #4a02a3;
+}

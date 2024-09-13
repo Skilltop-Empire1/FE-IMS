@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
 import Filter from '../../components/Filter/Filter'
+import StoreList from '../../components/StoreComponent/StoreList';
+import StoreDetail from '../../components/StoreComponent/StoreDetail';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 const Stores = () => {
+  const [selectedStore, setSelectedStore] = useState(null)
   const [items, setItems] = useState();
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -25,9 +29,19 @@ const Stores = () => {
   //   return matchesSearch && matchesCategory;
   // });
 
+
+  //recieving data
+
+  const handleSelectedStore = (store) => {
+    setSelectedStore(store)
+  }
+
   return (
     <div>
-      <Filter handleSearch={handleSearch} handleFilter={handleFilter} direction='addProduct' title='Stores' button='+ Create Store'/>
+      
+      <Filter handleSearch={handleSearch} handleFilter={handleFilter} direction='createStore' title='Stores' button='+ Create Store'/>
+      <StoreList onSelectStore={handleSelectedStore}/>
+      <StoreDetail selectedStore={selectedStore}/>
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import style from './tableStyle.module.css'
-import BUtton from '../Button/BUtton'
+import BUtton from '../Button/Button'
 
 const Table = ({status, date}) => {
   return (
@@ -25,7 +25,7 @@ const Table = ({status, date}) => {
                 <td><input type="checkbox" /></td>
                 <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1bVUUPyZR8fspF-0txsgt5N_eAIDasisy6A&s" alt="" /></td>
                 <td>Shirt</td>
-                <td><BUtton title='Active' /></td>
+                <td><BUtton buttonName='Active' /></td>
                 <td>10</td>
                 <td>T-Shirt</td>
                 <td>3-store</td>
@@ -35,7 +35,7 @@ const Table = ({status, date}) => {
                 <td><input type="checkbox" /></td>
                 <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1bVUUPyZR8fspF-0txsgt5N_eAIDasisy6A&s" alt="" /></td>
                 <td>Shirt</td>
-                <td><BUtton title='Active' /></td>
+                <td><BUtton buttonName='Active' /></td>
                 <td>10</td>
                 <td>T-Shirt</td>
                 <td>3-store</td>
@@ -45,7 +45,7 @@ const Table = ({status, date}) => {
                 <td><input type="checkbox" /></td>
                 <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1bVUUPyZR8fspF-0txsgt5N_eAIDasisy6A&s" alt="" /></td>
                 <td>Shirt</td>
-                <td><BUtton title='Active' /></td>
+                <td><BUtton buttonName='Active' /></td>
                 <td>10</td>
                 <td>T-Shirt</td>
                 <td>3-store</td>
@@ -55,7 +55,7 @@ const Table = ({status, date}) => {
                 <td><input type="checkbox" /></td>
                 <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1bVUUPyZR8fspF-0txsgt5N_eAIDasisy6A&s" alt="" /></td>
                 <td>Shirt</td>
-                <td><BUtton title='Active' /></td>
+                <td><BUtton buttonName='Active' /></td>
                 <td>10</td>
                 <td>T-Shirt</td>
                 <td>3-store</td>
@@ -65,7 +65,7 @@ const Table = ({status, date}) => {
                 <td><input type="checkbox" /></td>
                 <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1bVUUPyZR8fspF-0txsgt5N_eAIDasisy6A&s" alt="" /></td>
                 <td>Shirt</td>
-                <td><BUtton title='Active' /></td>
+                <td><BUtton buttonName='Active' /></td>
                 <td>10</td>
                 <td>T-Shirt</td>
                 <td>3-store</td>

@@ -8,8 +8,10 @@
 }
 
 .body {
-    background: #F3F3F2;
+    /* background: #F3F3F2; */
     padding: 10px 0;
+    /* position: fixed;
+    width: 100%; */
 }
 
 .right input {
@@ -17,6 +19,7 @@
     height: 41px;
     border-radius: 21px;
     padding: 5px 15px;
+    
 }
 
 .right {

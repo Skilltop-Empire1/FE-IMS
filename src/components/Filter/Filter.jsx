@@ -23,7 +23,7 @@ const Filter = ({handleFilter, handleSearch, direction, title, button}) => {
             <option value="dairy">Dairy</option>
             
         </select>
-        <BUtton title={button} direction=  {direction} />
+        <BUtton buttonName={button} direction=  {direction} />
 
       </div>
     </div>

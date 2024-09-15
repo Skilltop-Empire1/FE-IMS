@@ -1,6 +1,6 @@
 import React from 'react'
 import style from './tableStyle.module.css'
-import BUtton from '../Button/Button'
+import BUtton from '../Button/OtherButton'
 
 const Table = ({status, date}) => {
   return (

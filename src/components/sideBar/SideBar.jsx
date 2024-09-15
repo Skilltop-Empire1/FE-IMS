@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import Modal from 'react-modal'
 import { NavLink } from 'react-router-dom'
 import Button from '../button/Button'
 import style from './Sidebar.module.css'
@@ -11,11 +12,22 @@ import {
   User,
   Settings,
   PlusCircle,
-  LogOut,
   UserPlus,
 } from 'lucide-react'
 
+Modal.setAppElement('#root')
+
 function SideBar() {
+  const [modalIsOpen, setModalIsOpen] = useState(false)
+
+  const openModal = () => setModalIsOpen(true)
+  const closeModal = () => setModalIsOpen(false)
+
+  const handleLogout = () => {
+    console.log('User logged out')
+    closeModal()
+  }
+
   return (
     <nav className={style.navContainer}>
       <ul>
@@ -122,9 +134,26 @@ function SideBar() {
           </NavLink>
         </li>
         <li className={style.logout}>
-          <Button className={style.logoutButton} buttonName="Logout" />
+          <Button
+            onClick={openModal}
+            className={style.logoutButton}
+            buttonName="Logout"
+          />
         </li>
       </ul>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Confirm Logout"
+        className={style.modal}
+        overlayClassName={style.overlay}
+      >
+        <h2>Are you sure you want to logout?</h2>
+        <div className={style.modalButtons}>
+          <button onClick={handleLogout}>Yes, logout</button>
+          <button onClick={closeModal}>Cancel</button>
+        </div>
+      </Modal>
     </nav>
   )
 }

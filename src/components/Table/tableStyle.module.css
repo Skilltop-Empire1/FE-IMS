@@ -1,0 +1,23 @@
+.table {
+    width: 100%;
+}
+
+.tr th{
+    font-family: Inter;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 22px;
+    text-align: left;
+
+}
+
+.table img {
+    width: 40px;
+    border-radius: 10px;
+}
+
+.table tbody tr td {
+    font-family: Inter;
+    color: #BDC1CA;
+    padding: 5px 5px;
+}

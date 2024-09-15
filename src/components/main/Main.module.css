@@ -1,7 +1,10 @@
 .mainContainer {
+  padding: 5px;
+  width: 100%;
   padding: 5px 34px 70px 34px;
   margin-left: 250px;
   width: calc(100%-250px);
   overflow-y: auto;
   height: 100vh;
+
 }

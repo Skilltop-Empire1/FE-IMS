@@ -36,6 +36,7 @@ const router = createBrowserRouter([
       { path: 'addProduct', element: <AddProduct /> },
       { path: 'staff', element: <Staff /> },
       { path: 'addStaff', element: <AddStaff /> },
+      { path: 'createStore', element: <CreateStore /> },
     ],
   },
   { path: '*', element: <NotFound /> },

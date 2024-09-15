@@ -1,0 +1,35 @@
+.store {
+    height: 170px;
+    width: 170px;
+    border-radius: 12px;
+    background: #F4F3F3;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 5px;
+}
+
+.store:active {
+    background: #E5D5F9;
+    
+}
+
+.box {
+    width: 650px;
+    border: 1px solid #000;
+    border-radius: 12px;
+    height: 350px;
+    padding: 10px 20px;
+}
+
+.box h3 {
+    font-family: Poppins;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 32px;
+    text-align: left;
+}
+
+.moreInfo {
+    margin-top: 100px;
+}

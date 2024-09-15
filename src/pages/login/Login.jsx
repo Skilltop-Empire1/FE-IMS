@@ -18,6 +18,12 @@ const Login = () => {
               <br />
               <input type="password" name='password' placeholder="Enter password" required/>
             </div>
+            <div className={style.submit}>
+              <button type='submit' className={style.button2}>SIGN UP</button> 
+            </div>
+              <div className='flex justify-center mt-4'>
+               <a href="" className={style.forgot}>Forgot your password?</a>
+              </div>
           </form>
         </div>
       </div>

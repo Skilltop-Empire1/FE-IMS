@@ -13,13 +13,18 @@ import NotFound from './pages/notFound/NotFound'
 import AddProduct from './pages/addProduct/AddProduct'
 import Staff from './pages/staff/Staff'
 import AddStaff from './pages/addStaff/AddStaff'
+import ProtectedRoute from './redux/ProtectedRoute'
 
 const router = createBrowserRouter([
   { path: '/', element: <Login /> },
   { path: 'signup', element: <Signup /> },
   {
     path: '/app',
-    element: <AppLayout />,
+    element: (
+      // <ProtectedRoute>
+      <AppLayout />
+      // </ProtectedRoute>
+    ),
     children: [
       { index: true, element: <Home /> },
       { path: 'accounts', element: <Account /> },

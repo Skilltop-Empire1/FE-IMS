@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Modal from 'react-modal'
 import { NavLink } from 'react-router-dom'
-import Button from '../button/Button'
+import Button from '../Button/Button'
 import style from './Sidebar.module.css'
 import {
   Home,

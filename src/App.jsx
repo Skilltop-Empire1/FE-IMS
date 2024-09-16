@@ -13,7 +13,7 @@ import NotFound from './pages/notFound/NotFound'
 import AddProduct from './pages/addProduct/AddProduct'
 import Staff from './pages/staff/Staff'
 import AddStaff from './pages/addStaff/AddStaff'
-import ProtectedRoute from './redux/ProtectedRoute'
+// import ProtectedRoute from './redux/ProtectedRoute'
 
 const router = createBrowserRouter([
   { path: '/', element: <Login /> },
@@ -36,7 +36,7 @@ const router = createBrowserRouter([
       { path: 'addProduct', element: <AddProduct /> },
       { path: 'staff', element: <Staff /> },
       { path: 'addStaff', element: <AddStaff /> },
-      { path: 'createStore', element: <CreateStore /> },
+      // { path: 'createStore', element: <CreateStore /> },
     ],
   },
   { path: '*', element: <NotFound /> },

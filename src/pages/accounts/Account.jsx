@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
-import SelectOptions from '../../components/selectOptions/SelectOptions'
 import AccountSummary from '../../components/accountSummary/AccountSummary'
 import Button from '../../components/button/Button'
 
 import style from './Account.module.css'
-import boutiqueItems from './data'
+import boutiqueItems, { months } from './data'
 
 function Account() {
   const [duration, setDuration] = useState('')
@@ -12,89 +11,86 @@ function Account() {
 
   const category = boutiqueItems.map((item) => item.category)
 
-  const months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ]
-
   const currentYear = new Date().getFullYear()
 
   const handleDuration = (e) => {
-    const value = e.target.value
-    setDuration(value)
+    setDuration(e.target.value)
   }
 
   const handleSelectWears = (e) => {
-    const value = e.target.value
-    setSelectedWears(value)
+    setSelectedWears(e.target.value)
   }
 
   return (
-    <div>
-      <div>
+    <div className={style.container}>
+      <div className={style.header}>
         <h3>Accounts</h3>
       </div>
-      <div>
-        <div>
-          <SelectOptions
-            options={months}
-            displayedRange="View Range"
-            className={style.selectOptions}
-            onChange={handleDuration}
-            selectedOption={duration}
-          />
+      <div className={style.selectOptionsContainer}>
+        <div className={style.selectOptions}>
+          <div className={style.selectBox}>
+            <select onChange={handleDuration} value={duration}>
+              <option value="">View Range</option>
+              {months.map((month) => (
+                <option key={month} value={month}>
+                  {month}
+                </option>
+              ))}
+            </select>
+          </div>
+
           {duration ? (
             <p>
-              {months[0]}
-              <span>{currentYear}</span> to {duration}{' '}
+              {months[0]} <span>{currentYear}</span> to {duration}{' '}
               <span>{currentYear}</span>
             </p>
           ) : (
             <p>Select Duration</p>
           )}
         </div>
-        <div>
-          <SelectOptions
-            selectedOption={selectedWears}
-            onChange={handleSelectWears}
-            displayedRange="Select Product"
-            options={category}
-            className={style.selectOptions}
-          />
+        <div className={style.selectOptions}>
+          <div className={style.selectBox}>
+            <select onChange={handleSelectWears} value={selectedWears}>
+              <option value="">Select Product</option>
+              {category.map((item, index) => (
+                <option key={index} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
+          </div>
+
           {selectedWears ? <p>{selectedWears}</p> : <p>Select wears</p>}
         </div>
       </div>
-      <div>
+      <div className={style.accountSummary}>
         <AccountSummary
           percentageIncrease="2%"
           summaryName="Total Sales"
           summaryValue="$4.12"
+          container={style.summaryContainer}
+          valueStyle={style.valueStyle}
         />
         <AccountSummary
           percentageIncrease="1.4%"
           summaryName="Stock Value"
           summaryValue="$13.45"
+          container={style.summaryContainer}
+          valueStyle={style.valueStyle}
         />
         <AccountSummary
           percentageIncrease="1.6%"
           summaryName="Sum Total"
           summaryValue="$7.00"
+          container={style.summaryContainer}
+          valueStyle={style.valueStyle}
+          s
         />
       </div>
-      <div>
+      <div className={style.breakdown}>
         <p>Revenue Breakdown</p>
       </div>
-      <div>
+      <div className={style.btn}>
         <Button onClick={() => console.log('clicked')} buttonName="Export" />
       </div>
     </div>

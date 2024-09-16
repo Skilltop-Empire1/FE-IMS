@@ -21,8 +21,28 @@
 
 .leftNavs li {
   margin-right: 90px;
+  cursor: pointer;
+}
+
+.searchContainer {
+  display: flex;
+  align-items: center;
+  border: 1px solid #e5d5f9;
+  height: 30px;
+  border-radius: 9px;
+}
+
+.searchContainer {
+  padding-left: 20px;
 }
 
 .rightNavs li {
   margin-left: 18px;
+}
+
+.navContainer img {
+  max-height: 40px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
 }

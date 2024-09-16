@@ -14,13 +14,19 @@ import AddProduct from './pages/addProduct/AddProduct'
 import Staff from './pages/staff/Staff'
 import AddStaff from './pages/addStaff/AddStaff'
 import CreateStore from './pages/createStore/CreateStore'
+import ProtectedRoute from './redux/ProtectedRoute'
+
 
 const router = createBrowserRouter([
   { path: '/', element: <Login /> },
   { path: 'signup', element: <Signup /> },
   {
     path: '/app',
-    element: <AppLayout />,
+    element: (
+      // <ProtectedRoute>
+      <AppLayout />
+      // </ProtectedRoute>
+    ),
     children: [
       { index: true, element: <Home /> },
       { path: 'accounts', element: <Account /> },

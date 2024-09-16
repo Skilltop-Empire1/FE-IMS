@@ -1,6 +1,6 @@
 import React from 'react'
 import style from './filterstyle.module.css'
-import BUtton from '../Button/BUtton'
+import RedirectButton from '../Button/RedirectButton'
 
 const Filter = ({handleFilter, handleSearch, direction, title, button}) => {
   return (
@@ -23,7 +23,7 @@ const Filter = ({handleFilter, handleSearch, direction, title, button}) => {
             <option value="dairy">Dairy</option>
             
         </select>
-        <BUtton buttonName={button} direction=  {direction} />
+        <RedirectButton buttonName={button} direction=  {direction} />
 
       </div>
     </div>

@@ -25,11 +25,11 @@ const AddProduct = () => {
     formData.append('description', description);
     formData.append('quantity', quantity);
     formData.append('storeAvailable', storeName);
-    formData.append('category', category);
+    formData.append('categoryId', category);
     formData.append('alertStatus', alertLimit);
     formData.append('price', price);
     if (productPhoto) {
-      formData.append('photo', productPhoto);
+      formData.append('image', productPhoto);
     }
 
     try {
@@ -71,7 +71,7 @@ const AddProduct = () => {
           <div className={style.cont}>
             <label className={style.label}>Item code:</label>
             <input
-              type="number"
+              type="text"
               className={style.input}
               value={itemCode}
               onChange={(e) => setItemCode(e.target.value)}
@@ -90,7 +90,7 @@ const AddProduct = () => {
           <div className={style.cont}>
             <label className={style.label}>Quantity:</label>
             <input
-              type="number"
+              type="text"
               className={style.input}
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
@@ -115,9 +115,9 @@ const AddProduct = () => {
             />
           </div>
           <div className={style.cont}>
-            <label className={style.label}>Product Alert Limit:</label>
+            <label className={style.label}> Alert Status:</label>
             <input
-              type="number"
+              type="text"
               className={style.input}
               value={alertLimit}
               onChange={(e) => setAlertLimit(e.target.value)}

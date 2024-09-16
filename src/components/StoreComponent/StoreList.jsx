@@ -22,10 +22,10 @@ const StoreList = ({ onSelectStore }) => {
             key={idx}
             className={style.store}
             onClick={() => onSelectStore(store)}
-            style={{backgroundImage: `url(https://be-ims.onrender.com/api/IMS/store/all/${store.storePhoto})`,
+            style={{backgroundImage: `url(${store.storePhoto})`,
             backgroundSize: 'cover', // ensure image covers the div
             backgroundPosition: 'center', // centers the image
-          }}
+            }}
           >
             {store.location}
           </div>

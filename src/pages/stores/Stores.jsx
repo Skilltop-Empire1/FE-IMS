@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Filter from '../../components/Filter/Filter'
 import StoreList from '../../components/StoreComponent/StoreList';
 import StoreDetail from '../../components/StoreComponent/StoreDetail';
+import { useGetLocationsQuery } from '../../redux/storeApi';
 
 const Stores = () => {
   const [selectedStore, setSelectedStore] = useState(null)
@@ -9,6 +10,10 @@ const Stores = () => {
 
   const [searchTerm, setSearchTerm] = useState('');
   const [filterCategory, setFilterCategory] = useState('all');
+
+  //get location data
+
+  const { data: locations, error, isLoading } = useGetLocationsQuery()
 
   const handleSearch = (term) => {
     setSearchTerm(term.toLowerCase());
@@ -21,10 +26,10 @@ const Stores = () => {
   // const filteredItems = items.filter((item) => {
   //   // Check if item matches the search term
   //   const matchesSearch = item.name.toLowerCase().includes(searchTerm);
-    
+
   //   // Check if item matches the selected category
   //   const matchesCategory = filterCategory === 'all' || item.category === filterCategory;
-    
+
   //   return matchesSearch && matchesCategory;
   // });
 
@@ -37,12 +42,12 @@ const Stores = () => {
 
   return (
     <div>
-      
-      <Filter handleSearch={handleSearch} handleFilter={handleFilter} direction='createStore' title='Stores' button='+ Create Store'/>
+
+      <Filter handleSearch={handleSearch} handleFilter={handleFilter} direction='createStore' title='Stores' button='+ Create Store' location={locations}/>
       <StoreList onSelectStore={handleSelectedStore}/>
       <StoreDetail selectedStore={selectedStore}/>
     </div>
-  )
-}
+  );
+};
 
-export default Stores
+export default Stores;

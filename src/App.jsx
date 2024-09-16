@@ -13,7 +13,8 @@ import NotFound from './pages/notFound/NotFound'
 import AddProduct from './pages/addProduct/AddProduct'
 import Staff from './pages/staff/Staff'
 import AddStaff from './pages/addStaff/AddStaff'
-// import ProtectedRoute from './redux/ProtectedRoute'
+import CreateStore from './pages/createStore/CreateStore'
+import ProtectedRoute from './redux/ProtectedRoute'
 
 const router = createBrowserRouter([
   { path: '/', element: <Login /> },

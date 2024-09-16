@@ -1,8 +1,15 @@
 import React from 'react'
 import style from './tableStyle.module.css'
 import BUtton from '../Button/Button'
+import { useGetProductsQuery } from '../../redux/productApi'
 
 const Table = ({status, date}) => {
+
+  const { data: products, error, isLoading } = useGetProductsQuery();
+
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Error loading products</p>;
+
   return (
     <div className='pt-3'>
       <table className={style.table}>
@@ -21,57 +28,23 @@ const Table = ({status, date}) => {
             </tr>
         </thead>
         <tbody>
-            <tr>
+          {
+            products.map((product, idx) => {
+              return (
+                <tr key={idx}>
                 <td><input type="checkbox" /></td>
-                <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1bVUUPyZR8fspF-0txsgt5N_eAIDasisy6A&s" alt="" /></td>
-                <td>Shirt</td>
-                <td><BUtton buttonName='Active' /></td>
-                <td>10</td>
-                <td>T-Shirt</td>
-                <td>3-store</td>
-                <td>date</td>
+                <td><img src={product.prodPhoto} alt={product.name} /></td>
+                <td>{product.name}</td>
+                <td><BUtton buttonName={product.alertStatus} /></td>
+                <td>{product.quantity}</td>
+                <td>{product.category}</td>
+                <td>{product.storeAvailable}</td>
+                <td>{product.createdAt}</td>
                 <td>delete/edit</td>
-            </tr><tr>
-                <td><input type="checkbox" /></td>
-                <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1bVUUPyZR8fspF-0txsgt5N_eAIDasisy6A&s" alt="" /></td>
-                <td>Shirt</td>
-                <td><BUtton buttonName='Active' /></td>
-                <td>10</td>
-                <td>T-Shirt</td>
-                <td>3-store</td>
-                <td>date</td>
-                <td>delete/edit</td>
-            </tr><tr>
-                <td><input type="checkbox" /></td>
-                <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1bVUUPyZR8fspF-0txsgt5N_eAIDasisy6A&s" alt="" /></td>
-                <td>Shirt</td>
-                <td><BUtton buttonName='Active' /></td>
-                <td>10</td>
-                <td>T-Shirt</td>
-                <td>3-store</td>
-                <td>date</td>
-                <td>delete/edit</td>
-            </tr><tr>
-                <td><input type="checkbox" /></td>
-                <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1bVUUPyZR8fspF-0txsgt5N_eAIDasisy6A&s" alt="" /></td>
-                <td>Shirt</td>
-                <td><BUtton buttonName='Active' /></td>
-                <td>10</td>
-                <td>T-Shirt</td>
-                <td>3-store</td>
-                <td>date</td>
-                <td>delete/edit</td>
-            </tr><tr>
-                <td><input type="checkbox" /></td>
-                <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1bVUUPyZR8fspF-0txsgt5N_eAIDasisy6A&s" alt="" /></td>
-                <td>Shirt</td>
-                <td><BUtton buttonName='Active' /></td>
-                <td>10</td>
-                <td>T-Shirt</td>
-                <td>3-store</td>
-                <td>date</td>
-                <td>delete/edit</td>
-            </tr>
+              </tr>
+              )
+            })
+          }
         </tbody>
       </table>
     </div>

@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import Filter from '../../components/Filter/Filter'
 import StoreList from '../../components/StoreComponent/StoreList';
 import StoreDetail from '../../components/StoreComponent/StoreDetail';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 const Stores = () => {
   const [selectedStore, setSelectedStore] = useState(null)

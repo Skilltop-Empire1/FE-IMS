@@ -4,7 +4,7 @@ import { logout as logoutAction } from './slices/AuthSlice';
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: '/api', // Ensure this base URL is correct
+    baseUrl: 'https://be-ims.onrender.com', // Ensure this base URL is correct
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.token; // Adjust if token is stored differently
       if (token) {
@@ -23,7 +23,7 @@ export const authApi = createApi({
     }),
     login: builder.mutation({
       query: (credentials) => ({
-        url: 'login', // Ensure this path is correct
+        url: '/api/IMS/user/login', // Ensure this path is correct
         method: 'POST',
         body: credentials,
       }),

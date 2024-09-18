@@ -1,20 +1,47 @@
-import React, { useState } from 'react';
-import { useCreateProductMutation } from '../../redux/productApi';  // Import createProduct mutation hook
+import React, { useState, useEffect } from 'react';
+import { useCreateProductMutation } from '../../redux/productApi'; // Import createProduct mutation hook
 import style from './AddProduct.module.css';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const AddProduct = () => {
   const [productName, setProductName] = useState('');
   const [itemCode, setItemCode] = useState('');
   const [description, setDescription] = useState('');
   const [quantity, setQuantity] = useState('');
-  const [storeName, setStoreName] = useState('');
+  const [selectedStore, setSelectedStore] = useState({ id: '', name: '' }); // Store ID and Name
   const [category, setCategory] = useState('');
   const [alertLimit, setAlertLimit] = useState('');
   const [price, setPrice] = useState('');
   const [productPhoto, setProductPhoto] = useState(null);
   const [addAnother, setAddAnother] = useState(false);
 
-  const [createProduct, { isLoading, error }] = useCreateProductMutation();  // Using the mutation hook
+  const [stores, setStores] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const navigate = useNavigate()
+
+
+  const [createProduct, { isLoading, error }] = useCreateProductMutation(); // Using the mutation hook
+
+  // Fetch stores and categories
+  useEffect(() => {
+    const fetchStores = async () => {
+      const response = await fetch('https://be-ims.onrender.com/api/IMS/store/all'); 
+      const data = await response.json();
+      setStores(data);
+      console.log(data)
+    };
+
+    const fetchCategories = async () => {
+      const response = await fetch('https://be-ims.onrender.com/api/IMS/category'); 
+      const data2 = await response.json();
+      setCategories(data2.categories);
+      console.log(data2)
+      console.log(categories)
+    };
+
+    fetchStores();
+    fetchCategories();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,25 +49,27 @@ const AddProduct = () => {
     const formData = new FormData();
     formData.append('name', productName);
     formData.append('itemCode', itemCode);
-    formData.append('description', description);
+    // formData.append('description', description);
     formData.append('quantity', quantity);
-    formData.append('storeAvailable', storeName);
-    formData.append('category', category);
+    formData.append('storeId', Number(selectedStore.id)); // Submit the store ID
+    formData.append('storeAvailable', selectedStore.name); // submit the store name
+    formData.append('categoryId', category);
     formData.append('alertStatus', alertLimit);
     formData.append('price', price);
     if (productPhoto) {
-      formData.append('photo', productPhoto);
+      formData.append('image', productPhoto);
     }
 
     try {
-      await createProduct(formData).unwrap();  // Dispatch the createProduct mutation
+      await createProduct(formData).unwrap(); 
       alert('Product created successfully!');
+      navigate('/app/products');
       if (!addAnother) {
         setProductName('');
         setItemCode('');
         setDescription('');
         setQuantity('');
-        setStoreName('');
+        setSelectedStore({ id: '', name: '' });
         setCategory('');
         setAlertLimit('');
         setPrice('');
@@ -48,6 +77,15 @@ const AddProduct = () => {
       }
     } catch (err) {
       console.error('Failed to create product:', err);
+    }
+  };
+
+  const handleStoreChange = (e) => {
+    const selectedStoreId = Number(e.target.value); // Get the selected store ID
+    const store = stores.find((store) => store.storeId === selectedStoreId); // Find the selected store object
+    
+    if (store) {
+      setSelectedStore({ id: store.storeId, name: store.storeName }); // Store both id and name
     }
   };
 
@@ -71,14 +109,14 @@ const AddProduct = () => {
           <div className={style.cont}>
             <label className={style.label}>Item code:</label>
             <input
-              type="number"
+              type="text"
               className={style.input}
               value={itemCode}
               onChange={(e) => setItemCode(e.target.value)}
               required
             />
           </div>
-          <div className={style.cont}>
+          {/* <div className={style.cont}>
             <label className={style.label}>Description:</label>
             <input
               type="text"
@@ -86,38 +124,60 @@ const AddProduct = () => {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
-          </div>
+          </div> */}
           <div className={style.cont}>
             <label className={style.label}>Quantity:</label>
             <input
-              type="number"
+              type="text"
               className={style.input}
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
             />
           </div>
+
+          {/* Stores Dropdown */}
           <div className={style.cont}>
             <label className={style.label}>Stores Available:</label>
-            <input
-              type="text"
+            <select
               className={style.input}
-              value={storeName}
-              onChange={(e) => setStoreName(e.target.value)}
-            />
+              value={selectedStore.id}
+              onChange={handleStoreChange}
+            >
+              <option value="">Select store</option>
+              {/* <option value="">Select Store</option> */}
+              {stores.map((store) => {
+                return (
+                <option key={store.storeId} value={store.storeId}>
+                  {store.storeName} 
+                </option>
+              )})}
+            </select>
           </div>
+
+
+          {/* Categories Dropdown */}
           <div className={style.cont}>
             <label className={style.label}>Category:</label>
-            <input
-              type="text"
+            <select
               className={style.input}
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-            />
+            >
+              <option value="">Select Category</option>
+              {categories.map((category) => {
+                return (
+                  <option value={category.catId}>
+                    {category.name}
+                  </option>
+                )
+              })}
+            </select>
           </div>
+
           <div className={style.cont}>
-            <label className={style.label}>Product Alert Limit:</label>
+            <label className={style.label}>Alert Status:</label>
             <input
-              type="number"
+              type="text"
               className={style.input}
               value={alertLimit}
               onChange={(e) => setAlertLimit(e.target.value)}

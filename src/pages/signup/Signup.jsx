@@ -10,17 +10,11 @@ function Signup() {
         <form action="" className={style.form}>
           <div  className={style.name}>
             <div  className={style.input}>
-              <label htmlFor="firstName">First name</label>
+              <label htmlFor="firstName">Username</label>
               <br />
-              <input type="text" name='firstName' placeholder="Enter First name" required/>
-            </div>
-            <div  className={style.input}>
-              <label htmlFor="firstName">Last name</label>
-              <br />
-              <input type="text" name='lastName' placeholder="Enter Last name" required/>
+              <input type="text" name='firstName' placeholder="Enter Username" required/>
             </div>
           </div>
-         <div className={style.name}> 
           <div  className={style.input}>
               <label htmlFor="email">Email</label>
               <br />
@@ -31,7 +25,7 @@ function Signup() {
               <br />
               <input type="password" name='password' placeholder="Enter password" required/>
             </div>
-         </div>
+
          <div className={style.submit}>
           <button type='submit' className={style.button2}>SIGN UP</button>
          </div>

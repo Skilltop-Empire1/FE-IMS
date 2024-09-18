@@ -1,6 +1,7 @@
 import React , { useState }from 'react'
 import Filter from '../../components/Filter/Filter'
 import Table from '../../components/Table/Table'
+import { useGetLocationsQuery } from '../../redux/storeApi';
 
 
 const Products = () => {
@@ -17,6 +18,11 @@ const Products = () => {
     setFilterCategory(category);
   };
 
+
+    //get location data
+
+    const { data: locations, error, isLoading } = useGetLocationsQuery()
+
   // const filteredItems = items.filter((item) => {
   //   // Check if item matches the search term
   //   const matchesSearch = item.name.toLowerCase().includes(searchTerm);
@@ -30,7 +36,7 @@ const Products = () => {
   return (
     <div>
       <div>
-      <Filter handleSearch={handleSearch} handleFilter={handleFilter} direction='addProduct' title='Products' button='+ Add Product'/>
+      <Filter handleSearch={handleSearch} handleFilter={handleFilter} direction='addProduct' title='Products' button='+ Add Product' location={locations}/>
       <Table status='Alert Status' date={'date'}/>
       </div>
       

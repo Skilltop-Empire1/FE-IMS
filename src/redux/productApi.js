@@ -9,7 +9,7 @@ export const productApi = createApi({
     }),
     createProduct: builder.mutation({
       query: (newProduct) => ({
-        url: '/product/create',  // Endpoint for creating a new product
+        url: '/api/IMS/product',  // Endpoint for creating a new product
         method: 'POST',
         body: newProduct,
       }),

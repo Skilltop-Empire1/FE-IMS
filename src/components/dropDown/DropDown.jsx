@@ -6,31 +6,46 @@ import ImagePicker from '../../modals/imagePicker/ImagePicker'
 
 function DropDown() {
   const [modalType, setModalType] = useState(null)
+  const [activeItem, setActiveItem] = useState(null)
 
   const openModal = (type) => () => {
     setModalType(type)
+    setActiveItem(type) // Set the clicked item as active
   }
 
   const closeModal = () => {
     setModalType(null)
+    setActiveItem(null) // Remove active state when closing modal
   }
 
   return (
     <div className={style.container}>
       <ul>
-        <li onClick={openModal('add-profile-picture')}>
+        <li
+          onClick={openModal('add-profile-picture')}
+          className={modalType === 'add-profile-picture' ? style.active : ''}
+        >
           <User size={16} className="icon" />
           Add Profile Picture
         </li>
-        <li onClick={openModal('update-profile-picture')}>
+        <li
+          onClick={openModal('update-profile-picture')}
+          className={modalType === 'update-profile-picture' ? style.active : ''}
+        >
           <Camera size={16} className="icon" />
           Update Profile Picture
         </li>
-        <li onClick={openModal('change-password')}>
+        <li
+          onClick={openModal('change-password')}
+          className={modalType === 'change-password' ? style.active : ''}
+        >
           <Lock size={16} className="icon" />
           Change Password
         </li>
-        <li onClick={openModal('logout')}>
+        <li
+          onClick={openModal('logout')}
+          className={modalType === 'logout' ? style.active : ''}
+        >
           <LogOut size={16} className="icon" />
           Logout
         </li>

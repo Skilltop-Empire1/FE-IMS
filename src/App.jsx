@@ -1,3 +1,4 @@
+import React from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Login from './pages/login/Login'
 import Signup from './pages/signup/Signup'
@@ -15,10 +16,12 @@ import Staff from './pages/staff/Staff'
 import AddStaff from './pages/addStaff/AddStaff'
 import CreateStore from './pages/createStore/CreateStore'
 import ProtectedRoute from './redux/ProtectedRoute'
+import MobileWarning from './pages/mobileWarning/MobileWarning'
 
 const router = createBrowserRouter([
   { path: '/', element: <Login /> },
   { path: 'signup', element: <Signup /> },
+  { path: '/mobile-warning', element: <MobileWarning /> }, // Corrected path
   {
     path: '/app',
     element: (

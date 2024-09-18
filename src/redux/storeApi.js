@@ -8,11 +8,11 @@ export const storesApi = createApi({
     getStores: builder.query({
       query: () => '/api/IMS/store/all',  //  endpoint 
     }),
-    
+
     // POST request to create a new store
     createStore: builder.mutation({
       query: (newStore) => ({
-        url: '/api/IMS/store/create',  //  endpoint 
+        url: '/api/IMS/store/create',  //  endpoint
         method: 'POST',
         body: newStore,
       }),

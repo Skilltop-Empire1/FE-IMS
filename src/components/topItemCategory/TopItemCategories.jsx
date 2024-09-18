@@ -1,19 +1,14 @@
 import React from 'react'
 import style from './TopItemCategories.module.css'
-import { Link } from 'react-router-dom'
-function TopItemCategories() {
-  const topCategoriesItems = [
-    { quantitySold: 3 },
-    { quantitySold: 3 },
-    { quantitySold: 3 },
-    { quantitySold: 3 },
-    { quantitySold: 3 },
-  ]
+import { Link, useNavigate } from 'react-router-dom'
+function TopItemCategories({ topCategoriesItems }) {
+  const navigate = useNavigate()
+
   return (
-    <div className={style.container}>
+    <div onClick={() => navigate('/app/products')} className={style.container}>
       <div className={style.header}>
         <p>Top Item Categories</p>
-        <Link>
+        <Link to="/app/salesRecords">
           <p>View All</p>
         </Link>
       </div>

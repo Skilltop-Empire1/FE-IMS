@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './slices/AuthSlice';
-import { authApi } from './authApi';
-import { storesApi } from './storeApi';
-import { productApi } from './productApi';
+import { authApi } from './APIs/authApi';
+import { storesApi } from './APIs/storeApi';
+import { productApi } from './APIs/productApi';
 
 const store = configureStore({
   reducer: {
@@ -17,5 +17,6 @@ const store = configureStore({
       .concat(storesApi.middleware)  //storesApi middleware
       .concat( productApi.middleware),  //productApi middleware
 });
+
 
 export default store;

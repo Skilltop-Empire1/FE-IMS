@@ -1,27 +1,27 @@
 import React, { useState } from 'react'
 import Filter from '../../components/Filter/Filter'
-import StoreList from '../../components/StoreComponent/StoreList';
-import StoreDetail from '../../components/StoreComponent/StoreDetail';
-import { useGetLocationsQuery } from '../../redux/storeApi';
+import StoreList from '../../components/StoreComponent/StoreList'
+import StoreDetail from '../../components/StoreComponent/StoreDetail'
+import { useGetLocationsQuery } from '../../redux/APIs/storeApi'
 
 const Stores = () => {
   const [selectedStore, setSelectedStore] = useState(null)
-  const [items, setItems] = useState();
+  const [items, setItems] = useState()
 
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filterCategory, setFilterCategory] = useState('all');
+  const [searchTerm, setSearchTerm] = useState('')
+  const [filterCategory, setFilterCategory] = useState('all')
 
   //get location data
 
   const { data: locations, error, isLoading } = useGetLocationsQuery()
 
   const handleSearch = (term) => {
-    setSearchTerm(term.toLowerCase());
-  };
+    setSearchTerm(term.toLowerCase())
+  }
 
   const handleFilter = (category) => {
-    setFilterCategory(category);
-  };
+    setFilterCategory(category)
+  }
 
   // const filteredItems = items.filter((item) => {
   //   // Check if item matches the search term
@@ -33,7 +33,6 @@ const Stores = () => {
   //   return matchesSearch && matchesCategory;
   // });
 
-
   //recieving data
 
   const handleSelectedStore = (store) => {
@@ -42,12 +41,18 @@ const Stores = () => {
 
   return (
     <div>
-
-      <Filter handleSearch={handleSearch} handleFilter={handleFilter} direction='createStore' title='Stores' button='+ Create Store' location={locations}/>
-      <StoreList onSelectStore={handleSelectedStore}/>
-      <StoreDetail selectedStore={selectedStore}/>
+      <Filter
+        handleSearch={handleSearch}
+        handleFilter={handleFilter}
+        direction="createStore"
+        title="Stores"
+        button="+ Create Store"
+        location={locations}
+      />
+      <StoreList onSelectStore={handleSelectedStore} />
+      <StoreDetail selectedStore={selectedStore} />
     </div>
-  );
-};
+  )
+}
 
-export default Stores;
+export default Stores

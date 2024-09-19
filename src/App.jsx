@@ -15,19 +15,21 @@ import AddProduct from './pages/addProduct/AddProduct'
 import Staff from './pages/staff/Staff'
 import AddStaff from './pages/addStaff/AddStaff'
 import CreateStore from './pages/createStore/CreateStore'
-import ProtectedRoute from './redux/ProtectedRoute'
+import ProtectedRoute from './utilities/ProtectedRoute'
 import MobileWarning from './pages/mobileWarning/MobileWarning'
+import store from './redux/store'
+import { setCredentials } from './redux/slices/AuthSlice'
 
 const router = createBrowserRouter([
   { path: '/', element: <Login /> },
   { path: 'signup', element: <Signup /> },
-  { path: '/mobile-warning', element: <MobileWarning /> }, // Corrected path
+  { path: '/mobile-warning', element: <MobileWarning /> },
   {
     path: '/app',
     element: (
-      // <ProtectedRoute>
-      <AppLayout />
-      // </ProtectedRoute>
+      <ProtectedRoute>
+        <AppLayout />
+      </ProtectedRoute>
     ),
     children: [
       { index: true, element: <Home /> },
@@ -47,6 +49,10 @@ const router = createBrowserRouter([
 ])
 
 function App() {
+  const token = localStorage.getItem('token')
+  if (token) {
+    store.dispatch(setCredentials({ token }))
+  }
   return <RouterProvider router={router} />
 }
 

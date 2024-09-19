@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useLoginMutation } from '../../redux/authApi' // Adjust the import path as needed
-import { setCredentials, setUser } from '../../redux/slices/AuthSlice' // Adjust the import path as needed
+import { useLoginMutation } from '../../redux/APIs/authApi' // Adjust the import path as needed
+import { setCredentials } from '../../redux/slices/AuthSlice' // Adjust the import path as needed
 import style from './loginStyle.module.css'
 import { useNavigate } from 'react-router-dom'
 import { useRedirectOnMobile } from '../../utilities/mobileRedirect'
@@ -10,29 +10,23 @@ const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const dispatch = useDispatch()
-  const [login, { isLoading, error }] = useLoginMutation()
-
+  const [login, { isLoading }] = useLoginMutation()
   const navigate = useNavigate()
+
+  // useRedirectOnMobile();
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
     try {
-      const { token, user } = await login({ email, password }).unwrap()
-
-      // Update Redux store with token and user information
-      dispatch(setCredentials({ token }))
-      dispatch(setUser(user))
-
-      navigate('/app')
-      // For example: navigate('/dashboard');
+      const token = await login({ email, password }).unwrap() // Execute login mutation
+      dispatch(setCredentials({ token })) // Dispatch the token to Redux store
+      navigate('/app') // Navigate to the dashboard or another page
     } catch (err) {
-      console.error('Login failed:', err.message || error)
-      // Optionally, handle login error (e.g., show error message to the user)
+      console.error('Failed to login:', err) // Handle error
+      alert('Login failed! Please check your credentials and try again.')
     }
   }
-
-  useRedirectOnMobile()
 
   return (
     <div className={style.body}>
@@ -70,7 +64,7 @@ const Login = () => {
                 className={style.button2}
                 disabled={isLoading}
               >
-                LOGIN
+                {isLoading ? 'Logging in...' : 'LOGIN'}
               </button>
             </div>
             <div className="flex justify-center mt-4">

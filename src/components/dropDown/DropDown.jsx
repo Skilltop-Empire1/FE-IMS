@@ -10,12 +10,12 @@ function DropDown() {
 
   const openModal = (type) => () => {
     setModalType(type)
-    setActiveItem(type) // Set the clicked item as active
+    setActiveItem(type)
   }
 
   const closeModal = () => {
     setModalType(null)
-    setActiveItem(null) // Remove active state when closing modal
+    setActiveItem(null)
   }
 
   return (

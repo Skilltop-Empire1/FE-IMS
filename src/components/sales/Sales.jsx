@@ -5,11 +5,8 @@ import { useNavigate } from 'react-router-dom'
 function Sales({ posPayments, transferPayments, cashPayments, totalPayments }) {
   const navigate = useNavigate()
   return (
-    <div
-      onClick={() => navigate('/app/salesRecords')}
-      className={style.salesContainer}
-    >
-      <div>
+    <div className={style.salesContainer}>
+      <div onClick={() => navigate('/app/salesRecords')}>
         <p className={style.header}>Sales</p>
       </div>
       <ul>

@@ -6,15 +6,21 @@ import TopItemCategories from '../../components/topItemCategory/TopItemCategorie
 import StockStatus from '../../components/stockStatus/StockStatus'
 import StoreList from '../../components/storeList/StoreList'
 import Button from '../../components/Button/Button'
-import { useGetStoresQuery } from '../../redux/storeApi'
-import { useGetProductsQuery } from '../../redux/productApi'
+import {
+  useGetStoresOverviewQuery,
+  useGetStoresQuery,
+} from '../../redux/APIs/storeApi'
+import { useGetProductsQuery } from '../../redux/APIs/productApi'
 import { Rings } from 'react-loader-spinner'
 
 function Home() {
   const { data: storeData = [] } = useGetStoresQuery()
   const { data: productData = [], error, isLoading } = useGetProductsQuery()
+  const { data: storeOverview = [] } = useGetStoresOverviewQuery()
 
-  console.log('storeData', storeData)
+  console.log('storeData:', storeData)
+
+  console.log('storeOverview:', storeOverview.data)
 
   const topCategoriesItems = [
     { quantitySold: 3 },
@@ -96,8 +102,9 @@ function Home() {
           lowStockItems={lowStocks}
           lowStockCategories={lowCategories}
         />
-        <StoreList data={storeData} />
+        <StoreList data={storeOverview.data} />
       </div>
+
       <div className={style.btn}>
         <Button buttonName="Export" />
       </div>

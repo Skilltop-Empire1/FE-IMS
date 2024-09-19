@@ -11,7 +11,7 @@ import Settings from './pages/settings/Settings'
 import Stores from './pages/stores/Stores'
 import NotFound from './pages/notFound/NotFound'
 import AddProduct from './pages/addProduct/AddProduct'
-import Staff from './pages/staff/Staff'
+import Staff from './pages/addStaff/Staff'
 import AddStaff from './pages/addStaff/AddStaff'
 import CreateStore from './pages/createStore/CreateStore'
 import ProtectedRoute from './redux/ProtectedRoute'
@@ -21,8 +21,8 @@ import PasswordConfirmation from './pages/Password reset/PasswordConfirmation'
 const router = createBrowserRouter([
   { path: '/', element: <Login /> },
   { path: 'signup', element: <Signup /> },
-  { path: 'passwordReset', element: <PasswordReset/> },
-  { path: 'passwordConfirmation', element: <PasswordConfirmation/> },
+  { path: 'passwordReset', element: <PasswordReset /> },
+  { path: 'passwordConfirmation', element: <PasswordConfirmation /> },
   {
     path: '/app',
     element: (

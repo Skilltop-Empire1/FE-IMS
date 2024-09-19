@@ -1,29 +1,33 @@
 import React, { useEffect, useState } from 'react'
-
 import { useSearchParams } from 'react-router-dom'
 import ModalWrapper from './ModalWrapper'
 import { z } from 'zod'
+import { useGetStoresQuery } from '../../redux/storeApi' // API hooks
+import { useCreateCategoryMutation } from '../../redux/categoryApi'
 
+// Initial form state
 const initialState = {
   name: '',
-  description: '',
-  image_url:
-    'https://via.placeholder.com/640x480.png/006677?text=categories+Faker+unde',
+  // description: '',
+  // image_url:
+  //   'https://via.placeholder.com/640x480.png/006677?text=categories+Faker+unde',
+  storeId: null,
 }
 
+// Schema for form validation
 export const categorySchema = z.object({
   name: z.string().min(1, 'Category Name is required'),
-  description: z
-    .string()
-    .min(10, { message: 'Description must be at least 10 characters long.' })
-    .max(500, { message: 'Description must not exceed 500 characters.' }),
+  // description: z
+  //   .string()
+  //   .min(10, { message: 'Description must be at least 10 characters long.' })
+  //   .max(500, { message: 'Description must not exceed 500 characters.' }),
+  storeId: z.string().min(1, 'Store selection is required'),
 })
 
 const AddCategoryModal = ({ show, onClose }) => {
   const [formData, setFormData] = useState(initialState)
   const [errors, setErrors] = useState({})
   const [imageFile, setImageFile] = useState(null)
-  const [parentError, setParentError] = useState(null)
   const [apiError, setApiError] = useState(null)
   const [loading, setLoading] = useState(false)
 
@@ -31,11 +35,17 @@ const AddCategoryModal = ({ show, onClose }) => {
   const page = parseInt(searchParams.get('categorypage')) || 1
   const searchQuery = searchParams.get('categorysearch') || ''
 
-  const handleImageChange = (file) => {
-    setErrors({})
-    setImageFile(file)
-  }
+  // Fetch stores
+  const {
+    data: stores,
+    error: storesError,
+    isLoading: storesLoading,
+  } = useGetStoresQuery()
 
+  // Create category mutation
+  const [createCategory] = useCreateCategoryMutation()
+
+  // Handle input changes
   const handleChange = (field, value) => {
     setErrors({})
     setFormData((prevData) => ({
@@ -44,75 +54,62 @@ const AddCategoryModal = ({ show, onClose }) => {
     }))
     setApiError(null)
   }
-  useEffect(() => {
+
+  // Handle image change
+  const handleImageChange = (file) => {
     setErrors({})
-  }, [show])
+    setImageFile(file)
+  }
+
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setApiError(null)
-    const result = categorySchema.safeParse(formData)
-
-    if (!result.success) {
-      setErrors(result.error.flatten().fieldErrors)
-      console.log({ errors })
-      return
-    }
     setErrors({})
+    setLoading(true)
 
-    // TODO:: validate image upload field here before mamking api request
+    // Validate form data
     try {
-      const submitFormData = new FormData()
-      for (const key in formData) {
-        if (formData.hasOwnProperty(key)) {
-          submitFormData.append(key, formData[key])
-        }
+      categorySchema.parse(formData)
+
+      // Call API to create category
+      const newCategory = {
+        ...formData,
+        // image_url: formData.image_url || initialState.image_url, // Use default image if none provided
       }
-      if (imageFile) {
-        submitFormData.append('image_url', imageFile)
-      } else {
-        setErrors((prev) => ({
-          ...prev,
-          image_url: 'Category Image is required',
-        }))
-        return
-      }
-      setLoading(true)
-      await createCategory(submitFormData)
-      mutate([page, searchQuery, 12, 'categories'])
+      await createCategory(newCategory).unwrap()
+
+      // Update the category cache or refetch the list
+      setFormData(initialState) // Reset form on success
       setLoading(false)
-      setFormData(initialState)
-      onClose()
-      showSuccessToast(
-        'Completed!',
-        'New Product Category has been created successfully',
-      )
+      onClose() // Close modal on success
     } catch (error) {
       console.log({ error })
-      if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        const errorResponse = error.response.data
-        if (errorResponse.errors) {
-          // Extract the specific error messages
-          const errorMessages = Object.values(errorResponse.errors).flat()
-          setApiError(errorMessages)
-        } else {
-          setApiError([
-            `Error: ${errorResponse.message} (status: ${error.response.status})`,
-          ])
-        }
-      } else if (error.request) {
-        // The request was made but no response was received
-        setApiError(['Error: No response received from the server.'])
+      // Handle validation errors
+      if (error.errors) {
+        const fieldErrors = {}
+        error.errors.forEach((err) => {
+          fieldErrors[err.path[0]] = err.message
+        })
+        setErrors(fieldErrors)
       } else {
-        // Something happened in setting up the request that triggered an Error
-        setApiError([`Error: ${error.message}`])
+        setApiError(['Error creating category.'])
       }
       setLoading(false)
-      return
     }
   }
+
+  useEffect(() => {
+    setErrors({})
+    if (stores) {
+      setFormData((prev) => ({
+        ...prev,
+        storeId: stores[0].storeId + '',
+      }))
+    }
+  }, [show, stores])
+
   if (!show) return null
+
   return (
     <ModalWrapper onClose={onClose}>
       <form
@@ -139,7 +136,7 @@ const AddCategoryModal = ({ show, onClose }) => {
             <div>
               <input
                 value={formData.name}
-                onChange={(value) => handleChange('name', value)}
+                onChange={(e) => handleChange('name', e.target.value)}
                 placeholder="Category Name"
                 type="text"
                 className="z-10 block w-full rounded border border-gray-300 p-[14px] text-sm focus:border-imsLightPurple focus:outline-none"
@@ -149,19 +146,41 @@ const AddCategoryModal = ({ show, onClose }) => {
               )}
             </div>
 
-            <div>
-              <select
-                value={formData.store}
-                onChange={(value) => handleChange('store', value)}
-                placeholder="Select Store"
+            {/* <div>
+              <input
+                value={formData.description}
+                onChange={(e) => handleChange('description', e.target.value)}
+                placeholder="Category Description"
                 type="text"
                 className="z-10 block w-full rounded border border-gray-300 p-[14px] text-sm focus:border-imsLightPurple focus:outline-none"
+              />
+              {errors?.description && (
+                <p className="pt-1 text-xs text-red-500">
+                  {errors.description}
+                </p>
+              )}
+            </div> */}
+
+            {/* Store select dropdown */}
+            <div>
+              <select
+                value={formData.storeId}
+                onChange={(e) => handleChange('storeId', e.target.value)}
+                className="z-10 block w-full rounded border border-gray-300 p-[14px] text-sm focus:border-imsLightPurple focus:outline-none"
               >
-                <option>Store 1</option>
-                <option>Store 2</option>
-                <option>Store 3</option>
-                <option>Store 4</option>
-                <option>Store 5</option>
+                <option disabled value="">
+                  Select Store
+                </option>
+                {storesLoading || storesError ? (
+                  <option>Loading Stores...</option>
+                ) : (
+                  stores &&
+                  stores.map((store) => (
+                    <option key={store.storeId} value={store.storeId}>
+                      {store.storeName}
+                    </option>
+                  ))
+                )}
               </select>
               {errors?.store && (
                 <p className="pt-1 text-xs text-red-500">{errors.store}</p>
@@ -173,7 +192,7 @@ const AddCategoryModal = ({ show, onClose }) => {
         <div className="flex items-center space-x-3 rounded-b border-t border-gray-200 p-6 rtl:space-x-reverse">
           <button
             type="button"
-            onClick={() => onClose()}
+            onClick={onClose}
             className="flex-grow rounded-full bg-red-100 px-8 py-2.5 text-center text-xs font-medium hover:bg-red-200 focus:outline-none focus:ring-1 focus:ring-red-300"
           >
             Cancel
@@ -181,7 +200,7 @@ const AddCategoryModal = ({ show, onClose }) => {
           <button
             disabled={loading}
             type="submit"
-            className="text-white text-center flex-grow bg-imsPurple rounded-full font-semibold px-8 py-2.5 text-xs  focus:ring-imsLightPurple focus:ring-offset-2 focus:ring-1"
+            className="text-white text-center flex-grow bg-imsPurple rounded-full font-semibold px-8 py-2.5 text-xs focus:ring-imsLightPurple focus:ring-offset-2 focus:ring-1"
           >
             {loading ? 'Please wait...' : 'Add Category'}
           </button>

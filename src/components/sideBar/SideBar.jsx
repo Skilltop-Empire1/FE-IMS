@@ -113,7 +113,7 @@ function SideBar() {
       <ul>
         <li>
           <NavLink
-            to="/app/addStaff"
+            to="/app/staff"
             className={({ isActive }) =>
               isActive ? style.activeLink : undefined
             }
@@ -160,40 +160,40 @@ function SideBar() {
 
 export default SideBar
 
-const routes = [
-  {
-    label: 'Home',
-    path: '',
-    icon: <HomeIcon size={15} className="group-hover:animate-pulse" />,
-  },
-  {
-    label: 'Products',
-    path: 'products',
-    icon: <FileIcon size={15} className="group-hover:animate-pulse" />,
-  },
-  {
-    label: 'Categories',
-    path: 'categories',
-    icon: <GroupIcon size={15} className="group-hover:animate-pulse" />,
-  },
-  {
-    label: 'Stores',
-    path: 'stores',
-    icon: <StoreIcon size={15} className="group-hover:animate-pulse" />,
-  },
-  {
-    label: 'Sales Records',
-    path: 'sales-records',
-    icon: <SparklesIcon size={15} className="group-hover:animate-pulse" />,
-  },
-  {
-    label: 'Account',
-    path: 'accounts',
-    icon: <DollarSign size={15} className="group-hover:animate-pulse" />,
-  },
-  {
-    label: 'Settings',
-    path: 'settings',
-    icon: <SearchSlashIcon size={15} className="group-hover:animate-pulse" />,
-  },
-]
+// const routes = [
+//   {
+//     label: 'Home',
+//     path: '',
+//     icon: <HomeIcon size={15} className="group-hover:animate-pulse" />,
+//   },
+//   {
+//     label: 'Products',
+//     path: 'products',
+//     icon: <FileIcon size={15} className="group-hover:animate-pulse" />,
+//   },
+//   {
+//     label: 'Categories',
+//     path: 'categories',
+//     icon: <GroupIcon size={15} className="group-hover:animate-pulse" />,
+//   },
+//   {
+//     label: 'Stores',
+//     path: 'stores',
+//     icon: <StoreIcon size={15} className="group-hover:animate-pulse" />,
+//   },
+//   {
+//     label: 'Sales Records',
+//     path: 'sales-records',
+//     icon: <SparklesIcon size={15} className="group-hover:animate-pulse" />,
+//   },
+//   {
+//     label: 'Account',
+//     path: 'accounts',
+//     icon: <DollarSign size={15} className="group-hover:animate-pulse" />,
+//   },
+//   {
+//     label: 'Settings',
+//     path: 'settings',
+//     icon: <SearchSlashIcon size={15} className="group-hover:animate-pulse" />,
+//   },
+// ]

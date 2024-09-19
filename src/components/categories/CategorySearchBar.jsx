@@ -1,6 +1,14 @@
 import React from 'react'
+import { useGetStoresQuery } from '../../redux/storeApi'
 
 const CategorySearchBar = () => {
+  // Fetch stores
+  const {
+    data: stores,
+    error: storesError,
+    isLoading: storesLoading,
+  } = useGetStoresQuery()
+
   return (
     <div className="p-4  shadow-md rounded-md bg-gray-200">
       <div className="flex space-x-2">
@@ -13,9 +21,18 @@ const CategorySearchBar = () => {
 
         {/* Select dropdown */}
         <select className="flex-grow p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-imsDarkPurple">
-          <option>Select Store</option>
+          <option disabled>Select Store</option>
+          {storesLoading || storesError ? (
+            <option>Loading Stores...</option>
+          ) : (
+            stores &&
+            stores.map((store) => (
+              <option key={store.storeId} value={store.storeId}>
+                {store.storeName}
+              </option>
+            ))
+          )}
         </select>
-
         {/* Save Button */}
         <button className="p-2 text-white bg-imsDarkPurple rounded-md hover:bg-purple-600">
           Save Category

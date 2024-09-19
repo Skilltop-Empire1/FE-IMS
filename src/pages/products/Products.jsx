@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Filter from '../../components/Filter/Filter';
 import Table from '../../components/Table/Table';
-import { useGetLocationsQuery } from '../../redux/storeApi';
-import { useGetProductsQuery } from '../../redux/productApi';
+import { useGetLocationsQuery } from '../../redux/APIs/storeApi';
+import { useGetProductsQuery } from '../../redux/APIs/productApi';
 
 const SalesRecord = () => {
   const [searchTerm, setSearchTerm] = useState('');

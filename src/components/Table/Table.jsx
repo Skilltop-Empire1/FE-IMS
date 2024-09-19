@@ -5,8 +5,8 @@ import { useGetProductsQuery } from '../../redux/APIs/productApi'
 
 const Table = ({status, date, api}) => {
 
-  if (isLoading) return <p>Loading...</p>
-  if (error) return <p>Error loading products</p>
+  // if (isLoading) return <p>Loading...</p>
+  // if (error) return <p>Error loading products</p>
 
   return (
     <div className="pt-3">

@@ -4,16 +4,16 @@ import RedirectButton from '../Button/RedirectButton'
 import { useGetLocationsQuery } from '../../redux/APIs/storeApi'
 
 
-// const Filter = ({ handleFilter, handleSearch, direction, title, button, location, search }) => {
+const Filter = ({ handleFilter, handleSearch, direction, title, button, location, search }) => {
 
-const Filter = ({
-  handleFilter,
-  handleSearch,
-  direction,
-  title,
-  button,
-  location,
-}) => {
+// const Filter = ({
+//   handleFilter,
+//   handleSearch,
+//   direction,
+//   title,
+//   button,
+//   location,
+// }) => {
 
   // Fetch locations data using RTK query
   const { data: locations, error, isLoading } = useGetLocationsQuery()

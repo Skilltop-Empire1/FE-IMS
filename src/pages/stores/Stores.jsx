@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Filter from '../../components/Filter/Filter';
 import StoreList from '../../components/StoreComponent/StoreList';
 import StoreDetail from '../../components/StoreComponent/StoreDetail';
-import { useGetLocationsQuery, useGetStoresQuery } from '../../redux/storeApi';
+import { useGetLocationsQuery, useGetStoresQuery } from '../../redux/APIs/storeApi';
 
 const Stores = () => {
   const [selectedStore, setSelectedStore] = useState(null);

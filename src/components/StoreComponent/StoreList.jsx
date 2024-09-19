@@ -1,6 +1,6 @@
 import React from 'react';
 import style from './storeComponentStyle.module.css';
-import { useGetStoresQuery } from '../../redux/storeApi';
+import { useGetStoresQuery } from '../../redux/APIs/storeApi';
 
 const StoreList = ({ onSelectStore, items }) => {
   const { data: stores, error, isLoading } = useGetStoresQuery();

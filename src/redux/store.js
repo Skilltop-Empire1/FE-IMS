@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
 import authReducer from './slices/AuthSlice'
-import { authApi } from './authApi'
-import { storesApi } from './storeApi'
-import { productApi } from './productApi'
+import { authApi } from './APIs/authApi'
+import { storesApi } from './APIs/storeApi'
+import { productApi } from './APIs/productApi'
 import { categoryApi } from './categoryApi'
 import { staffApi } from './staffApi'
 
@@ -14,7 +14,7 @@ const store = configureStore({
     [storesApi.reducerPath]: storesApi.reducer, //  storesApi reducer
     [productApi.reducerPath]: productApi.reducer, //  product API reducer
     [categoryApi.reducerPath]: categoryApi.reducer, //  category API reducer
-    [staffApi.reducerPath]: staffApi.reducer, //  staff API reducer
+    [staffApi.reducerPath]: staffApi.reducer, //  staff API reducer 
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()

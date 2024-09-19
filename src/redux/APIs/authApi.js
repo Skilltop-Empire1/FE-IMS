@@ -4,7 +4,7 @@ import { logout as logoutAction, setCredentials } from '../slices/AuthSlice';
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://be-ims.onrender.com/',
+    baseUrl: 'https://be-ims.onrender.com',
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.token;
       if (token) {
@@ -17,14 +17,14 @@ export const authApi = createApi({
   endpoints: (builder) => ({
     signup: builder.mutation({
       query: (userData) => ({
-        url: 'api/IMS/user/signup',
+        url: '/api/IMS/user/signup',
         method: 'POST',
         body: userData,
       }),
     }),
     login: builder.mutation({
       query: (credentials) => ({
-        url: 'api/IMS/user/login',
+        url: '/api/IMS/user/login',
         method: 'POST',
         body: credentials,
       }),
@@ -51,7 +51,7 @@ export const authApi = createApi({
     }),
     logout: builder.mutation({
       query: () => ({
-        url: 'api/IMS/user/logout',
+        url: '/api/IMS/user/logout',
         method: 'POST',
       }),
       async onQueryStarted(_, { dispatch, queryFulfilled }) {

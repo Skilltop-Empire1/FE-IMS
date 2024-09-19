@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import ModalWrapper from './ModalWrapper'
 import { z } from 'zod'
-import { useGetStoresQuery } from '../../redux/storeApi' // API hooks
+import { useGetStoresQuery } from '../../redux/APIs/storeApi' // API hooks
 import { useCreateCategoryMutation } from '../../redux/categoryApi'
 
 // Initial form state

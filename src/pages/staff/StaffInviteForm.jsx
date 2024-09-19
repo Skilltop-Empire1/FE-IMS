@@ -15,7 +15,7 @@ const StaffInviteForm = () => {
               Email Address
             </label>
             <input
-              className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-transparent"
+              className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-imsDarkPurple focus:border-imsring-imsDarkPurple sm:text-sm bg-transparent"
               type="email"
               placeholder="Enter email"
             />
@@ -25,7 +25,7 @@ const StaffInviteForm = () => {
               Default Password
             </label>
             <input
-              className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-transparent"
+              className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-imsDarkPurple focus:border-imsDarkring-imsDarkPurple sm:text-sm bg-transparent"
               type="password"
               placeholder="Enter password"
             />

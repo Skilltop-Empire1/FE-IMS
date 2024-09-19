@@ -9,13 +9,13 @@ export const staffApi = createApi({
   endpoints: (builder) => ({
     // Get all staff members
     getStaff: builder.query({
-      query: () => '/api/IMS/staff/get', // Endpoint for fetching the list of staff members
+      query: () => '/api/IMS/staff', // Endpoint for fetching the list of staff members
       providesTags: ['Staff'], // Tag for cache invalidation
     }),
 
     // Get a single staff member by ID
     getStaffById: builder.query({
-      query: (id) => `/api/IMS/staff/get/${id}`, // Fetch staff member by ID
+      query: (id) => `/api/IMS/staff/${id}`, // Fetch staff member by ID
       providesTags: (result, error, id) => [{ type: 'Staff', id }], // Cache tag for a single staff member
     }),
 

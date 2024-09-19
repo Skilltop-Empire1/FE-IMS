@@ -1,7 +1,12 @@
 import React from 'react'
+import { Rings } from 'react-loader-spinner'
 
 function Loader() {
-  return <div>Loader</div>
+  return (
+    <div>
+      <Rings />
+    </div>
+  )
 }
 
 export default Loader

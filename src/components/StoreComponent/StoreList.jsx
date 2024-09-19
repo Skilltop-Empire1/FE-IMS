@@ -1,12 +1,17 @@
 import React from 'react';
 import style from './storeComponentStyle.module.css';
+import { useGetStoresQuery } from '../../redux/storeApi';
 
 const StoreList = ({ onSelectStore, items }) => {
+  const { data: stores, error, isLoading } = useGetStoresQuery();
+
+
+
   // Safely handle the case when stores are not available or empty
   return (
     <div className='flex flex-wrap gap-5 mt-5'>
-      {items?.length > 0 ? (
-        items.map((store, idx) => (
+      {stores?.length > 0 ? (
+        stores.map((store, idx) => (
           <div
             key={idx}
             className={style.store}
@@ -24,7 +29,7 @@ const StoreList = ({ onSelectStore, items }) => {
         <div>No stores available</div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default StoreList;
+export default StoreList

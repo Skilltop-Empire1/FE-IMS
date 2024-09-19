@@ -28,8 +28,8 @@ const SalesRecord = () => {
 
   // Handle search input
   const handleSearch = (term) => {
-    setSearchTerm(term.toLowerCase());
-  };
+    setSearchTerm(term.toLowerCase())
+  }
 
   // Handle filter selection
   const handleFilter = (category) => {

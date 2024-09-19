@@ -18,13 +18,13 @@ const Stores = () => {
 
   // Handle search input
   const handleSearch = (term) => {
-    setSearchTerm(term.toLowerCase());
-  };
+    setSearchTerm(term.toLowerCase())
+  }
 
   // Handle filter category
   const handleFilter = (category) => {
-    setFilterCategory(category);
-  };
+    setFilterCategory(category)
+  }
 
   // Update filteredItems based on search and filter criteria
   useEffect(() => {
@@ -72,7 +72,7 @@ const Stores = () => {
       {/* Store Detail Component */}
       <StoreDetail selectedStore={selectedStore} />
     </div>
-  );
-};
+  )
+}
 
-export default Stores;
+export default Stores

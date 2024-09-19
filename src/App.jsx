@@ -1,3 +1,4 @@
+import React from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Login from './pages/login/Login'
 import Signup from './pages/signup/Signup'
@@ -14,21 +15,25 @@ import AddProduct from './pages/addProduct/AddProduct'
 import Staff from './pages/addStaff/Staff'
 import AddStaff from './pages/addStaff/AddStaff'
 import CreateStore from './pages/createStore/CreateStore'
-import ProtectedRoute from './redux/ProtectedRoute'
+import ProtectedRoute from './utilities/ProtectedRoute'
+import MobileWarning from './pages/mobileWarning/MobileWarning'
+import store from './redux/store'
+import { setCredentials } from './redux/slices/AuthSlice'
 import PasswordReset from './pages/Password reset/PasswordReset'
 import PasswordConfirmation from './pages/Password reset/PasswordConfirmation'
 
 const router = createBrowserRouter([
   { path: '/', element: <Login /> },
   { path: 'signup', element: <Signup /> },
+  { path: '/mobile-warning', element: <MobileWarning /> },
   { path: 'passwordReset', element: <PasswordReset /> },
   { path: 'passwordConfirmation', element: <PasswordConfirmation /> },
   {
     path: '/app',
     element: (
-      // <ProtectedRoute>
-      <AppLayout />
-      // </ProtectedRoute>
+      <ProtectedRoute>
+        <AppLayout />
+      </ProtectedRoute>
     ),
     children: [
       { index: true, element: <Home /> },
@@ -41,13 +46,17 @@ const router = createBrowserRouter([
       { path: 'addProduct', element: <AddProduct /> },
       { path: 'staff', element: <Staff /> },
       { path: 'addStaff', element: <AddStaff /> },
-      { path: 'createStore', element: <CreateStore /> },
+      // { path: 'createStore', element: <CreateStore /> },
     ],
   },
   { path: '*', element: <NotFound /> },
 ])
 
 function App() {
+  const token = localStorage.getItem('token')
+  if (token) {
+    store.dispatch(setCredentials({ token }))
+  }
   return <RouterProvider router={router} />
 }
 

@@ -1,93 +1,96 @@
-import React, { useState, useEffect } from 'react';
-import { useCreateProductMutation } from '../../redux/productApi'; // Import createProduct mutation hook
-import style from './AddProduct.module.css';
-import { Navigate, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react'
+import { useCreateProductMutation } from '../../redux/APIs/productApi' // Import createProduct mutation hook
+import style from './AddProduct.module.css'
+import { Navigate, useNavigate } from 'react-router-dom'
 
 const AddProduct = () => {
-  const [productName, setProductName] = useState('');
-  const [itemCode, setItemCode] = useState('');
-  const [description, setDescription] = useState('');
-  const [quantity, setQuantity] = useState('');
-  const [selectedStore, setSelectedStore] = useState({ id: '', name: '' }); // Store ID and Name
-  const [category, setCategory] = useState('');
-  const [alertLimit, setAlertLimit] = useState('');
-  const [price, setPrice] = useState('');
-  const [productPhoto, setProductPhoto] = useState(null);
-  const [addAnother, setAddAnother] = useState(false);
+  const [productName, setProductName] = useState('')
+  const [itemCode, setItemCode] = useState('')
+  const [description, setDescription] = useState('')
+  const [quantity, setQuantity] = useState('')
+  const [selectedStore, setSelectedStore] = useState({ id: '', name: '' }) // Store ID and Name
+  const [category, setCategory] = useState('')
+  const [alertLimit, setAlertLimit] = useState('')
+  const [price, setPrice] = useState('')
+  const [productPhoto, setProductPhoto] = useState(null)
+  const [addAnother, setAddAnother] = useState(false)
 
-  const [stores, setStores] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const [stores, setStores] = useState([])
+  const [categories, setCategories] = useState([])
   const navigate = useNavigate()
 
-
-  const [createProduct, { isLoading, error }] = useCreateProductMutation(); // Using the mutation hook
+  const [createProduct, { isLoading, error }] = useCreateProductMutation() // Using the mutation hook
 
   // Fetch stores and categories
   useEffect(() => {
     const fetchStores = async () => {
-      const response = await fetch('https://be-ims.onrender.com/api/IMS/store/all'); 
-      const data = await response.json();
-      setStores(data);
+      const response = await fetch(
+        'https://be-ims.onrender.com/api/IMS/store/all',
+      )
+      const data = await response.json()
+      setStores(data)
       console.log(data)
-    };
+    }
 
     const fetchCategories = async () => {
-      const response = await fetch('https://be-ims.onrender.com/api/IMS/category'); 
-      const data2 = await response.json();
-      setCategories(data2.categories);
+      const response = await fetch(
+        'https://be-ims.onrender.com/api/IMS/category',
+      )
+      const data2 = await response.json()
+      setCategories(data2.categories)
       console.log(data2)
       console.log(categories)
-    };
+    }
 
-    fetchStores();
-    fetchCategories();
-  }, []);
+    fetchStores()
+    fetchCategories()
+  }, [])
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const formData = new FormData();
-    formData.append('name', productName);
-    formData.append('itemCode', itemCode);
+    const formData = new FormData()
+    formData.append('name', productName)
+    formData.append('itemCode', itemCode)
     // formData.append('description', description);
-    formData.append('quantity', quantity);
-    formData.append('storeId', Number(selectedStore.id)); // Submit the store ID
-    formData.append('storeAvailable', selectedStore.name); // submit the store name
-    formData.append('categoryId', category);
-    formData.append('alertStatus', alertLimit);
-    formData.append('price', price);
+    formData.append('quantity', quantity)
+    formData.append('storeId', Number(selectedStore.id)) // Submit the store ID
+    formData.append('storeAvailable', selectedStore.name) // submit the store name
+    formData.append('categoryId', category)
+    formData.append('alertStatus', alertLimit)
+    formData.append('price', price)
     if (productPhoto) {
-      formData.append('image', productPhoto);
+      formData.append('image', productPhoto)
     }
 
     try {
-      await createProduct(formData).unwrap(); 
-      alert('Product created successfully!');
-      navigate('/app/products');
+      await createProduct(formData).unwrap()
+      alert('Product created successfully!')
+      navigate('/app/products')
       if (!addAnother) {
-        setProductName('');
-        setItemCode('');
-        setDescription('');
-        setQuantity('');
-        setSelectedStore({ id: '', name: '' });
-        setCategory('');
-        setAlertLimit('');
-        setPrice('');
-        setProductPhoto(null);
+        setProductName('')
+        setItemCode('')
+        setDescription('')
+        setQuantity('')
+        setSelectedStore({ id: '', name: '' })
+        setCategory('')
+        setAlertLimit('')
+        setPrice('')
+        setProductPhoto(null)
       }
     } catch (err) {
-      console.error('Failed to create product:', err);
+      console.error('Failed to create product:', err)
     }
-  };
+  }
 
   const handleStoreChange = (e) => {
-    const selectedStoreId = Number(e.target.value); // Get the selected store ID
-    const store = stores.find((store) => store.storeId === selectedStoreId); // Find the selected store object
-    
+    const selectedStoreId = Number(e.target.value) // Get the selected store ID
+    const store = stores.find((store) => store.storeId === selectedStoreId) // Find the selected store object
+
     if (store) {
-      setSelectedStore({ id: store.storeId, name: store.storeName }); // Store both id and name
+      setSelectedStore({ id: store.storeId, name: store.storeName }) // Store both id and name
     }
-  };
+  }
 
   return (
     <div className={`${style.body}`}>
@@ -147,13 +150,13 @@ const AddProduct = () => {
               {/* <option value="">Select Store</option> */}
               {stores.map((store) => {
                 return (
-                <option key={store.storeId} value={store.storeId}>
-                  {store.storeName} 
-                </option>
-              )})}
+                  <option key={store.storeId} value={store.storeId}>
+                    {store.storeName}
+                  </option>
+                )
+              })}
             </select>
           </div>
-
 
           {/* Categories Dropdown */}
           <div className={style.cont}>
@@ -165,11 +168,7 @@ const AddProduct = () => {
             >
               <option value="">Select Category</option>
               {categories.map((category) => {
-                return (
-                  <option value={category.catId}>
-                    {category.name}
-                  </option>
-                )
+                return <option value={category.catId}>{category.name}</option>
               })}
             </select>
           </div>
@@ -200,7 +199,7 @@ const AddProduct = () => {
               onChange={(e) => setProductPhoto(e.target.files[0])}
             />
           </div>
-          
+
           <div className="mt-8 flex items-center gap-4">
             <input
               type="checkbox"
@@ -222,7 +221,7 @@ const AddProduct = () => {
         </form>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AddProduct;
+export default AddProduct

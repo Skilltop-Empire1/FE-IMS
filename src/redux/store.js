@@ -6,6 +6,7 @@ import { productApi } from './productApi'
 import { categoryApi } from './categoryApi'
 import { staffApi } from './staffApi'
 
+
 const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -24,4 +25,7 @@ const store = configureStore({
       .concat(staffApi.middleware), //staffApi middleware
 })
 
-export default store
+
+
+export default store;
+

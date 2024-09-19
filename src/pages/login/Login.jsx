@@ -1,37 +1,32 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useLoginMutation } from '../../redux/authApi'; // Adjust the import path as needed
-import { setCredentials, setUser } from '../../redux/slices/AuthSlice'; // Adjust the import path as needed
-import style from './loginStyle.module.css';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useLoginMutation } from '../../redux/APIs/authApi' // Adjust the import path as needed
+import { setCredentials } from '../../redux/slices/AuthSlice' // Adjust the import path as needed
+import style from './loginStyle.module.css'
+import { useNavigate } from 'react-router-dom'
+import { useRedirectOnMobile } from '../../utilities/mobileRedirect'
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const dispatch = useDispatch();
-  const [login, { isLoading, error }] = useLoginMutation();
-
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const dispatch = useDispatch()
+  const [login, { isLoading }] = useLoginMutation()
   const navigate = useNavigate()
 
+  // useRedirectOnMobile();
+
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     try {
-      const { token, user } = await login({ email, password }).unwrap();
-      
-      // Update Redux store with token and user information
-      dispatch(setCredentials({ token }));
-      dispatch(setUser(user));
-      
-      navigate('/app')
-      // For example: navigate('/dashboard');
+      const token = await login({ email, password }).unwrap() // Execute login mutation
+      dispatch(setCredentials({ token })) // Dispatch the token to Redux store
+      navigate('/app') // Navigate to the dashboard or another page
     } catch (err) {
-      console.error('Login failed:', err.message || error);
-      // Optionally, handle login error (e.g., show error message to the user)
+      console.error('Failed to login:', err) // Handle error
+      alert('Login failed! Please check your credentials and try again.')
     }
-  };
-
-  
+  }
 
   return (
     <div className={style.body}>
@@ -42,10 +37,10 @@ const Login = () => {
             <div className={style.input}>
               <label htmlFor="email">Email</label>
               <br />
-              <input 
-                type="email" 
-                name="email" 
-                placeholder="Enter email" 
+              <input
+                type="email"
+                name="email"
+                placeholder="Enter email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -54,24 +49,30 @@ const Login = () => {
             <div className={style.input}>
               <label htmlFor="password">Password</label>
               <br />
-              <input 
-                type="password" 
-                name="password" 
-                placeholder="Enter password" 
+              <input
+                type="password"
+                name="password"
+                placeholder="Enter password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
             </div>
             <div className={style.submit}>
-              <button type="submit" className={style.button2} disabled={isLoading}>
-                LOGIN
-              </button> 
+              <button
+                type="submit"
+                className={style.button2}
+                disabled={isLoading}
+              >
+                {isLoading ? 'Logging in...' : 'LOGIN'}
+              </button>
             </div>
             <div className="flex justify-center mt-4">
+              <a href="" className={style.forgot}>
+                Forgot your password?
+              </a>
               <a href="passwordReset" className={style.forgot}>Forgot your password?</a>
             </div>
-
           </form>
         </div>
       </div>
@@ -84,7 +85,7 @@ const Login = () => {
         </a>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

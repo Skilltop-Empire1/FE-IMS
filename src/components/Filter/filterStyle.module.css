@@ -19,7 +19,9 @@
     height: 41px;
     border-radius: 21px;
     padding: 5px 15px;
-    
+    box-shadow: 0px 0px 2px 0px rgba(180, 178, 178, 0.75);
+    -webkit-box-shadow: 0px 0px 2px 0px rgba(180, 178, 178, 0.75);
+    -moz-box-shadow: 0px 0px 2px 0px rgba(180, 178, 178, 0.75);
 }
 
 .right {
@@ -36,6 +38,7 @@
     line-height: 24px;
     color: #4B03A3;
     appearance: none;
+    width: 200px;
 }
 
 .right select:active {

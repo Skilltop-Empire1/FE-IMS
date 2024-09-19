@@ -3,7 +3,7 @@ import style from './filterstyle.module.css'
 import RedirectButton from '../Button/RedirectButton'
 import { useGetLocationsQuery } from '../../redux/storeApi'
 
-const Filter = ({ handleFilter, handleSearch, direction, title, button, location }) => {
+const Filter = ({ handleFilter, handleSearch, direction, title, button, location, search }) => {
   // Fetch locations data using RTK query
   const { data: locations, error, isLoading } = useGetLocationsQuery();
 
@@ -15,7 +15,7 @@ const Filter = ({ handleFilter, handleSearch, direction, title, button, location
       <div className={`flex ${style.right}`}>
         <input
           type="text"
-          placeholder="Search items"
+          placeholder={search}
           onChange={(e) => handleSearch(e.target.value)}
         />
 
@@ -29,14 +29,17 @@ const Filter = ({ handleFilter, handleSearch, direction, title, button, location
             <option value="">Failed to load locations</option>
           </select>
         ) : (
-          <select onChange={(e) => handleFilter(e.target.value)}>
-            <option value="all">Filter by location</option>
-            {location.map((location, idx) => (
-              <option value={location} key={idx}>
-                {location}
-              </option>
-            ))}
-          </select>
+          <div>
+            <select onChange={(e) => handleFilter(e.target.value)}>
+              <option value="all">Filter by location</option>
+              {location.map((location, idx) => (
+                <option value={location} key={idx}>
+                  {location}
+                </option>
+                
+              ))}
+            </select>
+          </div>
         )}
 
         <RedirectButton buttonName={button} direction={direction} />

@@ -3,7 +3,7 @@ import style from './tableStyle.module.css'
 import BUtton from '../Button/Button'
 import { useGetProductsQuery } from '../../redux/productApi'
 
-const Table = ({status, date}) => {
+const Table = ({status, date, api}) => {
 
   const { data: products, error, isLoading } = useGetProductsQuery();
 
@@ -29,7 +29,7 @@ const Table = ({status, date}) => {
         </thead>
         <tbody>
           {
-            products.map((product, idx) => {
+            api.map((product, idx) => {
               return (
                 <tr key={idx}>
                 <td><input type="checkbox" /></td>
@@ -37,9 +37,9 @@ const Table = ({status, date}) => {
                 <td>{product.name}</td>
                 <td><BUtton buttonName={product.alertStatus} /></td>
                 <td>{product.quantity}</td>
-                <td>{product.category}</td>
-                <td>{product.storeAvailable}</td>
-                <td>{product.createdAt}</td>
+                <td>{product.categoryId}</td>
+                <td>{product.storeAvailable.length > 8 ? product.storeAvailable.substr(0,8) + '...' : product.storeAvailable}</td>
+                <td>{product.createdAt.substr(0,10)}</td>
                 <td>delete/edit</td>
               </tr>
               )

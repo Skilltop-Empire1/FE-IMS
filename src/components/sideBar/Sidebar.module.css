@@ -1,13 +1,14 @@
 .navContainer {
   background-color: #7d2ce0;
-  height: 100vh;
+  height: 100%;
   width: 250px;
   padding-left: 65px;
-  padding-top: 53px;
+  padding-top: 15px;
   padding-bottom: 60px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: fixed;
 }
 
 .navContainer li {
@@ -16,4 +17,89 @@
 
 .navContainer a {
   color: #f4f3f3;
+  display: flex;
+  gap: 10px;
+}
+
+.iconStyle {
+  width: 20px;
+  height: 20px;
+  color: white;
+}
+
+.activeLink {
+  display: relative;
+  width: 150px;
+  height: 46px;
+  top: 148px;
+  left: -12px;
+  padding: 10px;
+  border-radius: 0px 8px 8px 0px;
+  opacity: 1;
+  background-color: #4b03a3;
+}
+
+.logout {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  margin-top: 40px;
+}
+
+.logoutButton {
+  background-color: #7d2ce0 !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  color: #fff !important;
+}
+
+.modal {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 50%;
+  max-width: 500px;
+  text-align: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.modalButtons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.modalButtons button {
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+.modalButtons button:first-child {
+  background-color: #f44336;
+  color: white;
+}
+
+.modalButtons button:last-child {
+  background-color: #7d2ce0;
+  color: #fff;
 }

@@ -1,32 +1,45 @@
+import React, { useState } from 'react'
 import { BellIcon, CogIcon, Settings, User2 } from 'lucide-react'
-import React from 'react'
 import { Link } from 'react-router-dom'
 
+import { Bell, Cog, User, Search } from 'lucide-react'
+import imsLogo from '../../assets/ims-logo.png'
+import style from './navBar.module.css'
+import DropDown from '../dropDown/dropDown'
+import { useNavigate } from 'react-router-dom'
+
+const iconStyle = { color: '#8D46E2' }
+
 function NavBar() {
+  const [showDropdown, setShowDropdown] = useState(false)
+  const openDropdown = () => setShowDropdown((prev) => !prev)
+  const navigate = useNavigate()
   return (
-    <div className="w-full fixed flex items-centes justify-between py-4 px-2 flex-wrap bg-gray-100">
-      <div className="flex gap-10 items-center">
-        <div className="px-4">
-          <Link to="" className="text-gray-800 inline-block h-[43px]">
-            <img src="/images/logo.png" className=" h-[38px] w-auto" />
-          </Link>
-        </div>
-        <div>
-          <input
-            type="text"
-            placeholder="Search"
-            className="indent-2 p-1 text-sm text-imsPurple"
-          />
-        </div>
-      </div>
-      <div className="flex gap-4 items-center">
-        <BellIcon size={20} className="text-imsPurple" />
-        <Settings size={20} className="text-imsPurple" />
-        <div className="w-8 h-8 rounded-full bg-imsDarkPurple flex justify-center items-center">
-          <User2 size={20} className="text-imsLightPurple" />
-        </div>
-      </div>
-    </div>
+    <nav className={style.navContainer}>
+      <ul className={style.leftNavs}>
+        <li onClick={() => navigate('/app')}>
+          <img src={imsLogo} alt="Product Logo" />
+        </li>
+        <li>
+          <div className={style.searchContainer}>
+            <input type="text" placeholder="Search" />
+            <Search size={16} style={iconStyle} />
+          </div>
+        </li>
+      </ul>
+      <ul className={style.rightNavs}>
+        <li>
+          <Bell size={24} style={iconStyle} />
+        </li>
+        <li onClick={() => navigate('/app/settings')}>
+          <Cog size={24} style={iconStyle} />
+        </li>
+        <li onClick={openDropdown}>
+          <User size={24} style={iconStyle} />
+        </li>
+      </ul>
+      {showDropdown && <DropDown />}
+    </nav>
   )
 }
 

@@ -12,24 +12,36 @@ import Stores from './pages/stores/Stores'
 import NotFound from './pages/notFound/NotFound'
 import AddProduct from './pages/addProduct/AddProduct'
 import Staff from './pages/staff/Staff'
-
+import AddStaff from './pages/addStaff/AddStaff'
+import CreateStore from './pages/createStore/CreateStore'
+import ProtectedRoute from './redux/ProtectedRoute'
+import PasswordReset from './pages/Password reset/PasswordReset'
+import PasswordConfirmation from './pages/Password reset/PasswordConfirmation'
 
 const router = createBrowserRouter([
   { path: '/', element: <Login /> },
   { path: 'signup', element: <Signup /> },
+  { path: 'passwordReset', element: <PasswordReset/> },
+  { path: 'passwordConfirmation', element: <PasswordConfirmation/> },
   {
     path: '/app',
-    element: <AppLayout />,
+    element: (
+      // <ProtectedRoute>
+      <AppLayout />
+      // </ProtectedRoute>
+    ),
     children: [
       { index: true, element: <Home /> },
       { path: 'accounts', element: <Account /> },
       { path: 'products', element: <Products /> },
-      { path: 'sales-records', element: <SalesRecord /> },
+      { path: 'salesRecords', element: <SalesRecord /> },
       { path: 'settings', element: <Settings /> },
       { path: 'stores', element: <Stores /> },
       { path: 'categories', element: <Categories /> },
       { path: 'addProduct', element: <AddProduct /> },
       { path: 'staff', element: <Staff /> },
+      { path: 'addStaff', element: <AddStaff /> },
+      { path: 'createStore', element: <CreateStore /> },
     ],
   },
   { path: '*', element: <NotFound /> },

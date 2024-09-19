@@ -4,6 +4,13 @@
   justify-content: space-between;
   align-items: center;
   padding: 11px;
+  position: fixed;
+  background-color: #f4f3f3;
+  width: 100vw;
+  padding: 6px 20px;
+  box-shadow: 0px 0px 1px 0px #171a1f12;
+
+  box-shadow: 0px 0px 2px 0px #171a1f1f;
 }
 
 .navContainer ul {
@@ -14,8 +21,28 @@
 
 .leftNavs li {
   margin-right: 90px;
+  cursor: pointer;
+}
+
+.searchContainer {
+  display: flex;
+  align-items: center;
+  border: 1px solid #e5d5f9;
+  height: 30px;
+  border-radius: 9px;
+}
+
+.searchContainer {
+  padding-left: 20px;
 }
 
 .rightNavs li {
   margin-left: 18px;
+}
+
+.navContainer img {
+  max-height: 40px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
 }

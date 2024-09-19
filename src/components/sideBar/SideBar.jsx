@@ -1,78 +1,160 @@
-import clsx from 'clsx'
+import React, { useState } from 'react'
+import Modal from 'react-modal'
+import { NavLink } from 'react-router-dom'
+import Button from '../Button/Button'
+import style from './Sidebar.module.css'
 import {
-  DollarSign,
-  FileIcon,
-  GroupIcon,
-  HomeIcon,
-  PlusCircleIcon,
-  Power,
-  PowerCircle,
-  SearchSlash,
-  SearchSlashIcon,
-  SettingsIcon,
-  SparklesIcon,
-  StoreIcon,
+  Home,
+  Box,
+  Tag,
+  Store,
+  FileText,
+  User,
+  Settings,
+  PlusCircle,
+  UserPlus,
 } from 'lucide-react'
-import React from 'react'
-import { Link, useLocation } from 'react-router-dom'
+
+Modal.setAppElement('#root')
 
 function SideBar() {
-  const { pathname } = useLocation()
-  console.log({ pathname })
+  const [modalIsOpen, setModalIsOpen] = useState(false)
+
+  const openModal = () => setModalIsOpen(true)
+  const closeModal = () => setModalIsOpen(false)
+
+  const handleLogout = () => {
+    console.log('User logged out')
+    closeModal()
+  }
+
   return (
-    <div className="w-72 h-[calc(100vh-4.2rem)] mt-20 max-h-screen bg-imsPurple flex flex-col justify-between py-10 fixed">
-      <div className=" px-2 flex flex-col gap-1">
-        {routes.map(({ path, label, icon }, index) => {
-          return (
-            <Link
-              key={index}
-              to={`/app/${path}`}
-              className={clsx(
-                'group px-10 py-2 font-normal text-sm text-gray-100 items-center flex gap-2 hover:bg-imsDarkPurple/60 hover:text-white rounded-sm',
-                {
-                  'bg-imsDarkPurple': pathname == `/app/${path}`,
-                },
-              )}
-            >
-              {icon}
-              <span>{label}</span>
-            </Link>
-          )
-        })}
-      </div>
-      <div className=" px-2 flex flex-col gap-1">
-        <Link
-          to="/app/staff"
-          className={clsx(
-            'group px-10 py-2 text-sm text-gray-100 items-center flex gap-2 hover:bg-imsDarkPurple/60 hover:text-white rounded-sm',
-            {
-              'bg-imsDarkPurple': pathname == `/app/staff`,
-            },
-          )}
-        >
-          <PlusCircleIcon size={14} />
-          <span>Add Staff</span>
-        </Link>
-        <Link
-          to={``}
-          className={clsx(
-            'group px-10 py-2 text-sm text-gray-100 items-center flex gap-2 hover:bg-imsDarkPurple/60 hover:text-white rounded-sm',
-          )}
-        >
-          <PlusCircleIcon size={14} />
-          <span>Add Product</span>
-        </Link>
-        <Link
-          to={``}
-          className={clsx(
-            'group px-10 py-2 text-sm text-gray-100 items-center flex gap-2 hover:bg-imsDarkPurple/60 hover:text-white rounded-sm',
-          )}
-        >
-          <Power size={14} />
-          <span>Logout</span>
-        </Link>
-      </div>
-    </div>
+    <nav className={style.navContainer}>
+      <ul>
+        <li>
+          <NavLink
+            to="/app"
+            end
+            className={({ isActive }) =>
+              isActive ? style.activeLink : undefined
+            }
+          >
+            <Home className={style.iconStyle} />
+            <span>Home</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/app/products"
+            className={({ isActive }) =>
+              isActive ? style.activeLink : undefined
+            }
+          >
+            <Box className={style.iconStyle} />
+            <span>Products</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/app/categories"
+            className={({ isActive }) =>
+              isActive ? style.activeLink : undefined
+            }
+          >
+            <Tag className={style.iconStyle} />
+            <span>Categories</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/app/stores"
+            className={({ isActive }) =>
+              isActive ? style.activeLink : undefined
+            }
+          >
+            <Store className={style.iconStyle} />
+            <span>Stores</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/app/salesRecords"
+            className={({ isActive }) =>
+              isActive ? style.activeLink : undefined
+            }
+          >
+            <FileText className={style.iconStyle} />
+            <span>Sales Record</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/app/accounts"
+            className={({ isActive }) =>
+              isActive ? style.activeLink : undefined
+            }
+          >
+            <User className={style.iconStyle} />
+            <span>Accounts</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/app/settings"
+            className={({ isActive }) =>
+              isActive ? style.activeLink : undefined
+            }
+          >
+            <Settings className={style.iconStyle} />
+            <span>Settings</span>
+          </NavLink>
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <NavLink
+            to="/app/addStaff"
+            className={({ isActive }) =>
+              isActive ? style.activeLink : undefined
+            }
+          >
+            <UserPlus className={style.iconStyle} />
+            <span>Add Staff</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/app/addProduct"
+            className={({ isActive }) =>
+              isActive ? style.activeLink : undefined
+            }
+          >
+            <PlusCircle className={style.iconStyle} />
+            <span>Add Product</span>
+          </NavLink>
+        </li>
+        <li className={style.logout}>
+          <Button
+            onClick={openModal}
+            className={style.logoutButton}
+            buttonName="Logout"
+          />
+        </li>
+      </ul>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Confirm Logout"
+        className={style.modal}
+        overlayClassName={style.overlay}
+      >
+        <h2>Are you sure you want to logout?</h2>
+        <div className={style.modalButtons}>
+          <button onClick={handleLogout}>Yes, logout</button>
+          <button onClick={closeModal}>Cancel</button>
+        </div>
+      </Modal>
+    </nav>
   )
 }
 

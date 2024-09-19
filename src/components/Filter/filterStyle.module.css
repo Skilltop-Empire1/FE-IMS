@@ -1,0 +1,46 @@
+.left h2 {
+    font-family: ;
+    font-size: clamp(1.5rem, .2951vw + 1.8111rem, 2.18rem);
+    font-weight: 800;
+    line-height: 48px;
+    text-align: left;
+
+}
+
+.body {
+    /* background: #F3F3F2; */
+    padding: 10px 0;
+    /* position: fixed;
+    width: 100%; */
+}
+
+.right input {
+    width: clamp(15.6rem, 10.1639vw + 9.0951rem, 21.8rem);
+    height: 41px;
+    border-radius: 21px;
+    padding: 5px 15px;
+    box-shadow: 0px 0px 2px 0px rgba(180, 178, 178, 0.75);
+    -webkit-box-shadow: 0px 0px 2px 0px rgba(180, 178, 178, 0.75);
+    -moz-box-shadow: 0px 0px 2px 0px rgba(180, 178, 178, 0.75);
+}
+
+.right {
+    gap: clamp(1rem, 1.0246vw + -.0492rem, 2rem);
+}
+
+.right select {
+    background: #D0B1F2;
+    border-radius: 21px;
+    padding: 5px 15px;
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #4B03A3;
+    appearance: none;
+    width: 200px;
+}
+
+.right select:active {
+    border: none;
+}

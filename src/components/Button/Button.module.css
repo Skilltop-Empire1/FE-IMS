@@ -1,7 +1,7 @@
 .buttonName {
   /* width: 119px; */
   height: 37px;
-  padding: 9px 37px;
+  padding: 9px 20px;
   gap: 0px;
   border-radius: 19px;
   border: 1px 0px 0px 0px;
@@ -14,4 +14,5 @@
   line-height: 20px;
   text-align: left;
   color: #fbf8ff;
+  text-align: center;
 }

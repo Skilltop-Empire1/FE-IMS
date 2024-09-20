@@ -11,15 +11,17 @@ const StoreList = ({ onSelectStore, items }) => {
   return (
     <div className='flex flex-wrap gap-5 mt-5'>
       {stores?.length > 0 ? (
-        stores.map((store, idx) => (
+        items.map((store, idx) => (
           <div
             key={idx}
             className={style.store}
             onClick={() => onSelectStore(store)}
             style={{
-              backgroundImage: `url(${store.storePhoto})`,
+              // backgroundImage: `url(${store.storePhoto})`,
               backgroundSize: 'cover', // ensure image covers the div
               backgroundPosition: 'center', // centers the image
+              backgroundImage: `linear-gradient(0deg, rgb(121 0 255 / 25%), rgb(81 3 163 / 39%)),  url(${store.storePhoto})`, // add a gradient on top of the image
+
             }}
           >
             {store.location}

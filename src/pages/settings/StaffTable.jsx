@@ -16,8 +16,6 @@ const StaffTable = () => {
     error: staffDataError,
   } = useGetStaffQuery() // Fetch the staff data
 
-  console.log({ staffDataError, staffData })
-
   const getStatusBadgeColor = (status) => {
     switch (status) {
       case 'Active':
@@ -65,35 +63,48 @@ const StaffTable = () => {
                 </tr>
               </thead>
               <tbody>
-                {staffData?.map((staff, index) => (
-                  <tr key={index}>
-                    <td className="py-2 px-4 border-b text-sm">
-                      {staff.username}
-                    </td>
-                    <td className="py-2 px-4 border-b text-sm">
-                      {staff.email}
-                    </td>
-                    <td className="py-2 px-4 border-b text-sm">
-                      {staff.addedDate}
-                    </td>
-                    <td className="py-2 px-4 border-b text-sm">
-                      <span
-                        className={`px-2 py-1 text-xs font-semibold rounded-full ${getStatusBadgeColor(staff.status)}`}
-                      >
-                        {staff.status}
-                      </span>
-                    </td>
-                    <td className="py-2 px-4 border-b text-sm">{staff.role}</td>
-                    <td className="py-2 px-4 border-b text-sm">
-                      <button className="text-blue-600 hover:underline">
-                        Edit
-                      </button>
-                    </td>
-                    <td className="py-2 px-4 border-b text-sm">
-                      {staff.storeName}
+                {staffData?.data?.length === 0 ? (
+                  <tr>
+                    <td
+                      colSpan="7"
+                      className="py-2 px-4 text-center text-sm text-gray-500"
+                    >
+                      No staff members found.
                     </td>
                   </tr>
-                ))}
+                ) : (
+                  staffData?.data?.map((staff, index) => (
+                    <tr key={index}>
+                      <td className="py-2 px-4 border-b text-sm">
+                        {staff.username}
+                      </td>
+                      <td className="py-2 px-4 border-b text-sm">
+                        {staff.email}
+                      </td>
+                      <td className="py-2 px-4 border-b text-sm">
+                        {staff.addedDate}
+                      </td>
+                      <td className="py-2 px-4 border-b text-sm">
+                        <span
+                          className={`px-2 py-1 text-xs font-semibold rounded-full ${getStatusBadgeColor(staff.status)}`}
+                        >
+                          {staff.status}
+                        </span>
+                      </td>
+                      <td className="py-2 px-4 border-b text-sm">
+                        {staff.role}
+                      </td>
+                      <td className="py-2 px-4 border-b text-sm">
+                        <button className="text-blue-600 hover:underline">
+                          Edit
+                        </button>
+                      </td>
+                      <td className="py-2 px-4 border-b text-sm">
+                        {staff.storeName}
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>

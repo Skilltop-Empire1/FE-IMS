@@ -9,7 +9,7 @@ export const staffApi = createApi({
   endpoints: (builder) => ({
     // Get all staff members
     getStaff: builder.query({
-      query: () => '/api/IMS/staff/get', // Endpoint for fetching the list of staff members
+      query: () => '/api/IMS/staff', // Endpoint for fetching the list of staff members
       providesTags: ['Staff'], // Tag for cache invalidation
     }),
 

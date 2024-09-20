@@ -21,6 +21,7 @@ import store from './redux/store'
 import { setCredentials } from './redux/slices/AuthSlice'
 import PasswordReset from './pages/Password reset/PasswordReset'
 import PasswordConfirmation from './pages/Password reset/PasswordConfirmation'
+import AddSaleRecord from './pages/addSalesRecord/AddSalesRecord'
 
 const router = createBrowserRouter([
   { path: '/', element: <Login /> },
@@ -47,6 +48,7 @@ const router = createBrowserRouter([
       { path: 'staff', element: <Staff /> },
       { path: 'addStaff', element: <AddStaff /> },
       { path: 'createStore', element: <CreateStore /> },
+      { path: 'addSaleRecord', element: <AddSaleRecord /> },
     ],
   },
   { path: '*', element: <NotFound /> },

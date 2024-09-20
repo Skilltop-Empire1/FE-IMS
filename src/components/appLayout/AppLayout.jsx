@@ -8,7 +8,7 @@ import style from './AppLayout.module.css'
 import { useRedirectOnMobile } from '../../utilities/mobileRedirect'
 
 function AppLayout() {
-  // useRedirectOnMobile() commented out for backwards compatibility during development
+  // useRedirectOnMobile() //commented out for backwards compatibility during development
   return (
     <>
       <div className={style.appContainer}>

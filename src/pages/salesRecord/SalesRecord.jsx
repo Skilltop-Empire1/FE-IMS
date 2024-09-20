@@ -53,7 +53,7 @@ const SalesRecord = () => {
       <Filter 
         handleSearch={handleSearch} 
         handleFilter={handleFilter} 
-        direction='addProduct' 
+        direction='addSaleRecord' 
         title='Sales Record' 
         button='+ Add Record' 
         location={locations}  // Pass categories to the Filter component

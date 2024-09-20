@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import ModalWrapper from './ModalWrapper'
 import { z } from 'zod'
-import { useGetStoresQuery } from '../../redux/storeApi' // API hooks
 import { useUpdateStaffMutation } from '../../redux/staffApi'
+import { useGetStoresQuery } from '../../redux/storeApi'
 
 // Initial form state
 const initialState = {

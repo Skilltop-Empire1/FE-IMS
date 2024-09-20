@@ -38,7 +38,7 @@ const Table = ({status, date, api}) => {
                 </td>
                 <td>{product.quantity}</td>
                 <td>{product.categoryId}</td>
-                <td>{product.storeAvailable.length > 8 ? product.storeAvailable.substr(0,8) + '...' : product.storeAvailable}</td>
+                {/* <td>{product.storeAvailable.length > 8 ? product.storeAvailable.substr(0,8) + '...' : product.storeAvailable}</td> */}
                 <td>{product.createdAt.substr(0,10)}</td>
                 <td className='flex gap-1'><Edit2Icon className={style.icon}/><Trash className={style.icon}/></td>
               </tr>

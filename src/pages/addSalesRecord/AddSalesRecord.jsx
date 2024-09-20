@@ -4,7 +4,7 @@ import style from './addSalesRecordStyle.module.css'
 import { useNavigate } from 'react-router-dom'
 
 const AddSaleRecord = () => {
-  const [userId, setUserId] = useState('1') // Assuming user ID is predefined
+  const [userId, setUserId] = useState('10') // Assuming user ID is predefined
   const [productId, setProductId] = useState('')
   const [paymentMethod, setPaymentMethod] = useState('cash') // Default to cash
   const [quantity, setQuantity] = useState('')
@@ -67,7 +67,7 @@ const AddSaleRecord = () => {
     try {
       await createSalesRecord(saleRecordData).unwrap()
       alert('Sale record created successfully!')
-      navigate('/app/salesRecord')
+      navigate('/app/salesRecords')
     } catch (err) {
       console.error('Failed to create sale record:', err)
     }

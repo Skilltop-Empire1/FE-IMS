@@ -8,12 +8,14 @@ const staffInviteSchema = z.object({
   username: z.string().min(1, 'Username is required'),
   email: z.string().email('Invalid email address'),
   password: z.string().min(6, 'Password must be at least 6 characters'),
+  role: z.string().min(1, 'Role is required'), // Add validation for role
 })
 
 const StaffInviteForm = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [username, setUsername] = useState('')
+  const [role, setRole] = useState('') // State for selected role
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState({})
   const [createStaff, { isLoading, isSuccess, isError }] =
@@ -28,6 +30,7 @@ const StaffInviteForm = () => {
       email,
       password,
       username,
+      role, // Include role in validation
     })
 
     if (!validationResult.success) {
@@ -39,10 +42,11 @@ const StaffInviteForm = () => {
     try {
       setLoading(true)
       // Call the mutation with form data
-      await createStaff({ email, password, username }).unwrap()
+      await createStaff({ email, password, username, role }).unwrap()
       setEmail('')
       setPassword('')
       setUsername('')
+      setRole('')
       setLoading(false)
       alert('Invite sent successfully!')
     } catch (error) {
@@ -115,7 +119,13 @@ const StaffInviteForm = () => {
         </div>
 
         <div className="mt-14">
-          <RolesPermissionsCard showExport={false} />
+          <RolesPermissionsCard
+            showExport={false}
+            onRoleChange={(role) => setRole(role)} // Pass handler to update role
+          />
+          {errors?.role && (
+            <p className="text-red-600 text-sm mt-1">{errors.role._errors}</p>
+          )}
         </div>
 
         <div className="mt-6 flex justify-center gap-4">
@@ -134,6 +144,7 @@ const StaffInviteForm = () => {
               setEmail('')
               setUsername('')
               setPassword('')
+              setRole('') // Reset role as well
             }}
           >
             Cancel

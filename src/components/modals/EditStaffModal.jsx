@@ -23,7 +23,7 @@ export const staffSchema = z.object({
   status: z.string().min(1, 'Status selection is required'),
 })
 
-const EditStaffModal = ({ visible, onClose, staffInfo }) => {
+const EditStaffModal = ({ visible, onClose, staffInfo, refetch }) => {
   const [formData, setFormData] = useState(initialState)
   const [errors, setErrors] = useState({})
   const [apiError, setApiError] = useState(null)
@@ -62,7 +62,7 @@ const EditStaffModal = ({ visible, onClose, staffInfo }) => {
       // Call API to update staff
       const updatedStaff = { ...formData }
       await updateStaff({ id: staffInfo.staffId, updatedStaff }).unwrap()
-
+      refetch()
       // Reset form and close modal on success
       setFormData(initialState)
       setLoading(false)

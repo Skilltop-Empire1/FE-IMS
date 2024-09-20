@@ -38,8 +38,8 @@ export const staffApi = createApi({
     // Update an existing staff member by ID
     updateStaff: builder.mutation({
       query: ({ id, updatedStaff }) => ({
-        url: `/api/IMS/staff/update/${id}`, // Update staff member by ID
-        method: 'POST',
+        url: `/api/IMS/staff/${id}`, // Update staff member by ID
+        method: 'PUT',
         body: JSON.stringify(updatedStaff),
         headers: {
           'Content-Type': 'application/json', // Ensure proper content-type for JSON

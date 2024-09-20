@@ -10,6 +10,7 @@ const initialState = {
   username: '',
   email: '',
   storeId: '',
+  permissions: '',
   role: '',
   status: '',
 }

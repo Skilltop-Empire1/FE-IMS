@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
 import ModalWrapper from './ModalWrapper'
 import { z } from 'zod'
 import { useGetStoresQuery } from '../../redux/storeApi' // API hooks
@@ -29,10 +28,6 @@ const EditStaffModal = ({ visible, onClose, staffInfo }) => {
   const [errors, setErrors] = useState({})
   const [apiError, setApiError] = useState(null)
   const [loading, setLoading] = useState(false)
-
-  const [searchParams] = useSearchParams()
-  const page = parseInt(searchParams.get('categorypage')) || 1
-  const searchQuery = searchParams.get('categorysearch') || ''
 
   // Fetch stores
   const {

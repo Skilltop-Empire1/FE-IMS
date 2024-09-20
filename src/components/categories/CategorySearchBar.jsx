@@ -15,7 +15,7 @@ const CategorySearchBar = () => {
         {/* Input field */}
         <input
           type="text"
-          placeholder="Search category..."
+          placeholder="Enter category name"
           className="flex-grow p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-imsDarkPurple"
         />
 

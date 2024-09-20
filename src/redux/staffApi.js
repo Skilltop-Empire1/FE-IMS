@@ -7,15 +7,18 @@ export const staffApi = createApi({
   baseQuery, // Use the shared baseQuery
   tagTypes: ['Staff'], // Ensure cache invalidation across operations
   endpoints: (builder) => ({
-    // Get all staff members
+    // Get paginated staff members
     getStaff: builder.query({
-      query: () => '/api/IMS/staff', // Endpoint for fetching the list of staff members
+      query: ({ page = 1, limit = 10 }) => ({
+        url: '/api/IMS/staff', // Endpoint for fetching the list of staff members
+        params: { page, limit }, // Send pagination parameters
+      }),
       providesTags: ['Staff'], // Tag for cache invalidation
     }),
 
     // Get a single staff member by ID
     getStaffById: builder.query({
-      query: (id) => `/api/IMS/staff/get/${id}`, // Fetch staff member by ID
+      query: (id) => `/api/IMS/staff/${id}`, // Fetch staff member by ID
       providesTags: (result, error, id) => [{ type: 'Staff', id }], // Cache tag for a single staff member
     }),
 
@@ -35,7 +38,7 @@ export const staffApi = createApi({
     // Update an existing staff member by ID
     updateStaff: builder.mutation({
       query: ({ id, updatedStaff }) => ({
-        url: `/api/IMS/staff/update/${id}`, // Update staff member by ID
+        url: `/api/IMS/staff/${id}`, // Update staff member by ID
         method: 'PUT',
         body: JSON.stringify(updatedStaff),
         headers: {

@@ -1,5 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useGetStaffQuery } from '../../redux/staffApi' // Import the API hook
+import moment from 'moment'
+import { capitalizedWords } from '../../utils/helpers'
+import EditStaffModal from '../../components/modals/EditStaffModal'
 
 const StaffTableSkeleton = () => (
   <div className="animate-pulse">
@@ -10,24 +13,47 @@ const StaffTableSkeleton = () => (
 )
 
 const StaffTable = () => {
+  const [staffInfo, setStaffInfo] = useState(null)
+  const [showEditStaffModal, setShowEditStaffModal] = useState(false)
+  const [currentPage, setCurrentPage] = useState(1) // Page state for pagination
+  const pageSize = 10 // Set page size
+
+  // Fetch staff data with pagination parameters (page number and page size)
   const {
     data: staffData,
     isLoading,
     error: staffDataError,
-  } = useGetStaffQuery() // Fetch the staff data
-
+    refetch,
+  } = useGetStaffQuery({ page: currentPage, limit: pageSize })
+  console.log(staffData)
   const getStatusBadgeColor = (status) => {
     switch (status) {
-      case 'Active':
+      case 'active':
         return 'bg-green-200 text-green-800'
-      case 'Pending':
+      case 'pending':
         return 'bg-yellow-200 text-yellow-800'
-      case 'Inactive':
+      case 'inactive':
         return 'bg-red-200 text-red-800'
       default:
         return 'bg-gray-200 text-gray-800'
     }
   }
+
+  const editStaff = (id, staff) => {
+    setStaffInfo(staff)
+    setShowEditStaffModal(true)
+  }
+
+  const closeEditStaffModal = () => {
+    setStaffInfo(null)
+    setShowEditStaffModal(false)
+  }
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage)
+  }
+
+  const totalPages = staffData?.pagination?.totalPages || 1
 
   return (
     <div className="py-5 bg-white">
@@ -76,31 +102,34 @@ const StaffTable = () => {
                   staffData?.data?.map((staff, index) => (
                     <tr key={index}>
                       <td className="py-2 px-4 border-b text-sm">
-                        {staff.username}
+                        {staff.username || 'N/A'}
                       </td>
                       <td className="py-2 px-4 border-b text-sm">
                         {staff.email}
                       </td>
                       <td className="py-2 px-4 border-b text-sm">
-                        {staff.addedDate}
+                        {moment(staff.added_date).format('DD/MM/yyyy')}
                       </td>
                       <td className="py-2 px-4 border-b text-sm">
                         <span
                           className={`px-2 py-1 text-xs font-semibold rounded-full ${getStatusBadgeColor(staff.status)}`}
                         >
-                          {staff.status}
+                          {capitalizedWords(staff?.status?.split(' '))}
                         </span>
                       </td>
                       <td className="py-2 px-4 border-b text-sm">
                         {staff.role}
                       </td>
                       <td className="py-2 px-4 border-b text-sm">
-                        <button className="text-blue-600 hover:underline">
+                        <button
+                          className="text-blue-600 hover:underline"
+                          onClick={() => editStaff(staff.staffId, staff)}
+                        >
                           Edit
                         </button>
                       </td>
                       <td className="py-2 px-4 border-b text-sm">
-                        {staff.storeName}
+                        {staff?.storeName || 'No Store'}
                       </td>
                     </tr>
                   ))
@@ -109,7 +138,35 @@ const StaffTable = () => {
             </table>
           </div>
         )}
+
+        {/* Pagination controls */}
+        <div className="flex justify-center mt-4">
+          <button
+            className="px-3 py-1 bg-gray-200 text-gray-800 rounded-l"
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+          <span className="px-3 py-1 bg-gray-100 text-gray-700">{`Page ${currentPage} of ${totalPages}`}</span>
+          <button
+            className="px-3 py-1 bg-gray-200 text-gray-800 rounded-r"
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
+            Next
+          </button>
+        </div>
       </div>
+
+      {staffInfo && showEditStaffModal && (
+        <EditStaffModal
+          visible={showEditStaffModal}
+          staffInfo={staffInfo}
+          onClose={closeEditStaffModal}
+          refetch={refetch}
+        />
+      )}
     </div>
   )
 }

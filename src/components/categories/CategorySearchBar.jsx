@@ -11,11 +11,11 @@ const CategorySearchBar = () => {
 
   return (
     <div className="p-4  shadow-md rounded-md bg-gray-200">
-      <div className="flex space-x-2">
+      <div className="flex flex-wrap gap-2">
         {/* Input field */}
         <input
           type="text"
-          placeholder="Search category..."
+          placeholder="Enter category name"
           className="flex-grow p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-imsDarkPurple"
         />
 

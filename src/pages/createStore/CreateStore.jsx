@@ -1,70 +1,65 @@
-import React, { useState } from 'react';
-import style from './createStoreStyle.module.css';
-import { useCreateStoreMutation } from '../../redux/APIs/storeApi';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react'
+import style from './createStoreStyle.module.css'
+import { useCreateStoreMutation } from '../../redux/APIs/storeApi'
+import { Navigate, useNavigate } from 'react-router-dom'
 
 const CreateStore = ({ userId }) => {
-  const [storeName, setStoreName] = useState('');
-  const [location, setLocation] = useState('');
-  const [description, setDescription] = useState('');
-  const [numberOfStaff, setNumberOfStaff] = useState('');
-  const [storeManager, setStoreManager] = useState('');
-  const [storeContact, setStoreContact] = useState('');
-  const [storePhoto, setStorePhoto] = useState(null);
-  const [addAnotherStore, setAddAnotherStore] = useState(false);
-  const navigate = useNavigate();
+  // Local state to manage form inputs
+  const [storeName, setStoreName] = useState('')
+  const [location, setLocation] = useState('')
+  const [description, setDescription] = useState('')
+  const [numberOfStaff, setNumberOfStaff] = useState('')
+  const [storeManager, setStoreManager] = useState('')
+  const [storeContact, setStoreContact] = useState('')
+  const [storePhoto, setStorePhoto] = useState(null)
+  const [addAnotherStore, setAddAnotherStore] = useState(false)
+  const navigate = useNavigate()
 
   // RTK Query mutation hook
-  const [createStore, { isLoading, error }] = useCreateStoreMutation();
-
-  // Retrieve token from localStorage (or wherever you store it)
-  const token = localStorage.getItem('token'); // Adjust this if your token is stored elsewhere
+  const [createStore, { isLoading, error }] = useCreateStoreMutation()
 
   // Handle form submission
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     // Create form data
-    const formData = new FormData();
-    // formData.append('userId', parseInt(userId) || 3);
-    formData.append('storeName', storeName);
-    formData.append('location', location);
-    formData.append('storeContact', storeContact);
-    formData.append('description', description);
-    formData.append('noOfStaff', parseInt(numberOfStaff));
-    formData.append('storeManager', storeManager);
+    const formData = new FormData()
+    formData.append('userId', parseInt(userId) || 3) // Ensures this is an integer
+    formData.append('storeName', storeName)
+    formData.append('location', location)
+    formData.append('storeContact', storeContact)
+    formData.append('description', description)
+    formData.append('noOfStaff', parseInt(numberOfStaff)) // Ensures this is an integer
+    formData.append('storeManager', storeManager)
 
     if (storePhoto) {
-      formData.append('storePhoto', storePhoto);
+      formData.append('storePhoto', storePhoto)
+    }
+
+    // Log formData to check values before sending
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`)
     }
 
     try {
-      const response = await createStore({
-        body: formData,
-        extraOptions: {
-          headers: {
-            Authorization: `Bearer ${token}`, // Add the JWT token here
-          },
-        },
-      }).unwrap();
-
+      const response = await createStore(formData).unwrap() // Sends POST request to create store
       if (addAnotherStore) {
         // Clear form if the user wants to add another store
-        setStoreName('');
-        setLocation('');
-        setDescription('');
-        setNumberOfStaff('');
-        setStoreManager('');
-        setStoreContact('');
-        setStorePhoto(null);
+        setStoreName('')
+        setLocation('')
+        setDescription('')
+        setNumberOfStaff('')
+        setStoreManager('')
+        setStoreContact('')
+        setStorePhoto(null)
       } else {
-        alert('Store created successfully!');
-        navigate('/app/stores');
+        alert('Store created successfully!')
+        navigate('/app/stores') // Navigate to the store list page after successful creation
       }
     } catch (err) {
-      console.error('Failed to create store: ', err);
+      console.error('Failed to create store: ', err)
     }
-  };
+  }
 
   return (
     <div className={`${style.body}`}>
@@ -158,7 +153,7 @@ const CreateStore = ({ userId }) => {
         </form>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CreateStore;
+export default CreateStore

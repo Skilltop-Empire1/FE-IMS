@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Filter from '../../components/Filter/Filter';
-import Table from '../../components/Table/Table';
+import Table from '../../components/Table/Table2';
 import { useGetLocationsQuery } from '../../redux/APIs/storeApi';
 import { useGetSalesRecordQuery } from '../../redux/APIs/salesRecordApi';
 
@@ -68,7 +68,7 @@ const SalesRecord = () => {
         ) : salesError || locationError ? ( 
           <p>Error loading data</p> 
         ) : (
-          <Table status='Alert Status' date='Date' api={filteredItems} />  // Display filtered sales records
+          <Table status='Alert Status' date='Date' api={filteredItems}/>  // Display filtered sales records
         )
       }
     </div>

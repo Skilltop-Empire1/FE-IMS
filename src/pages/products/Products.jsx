@@ -67,7 +67,7 @@ const SalesRecord = () => {
         ) : error ? ( 
           <p>Error loading products</p> 
         ) : (
-          <Table status='Alert Status' date='Date' api={filteredItems} />  // Display filtered products
+          <Table status='Alert Status' date='Date' api={filteredItems} record ='hidden'/>  // Display filtered products
         )
       }
     </div>

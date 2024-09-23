@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState } from 'react'
 import { Bell, Cog, User, Search } from 'lucide-react'
 import imsLogo from '../../assets/ims-logo.png'
 import style from './navBar.module.css'
@@ -9,28 +9,9 @@ const iconStyle = { color: '#8D46E2' }
 
 function NavBar() {
   const [showDropdown, setShowDropdown] = useState(false)
-  const dropdownRef = useRef(null) // Reference for dropdown
   const navigate = useNavigate()
 
-  // Toggle dropdown
   const openDropdown = () => setShowDropdown((prev) => !prev)
-
-  // Handle clicks outside the dropdown
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setShowDropdown(false) // Close dropdown if clicked outside
-      }
-    }
-
-    // Add event listener
-    document.addEventListener('mousedown', handleClickOutside)
-
-    // Cleanup event listener on unmount
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [dropdownRef])
 
   return (
     <nav className={style.navContainer}>
@@ -57,7 +38,7 @@ function NavBar() {
         </li>
       </ul>
       {showDropdown && (
-        <div ref={dropdownRef}>
+        <div>
           <DropDown />
         </div>
       )}

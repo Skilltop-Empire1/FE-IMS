@@ -18,3 +18,7 @@ const dropdown = createSlice({
         },
     },
 });
+
+export const { toggleDropdown, showDropdown, hideDropdown } = dropdown.actions;
+
+export default dropdown.reducer;

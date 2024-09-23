@@ -13,7 +13,7 @@ const Login = () => {
   const [login, { isLoading }] = useLoginMutation()
   const navigate = useNavigate()
 
-  useRedirectOnMobile()
+  // useRedirectOnMobile()
 
   const handleSubmit = async (e) => {
     e.preventDefault()

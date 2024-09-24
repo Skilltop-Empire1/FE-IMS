@@ -18,7 +18,7 @@ const initialState = {
 export const staffSchema = z.object({
   username: z.string().min(1, 'Staff Username is required'),
   email: z.string().email('Invalid email address'),
-  storeId: z.string().min(1, 'Store selection is required'),
+  // storeId: z.string().min(1, 'Store selection is required'),
   role: z.string().min(1, 'Role selection is required'),
   status: z.string().min(1, 'Status selection is required'),
 })

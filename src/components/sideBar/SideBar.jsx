@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Modal from 'react-modal'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import Button from '../Button/Button'
 import style from './Sidebar.module.css'
 import {
@@ -14,18 +14,21 @@ import {
   PlusCircle,
   UserPlus,
 } from 'lucide-react'
+import { useDispatch } from 'react-redux'
+import { logout as clearAuth } from '../../redux/slices/AuthSlice'
 
 Modal.setAppElement('#root')
 
 function SideBar() {
   const [modalIsOpen, setModalIsOpen] = useState(false)
 
+  const dispatch = useDispatch()
+
   const openModal = () => setModalIsOpen(true)
   const closeModal = () => setModalIsOpen(false)
 
-  const handleLogout = () => {
-    console.log('User logged out')
-    closeModal()
+  const handleLogout = async () => {
+    dispatch(clearAuth())
   }
 
   return (
@@ -149,8 +152,9 @@ function SideBar() {
         overlayClassName={style.overlay}
       >
         <h2>Are you sure you want to logout?</h2>
+
         <div className={style.modalButtons}>
-          <button onClick={handleLogout}>Yes, logout</button>
+          <button onClick={handleLogout}>Logout</button>
           <button onClick={closeModal}>Cancel</button>
         </div>
       </Modal>

@@ -4,7 +4,7 @@ import BUtton from '../Button/Button'
 import { useGetProductsQuery } from '../../redux/APIs/productApi'
 import { Trash, Edit2Icon } from 'lucide-react'
 
-const Table = ({status, date, api, prod, record}) => {
+const Table2 = ({status, date, api,}) => {
 
   // if (isLoading) return <p>Loading...</p>
   // if (error) return <p>Error loading products</p>
@@ -25,20 +25,20 @@ const Table = ({status, date, api, prod, record}) => {
             <th>Action</th>
           </tr>
         </thead>
-        <tbody className={prod}>
+        <tbody>
           {
             api.map((product, idx) => {
               return (
                 <tr key={idx}>
                 <td><input type="checkbox" /></td>
                 <td><img src={product.prodPhoto} alt={product.name} /></td>
-                <td>{`${product.name}`} </td>
+                <td>{`${product.Product.name}`} </td>
                 <td >
-                  <BUtton buttonName={product.alertStatus } />
+                  {product.paymentMethod}
                 </td>
                 <td>{product.quantity}</td>
                 <td>{product.categoryId}</td>
-                <td>{product.storeAvailable.length > 8 ? product.storeAvailable.substr(0,8) + '...' : product.storeAvailable}</td>
+                <td>{product.Store.storeName.length > 8 ? product.Store.storeName.substr(0,8) + '...' : product.Store.storeName}</td>
                 <td>{product.createdAt.substr(0,10)}</td>
                 <td className='flex gap-1'><Edit2Icon className={style.icon}/><Trash className={style.icon}/></td>
               </tr>
@@ -46,29 +46,10 @@ const Table = ({status, date, api, prod, record}) => {
           })}
         </tbody>
         
-        <tbody className={record}>
-          {
-            api.map((product, idx) => {
-              return (
-                <tr key={idx}>
-                <td><input type="checkbox" /></td>
-                <td><img src={product.prodPhoto} alt={product.name} /></td>
-                <td>{`${product.name}`} </td>
-                <td >
-                  <BUtton buttonName={product.alertStatus } />
-                </td>
-                <td>{product.quantity}</td>
-                <td>{product.categoryId}</td>
-                {/* <td>{product.storeAvailable.length > 8 ? product.storeAvailable.substr(0,8) + '...' : product.storeAvailable}</td> */}
-                <td>{product.createdAt.substr(0,10)}</td>
-                <td className='flex gap-1'><Edit2Icon className={style.icon}/><Trash className={style.icon}/></td>
-              </tr>
-            )
-          })}
-        </tbody>
+
       </table>
     </div>
   )  
 }
 
-export default Table
+export default Table2

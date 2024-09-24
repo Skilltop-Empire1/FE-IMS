@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Filter from '../../components/Filter/Filter';
 import Table from '../../components/Table/Table';
-import { useGetLocationsQuery } from '../../redux/storeApi';
-import { useGetProductsQuery } from '../../redux/productApi';
+import { useGetLocationsQuery } from '../../redux/APIs/storeApi';
+import { useGetProductsQuery } from '../../redux/APIs/productApi';
 
 const SalesRecord = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -28,8 +28,8 @@ const SalesRecord = () => {
 
   // Handle search input
   const handleSearch = (term) => {
-    setSearchTerm(term.toLowerCase());
-  };
+    setSearchTerm(term.toLowerCase())
+  }
 
   // Handle filter selection
   const handleFilter = (category) => {
@@ -67,7 +67,7 @@ const SalesRecord = () => {
         ) : error ? ( 
           <p>Error loading products</p> 
         ) : (
-          <Table status='Alert Status' date='Date' api={filteredItems} />  // Display filtered products
+          <Table status='Alert Status' date='Date' api={filteredItems} record ='hidden'/>  // Display filtered products
         )
       }
     </div>

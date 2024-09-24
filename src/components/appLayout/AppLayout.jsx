@@ -5,8 +5,10 @@ import { Outlet } from 'react-router-dom'
 import Main from '../main/Main'
 
 import style from './AppLayout.module.css'
+import { useRedirectOnMobile } from '../../utilities/mobileRedirect'
 
 function AppLayout() {
+  // useRedirectOnMobile() //commented out for backwards compatibility during development
   return (
     <>
       <div className={style.appContainer}>

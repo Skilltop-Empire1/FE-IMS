@@ -18,6 +18,10 @@ export const storesApi = createApi({
       }),
     }),
 
+    getStoresOverview: builder.query({
+      query: () => '/api/IMS/store/overview',  // Overview endpoint
+    }),
+
     // GET request to fetch location list
     getLocations: builder.query({
       query: () => '/api/IMS/store/filter',  // endpoint to get locations
@@ -25,4 +29,4 @@ export const storesApi = createApi({
   }),
 });
 
-export const { useGetStoresQuery, useCreateStoreMutation, useGetLocationsQuery } = storesApi;
+export const { useGetStoresQuery, useCreateStoreMutation, useGetLocationsQuery, useGetStoresOverviewQuery } = storesApi;

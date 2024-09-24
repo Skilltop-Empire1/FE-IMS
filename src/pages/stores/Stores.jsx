@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Filter from '../../components/Filter/Filter';
 import StoreList from '../../components/StoreComponent/StoreList';
 import StoreDetail from '../../components/StoreComponent/StoreDetail';
-import { useGetLocationsQuery, useGetStoresQuery } from '../../redux/storeApi';
+import { useGetLocationsQuery, useGetStoresQuery } from '../../redux/APIs/storeApi';
 
 const Stores = () => {
   const [selectedStore, setSelectedStore] = useState(null);
@@ -18,13 +18,13 @@ const Stores = () => {
 
   // Handle search input
   const handleSearch = (term) => {
-    setSearchTerm(term.toLowerCase());
-  };
+    setSearchTerm(term.toLowerCase())
+  }
 
   // Handle filter category
   const handleFilter = (category) => {
-    setFilterCategory(category);
-  };
+    setFilterCategory(category)
+  }
 
   // Update filteredItems based on search and filter criteria
   useEffect(() => {
@@ -72,7 +72,7 @@ const Stores = () => {
       {/* Store Detail Component */}
       <StoreDetail selectedStore={selectedStore} />
     </div>
-  );
-};
+  )
+}
 
-export default Stores;
+export default Stores

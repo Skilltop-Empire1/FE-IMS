@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import Filter from '../../components/Filter/Filter';
-import Table from '../../components/Table/Table';
-import { useGetLocationsQuery } from '../../redux/storeApi';
-import { useGetProductsQuery } from '../../redux/productApi';
+import Table from '../../components/Table/Table2';
+import { useGetLocationsQuery } from '../../redux/APIs/storeApi';
+import { useGetSalesRecordQuery } from '../../redux/APIs/salesRecordApi';
 
 const SalesRecord = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterCategory, setFilterCategory] = useState('all');
   const [categories, setCategories] = useState([]);
 
-  // Fetch products using RTK Query
-  const { data: products, error, isLoading } = useGetProductsQuery();
+  // Fetch sales records using RTK Query
+  const { data: salesRecord, error: salesError, isLoading: salesLoading } = useGetSalesRecordQuery();
 
   // Fetch locations
   const { data: locations, error: locationError, isLoading: locationLoading } = useGetLocationsQuery();
 
-  // Fetch categories
+  // Fetch categories (if needed for filtering)
   useEffect(() => {
     const fetchCategories = async () => {
       const response = await fetch('https://be-ims.onrender.com/api/IMS/store/filter');
@@ -36,10 +36,10 @@ const SalesRecord = () => {
     setFilterCategory(category);
   };
 
-  // Filter products based on search term and selected category
-  const filteredItems = products?.filter((item) => {
-    // Check if item matches the search term
-    const matchesSearch = item.name.toLowerCase().includes(searchTerm);
+  // Filter sales records based on search term and selected category
+  const filteredItems = salesRecord?.filter((item) => {
+    // Check if item matches the search term (paymentMethod in this case)
+    const matchesSearch = item.paymentMethod.toLowerCase().includes(searchTerm);
 
     // Check if item matches the selected category
     const matchesCategory = filterCategory === 'all' || item.category === filterCategory;
@@ -53,25 +53,26 @@ const SalesRecord = () => {
       <Filter 
         handleSearch={handleSearch} 
         handleFilter={handleFilter} 
-        direction='addProduct' 
+        direction='addSaleRecord' 
         title='Sales Record' 
         button='+ Add Record' 
-        location={locations}  // Pass categories to the Filter component
-        search='search by name'
+        location={locations}  // Pass locations to the Filter component
+        categories={categories}  // Pass categories to the Filter component
+        search='search by payment method'
       />
       
-      {/* Products Table Section */}
+      {/* Sales Record Table Section */}
       {
-        isLoading ? ( 
+        salesLoading || locationLoading ? ( 
           <p>Loading...</p> 
-        ) : error ? ( 
-          <p>Error loading products</p> 
+        ) : salesError || locationError ? ( 
+          <p>Error loading data</p> 
         ) : (
-          <Table status='Alert Status' date='Date' api={filteredItems} />  // Display filtered products
+          <Table status='Alert Status' date='Date' api={filteredItems}/>  // Display filtered sales records
         )
       }
     </div>
   );
-}
+};
 
 export default SalesRecord;

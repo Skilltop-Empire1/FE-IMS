@@ -1,5 +1,5 @@
 import React from 'react'
-import { useGetStoresQuery } from '../../redux/storeApi'
+import { useGetStoresQuery } from '../../redux/APIs/storeApi'
 
 const CategorySearchBar = () => {
   // Fetch stores

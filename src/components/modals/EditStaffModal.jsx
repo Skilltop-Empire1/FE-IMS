@@ -3,7 +3,6 @@ import ModalWrapper from './ModalWrapper'
 import { z } from 'zod'
 import { useGetStoresQuery } from '../../redux/APIs/storeApi'
 import { useUpdateStaffMutation } from '../../redux/staffApi'
-import { useGetStoresQuery } from '../../redux/storeApi'
 
 // Initial form state
 const initialState = {

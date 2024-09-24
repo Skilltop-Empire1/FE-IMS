@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useGetCategoriesQuery } from '../../redux/categoryApi' // Adjust the import path as needed
+import { useCategory } from '../../context/CategoryContext'
 
 const placeholderImage = 'https://via.placeholder.com/150x250/B990E9/FFFFFF'
 
@@ -24,10 +25,13 @@ const CategoryGridSkeleton = () => {
 
 const CategoryGrid = () => {
   const [currentPage, setCurrentPage] = useState(1)
+  const [selectedCategoryId, setSelectedCategoryId] = useState(null) // Track selected category
   const itemsPerPage = 6
+  // Access the context to set refetchCategories
+  const { setRefetchCategories, selectCategory } = useCategory()
 
   // Fetch categories using the useGetCategoriesQuery hook
-  const { data, error, isLoading } = useGetCategoriesQuery({
+  const { data, error, isLoading, refetch } = useGetCategoriesQuery({
     page: currentPage,
     limit: itemsPerPage,
   })
@@ -44,6 +48,18 @@ const CategoryGrid = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1)
   }
 
+  // Handle category selection
+  const handleSelectCategory = (category) => {
+    setSelectedCategoryId(category.catId) // Set selected category ID
+    selectCategory(category) // Notify the context of the selected category
+  }
+
+  useEffect(() => {
+    if (setRefetchCategories) {
+      setRefetchCategories(() => refetch) // Pass the refetch function to the context
+    }
+  }, [refetch, setRefetchCategories])
+
   return (
     <div className="container mx-auto my-10 p-4">
       {/* Skeleton Loader or Category Grid */}
@@ -56,7 +72,12 @@ const CategoryGrid = () => {
           {categories?.map((category) => (
             <div
               key={category.id}
-              className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+              onClick={() => handleSelectCategory(category)} // Handle selection
+              className={`bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer ${
+                selectedCategoryId === category.catId
+                  ? 'border-4 border-purple-500' // Apply border if selected
+                  : ''
+              }`}
             >
               <img
                 src={category.image_url || placeholderImage}

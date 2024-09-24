@@ -13,7 +13,17 @@ const initialState = {
 // Schema for form validation
 export const categorySchema = z.object({
   name: z.string().min(1, 'Category Name is required'),
-  storeId: z.string().min(1, 'Store selection is required'),
+  storeId: z
+    .union([z.number(), z.string()]) // Accepts number or string
+    .refine(
+      (val) => {
+        const parsed = parseInt(val) // Try to parse the value as a number
+        return !isNaN(parsed) // Ensure it's a valid number
+      },
+      {
+        message: 'Select a Store', // Error message when it's not a number
+      },
+    ),
 })
 
 const AddCategoryModal = ({ show, onClose }) => {
@@ -82,8 +92,8 @@ const AddCategoryModal = ({ show, onClose }) => {
     setErrors({})
     if (stores) {
       setFormData((prev) => ({
-        ...prev,
-        storeId: stores[0].storeId + '',
+        name: '',
+        storeId: null,
       }))
     }
   }, [show, stores])
@@ -114,6 +124,9 @@ const AddCategoryModal = ({ show, onClose }) => {
               ))}
 
             <div>
+              <label className="text-sm text-imsPurple mb-2">
+                Category Name
+              </label>
               <input
                 value={formData.name}
                 onChange={(e) => handleChange('name', e.target.value)}
@@ -128,27 +141,28 @@ const AddCategoryModal = ({ show, onClose }) => {
 
             {/* Store select dropdown */}
             <div>
+              <label className="text-sm text-imsPurple mb-2">
+                Select Store
+              </label>
               <select
-                value={formData.storeId}
+                value={Number(formData.storeId)}
                 onChange={(e) => handleChange('storeId', e.target.value)}
                 className="z-10 block w-full rounded border border-gray-300 p-[14px] text-sm focus:border-imsLightPurple focus:outline-none"
               >
-                <option disabled value="">
-                  Select Store
-                </option>
+                <option value={null}>Select Store</option>
                 {storesLoading || storesError ? (
                   <option>Loading Stores...</option>
                 ) : (
                   stores &&
                   stores.map((store) => (
-                    <option key={store.storeId} value={store.storeId}>
+                    <option key={store.storeId} value={Number(store.storeId)}>
                       {store.storeName}
                     </option>
                   ))
                 )}
               </select>
-              {errors?.store && (
-                <p className="pt-1 text-xs text-red-500">{errors.store}</p>
+              {errors?.storeId && (
+                <p className="pt-1 text-xs text-red-500">{errors.storeId}</p>
               )}
             </div>
           </div>

@@ -1,13 +1,13 @@
-import { configureStore } from '@reduxjs/toolkit';
-import authReducer from './slices/AuthSlice';
-import dropdownReducer from './slices/dropdownSlice';
+import { configureStore } from '@reduxjs/toolkit'
+import authReducer from './slices/AuthSlice'
+import dropdownReducer from './slices/dropdownSlice'
 
-import { authApi } from './APIs/authApi';
-import { storesApi } from './APIs/storeApi';
-import { productApi } from './APIs/productApi';
-import { categoryApi } from './categoryApi';
-import { staffApi } from './staffApi';
-import { profilePictureApi } from './APIs/profilePictureUploadApi';
+import { authApi } from './APIs/authApi'
+import { storesApi } from './APIs/storeApi'
+import { productApi } from './APIs/productApi'
+import { categoryApi } from './categoryApi'
+import { staffApi } from './staffApi'
+import { profilePictureApi } from './APIs/profilePictureUploadApi'
 
 const store = configureStore({
   reducer: {
@@ -28,6 +28,6 @@ const store = configureStore({
       .concat(categoryApi.middleware)
       .concat(staffApi.middleware)
       .concat(profilePictureApi.middleware),
-});
+})
 
-export default store;
+export default store

@@ -3,8 +3,7 @@ import style from './tableStyle.module.css'
 import BUtton from '../Button/Button'
 import { useGetProductsQuery } from '../../redux/APIs/productApi'
 
-const Table = ({status, date, api}) => {
-
+const Table = ({ status, date, api }) => {
   // if (isLoading) return <p>Loading...</p>
   // if (error) return <p>Error loading products</p>
 
@@ -25,20 +24,27 @@ const Table = ({status, date, api}) => {
           </tr>
         </thead>
         <tbody>
-          {
-            api.map((product, idx) => {
-              return (
-                <tr key={idx}>
-                <td><input type="checkbox" /></td>
-                <td><img src={product.prodPhoto} alt={product.name} /></td>
+          {api.map((product, idx) => {
+            return (
+              <tr key={idx}>
+                <td>
+                  <input type="checkbox" />
+                </td>
+                <td>
+                  <img src={product.prodPhoto} alt={product.name} />
+                </td>
                 <td>{product.name}</td>
                 <td>
                   <BUtton buttonName={product.alertStatus} />
                 </td>
                 <td>{product.quantity}</td>
                 <td>{product.categoryId}</td>
-                <td>{product.storeAvailable.length > 8 ? product.storeAvailable.substr(0,8) + '...' : product.storeAvailable}</td>
-                <td>{product.createdAt.substr(0,10)}</td>
+                <td>
+                  {product.storeAvailable.length > 8
+                    ? product.storeAvailable.substr(0, 8) + '...'
+                    : product.storeAvailable}
+                </td>
+                <td>{product.createdAt.substr(0, 10)}</td>
                 <td>delete/edit</td>
               </tr>
             )

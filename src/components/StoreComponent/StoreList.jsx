@@ -1,15 +1,13 @@
-import React from 'react';
-import style from './storeComponentStyle.module.css';
-import { useGetStoresQuery } from '../../redux/APIs/storeApi';
+import React from 'react'
+import style from './storeComponentStyle.module.css'
+import { useGetStoresQuery } from '../../redux/APIs/storeApi'
 
 const StoreList = ({ onSelectStore, items }) => {
-  const { data: stores, error, isLoading } = useGetStoresQuery();
-
-
+  const { data: stores, error, isLoading } = useGetStoresQuery()
 
   // Safely handle the case when stores are not available or empty
   return (
-    <div className='flex flex-wrap gap-5 mt-5'>
+    <div className="flex flex-wrap gap-5 mt-5">
       {stores?.length > 0 ? (
         stores.map((store, idx) => (
           <div

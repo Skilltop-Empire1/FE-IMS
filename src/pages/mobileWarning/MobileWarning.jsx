@@ -1,11 +1,11 @@
 import React from 'react'
-import styles from './MobileWarning.module.css' // Import the CSS module
+import styles from './MobileWarning.module.css'
 
 function MobileWarning() {
   return (
     <div className={styles.container}>
       <img
-        src="https://www.example.com/realistic-image.jpg" // Replace with your own realistic image URL
+        src="https://www.example.com/realistic-image.jpg"
         alt="Mobile Warning"
         className={styles.image}
       />

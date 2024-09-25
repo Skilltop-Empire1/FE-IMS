@@ -7,6 +7,9 @@ export const productApi = createApi({
     getProducts: builder.query({
       query: () => '/api/IMS/product',  // Endpoint for fetching the list of products
     }),
+    getSoldProducts: builder.query({
+      query: () => '/api/IMS/product/2',
+    }),
     createProduct: builder.mutation({
       query: (newProduct) => ({
         url: '/api/IMS/product',  // Endpoint for creating a new product
@@ -18,4 +21,4 @@ export const productApi = createApi({
 });
 
 
-export const { useGetProductsQuery, useCreateProductMutation } = productApi;
+export const { useGetProductsQuery, useCreateProductMutation, useGetSoldProductsQuery } = productApi;

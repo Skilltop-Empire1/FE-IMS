@@ -1,20 +1,24 @@
-import React, { useState } from 'react'
+import React from 'react'
+
 import { Bell, Cog, User, Search } from 'lucide-react'
 import imsLogo from '../../assets/ims-logo.png'
 import style from './navBar.module.css'
 import DropDown from '../dropDown/dropDown'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { toggleDropdown } from '../../redux/slices/dropdownSlice'
+import { useGetPictureQuery } from '../../redux/APIs/profilePictureUploadApi'
 
 const iconStyle = { color: '#8D46E2' }
 
-function NavBar() {
-  const [showDropdown, setShowDropdown] = useState(false)
+function NavBar({ dropdownRef }) {
+  const isShowDropDown = useSelector((state) => state.dropdown.isOpen)
+  const dispatch = useDispatch()
   const navigate = useNavigate()
-
-  const openDropdown = () => setShowDropdown((prev) => !prev)
-
+  const { data: profilePic, isLoading, error } = useGetPictureQuery()
+  console.log('profile picture data', profilePic)
   return (
-    <nav className={style.navContainer}>
+    <nav className={style.navContainer} ref={dropdownRef}>
       <ul className={style.leftNavs}>
         <li onClick={() => navigate('/app')}>
           <img src={imsLogo} alt="Product Logo" />
@@ -28,20 +32,16 @@ function NavBar() {
       </ul>
       <ul className={style.rightNavs}>
         <li>
-          <Bell size={24} style={iconStyle} />
+          {profilePic ? profilePic : <Bell size={24} style={iconStyle} />}
         </li>
         <li onClick={() => navigate('/app/settings')}>
           <Cog size={24} style={iconStyle} />
         </li>
-        <li onClick={openDropdown}>
+        <li onClick={() => dispatch(toggleDropdown())}>
           <User size={24} style={iconStyle} />
         </li>
       </ul>
-      {showDropdown && (
-        <div>
-          <DropDown />
-        </div>
-      )}
+      {isShowDropDown && <DropDown />}
     </nav>
   )
 }

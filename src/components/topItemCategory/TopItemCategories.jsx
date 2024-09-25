@@ -1,14 +1,17 @@
 import React from 'react'
 import style from './TopItemCategories.module.css'
 import { Link, useNavigate } from 'react-router-dom'
-import { useGetProductsQuery } from '../../redux/APIs/productApi'
+import { useGetSoldProductsQuery } from '../../redux/APIs/productApi'
 function TopItemCategories() {
-  const { data: productData } = useGetProductsQuery()
-  console.log('product', productData)
-  const topCategoriesItems = productData
-    .slice()
-    .sort((a, b) => b.quantity - a.quantity)
-    .slice(0, 4)
+  const { data: soldProductData } = useGetSoldProductsQuery()
+  console.log(typeof data)
+
+  const topCategoriesItems = Array.isArray(soldProductData)
+    ? soldProductData
+        .slice()
+        .sort((a, b) => b.quantity - a.quantity)
+        .slice(0, 4)
+    : []
 
   console.log('topCategoriesItems', topCategoriesItems)
 

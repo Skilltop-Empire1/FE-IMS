@@ -20,13 +20,13 @@ function Home() {
   const { data: storeOverview = [] } = useGetStoresOverviewQuery()
   const { data: categoryData = [] } = useGetCategoriesQuery()
 
-  const topCategoriesItems = [
-    { quantitySold: 3 },
-    { quantitySold: 3 },
-    { quantitySold: 3 },
-    { quantitySold: 3 },
-    { quantitySold: 3 },
-  ]
+  // const topCategoriesItems = [
+  //   { quantitySold: 3 },
+  //   { quantitySold: 3 },
+  //   { quantitySold: 3 },
+  //   { quantitySold: 3 },
+  //   { quantitySold: 3 },
+  // ]
 
   if (isLoading) {
     return (
@@ -100,7 +100,7 @@ function Home() {
       </div>
       <div className={style.saleAndCatgoryContainer}>
         <Sales />
-        <TopItemCategories topCategoriesItems={topCategoriesItems} />
+        <TopItemCategories />
       </div>
       <div className={style.stockStatusAndStoreList}>
         <StockStatus

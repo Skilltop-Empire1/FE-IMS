@@ -12,10 +12,10 @@ export const passwordReset = createApi({
       }),
     }),
     resetPassword: builder.mutation({
-      query: ({ token, newPassword }) => ({
+      query: (payload) => ({
         url: '/api/IMS/user/submit-reset',
-        method: 'POST',
-        body: { token, newPassword },
+        method: 'PUT', // or 'POST' depending on your server
+        body: payload,
       }),
     }),
   }),

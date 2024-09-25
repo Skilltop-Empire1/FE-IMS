@@ -10,7 +10,7 @@ const AddSaleRecord = () => {
   const [quantity, setQuantity] = useState('')
   const [categoryId, setCategoryId] = useState('')
   const [storeId, setStoreId] = useState('') // Store ID
-
+  const [success, setSuccess] = useState('hidden')
   const [stores, setStores] = useState([])
   const [categories, setCategories] = useState([])
   const [products, setProducts] = useState([]) // Assuming you also need a product list
@@ -55,7 +55,7 @@ const AddSaleRecord = () => {
     const currentDate = new Date().toISOString() // Get the current date in ISO format
 
     const saleRecordData = {
-      userId: Number(userId) , // Assuming userId is numeric
+      userId: Number(userId) , 
       productId: Number(productId),
       paymentMethod,
       quantity: Number(quantity),
@@ -66,7 +66,12 @@ const AddSaleRecord = () => {
 
     try {
       await createSalesRecord(saleRecordData).unwrap()
-      alert('Sale record created successfully!')
+      setSuccess('')
+        // revert success message 
+        setTimeout(() => {
+          setSuccess('hidden') 
+        }, 3000)
+
       navigate('/app/salesRecords')
     } catch (err) {
       console.error('Failed to create sale record:', err)
@@ -74,7 +79,10 @@ const AddSaleRecord = () => {
   }
 
   return (
-    <div className={style.body}>
+    <div className={`${style.body} relative`}>
+      <div className='absolute w-full ease-in-out duration-300'>
+        <p className={`text-center bg-green-400 py-3 ${success}`} style={{ color: '#fff' }}>Product saved successfully</p>
+      </div>
       <div className={style.top}>
         <h2 className={style.title}>Add Sale Record</h2>
       </div>

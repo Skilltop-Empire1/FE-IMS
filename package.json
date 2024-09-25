@@ -1,9 +1,12 @@
 {
+  "homepage": "https://Skilltop-Empire1.github.io/FE-IMS",
   "name": "fe-ims",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
@@ -23,9 +26,9 @@
     "react-loader-spinner": "^6.1.6",
     "react-modal": "^3.16.1",
     "react-redux": "^9.1.2",
-    "zod": "^3.23.8",
     "react-router-dom": "^6.26.2",
-    "react-spinner": "^0.2.7"
+    "react-spinner": "^0.2.7",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
@@ -39,6 +42,7 @@
     "eslint-plugin-react": "^7.35.2",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.9",
+    "gh-pages": "^6.1.1",
     "globals": "^15.9.0",
     "postcss": "^8.4.45",
     "prettier": "^3.3.3",

@@ -2,20 +2,24 @@ import React, { useState, useEffect } from 'react';
 import Filter from '../../components/Filter/Filter';
 import Table from '../../components/Table/Table2';
 import { useGetLocationsQuery } from '../../redux/APIs/storeApi';
-import { useGetSalesRecordQuery } from '../../redux/APIs/salesRecordApi';
+import { useGetSalesRecordQuery, useDeleteSalesRecordMutation, useUpdateSalesRecordMutation } from '../../redux/APIs/salesRecordApi';
+import ConfirmationModal from '../../components/modals/ConfirmationModal';
+import EditSalesRecordModal from '../../components/modals/EditSalesRecordModal';
 
 const SalesRecord = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterCategory, setFilterCategory] = useState('all');
   const [categories, setCategories] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [salesRecordIdToDelete, setSalesRecordIdToDelete] = useState(null);
+  const [salesRecordToUpdate, setSalesRecordToUpdate] = useState(null); // Track record to update
+  const { data: salesRecord, error: salesError, isLoading: salesLoading, refetch } = useGetSalesRecordQuery();
+  const [deleteSalesRecord] = useDeleteSalesRecordMutation();
+  const [updateSalesRecord] = useUpdateSalesRecordMutation();
 
-  // Fetch sales records using RTK Query
-  const { data: salesRecord, error: salesError, isLoading: salesLoading } = useGetSalesRecordQuery();
-
-  // Fetch locations
   const { data: locations, error: locationError, isLoading: locationLoading } = useGetLocationsQuery();
 
-  // Fetch categories (if needed for filtering)
   useEffect(() => {
     const fetchCategories = async () => {
       const response = await fetch('https://be-ims.onrender.com/api/IMS/store/filter');
@@ -26,22 +30,63 @@ const SalesRecord = () => {
     fetchCategories();
   }, []);
 
-  // Handle search input
   const handleSearch = (term) => {
     setSearchTerm(term.toLowerCase());
   };
 
-  // Handle filter selection
   const handleFilter = (category) => {
     setFilterCategory(category);
   };
 
-  // Filter sales records based on search term and selected category
-  const filteredItems = salesRecord?.filter((item) => {
-    // Check if item matches the search term (paymentMethod in this case)
-    const matchesSearch = item.paymentMethod.toLowerCase().includes(searchTerm);
+  const handleDeleteSalesRecord = (id) => {
+    setSalesRecordIdToDelete(id);
+    setShowModal(true);
+  };
 
-    // Check if item matches the selected category
+  const confirmDeleteSalesRecord = () => {
+    if (!salesRecordIdToDelete) {
+      alert('No record selected for deletion');
+      return;
+    }
+
+    deleteSalesRecord(salesRecordIdToDelete)
+      .then(() => {
+        alert('Record deleted successfully!');
+        setShowModal(false);
+        setSalesRecordIdToDelete(null);
+      })
+      .catch((error) => alert('Error deleting record'));
+  };
+
+  //sales record update
+
+  const handleUpdateSalesRecord = (record) => {
+    setSalesRecordToUpdate(record);
+    setShowUpdateModal(true);
+  };
+
+  const confirmUpdateSalesRecord = (updatedData) => {
+    if (!salesRecordToUpdate) {
+      alert('No record selected for update');
+      return;
+    }
+
+    updateSalesRecord({ id: salesRecordToUpdate.id, updatedData })
+      .then(() => {
+        alert('Record updated successfully!');
+        setShowUpdateModal(false);
+        setSalesRecordToUpdate(null);
+        refetch()
+      })
+      .catch((error) => alert('Error updating record'));
+  };
+
+
+
+  //filter
+
+  const filteredItems = salesRecord?.filter((item) => {
+    const matchesSearch = item.paymentMethod.toLowerCase().includes(searchTerm);
     const matchesCategory = filterCategory === 'all' || item.category === filterCategory;
 
     return matchesSearch && matchesCategory;
@@ -49,28 +94,45 @@ const SalesRecord = () => {
 
   return (
     <div>
-      {/* Filter Section */}
       <Filter 
         handleSearch={handleSearch} 
         handleFilter={handleFilter} 
         direction='addSaleRecord' 
         title='Sales Record' 
         button='+ Add Record' 
-        location={locations}  // Pass locations to the Filter component
-        categories={categories}  // Pass categories to the Filter component
+        location={locations}  
+        categories={categories}  
         search='search by payment method'
       />
       
-      {/* Sales Record Table Section */}
       {
         salesLoading || locationLoading ? ( 
           <p>Loading...</p> 
         ) : salesError || locationError ? ( 
           <p>Error loading data</p> 
         ) : (
-          <Table status='Alert Status' date='Date' api={filteredItems}/>  // Display filtered sales records
+          <Table 
+            status='Payment method' 
+            date='Date added' 
+            api={filteredItems} 
+            deleted={(id) => handleDeleteSalesRecord(id)} 
+            updated={(record) => handleUpdateSalesRecord(record)} // Pass product record to update handler
+          />
         )
       }
+
+      <ConfirmationModal 
+        title={'sale record'}
+        showModal={showModal} 
+        setShowModal={setShowModal} 
+        handleDelete={confirmDeleteSalesRecord}  
+      />
+      <EditSalesRecordModal
+        showModal={showUpdateModal} 
+        setShowModal={setShowUpdateModal} 
+        record={salesRecordToUpdate} 
+        handleUpdate={confirmUpdateSalesRecord} 
+      />
     </div>
   );
 };

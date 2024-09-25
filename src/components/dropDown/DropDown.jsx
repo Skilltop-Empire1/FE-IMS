@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { User, Camera, Lock, LogOut } from 'lucide-react'
 import style from './Dropdown.module.css'
-import ModalContainer from '../../modals/modalContainer'
+import ModalContainer from '../../modals/ModalContainer'
 import ImagePicker from '../../modals/imagePicker/ImagePicker'
 import Logout from '../../modals/logout/Logout'
 import { useDispatch } from 'react-redux'

@@ -17,8 +17,9 @@ function NavBar({ dropdownRef }) {
   const navigate = useNavigate()
   const { data: profilePic, isLoading, error } = useGetPictureQuery()
   console.log('profile picture data', profilePic)
+
   return (
-    <nav className={style.navContainer} ref={dropdownRef}>
+    <nav className={`${style.navContainer} navbar`} ref={dropdownRef}>
       <ul className={style.leftNavs}>
         <li onClick={() => navigate('/app')}>
           <img src={imsLogo} alt="Product Logo" />
@@ -32,13 +33,27 @@ function NavBar({ dropdownRef }) {
       </ul>
       <ul className={style.rightNavs}>
         <li>
-          {profilePic ? profilePic : <Bell size={24} style={iconStyle} />}
+          <Bell size={24} style={iconStyle} />
         </li>
-        <li onClick={() => navigate('/app/settings')}>
+        <li onClick={() => navigate('/app/settings')} aria-label="Settings">
           <Cog size={24} style={iconStyle} />
         </li>
-        <li onClick={() => dispatch(toggleDropdown())}>
-          <User size={24} style={iconStyle} />
+        <li
+          onClick={() => dispatch(toggleDropdown())}
+          aria-label="User Dropdown"
+        >
+          {' '}
+          {isLoading ? (
+            <div>Loading...</div>
+          ) : error ? (
+            <User size={24} style={iconStyle} />
+          ) : (
+            <img
+              src={profilePic.profilePic}
+              alt="Profile"
+              className={style.profileImage}
+            />
+          )}
         </li>
       </ul>
       {isShowDropDown && <DropDown />}

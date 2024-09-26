@@ -26,11 +26,18 @@ const ImagePicker = ({ onSelectImage }) => {
     if (!imageFile) return
     try {
       await upload(imageFile).unwrap()
-
+      console.log('Upload successful')
       setImageFile(null)
       setImagePreview(null)
     } catch (err) {
       console.error('Error uploading image:', err)
+      // Ensure you extract a string from the error to display
+      const errorMessage =
+        typeof err === 'object'
+          ? err.data?.error || err.message || 'An unknown error occurred.'
+          : err
+
+      alert(`Upload failed: ${errorMessage}`)
     }
   }
 
@@ -58,7 +65,14 @@ const ImagePicker = ({ onSelectImage }) => {
       >
         {isLoading ? 'Loading...' : 'Ok'}
       </button>
-      {error && <p className={style.error}>{error.message}</p>}
+      {error && (
+        <p className={style.error}>
+          {/* Ensure to handle the error message correctly */}
+          {typeof error.data === 'object'
+            ? JSON.stringify(error.data) // This will prevent rendering an object directly
+            : error.message || 'An error occurred while uploading.'}
+        </p>
+      )}
     </div>
   )
 }

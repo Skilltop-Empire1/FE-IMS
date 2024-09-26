@@ -1,26 +1,34 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const profilePictureApi = createApi({
   reducerPath: 'profilePicture',
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://be-ims.onrender.com',
     prepareHeaders: (headers, { getState }) => {
-      const token = getState().auth.token
+      const token = getState().auth.token;
       if (token) {
-        headers.set('Authorization', `Bearer ${token}`)
-        console.log(`Bearer ${token}`)
+        headers.set('Authorization', `Bearer ${token}`);
+        console.log(`JWT Token retrieved from Redux: ${token}`);
       }
-      return headers
+      return headers;
     },
   }),
 
   endpoints: (builder) => ({
     upload: builder.mutation({
-      query: (profilePic) => ({
-        url: '/api/IMS/profile/upload',
-        method: 'POST',
-        body: profilePic,
-      }),
+      query: (profilePic) => {
+        const formData = new FormData();
+        formData.append('profilePic', profilePic);
+
+        return {
+          url: '/api/IMS/profile/upload',
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Accept': 'application/json',
+          },
+        };
+      },
       transformResponse: (response) => response,
     }),
     getPicture: builder.query({
@@ -30,7 +38,7 @@ export const profilePictureApi = createApi({
       transformResponse: (response) => response,
     }),
   }),
-})
+});
 
-export const { useUploadMutation, useGetPictureQuery } = profilePictureApi
-export const { reducer } = profilePictureApi
+export const { useUploadMutation, useGetPictureQuery } = profilePictureApi;
+export const { reducer } = profilePictureApi;

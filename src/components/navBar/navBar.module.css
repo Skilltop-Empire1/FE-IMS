@@ -51,3 +51,13 @@
   height: auto;
   object-fit: contain;
 }
+
+.profileImage {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid #8d46e2;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}

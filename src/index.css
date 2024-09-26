@@ -58,8 +58,9 @@ li {
   list-style: none;
 }
 
-@media (print) {
-  .navbar .side-nav {
-    display: none;
+@media print {
+  .navbar,
+  .sidebar {
+    display: none !important;
   }
 }

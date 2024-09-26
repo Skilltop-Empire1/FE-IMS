@@ -30,6 +30,10 @@ export const productApi = createApi({
       }),
     }),
 
+    getSoldProducts: builder.query({
+      query: () => '/api/IMS/product/2',
+    }),
+
     // Edit (Update) a product
     updateProduct: builder.mutation({
       query: ({ prodId, updatedProduct }) => ({
@@ -53,6 +57,7 @@ export const {
   useGetProductsQuery, 
   useCreateProductMutation, 
   useUpdateProductMutation, 
-  useDeleteProductMutation 
+  useDeleteProductMutation,
+  useGetSoldProductMutation
 } = productApi;
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import QtyCard from '../../components/quantityCard/qtyCard'
+import QtyCard from '../../components/quantityCard/QtyCard'
 import style from './Home.module.css'
 import Sales from '../../components/sales/Sales'
 import TopItemCategories from '../../components/topItemCategory/TopItemCategories'
@@ -12,23 +12,13 @@ import {
 } from '../../redux/APIs/storeApi'
 import { useGetProductsQuery } from '../../redux/APIs/productApi'
 import { Rings } from 'react-loader-spinner'
+import { useGetCategoriesQuery } from '../../redux/categoryApi'
 
 function Home() {
   const { data: storeData = [] } = useGetStoresQuery()
   const { data: productData = [], error, isLoading } = useGetProductsQuery()
   const { data: storeOverview = [] } = useGetStoresOverviewQuery()
-
-  console.log('storeData:', storeData)
-
-  console.log('storeOverview:', storeOverview.data)
-
-  const topCategoriesItems = [
-    { quantitySold: 3 },
-    { quantitySold: 3 },
-    { quantitySold: 3 },
-    { quantitySold: 3 },
-    { quantitySold: 3 },
-  ]
+  const { data: categoryData = [] } = useGetCategoriesQuery()
 
   if (isLoading) {
     return (
@@ -64,6 +54,9 @@ function Home() {
     0,
   )
 
+  const allCategories = categoryData?.categories?.length || 0
+  console.log('all categories', allCategories)
+
   const lowStocks = productData
     ?.filter((item) => item.alertStatus === 'low')
     .reduce((acc, item) => acc + (item.quantity || 0), 0)
@@ -87,7 +80,11 @@ function Home() {
           />
         </div>
         <div className={style.cards}>
-          <QtyCard page="categories" cardName="Category" quantity={123} />
+          <QtyCard
+            page="categories"
+            cardName="Category"
+            quantity={allCategories}
+          />
         </div>
         <div className={style.cards}>
           <QtyCard page="stores" cardName="Store" quantity={totalStores} />
@@ -95,7 +92,7 @@ function Home() {
       </div>
       <div className={style.saleAndCatgoryContainer}>
         <Sales />
-        <TopItemCategories topCategoriesItems={topCategoriesItems} />
+        <TopItemCategories />
       </div>
       <div className={style.stockStatusAndStoreList}>
         <StockStatus

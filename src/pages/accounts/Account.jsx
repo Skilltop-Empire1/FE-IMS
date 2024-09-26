@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import AccountSummary from '../../components/accountSummary/AccountSummary'
-import Button from '../../components/button/Button'
+import Button from '../../components/Button/Button'
 import style from './Account.module.css'
 import { months } from './data'
 import { useGetProductsQuery } from '../../redux/APIs/productApi'
@@ -17,12 +17,10 @@ function Account() {
 
   const currentYear = new Date().getFullYear()
 
-  // Handles duration selection (e.g., month or view range)
   const handleDuration = (e) => {
     setDuration(e.target.value)
   }
 
-  // Handles product selection and computes the stock value for the selected product
   const handleSelectWears = (e) => {
     const productName = e.target.value
     setSelectedProducts(productName)
@@ -39,7 +37,6 @@ function Account() {
 
   const sumTotal = stockValue - totalSales
 
-  // Handle when data is still loading or an error occurs
   if (isLoading) {
     return <div>Loading...</div>
   }

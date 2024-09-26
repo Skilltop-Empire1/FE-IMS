@@ -1,20 +1,27 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import { BellIcon, CogIcon, Settings, User2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { NotificationContext } from '../Notifications/NotificationContext'
+
 import { Bell, Cog, User, Search } from 'lucide-react'
 import imsLogo from '../../assets/ims-logo.png'
 import style from './navBar.module.css'
-import DropDown from '../dropDown/dropDown'
+import DropDown from '../dropDown/DropDown'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { toggleDropdown } from '../../redux/slices/dropdownSlice'
+import { useGetPictureQuery } from '../../redux/APIs/profilePictureUploadApi'
 
 const iconStyle = { color: '#8D46E2' }
 
-function NavBar() {
+function NavBar({ dropdownRef }) {
   const [isOpen, setIsOpen] = useState(false)
   const [showDropdown, setShowDropdown] = useState(false)
   const openDropdown = () => setShowDropdown((prev) => !prev)
+  const isShowDropDown = useSelector((state) => state.dropdown.isOpen)
+  const dispatch = useDispatch()
   const navigate = useNavigate()
+  const { data: profilePic, isLoading, error } = useGetPictureQuery()
+  console.log('profile picture data', profilePic)
 
   const { notifications, hasNewNotification, setHasNewNotification } = useContext(NotificationContext);
 
@@ -24,10 +31,8 @@ function NavBar() {
   };
 
   console.log(notifications)
-
-
   return (
-    <nav className={style.navContainer}>
+    <nav className={`${style.navContainer} navbar`} ref={dropdownRef}>
       <ul className={style.leftNavs}>
         <li onClick={() => navigate('/app')}>
           <img src={imsLogo} alt="Product Logo" />
@@ -76,14 +81,28 @@ function NavBar() {
           }
         </div>
         </li>
-        <li onClick={() => navigate('/app/settings')}>
+        <li onClick={() => navigate('/app/settings')} aria-label="Settings">
           <Cog size={24} style={iconStyle} />
         </li>
-        <li onClick={openDropdown}>
-          <User size={24} style={iconStyle} />
+        <li
+          onClick={() => dispatch(toggleDropdown())}
+          aria-label="User Dropdown"
+        >
+          {' '}
+          {isLoading ? (
+            <div>Loading...</div>
+          ) : error ? (
+            <User size={24} style={iconStyle} />
+          ) : (
+            <img
+              src={profilePic.profilePic}
+              alt="Profile"
+              className={style.profileImage}
+            />
+          )}
         </li>
       </ul>
-      {showDropdown && <DropDown />}
+      {isShowDropDown && <DropDown />}
     </nav>
   )
 }

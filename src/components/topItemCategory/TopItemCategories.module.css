@@ -52,11 +52,12 @@
   background-color: #e5d5f9;
   box-shadow: 0px 0px 1px 0px #171a1f12;
   box-shadow: 0px 0px 2px 0px #171a1f1f;
+  padding: 5px;
 }
 
 .topItemCategoryCard p {
-  font-size: 28px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 400;
   line-height: 42px;
   text-align: center;
   color: #4a02a3;

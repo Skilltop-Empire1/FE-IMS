@@ -1,12 +1,19 @@
 import React, { useState } from 'react'
 import { User, Camera, Lock, LogOut } from 'lucide-react'
 import style from './Dropdown.module.css'
-import ModalContainer from '../../modals/modalContainer'
+import ModalContainer from '../../modals/ModalContainer'
 import ImagePicker from '../../modals/imagePicker/ImagePicker'
+import Logout from '../../modals/logout/Logout'
+import { useDispatch } from 'react-redux'
+import { logout } from '../../redux/slices/AuthSlice'
 
-function DropDown() {
+import styles from '../../components/sideBar/Sidebar.module.css'
+
+function DropDown({ dropdownRef }) {
   const [modalType, setModalType] = useState(null)
   const [activeItem, setActiveItem] = useState(null)
+
+  const dispatch = useDispatch()
 
   const openModal = (type) => () => {
     setModalType(type)
@@ -18,8 +25,12 @@ function DropDown() {
     setActiveItem(null)
   }
 
+  const handleLogout = async () => {
+    dispatch(logout())
+  }
+
   return (
-    <div className={style.container}>
+    <div className={style.container} ref={dropdownRef}>
       <ul>
         <li
           onClick={openModal('add-profile-picture')}
@@ -68,7 +79,9 @@ function DropDown() {
       <ModalContainer
         isOpen={modalType === 'logout'}
         onClose={closeModal}
-        content={<div>Are you sure you want to logout?</div>}
+        content={
+          <Logout className={styles.modalButtons} handleLogout={handleLogout} />
+        }
       />
     </div>
   )

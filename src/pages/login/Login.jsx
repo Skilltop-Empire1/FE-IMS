@@ -15,7 +15,7 @@ const Login = () => {
   const [login, { isLoading }] = useLoginMutation()
   const navigate = useNavigate()
 
-  // useRedirectOnMobile();
+  // useRedirectOnMobile()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -77,8 +77,9 @@ const Login = () => {
               </button>
             </div>
             <div className="flex justify-center mt-4">
-              
-              <a href="passwordReset" className={style.forgot}>Forgot your password?</a>
+              <a href="passwordReset" className={style.forgot}>
+                Forgot your password?
+              </a>
             </div>
           </form>
         </div>

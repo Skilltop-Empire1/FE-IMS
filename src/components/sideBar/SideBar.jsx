@@ -16,6 +16,7 @@ import {
 } from 'lucide-react'
 import { useDispatch } from 'react-redux'
 import { logout as clearAuth } from '../../redux/slices/AuthSlice'
+import Logout from '../../modals/logout/Logout'
 
 Modal.setAppElement('#root')
 
@@ -151,53 +152,14 @@ function SideBar() {
         className={style.modal}
         overlayClassName={style.overlay}
       >
-        <h2>Are you sure you want to logout?</h2>
-
-        <div className={style.modalButtons}>
-          <button onClick={handleLogout}>Logout</button>
-          <button onClick={closeModal}>Cancel</button>
-        </div>
+        <Logout
+          className={style.modalButtons}
+          closeModal={closeModal}
+          handleLogout={handleLogout}
+        />
       </Modal>
     </nav>
   )
 }
 
 export default SideBar
-
-// const routes = [
-//   {
-//     label: 'Home',
-//     path: '',
-//     icon: <HomeIcon size={15} className="group-hover:animate-pulse" />,
-//   },
-//   {
-//     label: 'Products',
-//     path: 'products',
-//     icon: <FileIcon size={15} className="group-hover:animate-pulse" />,
-//   },
-//   {
-//     label: 'Categories',
-//     path: 'categories',
-//     icon: <GroupIcon size={15} className="group-hover:animate-pulse" />,
-//   },
-//   {
-//     label: 'Stores',
-//     path: 'stores',
-//     icon: <StoreIcon size={15} className="group-hover:animate-pulse" />,
-//   },
-//   {
-//     label: 'Sales Records',
-//     path: 'sales-records',
-//     icon: <SparklesIcon size={15} className="group-hover:animate-pulse" />,
-//   },
-//   {
-//     label: 'Account',
-//     path: 'accounts',
-//     icon: <DollarSign size={15} className="group-hover:animate-pulse" />,
-//   },
-//   {
-//     label: 'Settings',
-//     path: 'settings',
-//     icon: <SearchSlashIcon size={15} className="group-hover:animate-pulse" />,
-//   },
-// ]

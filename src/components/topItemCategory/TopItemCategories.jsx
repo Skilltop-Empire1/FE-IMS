@@ -1,7 +1,20 @@
 import React from 'react'
 import style from './TopItemCategories.module.css'
 import { Link, useNavigate } from 'react-router-dom'
-function TopItemCategories({ topCategoriesItems }) {
+import { useGetSoldProductsQuery } from '../../redux/APIs/productApi'
+function TopItemCategories() {
+  const { data: soldProductData } = useGetSoldProductsQuery()
+  console.log(typeof data)
+
+  const topCategoriesItems = Array.isArray(soldProductData)
+    ? soldProductData
+        .slice()
+        .sort((a, b) => b.quantity - a.quantity)
+        .slice(0, 4)
+    : []
+
+  console.log('topCategoriesItems', topCategoriesItems)
+
   const navigate = useNavigate()
 
   return (
@@ -15,7 +28,7 @@ function TopItemCategories({ topCategoriesItems }) {
       <div className={style.cardContainer}>
         {topCategoriesItems.map((item, index) => (
           <div key={index} className={style.topItemCategoryCard}>
-            <p>{item.quantitySold}</p>
+            <p>{item.name}</p>
           </div>
         ))}
       </div>

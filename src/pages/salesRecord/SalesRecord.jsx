@@ -22,21 +22,23 @@ const SalesRecord = () => {
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const response = await fetch('https://be-ims.onrender.com/api/IMS/store/filter');
-      const data = await response.json();
-      setCategories(data.categories);
-    };
+      const response = await fetch(
+        'https://be-ims.onrender.com/api/IMS/store/filter',
+      )
+      const data = await response.json()
+      setCategories(data.categories)
+    }
 
-    fetchCategories();
-  }, []);
+    fetchCategories()
+  }, [])
 
   const handleSearch = (term) => {
-    setSearchTerm(term.toLowerCase());
-  };
+    setSearchTerm(term.toLowerCase())
+  }
 
   const handleFilter = (category) => {
-    setFilterCategory(category);
-  };
+    setFilterCategory(category)
+  }
 
   const handleDeleteSalesRecord = (id) => {
     setSalesRecordIdToDelete(id);
@@ -89,8 +91,8 @@ const SalesRecord = () => {
     const matchesSearch = item.paymentMethod.toLowerCase().includes(searchTerm);
     const matchesCategory = filterCategory === 'all' || item.category === filterCategory;
 
-    return matchesSearch && matchesCategory;
-  });
+    return matchesSearch && matchesCategory
+  })
 
   return (
     <div>
@@ -137,4 +139,4 @@ const SalesRecord = () => {
   );
 };
 
-export default SalesRecord;
+export default SalesRecord

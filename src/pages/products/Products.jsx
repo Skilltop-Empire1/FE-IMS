@@ -36,10 +36,12 @@ const SalesRecord = () => {
   // Fetch categories
   useEffect(() => {
     const fetchCategories = async () => {
-      const response = await fetch('https://be-ims.onrender.com/api/IMS/store/filter');
-      const data = await response.json();
-      setCategories(data.categories);
-    };
+      const response = await fetch(
+        'https://be-ims.onrender.com/api/IMS/store/filter',
+      )
+      const data = await response.json()
+      setCategories(data.categories)
+    }
 
     fetchCategories();
   }, []);
@@ -145,16 +147,16 @@ const SalesRecord = () => {
   return (
     <div>
       {/* Filter Section */}
-      <Filter 
-        handleSearch={handleSearch} 
-        handleFilter={handleFilter} 
-        direction='addProduct' 
-        title='Products' 
-        button='+ Add Product' 
-        location={locations}  // Pass categories to the Filter component
-        search='Search by name'
+      <Filter
+        handleSearch={handleSearch}
+        handleFilter={handleFilter}
+        direction="addProduct"
+        title="Products"
+        button="+ Add Product"
+        location={locations} // Pass categories to the Filter component
+        search="Search by name"
       />
-      
+
       {/* Products Table Section */}
       {
         isLoading ? ( 
@@ -192,4 +194,4 @@ const SalesRecord = () => {
   );
 };
 
-export default SalesRecord;
+export default SalesRecord

@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const productApi = createApi({
   reducerPath: 'productApi',
@@ -15,7 +15,10 @@ export const productApi = createApi({
   endpoints: (builder) => ({
     // Fetch products
     getProducts: builder.query({
-      query: () => '/api/IMS/product',  // Endpoint for fetching the list of products
+      query: () => '/api/IMS/product', // Endpoint for fetching the list of products
+    }),
+    getSoldProducts: builder.query({
+      query: () => '/api/IMS/product/2',
     }),
     
     // Create a new product
@@ -44,7 +47,7 @@ export const productApi = createApi({
       }),
     }),
   }),
-});
+})
 
 export const { 
   useGetProductsQuery, 

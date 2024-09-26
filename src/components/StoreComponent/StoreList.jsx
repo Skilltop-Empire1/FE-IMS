@@ -15,7 +15,7 @@ const StoreList = ({ onSelectStore, items }) => {
   };
 
   return (
-    <div className='flex flex-wrap gap-5 mt-5'>
+    <div className="flex flex-wrap gap-5 mt-5">
       {stores?.length > 0 ? (
         items.map((store, idx) => (
           <div

@@ -57,3 +57,10 @@ input {
 li {
   list-style: none;
 }
+
+@media print {
+  .navbar,
+  .sidebar {
+    display: none !important;
+  }
+}

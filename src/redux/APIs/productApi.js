@@ -58,6 +58,6 @@ export const {
   useCreateProductMutation, 
   useUpdateProductMutation, 
   useDeleteProductMutation,
-  useGetSoldProductMutation
+  useGetSoldProductsQuery
 } = productApi;
 

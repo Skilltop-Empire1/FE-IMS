@@ -9,17 +9,16 @@
     color: #fff;
 }
 
-.store:active {
-    background: #E5D5F9;
-    
-}
 
 .box {
     width: 650px;
-    border: 1px solid #000;
+    /* border: 1px solid #000; */
     border-radius: 12px;
     height: 350px;
     padding: 10px 20px;
+    box-shadow: 0px 0px 11px 4px rgba(153,147,147,0.75);
+    -webkit-box-shadow: 0px 0px 11px 4px rgba(153,147,147,0.75);
+    -moz-box-shadow: 0px 0px 11px 4px rgba(153,147,147,0.75);   
 }
 
 .box h3 {
@@ -33,3 +32,8 @@
 .moreInfo {
     margin-top: 100px;
 }
+
+.selected {
+    color: #fff; 
+}
+

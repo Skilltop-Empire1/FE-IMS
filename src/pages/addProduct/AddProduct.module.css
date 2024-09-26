@@ -60,3 +60,7 @@
 .check:checked::before {
     content: "\2713";
 }
+
+.success {
+    width: 100%;
+}

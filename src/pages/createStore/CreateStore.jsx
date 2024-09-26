@@ -1,68 +1,105 @@
-import React, { useState } from 'react'
-import style from './createStoreStyle.module.css'
-import { useCreateStoreMutation } from '../../redux/APIs/storeApi'
-import { Navigate, useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import style from './createStoreStyle.module.css';
+import { useCreateStoreMutation } from '../../redux/APIs/storeApi';
+import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 
-const CreateStore = ({ userId }) => {
-  // Local state to manage form inputs
-  const [storeName, setStoreName] = useState('')
-  const [location, setLocation] = useState('')
-  const [description, setDescription] = useState('')
-  const [numberOfStaff, setNumberOfStaff] = useState('')
-  const [storeManager, setStoreManager] = useState('')
-  const [storeContact, setStoreContact] = useState('')
-  const [storePhoto, setStorePhoto] = useState(null)
-  const [addAnotherStore, setAddAnotherStore] = useState(false)
-  const navigate = useNavigate()
+
+
+
+const CreateStore = () => {
+  const [storeName, setStoreName] = useState('');
+  const [location, setLocation] = useState('');
+  const [description, setDescription] = useState('');
+  const [numberOfStaff, setNumberOfStaff] = useState('');
+  const [success, setSuccess] = useState('hidden')
+  const [saveMessage, setSaveMessage] = useState(false)
+  const [storeManager, setStoreManager] = useState('');
+  const [storeContact, setStoreContact] = useState('');
+  const [storePhoto, setStorePhoto] = useState(null);
+  const [addAnotherStore, setAddAnotherStore] = useState(false);
+  const [formError, setFormError] = useState('');
+  const navigate = useNavigate();
+  const [userId, setUserId] = useState(null)
 
   // RTK Query mutation hook
-  const [createStore, { isLoading, error }] = useCreateStoreMutation()
+  const [createStore, { isLoading, error }] = useCreateStoreMutation();
+
+
+  // Extract userId from token
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setUserId(decodedToken.user); // Assuming the token contains a userId field
+      console.log(userId)
+    }
+  }, []);
 
   // Handle form submission
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
+
+    // Clear previous form error
+    setFormError('');
 
     // Create form data
-    const formData = new FormData()
-    formData.append('userId', parseInt(userId) || 3) // Ensures this is an integer
-    formData.append('storeName', storeName)
-    formData.append('location', location)
-    formData.append('storeContact', storeContact)
-    formData.append('description', description)
-    formData.append('noOfStaff', parseInt(numberOfStaff)) // Ensures this is an integer
-    formData.append('storeManager', storeManager)
+    const formData = new FormData();
+    // formData.append('userId', parseInt(userId));
+    formData.append('storeName', storeName);
+    formData.append('location', location);
+    formData.append('storeContact', storeContact);
+    formData.append('description', description);
+    formData.append('noOfStaff', parseInt(numberOfStaff));
+    formData.append('storeManager', storeManager);
 
     if (storePhoto) {
-      formData.append('storePhoto', storePhoto)
-    }
-
-    // Log formData to check values before sending
-    for (let [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`)
+      formData.append('storePhoto', storePhoto);
     }
 
     try {
-      const response = await createStore(formData).unwrap() // Sends POST request to create store
+        const response = await createStore(formData).unwrap();
+        setSaveMessage(true)
+        setSuccess('')
+
+        // revert success message 
+        setTimeout(() => {
+          setSuccess('hidden') 
+        }, 3000)
+
+
       if (addAnotherStore) {
         // Clear form if the user wants to add another store
-        setStoreName('')
-        setLocation('')
-        setDescription('')
-        setNumberOfStaff('')
-        setStoreManager('')
-        setStoreContact('')
-        setStorePhoto(null)
+        setStoreName('');
+        setLocation('');
+        setDescription('');
+        setNumberOfStaff('');
+        setStoreManager('');
+        setStoreContact('');
+        setStorePhoto(null);
       } else {
-        alert('Store created successfully!')
-        navigate('/app/stores') // Navigate to the store list page after successful creation
+        alert('Store created successfully!');
+        navigate('/app/stores');
       }
     } catch (err) {
-      console.error('Failed to create store: ', err)
+      console.error('Failed to create store:', err);
+
+      // Display the backend error message if available
+      if (err?.data?.error) {
+        setFormError(err.data.error); // Use the error message from the backend
+      } else if (err?.error) {
+        setFormError(err.error); // Fallback for RTK Query error message
+      } else {
+        setFormError('An unexpected error occurred. Please try again.');
+      }
     }
-  }
+  };
 
   return (
-    <div className={`${style.body}`}>
+    <div className={`${style.body} relative`}>
+      <div className='absolute w-full ease-in-out duration-300'>
+        <p className={`text-center bg-green-400 py-3 ${success}`} style={{ color: '#fff' }}>Product saved successfully</p>
+      </div>
       <div className={style.top}>
         <h2 className={style.title}>Create Store</h2>
       </div>
@@ -79,16 +116,17 @@ const CreateStore = ({ userId }) => {
             />
           </div>
           <div className={style.cont}>
-            <label className={style.label}>Location:</label>
+            <label className={style.label}>Location*</label>
             <input
               type="text"
               className={style.input}
               value={location}
               onChange={(e) => setLocation(e.target.value)}
+              required
             />
           </div>
           <div className={style.cont}>
-            <label className={style.label}>Description:</label>
+            <label className={style.label}>Description*</label>
             <input
               type="text"
               className={style.input}
@@ -97,16 +135,17 @@ const CreateStore = ({ userId }) => {
             />
           </div>
           <div className={style.cont}>
-            <label className={style.label}>Number of Staff</label>
+            <label className={style.label}>Number of Staff*</label>
             <input
               type="number"
               className={style.input}
               value={numberOfStaff}
               onChange={(e) => setNumberOfStaff(e.target.value)}
+              required
             />
           </div>
           <div className={style.cont}>
-            <label className={style.label}>Store Manager</label>
+            <label className={style.label}>Store Manager*</label>
             <input
               type="text"
               className={style.input}
@@ -115,16 +154,17 @@ const CreateStore = ({ userId }) => {
             />
           </div>
           <div className={style.cont}>
-            <label className={style.label}>Store Contact</label>
+            <label className={style.label}>Store Contact*</label>
             <input
               type="text"
               className={style.input}
               value={storeContact}
               onChange={(e) => setStoreContact(e.target.value)}
+              required
             />
           </div>
           <div className={style.cont}>
-            <label className={style.label}>Store photo:</label>
+            <label className={style.label}>Store photo*</label>
             <input
               type="file"
               onChange={(e) => setStorePhoto(e.target.files[0])}
@@ -145,15 +185,16 @@ const CreateStore = ({ userId }) => {
 
           <div className="mt-5">
             <button type="submit" className={style.submit} disabled={isLoading}>
-              {isLoading ? 'Saving...' : 'Save store'}
+              {isLoading ? 'Saving...' : saveMessage ? 'Saved' : 'Save store'}
             </button>
           </div>
 
-          {error && <p style={{ color: 'red' }}>Failed to create store</p>}
+          {/* Display backend error */}
+          {formError && <p style={{ color: 'red' }}>{formError}</p>}
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CreateStore
+export default CreateStore;

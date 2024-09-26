@@ -1,24 +1,39 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const salesRecordApi = createApi({
-  reducerPath: 'salesRecordApi',  // Unique key to identify the API slice
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://be-ims.onrender.com' }),  // Base URL for the API
+  reducerPath: 'salesRecordApi',
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://be-ims.onrender.com' }),
   endpoints: (builder) => ({
-    // GET request to fetch all sales records
     getSalesRecord: builder.query({
-      query: () => '/api/IMS/sales/get',  // Sales records endpoint
+      query: () => '/api/IMS/sales/get',
     }),
-
-    // POST request to create a new sales record
     createSalesRecord: builder.mutation({
       query: (newSalesRecord) => ({
-        url: '/api/IMS/sales/create',  // Sales record creation endpoint
+        url: '/api/IMS/sales/create',
         method: 'POST',
-        body: newSalesRecord,  // Pass the new sales record in the request body
+        body: newSalesRecord,
+      }),
+    }),
+    deleteSalesRecord: builder.mutation({
+      query: (id) => ({
+        url: `/api/IMS/sales/delete/${id}`,
+        method: 'DELETE',
+      }),
+    }),
+    updateSalesRecord: builder.mutation({
+      query: ({ id, updatedData }) => ({
+        url: `/api/IMS/sales/update/${id}`,
+        method: 'PUT',
+        body: updatedData,
       }),
     }),
   }),
 });
 
 // Export hooks for the queries and mutations
-export const { useGetSalesRecordQuery, useCreateSalesRecordMutation } = salesRecordApi;
+export const { 
+  useGetSalesRecordQuery, 
+  useCreateSalesRecordMutation, 
+  useDeleteSalesRecordMutation,
+  useUpdateSalesRecordMutation 
+} = salesRecordApi;

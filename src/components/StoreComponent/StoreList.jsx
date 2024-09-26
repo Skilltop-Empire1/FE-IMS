@@ -1,27 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import style from './storeComponentStyle.module.css';
 import { useGetStoresQuery } from '../../redux/APIs/storeApi';
 
 const StoreList = ({ onSelectStore, items }) => {
+  // Local state to track the selected store
+  const [selectedStoreId, setSelectedStoreId] = useState(null);
+
   const { data: stores, error, isLoading } = useGetStoresQuery();
 
+  const handleStoreClick = (store) => {
+    // Set the selected store ID to the clicked one
+    setSelectedStoreId(store.storeId); // Assuming `store.id` is unique
+    onSelectStore(store); // Send the selected store to the parent component
+  };
 
-
-  // Safely handle the case when stores are not available or empty
   return (
     <div className='flex flex-wrap gap-5 mt-5'>
       {stores?.length > 0 ? (
         items.map((store, idx) => (
           <div
             key={idx}
-            className={style.store}
-            onClick={() => onSelectStore(store)}
+            className={`${style.store} ${selectedStoreId === store.storeId ? style.selected : ''}`} // Conditionally add the `selected` class
+            onClick={() => handleStoreClick(store)}
             style={{
-              // backgroundImage: `url(${store.storePhoto})`,
-              backgroundSize: 'cover', // ensure image covers the div
-              backgroundPosition: 'center', // centers the image
-              backgroundImage: `linear-gradient(0deg, rgb(121 0 255 / 25%), rgb(81 3 163 / 39%)),  url(${store.storePhoto})`, // add a gradient on top of the image
-
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundImage: `linear-gradient(0deg, rgb(121 0 255 / 25%), rgb(81 3 163 / 39%)),  url(${store.storePhoto})`,
+              filter: selectedStoreId === store.storeId ? 'brightness(0.2)' : '', // Darken the background of the selected store
+              transition: 'filter 0.3s ease', // Smooth transition when changing the background
             }}
           >
             {store.location}
@@ -31,7 +37,7 @@ const StoreList = ({ onSelectStore, items }) => {
         <div>No stores available</div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default StoreList
+export default StoreList;

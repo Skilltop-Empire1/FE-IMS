@@ -28,7 +28,9 @@ function AppLayout() {
   return (
     <>
       <div className={style.appContainer}>
-        <NavBar dropdownRef={dropdownRef} />
+        <div>
+          <NavBar dropdownRef={dropdownRef} />
+        </div>
         <div className={style.main}>
           <div>
             <SideBar />

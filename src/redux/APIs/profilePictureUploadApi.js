@@ -13,6 +13,7 @@ export const profilePictureApi = createApi({
       return headers
     },
   }),
+
   endpoints: (builder) => ({
     upload: builder.mutation({
       query: (profilePic) => ({

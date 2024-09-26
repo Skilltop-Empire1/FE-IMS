@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { BellIcon, CogIcon, Settings, User2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
-
+import { NotificationContext } from '../Notifications/NotificationContext'
 import { Bell, Cog, User, Search } from 'lucide-react'
 import imsLogo from '../../assets/ims-logo.png'
 import style from './navBar.module.css'

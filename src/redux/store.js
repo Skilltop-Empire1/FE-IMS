@@ -9,6 +9,7 @@ import { categoryApi } from './categoryApi'
 import { staffApi } from './staffApi'
 import { salesRecordApi } from './APIs/salesRecordApi'
 import { passwordReset } from './APIs/passwordResetApi'
+import { profilePictureApi } from './APIs/profilePictureUploadApi'
 
 
 
@@ -23,6 +24,7 @@ const store = configureStore({
     [staffApi.reducerPath]: staffApi.reducer, //  staff API reducer 
     [salesRecordApi.reducerPath]: salesRecordApi.reducer, //  salesRecord API reducer
     [passwordReset.reducerPath]: passwordReset.reducer, //  passwordReset API reducer
+    [profilePictureApi.reducerPath]: profilePictureApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
@@ -33,6 +35,10 @@ const store = configureStore({
       .concat(staffApi.middleware)//staffApi middleware
       .concat(salesRecordApi.middleware) //salesRecordApi middleware
       .concat(passwordReset.middleware) //passwordReset middleware
+      .concat(profilePictureApi.middleware),
 })
 
 export default store
+
+
+

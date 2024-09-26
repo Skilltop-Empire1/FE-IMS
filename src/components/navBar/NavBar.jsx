@@ -23,6 +23,8 @@ function NavBar() {
     setHasNewNotification(false); // Mark the notification as seen
   };
 
+  console.log(notifications)
+
 
   return (
     <nav className={style.navContainer}>

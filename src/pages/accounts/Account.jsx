@@ -52,7 +52,6 @@ function Account() {
       </div>
       <div className={style.selectOptionsContainer}>
         <div className={style.selectOptions}>
-          {/* Select Duration */}
           <div className={style.selectBox}>
             <select onChange={handleDuration} value={duration || ''}>
               <option value="">View Range</option>
@@ -74,7 +73,6 @@ function Account() {
           )}
         </div>
 
-        {/* Select Product */}
         <div className={style.selectOptions}>
           <div className={style.selectBox}>
             <select onChange={handleSelectWears} value={selectedProducts || ''}>
@@ -95,7 +93,6 @@ function Account() {
         </div>
       </div>
 
-      {/* Account Summaries */}
       <div className={style.accountSummary}>
         <AccountSummary
           percentageIncrease="2%"
@@ -120,12 +117,10 @@ function Account() {
         />
       </div>
 
-      {/* Revenue Breakdown */}
       <div className={style.breakdown}>
         <p>Revenue Breakdown</p>
       </div>
 
-      {/* Export Button */}
       <div className={style.btn}>
         <Button
           onClick={() => console.log('Export clicked')}

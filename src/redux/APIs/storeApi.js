@@ -5,9 +5,10 @@ export const storesApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://be-ims.onrender.com',
     prepareHeaders: (headers) => {
-      const token = localStorage.getItem('token'); // Get token from localStorage (or other storage)
+      const token = localStorage.getItem('token');
       if (token) {
         headers.set('Authorization', `Bearer ${token}`); // Attach the token to the header
+        console.log('Token attached to headers:', headers.get('Authorization')); // Log token to verify
       }
       return headers;
     },

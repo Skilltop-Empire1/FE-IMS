@@ -9,10 +9,6 @@
     color: #fff;
 }
 
-.store:active {
-    background: #E5D5F9;
-    
-}
 
 .box {
     width: 650px;
@@ -35,5 +31,9 @@
 
 .moreInfo {
     margin-top: 100px;
+}
+
+.selected {
+    color: #fff; 
 }
 

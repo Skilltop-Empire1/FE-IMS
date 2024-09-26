@@ -10,7 +10,7 @@ const StoreList = ({ onSelectStore, items }) => {
 
   const handleStoreClick = (store) => {
     // Set the selected store ID to the clicked one
-    setSelectedStoreId(store.id); // Assuming `store.id` is unique
+    setSelectedStoreId(store.storeId); // Assuming `store.id` is unique
     onSelectStore(store); // Send the selected store to the parent component
   };
 
@@ -20,13 +20,13 @@ const StoreList = ({ onSelectStore, items }) => {
         items.map((store, idx) => (
           <div
             key={idx}
-            className={`${style.store} ${selectedStoreId === store.id ? style.selected : ''}`} // Conditionally add the `selected` class
+            className={`${style.store} ${selectedStoreId === store.storeId ? style.selected : ''}`} // Conditionally add the `selected` class
             onClick={() => handleStoreClick(store)}
             style={{
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundImage: `linear-gradient(0deg, rgb(121 0 255 / 25%), rgb(81 3 163 / 39%)),  url(${store.storePhoto})`,
-              filter: selectedStoreId === store.id ? 'brightness(0.5)' : 'none', // Darken the background of the selected store
+              filter: selectedStoreId === store.storeId ? 'brightness(0.2)' : '', // Darken the background of the selected store
               transition: 'filter 0.3s ease', // Smooth transition when changing the background
             }}
           >

@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import style from './createStoreStyle.module.css';
 import { useCreateStoreMutation } from '../../redux/APIs/storeApi';
 import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 
-const CreateStore = ({ userId }) => {
+
+
+
+const CreateStore = () => {
   const [storeName, setStoreName] = useState('');
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
@@ -16,9 +20,21 @@ const CreateStore = ({ userId }) => {
   const [addAnotherStore, setAddAnotherStore] = useState(false);
   const [formError, setFormError] = useState('');
   const navigate = useNavigate();
+  const [userId, setUserId] = useState(null)
 
   // RTK Query mutation hook
   const [createStore, { isLoading, error }] = useCreateStoreMutation();
+
+
+  // Extract userId from token
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setUserId(decodedToken.user); // Assuming the token contains a userId field
+      console.log(userId)
+    }
+  }, []);
 
   // Handle form submission
   const handleSubmit = async (e) => {
@@ -29,7 +45,7 @@ const CreateStore = ({ userId }) => {
 
     // Create form data
     const formData = new FormData();
-    // formData.append('userId', parseInt(userId) || 3);
+    // formData.append('userId', parseInt(userId));
     formData.append('storeName', storeName);
     formData.append('location', location);
     formData.append('storeContact', storeContact);

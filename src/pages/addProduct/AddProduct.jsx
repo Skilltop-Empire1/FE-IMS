@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useCreateProductMutation } from '../../redux/APIs/productApi' // Import createProduct mutation hook
 import style from './AddProduct.module.css'
 import { Navigate, useNavigate } from 'react-router-dom'
+import { jwtDecode } from 'jwt-decode'
 
 const AddProduct = () => {
   const [productName, setProductName] = useState('')
@@ -19,9 +20,21 @@ const AddProduct = () => {
   const [success, setSuccess] = useState('hidden')
   const [stores, setStores] = useState([])
   const [categories, setCategories] = useState([])
+  const [userId, setUserId] = useState(null)
   const navigate = useNavigate()
 
   const [createProduct, { isLoading, error }] = useCreateProductMutation() // Using the mutation hook
+
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setUserId(decodedToken.user); // Assuming the token contains a userId field
+      console.log(userId)
+    }
+  }, []);
+
 
   // Fetch stores and categories
   useEffect(() => {

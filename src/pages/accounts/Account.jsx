@@ -4,17 +4,20 @@ import Button from '../../components/Button/Button'
 import style from './Account.module.css'
 import { months } from './data'
 import { useGetProductsQuery } from '../../redux/APIs/productApi'
+import { useGetSalesRecordQuery } from '../../redux/APIs/salesRecordApi'
 
 function Account() {
   const [duration, setDuration] = useState('')
   const [selectedProducts, setSelectedProducts] = useState('')
   const [stockValue, setStockValue] = useState(0)
-  const [totalSales, setTotalSales] = useState(5)
+  const [totalSales, setTotalSales] = useState(0)
 
   const { data: productData = [], error, isLoading } = useGetProductsQuery()
+  const { data: salesData = [] } = useGetSalesRecordQuery()
+
+  console.log('productData', salesData)
 
   const category = productData?.map((item) => item.name) || []
-
   const currentYear = new Date().getFullYear()
 
   const handleDuration = (e) => {
@@ -25,24 +28,49 @@ function Account() {
     const productName = e.target.value
     setSelectedProducts(productName)
 
-    const product = productData.find((item) => item.name === productName)
+    const productDataItem = productData.find(
+      (item) => item.name === productName,
+    )
 
-    if (product) {
-      const { price, quantity } = product
-      setStockValue(price * quantity)
+    if (productDataItem) {
+      const productPrice = productDataItem.price
+      const productQuantity = productDataItem.quantity
+
+      const currentDate = new Date()
+      const startDate = new Date(
+        `${currentYear}-${months.indexOf(duration) + 1}-01`,
+      )
+      const endDate = new Date(currentYear, months.indexOf(duration) + 1, 0)
+
+      const salesForProduct = salesData.filter((sale) => {
+        const saleDate = new Date(sale.soldDate)
+        return (
+          sale.Product.name === productName &&
+          saleDate >= startDate &&
+          saleDate <= endDate
+        )
+      })
+
+      const totalSalesAmount = salesForProduct.reduce((total, sale) => {
+        return total + sale.quantity * sale.Product.price
+      }, 0)
+
+      setStockValue(productPrice * productQuantity)
+      setTotalSales(totalSalesAmount)
     } else {
       setStockValue(0)
+      setTotalSales(0)
     }
   }
 
   const sumTotal = stockValue - totalSales
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <div>Loading data, please wait...</div>
   }
 
   if (error) {
-    return <div>Error fetching product data</div>
+    return <div>Error fetching product data: {error.message}</div>
   }
 
   return (
@@ -62,7 +90,6 @@ function Account() {
               ))}
             </select>
           </div>
-
           {duration ? (
             <p>
               {months[0]} <span>{currentYear}</span> to {duration}{' '}
@@ -72,7 +99,6 @@ function Account() {
             <p>Select Duration</p>
           )}
         </div>
-
         <div className={style.selectOptions}>
           <div className={style.selectBox}>
             <select onChange={handleSelectWears} value={selectedProducts || ''}>
@@ -84,7 +110,6 @@ function Account() {
               ))}
             </select>
           </div>
-
           {selectedProducts ? (
             <p>{selectedProducts}</p>
           ) : (
@@ -122,10 +147,7 @@ function Account() {
       </div>
 
       <div className={style.btn}>
-        <Button
-          onClick={() => console.log('Export clicked')}
-          buttonName="Export"
-        />
+        <Button buttonName="Export" />
       </div>
     </div>
   )

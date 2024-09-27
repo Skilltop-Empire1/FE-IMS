@@ -35,25 +35,14 @@ function Account() {
     if (productDataItem) {
       const productPrice = productDataItem.price
       const productQuantity = productDataItem.quantity
-
-      const currentDate = new Date()
-      const startDate = new Date(
-        `${currentYear}-${months.indexOf(duration) + 1}-01`,
+      const salesForProduct = salesData.filter(
+        (sale) => sale.Product.name === productName,
       )
-      const endDate = new Date(currentYear, months.indexOf(duration) + 1, 0)
 
-      const salesForProduct = salesData.filter((sale) => {
-        const saleDate = new Date(sale.soldDate)
-        return (
-          sale.Product.name === productName &&
-          saleDate >= startDate &&
-          saleDate <= endDate
-        )
-      })
-
-      const totalSalesAmount = salesForProduct.reduce((total, sale) => {
-        return total + sale.quantity * sale.Product.price
-      }, 0)
+      const totalSalesAmount = salesForProduct.reduce(
+        (total, sale) => total + sale.quantity * sale.Product.price,
+        0,
+      )
 
       setStockValue(productPrice * productQuantity)
       setTotalSales(totalSalesAmount)
@@ -120,19 +109,20 @@ function Account() {
 
       <div className={style.accountSummary}>
         <AccountSummary
-          percentageIncrease="2%"
-          summaryName="Total Sales"
-          summaryValue={`$${totalSales.toFixed(2)}`}
-          container={style.summaryContainer}
-          valueStyle={style.valueStyle}
-        />
-        <AccountSummary
           percentageIncrease="1.4%"
           summaryName="Stock Value"
           summaryValue={`$${stockValue.toFixed(2)}`}
           container={style.summaryContainer}
           valueStyle={style.valueStyle}
         />
+        <AccountSummary
+          percentageIncrease="2%"
+          summaryName="Total Sales"
+          summaryValue={`$${totalSales.toFixed(2)}`}
+          container={style.summaryContainer}
+          valueStyle={style.valueStyle}
+        />
+
         <AccountSummary
           percentageIncrease="1.6%"
           summaryName="Sum Total"

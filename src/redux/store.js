@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import authReducer from './slices/AuthSlice'
 import dropdownReducer from './slices/dropdownSlice'
-
+import userReducer from './slices/userSlice'
 import { authApi } from './APIs/authApi'
 import { storesApi } from './APIs/storeApi'
 import { productApi } from './APIs/productApi'
@@ -15,6 +15,7 @@ import { profilePictureApi } from './APIs/profilePictureUploadApi'
 
 const store = configureStore({
   reducer: {
+    user: userReducer,
     auth: authReducer,
     dropdown: dropdownReducer,
     [authApi.reducerPath]: authApi.reducer,

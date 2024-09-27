@@ -90,22 +90,78 @@ const SalesRecord = () => {
 
   
 
+  // const confirmUpdateProduct = (updatedData) => {
+  //   if (!productToUpdate) {
+  //     alert('No product selected for update');
+  //     return;
+  //   }
+  
+  //   if (!productToUpdate.prodId) {
+  //     alert('Product ID is not defined');
+  //     return;
+  //   }
+  
+  //   const formData = new FormData();
+  //   Object.entries(updatedData).forEach(([key, value]) => {
+  //     formData.append(key, value);
+  //   });
+  
+  //   updateProduct({ prodId: productToUpdate.prodId, updatedProduct: formData })
+  //     .then(() => {
+  //       alert('Product updated successfully!');
+  //       setShowUpdateModal(false);
+  //       setProductToUpdate(null);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Update error:", error);
+  //       alert('Error updating product: ' + error.message);
+  //     });
+  // };
+  
+  
+  
+  
   const confirmUpdateProduct = (updatedData) => {
     if (!productToUpdate) {
       alert('No product selected for update');
       return;
     }
+
+    if (!productToUpdate.prodId) {
+      alert('Product ID is not defined');
+      return;
+    }
   
-    updateProduct({ prodId: productToUpdate.prodId, updatedProduct: updatedData })
+    const formData = new FormData();
+  
+    // Add all required fields to formData
+    formData.append('prodId', productToUpdate.prodId); // Ensure you have the product ID
+    formData.append('name', updatedData.name);
+    formData.append('price', updatedData.price);
+    formData.append('itemCode', updatedData.itemCode);
+    formData.append('prodPhoto', updatedData.prodPhoto); // Ensure this is the correct file or URL
+    formData.append('alertStatus', updatedData.alertStatus);
+    formData.append('quantity', updatedData.quantity);
+    formData.append('categoryId', updatedData.categoryId); // Assuming this is the correct field
+    formData.append('storeId', updatedData.storeAvailable); // Make sure storeId corresponds with what your backend expects
+  
+    // Log the formData to debug
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
+  
+    updateProduct({ prodId: productToUpdate.prodId, updatedProduct: formData })
       .then(() => {
         alert('Product updated successfully!');
         setShowUpdateModal(false);
         setProductToUpdate(null);
       })
-      .catch((error) => alert('Error updating product: ' + error.message));
+      .catch((error) => {
+        console.error("Update error:", error);
+        alert('Error updating product: ' + error.message);
+      });
   };
   
-
   
 
 

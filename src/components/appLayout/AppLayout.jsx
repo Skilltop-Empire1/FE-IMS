@@ -41,7 +41,6 @@ function AppLayout() {
           </Main>
         </div>
       </div>
-      {/* </div> */}
     </>
   )
 }

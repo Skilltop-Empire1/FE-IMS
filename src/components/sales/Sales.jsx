@@ -1,9 +1,26 @@
 import React from 'react'
 import style from './Sales.module.css'
 import { useNavigate } from 'react-router-dom'
+import { useGetSalesRecordQuery } from '../../redux/APIs/salesRecordApi'
 
-function Sales({ posPayments, transferPayments, cashPayments, totalPayments }) {
+function Sales({}) {
   const navigate = useNavigate()
+  const { data } = useGetSalesRecordQuery()
+  console.log('sales', data)
+
+  const posPayments = data
+    ?.map((sale) => sale.paymentMethod === 'pos')
+    .reduce((a, b) => a + b, 0)
+
+  const cashPayments = data
+    ?.map((sale) => sale.paymentMethod === 'cash')
+    .reduce((a, b) => a + b, 0)
+
+  const transferPayments = data
+    ?.map((sale) => sale.paymentMethod === 'transfer')
+    .reduce((a, b) => a + b, 0)
+
+  const totalPayments = posPayments + transferPayments + cashPayments
   return (
     <div className={style.salesContainer}>
       <div onClick={() => navigate('/app/salesRecords')}>
@@ -11,24 +28,20 @@ function Sales({ posPayments, transferPayments, cashPayments, totalPayments }) {
       </div>
       <ul>
         <li>
+          <span> {posPayments}</span>
           <span>POS</span>
-          {posPayments}
-          <span></span>
         </li>
         <li>
+          <span> {transferPayments}</span>
           <span>Transfers</span>
-          {transferPayments}
-          <span></span>
         </li>
         <li>
+          <span> {cashPayments}</span>
           <span>Cash</span>
-          {cashPayments}
-          <span></span>
         </li>
         <li>
+          <span> {totalPayments}</span>
           <span>Total</span>
-          {totalPayments}
-          <span></span>
         </li>
       </ul>
     </div>

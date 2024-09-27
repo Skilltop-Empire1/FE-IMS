@@ -17,11 +17,7 @@ export const productApi = createApi({
     getProducts: builder.query({
       query: () => '/api/IMS/product', // Endpoint for fetching the list of products
     }),
-    getSoldProducts: builder.query({
-      query: () => '/api/IMS/product/2',
-    }),
-    
-    // Create a new product
+
     createProduct: builder.mutation({
       query: (newProduct) => ({
         url: '/api/IMS/product',

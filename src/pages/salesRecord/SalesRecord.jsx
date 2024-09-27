@@ -68,20 +68,21 @@ const SalesRecord = () => {
   };
 
   const confirmUpdateSalesRecord = (updatedData) => {
-    if (!salesRecordToUpdate) {
+    if (!salesRecordToUpdate || !salesRecordToUpdate.saleId) { // Ensure there's a valid saleId
       alert('No record selected for update');
       return;
     }
-
-    updateSalesRecord({ id: salesRecordToUpdate.id, updatedData })
+  
+    updateSalesRecord({ id: salesRecordToUpdate.saleId, updatedData }) // Use the correct saleId
       .then(() => {
         alert('Record updated successfully!');
         setShowUpdateModal(false);
         setSalesRecordToUpdate(null);
-        refetch()
+        refetch();
       })
       .catch((error) => alert('Error updating record'));
   };
+  
 
 
 

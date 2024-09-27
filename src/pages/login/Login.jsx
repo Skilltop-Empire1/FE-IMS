@@ -77,7 +77,7 @@ const Login = () => {
               </button>
             </div>
             <div className="flex justify-center mt-4">
-              <a href="passwordReset" className={style.forgot}>
+              <a href="/passwordReset" className={style.forgot}>
                 Forgot your password?
               </a>
             </div>
@@ -88,7 +88,7 @@ const Login = () => {
       <div className={style.right}>
         <h2>Don't have an account?</h2>
         <h3>Start your journey in one click</h3>
-        <a href="signup" className={style.toSignUp}>
+        <a href="/signup" className={style.toSignUp}>
           <button className={style.button}>Sign Up</button>
         </a>
       </div>

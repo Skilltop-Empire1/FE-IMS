@@ -9,6 +9,7 @@ export const NotificationProvider = ({ children }) => {
 
   // Retrieve userId (assume it's stored in localStorage or Redux)
   const userId = localStorage.getItem('userId'); // Adjust this based on where you store user data
+  console.log(userId)
 
   useEffect(() => {
     // Pass the userId as a query parameter when connecting

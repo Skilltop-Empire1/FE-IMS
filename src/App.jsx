@@ -26,10 +26,10 @@ import { NotificationProvider } from './components/Notifications/NotificationCon
 
 const router = createBrowserRouter([
   { path: '/', element: <Login /> },
-  { path: 'signup', element: <Signup /> },
+  { path: '/signup', element: <Signup /> },
   { path: '/mobile-warning', element: <MobileWarning /> },
-  { path: 'passwordReset', element: <PasswordReset /> },
-  { path: 'passwordConfirmation', element: <PasswordConfirmation /> },
+  { path: '/passwordReset', element: <PasswordReset /> },
+  { path: '/passwordConfirmation', element: <PasswordConfirmation /> },
   {
     path: '/app',
     element: (

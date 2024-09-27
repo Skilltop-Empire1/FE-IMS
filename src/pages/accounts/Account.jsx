@@ -15,8 +15,6 @@ function Account() {
   const { data: productData = [], error, isLoading } = useGetProductsQuery()
   const { data: salesData = [] } = useGetSalesRecordQuery()
 
-  console.log('productData', salesData)
-
   const category = productData?.map((item) => item.name) || []
   const currentYear = new Date().getFullYear()
 

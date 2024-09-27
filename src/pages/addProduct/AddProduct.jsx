@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useCreateProductMutation } from '../../redux/APIs/productApi' // Import createProduct mutation hook
 import style from './AddProduct.module.css'
 import { Navigate, useNavigate } from 'react-router-dom'
+import { jwtDecode } from 'jwt-decode'
 
 const AddProduct = () => {
   const [productName, setProductName] = useState('')
@@ -13,13 +14,27 @@ const AddProduct = () => {
   const [alertLimit, setAlertLimit] = useState('')
   const [price, setPrice] = useState('')
   const [productPhoto, setProductPhoto] = useState(null)
+  const [formError, setFormError] = useState('');
   const [addAnother, setAddAnother] = useState(false)
-
+  const [saveMessage, setSaveMessage] = useState(false)
+  const [success, setSuccess] = useState('hidden')
   const [stores, setStores] = useState([])
   const [categories, setCategories] = useState([])
+  const [userId, setUserId] = useState(null)
   const navigate = useNavigate()
 
   const [createProduct, { isLoading, error }] = useCreateProductMutation() // Using the mutation hook
+
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setUserId(decodedToken.user); // Assuming the token contains a userId field
+      console.log(userId)
+    }
+  }, []);
+
 
   // Fetch stores and categories
   useEffect(() => {
@@ -65,9 +80,14 @@ const AddProduct = () => {
 
     try {
       await createProduct(formData).unwrap()
-      alert('Product created successfully!')
-      navigate('/app/products')
-      if (!addAnother) {
+      setSaveMessage(true)
+      setSuccess('')
+      // revert success message 
+      setTimeout(() => {
+        setSuccess('hidden')  // Revert success message
+      }, 3000)
+      
+      if (addAnother) {
         setProductName('')
         setItemCode('')
         setDescription('')
@@ -77,9 +97,24 @@ const AddProduct = () => {
         setAlertLimit('')
         setPrice('')
         setProductPhoto(null)
+        setAddAnother(false)
+        setSaveMessage(false)
+
+
+      }
+      else {
+        navigate('/app/products')
       }
     } catch (err) {
       console.error('Failed to create product:', err)
+
+      if (err?.data?.message) {
+        setFormError(err.data.message); // Use the error message from the backend
+      } else if (err?.error) {
+        setFormError(err.error); // Fallback for RTK Query error message
+      } else {
+        setFormError('An unexpected error occurred. Please try again.');
+      }
     }
   }
 
@@ -93,7 +128,10 @@ const AddProduct = () => {
   }
 
   return (
-    <div className={`${style.body}`}>
+    <div className={`${style.body} relative`}>
+      <div className='absolute w-full ease-in-out duration-300'>
+        <p className={`text-center bg-green-400 py-3 ${success}`} style={{ color: '#fff' }}>Product saved successfully</p>
+      </div>
       <div className={style.top}>
         <h2 className={style.title}>Add Product</h2>
       </div>
@@ -145,6 +183,7 @@ const AddProduct = () => {
               className={style.input}
               value={selectedStore.id}
               onChange={handleStoreChange}
+              required
             >
               <option value="">Select store</option>
               {/* <option value="">Select Store</option> */}
@@ -165,6 +204,7 @@ const AddProduct = () => {
               className={style.input}
               value={category}
               onChange={(e) => setCategory(e.target.value)}
+              required
             >
               <option value="">Select Category</option>
               {categories.map((category) => {
@@ -174,7 +214,7 @@ const AddProduct = () => {
           </div>
 
           <div className={style.cont}>
-            <label className={style.label}>Alert Status:</label>
+            <label className={style.label}>Alert limit*</label>
             <input
               type="text"
               className={style.input}
@@ -183,12 +223,13 @@ const AddProduct = () => {
             />
           </div>
           <div className={style.cont}>
-            <label className={style.label}>Price:</label>
+            <label className={style.label}>Price*</label>
             <input
               type="number"
               className={style.input}
               value={price}
               onChange={(e) => setPrice(e.target.value)}
+              required
             />
           </div>
           <div className={style.cont}>
@@ -213,11 +254,11 @@ const AddProduct = () => {
 
           <div className="mt-5">
             <button type="submit" className={style.submit} disabled={isLoading}>
-              {isLoading ? 'Saving...' : 'Save product'}
+              {isLoading ? 'Saving...' : saveMessage ? 'Saved' : 'Save product'}
             </button>
           </div>
 
-          {error && <p className="error">Error: Unable to create product</p>}
+          {error && <p className="error mt-5" style={{ color: 'red' }}>{formError}</p>}
         </form>
       </div>
     </div>

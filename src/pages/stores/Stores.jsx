@@ -14,33 +14,33 @@ const Stores = () => {
   const [filteredItems, setFilteredItems] = useState([])
 
   // Fetch locations
-  const {
-    data: locations,
-    error: locationError,
-    isLoading: locationLoading,
-  } = useGetLocationsQuery()
-
+  const { data: locations = [], error: locationError, isLoading: locationLoading } = useGetLocationsQuery();
+  
   // Fetch stores
-  const {
-    data: stores,
-    error: storesError,
-    isLoading: storesLoading,
-  } = useGetStoresQuery()
+  const { data: stores = [], error: storesError, isLoading: storesLoading } = useGetStoresQuery();
 
   // Handle search input
   const handleSearch = (term) => {
-    setSearchTerm(term.toLowerCase())
-  }
+    setSearchTerm(term.toLowerCase());
+  };
 
   // Handle filter category
   const handleFilter = (category) => {
-    setFilterCategory(category)
-  }
+    setFilterCategory(category);
+  };
 
   // Update filteredItems based on search and filter criteria
   useEffect(() => {
-    if (stores) {
-      const filtered = stores.filter((store) => {
+    if (stores.length) {
+      // Safely sort stores by location
+      const sortedData = stores?.slice().sort((a, b) => {
+        const locationA = a.location || '';
+        const locationB = b.location || '';
+        return locationA.localeCompare(locationB);
+      });
+
+      // Filter stores based on search term and category
+      const filtered = sortedData.filter((store) => {
         // Match search term
         const matchesSearch =
           store.location.toLowerCase().includes(searchTerm) ||
@@ -50,9 +50,10 @@ const Stores = () => {
         const matchesCategory =
           filterCategory === 'all' || store.location === filterCategory
 
-        return matchesSearch && matchesCategory
-      })
-      setFilteredItems(filtered)
+        return matchesSearch && matchesCategory;
+      });
+
+      setFilteredItems(filtered);
     }
   }, [stores, searchTerm, filterCategory])
 
@@ -86,7 +87,7 @@ const Stores = () => {
       {/* Store Detail Component */}
       <StoreDetail selectedStore={selectedStore} />
     </div>
-  )
-}
+  );
+};
 
-export default Stores
+export default Stores;

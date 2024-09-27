@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { logout as logoutAction, setCredentials } from '../slices/AuthSlice'
 
 export const authApi = createApi({
-  reducerPath: 'authApi',
+  reducerPath: 'passwordReset',
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://be-ims.onrender.com',
     prepareHeaders: (headers, { getState }) => {

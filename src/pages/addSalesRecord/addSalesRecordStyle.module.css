@@ -1,0 +1,62 @@
+.top {
+    /* background: #F3F3F2; */
+    padding: 10px ;
+}
+
+.title {
+    font-family: ;
+    font-size: clamp(1.5rem, .2951vw + 1.8111rem, 2.18rem);
+    font-weight: bolder;
+    line-height: 48px;
+    text-align: left;
+}
+
+.form {
+    display: grid;
+    grid-template-columns: 2fr 2fr;
+}
+
+.cont {
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    text-align: left;
+    margin: 20px 0 10px 0;
+}
+
+.input {
+    width: 450px;
+    background: #F4F3F3;
+    height: 55px;
+    border-radius: 15px;
+    padding: 5px 10px;
+}
+
+.submit {
+    width: 350px;
+    height: 55px;
+    background: #4B02A3;
+    color: #E2D3F4;
+    border-radius: 12px;
+}
+
+.check {
+    appearance: none;
+    background-color: #E2D3F4;
+    width: 35px;
+    height: 35px;
+}
+
+.check::before {
+    content: '';
+}
+
+.check:checked::before {
+    content: "\2713";
+}

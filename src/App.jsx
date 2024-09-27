@@ -21,13 +21,15 @@ import store from './redux/store'
 import { setCredentials } from './redux/slices/AuthSlice'
 import PasswordReset from './pages/Password reset/PasswordReset'
 import PasswordConfirmation from './pages/Password reset/PasswordConfirmation'
+import AddSaleRecord from './pages/addSalesRecord/AddSalesRecord'
+import { NotificationProvider } from './components/Notifications/NotificationContext'
 
 const router = createBrowserRouter([
   { path: '/', element: <Login /> },
-  { path: 'signup', element: <Signup /> },
+  { path: '/signup', element: <Signup /> },
   { path: '/mobile-warning', element: <MobileWarning /> },
-  { path: 'passwordReset', element: <PasswordReset /> },
-  { path: 'passwordConfirmation', element: <PasswordConfirmation /> },
+  { path: '/passwordReset', element: <PasswordReset /> },
+  { path: '/passwordConfirmation', element: <PasswordConfirmation /> },
   {
     path: '/app',
     element: (
@@ -47,6 +49,7 @@ const router = createBrowserRouter([
       { path: 'staff', element: <Staff /> },
       { path: 'addStaff', element: <AddStaff /> },
       { path: 'createStore', element: <CreateStore /> },
+      { path: 'addSaleRecord', element: <AddSaleRecord /> },
     ],
   },
   { path: '*', element: <NotFound /> },
@@ -57,7 +60,11 @@ function App() {
   if (token) {
     store.dispatch(setCredentials({ token }))
   }
-  return <RouterProvider router={router} />
+  return (
+  <NotificationProvider>
+    <RouterProvider router={router} />
+  </NotificationProvider>
+  )
 }
 
 export default App

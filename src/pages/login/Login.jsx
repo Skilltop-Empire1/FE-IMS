@@ -5,10 +5,13 @@ import { setCredentials } from '../../redux/slices/AuthSlice' // Adjust the impo
 import style from './loginStyle.module.css'
 import { useNavigate } from 'react-router-dom'
 import { useRedirectOnMobile } from '../../utilities/mobileRedirect'
+import { EyeIcon, EyeOff } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [passwordVisibility, setPasswordVisibility]= useState(false)
   const dispatch = useDispatch()
   const [login, { isLoading }] = useLoginMutation()
   const navigate = useNavigate()
@@ -18,6 +21,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
+
     try {
       const token = await login({ email, password }).unwrap() // Execute login mutation
       dispatch(setCredentials({ token })) // Dispatch the token to Redux store
@@ -26,6 +30,10 @@ const Login = () => {
       console.error('Failed to login:', err) // Handle error
       alert('Login failed! Please check your credentials and try again.')
     }
+  }
+
+  const showPassword = () => {
+    setPasswordVisibility(!passwordVisibility)
   }
 
   return (
@@ -46,17 +54,19 @@ const Login = () => {
                 required
               />
             </div>
-            <div className={style.input}>
+            <div className={style.input2}>
               <label htmlFor="password">Password</label>
               <br />
-              <input
-                type="password"
-                name="password"
-                placeholder="Enter password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
+              <div className={`flex items-center justify-between gap-3 ${style.sum}`}>
+                <input
+                  type={passwordVisibility? 'text' : 'password'}
+                  name="password"
+                  placeholder="Enter password"
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              {passwordVisibility ? <EyeIcon onClick={showPassword} /> : <EyeOff onClick={showPassword}/>}
+              </div>
             </div>
             <div className={style.submit}>
               <button
@@ -68,9 +78,9 @@ const Login = () => {
               </button>
             </div>
             <div className="flex justify-center mt-4">
-              <a href="passwordReset" className={style.forgot}>
+              <Link to="/passwordReset" className={style.forgot}>
                 Forgot your password?
-              </a>
+              </Link>
             </div>
           </form>
         </div>
@@ -79,9 +89,9 @@ const Login = () => {
       <div className={style.right}>
         <h2>Don't have an account?</h2>
         <h3>Start your journey in one click</h3>
-        <a href="signup" className={style.toSignUp}>
+        <Link to="/signup" className={style.toSignUp}>
           <button className={style.button}>Sign Up</button>
-        </a>
+        </Link>
       </div>
     </div>
   )

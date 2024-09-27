@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
 import ModalWrapper from './ModalWrapper'
 import { z } from 'zod'
 import { useGetStoresQuery } from '../../redux/APIs/storeApi' // API hooks
@@ -8,32 +7,30 @@ import { useCreateCategoryMutation } from '../../redux/categoryApi'
 // Initial form state
 const initialState = {
   name: '',
-  // description: '',
-  // image_url:
-  //   'https://via.placeholder.com/640x480.png/006677?text=categories+Faker+unde',
   storeId: null,
 }
 
 // Schema for form validation
 export const categorySchema = z.object({
   name: z.string().min(1, 'Category Name is required'),
-  // description: z
-  //   .string()
-  //   .min(10, { message: 'Description must be at least 10 characters long.' })
-  //   .max(500, { message: 'Description must not exceed 500 characters.' }),
-  storeId: z.string().min(1, 'Store selection is required'),
+  storeId: z
+    .union([z.number(), z.string()]) // Accepts number or string
+    .refine(
+      (val) => {
+        const parsed = parseInt(val) // Try to parse the value as a number
+        return !isNaN(parsed) // Ensure it's a valid number
+      },
+      {
+        message: 'Select a Store', // Error message when it's not a number
+      },
+    ),
 })
 
 const AddCategoryModal = ({ show, onClose }) => {
   const [formData, setFormData] = useState(initialState)
   const [errors, setErrors] = useState({})
-  const [imageFile, setImageFile] = useState(null)
   const [apiError, setApiError] = useState(null)
   const [loading, setLoading] = useState(false)
-
-  const [searchParams] = useSearchParams()
-  const page = parseInt(searchParams.get('categorypage')) || 1
-  const searchQuery = searchParams.get('categorysearch') || ''
 
   // Fetch stores
   const {
@@ -55,12 +52,6 @@ const AddCategoryModal = ({ show, onClose }) => {
     setApiError(null)
   }
 
-  // Handle image change
-  const handleImageChange = (file) => {
-    setErrors({})
-    setImageFile(file)
-  }
-
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -74,7 +65,6 @@ const AddCategoryModal = ({ show, onClose }) => {
       // Call API to create category
       const newCategory = {
         ...formData,
-        // image_url: formData.image_url || initialState.image_url, // Use default image if none provided
       }
       await createCategory(newCategory).unwrap()
 
@@ -102,8 +92,8 @@ const AddCategoryModal = ({ show, onClose }) => {
     setErrors({})
     if (stores) {
       setFormData((prev) => ({
-        ...prev,
-        storeId: stores[0].storeId + '',
+        name: '',
+        storeId: null,
       }))
     }
   }, [show, stores])
@@ -134,6 +124,9 @@ const AddCategoryModal = ({ show, onClose }) => {
               ))}
 
             <div>
+              <label className="text-sm text-imsPurple mb-2">
+                Category Name
+              </label>
               <input
                 value={formData.name}
                 onChange={(e) => handleChange('name', e.target.value)}
@@ -146,44 +139,30 @@ const AddCategoryModal = ({ show, onClose }) => {
               )}
             </div>
 
-            {/* <div>
-              <input
-                value={formData.description}
-                onChange={(e) => handleChange('description', e.target.value)}
-                placeholder="Category Description"
-                type="text"
-                className="z-10 block w-full rounded border border-gray-300 p-[14px] text-sm focus:border-imsLightPurple focus:outline-none"
-              />
-              {errors?.description && (
-                <p className="pt-1 text-xs text-red-500">
-                  {errors.description}
-                </p>
-              )}
-            </div> */}
-
             {/* Store select dropdown */}
             <div>
+              <label className="text-sm text-imsPurple mb-2">
+                Select Store
+              </label>
               <select
-                value={formData.storeId}
+                value={Number(formData.storeId)}
                 onChange={(e) => handleChange('storeId', e.target.value)}
                 className="z-10 block w-full rounded border border-gray-300 p-[14px] text-sm focus:border-imsLightPurple focus:outline-none"
               >
-                <option disabled value="">
-                  Select Store
-                </option>
+                <option value={null}>Select Store</option>
                 {storesLoading || storesError ? (
                   <option>Loading Stores...</option>
                 ) : (
                   stores &&
                   stores.map((store) => (
-                    <option key={store.storeId} value={store.storeId}>
+                    <option key={store.storeId} value={Number(store.storeId)}>
                       {store.storeName}
                     </option>
                   ))
                 )}
               </select>
-              {errors?.store && (
-                <p className="pt-1 text-xs text-red-500">{errors.store}</p>
+              {errors?.storeId && (
+                <p className="pt-1 text-xs text-red-500">{errors.storeId}</p>
               )}
             </div>
           </div>

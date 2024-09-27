@@ -1,8 +1,18 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const storesApi = createApi({
-  reducerPath: 'storesApi', // Unique key to identify the API slice
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://be-ims.onrender.com' }), // Base URL
+  reducerPath: 'storesApi',  // Unique key to identify the API slice
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'https://be-ims.onrender.com',
+    prepareHeaders: (headers) => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`); // Attach the token to the header
+        console.log('Token attached to headers:', headers.get('Authorization')); // Log token to verify
+      }
+      return headers;
+    },
+  }),
   endpoints: (builder) => ({
     // GET request to fetch all stores
     getStores: builder.query({
@@ -34,4 +44,4 @@ export const {
   useCreateStoreMutation,
   useGetLocationsQuery,
   useGetStoresOverviewQuery,
-} = storesApi
+} = storesApi;

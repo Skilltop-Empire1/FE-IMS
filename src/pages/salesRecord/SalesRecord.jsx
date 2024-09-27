@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from 'react'
-import Filter from '../../components/Filter/Filter'
-import Table from '../../components/Table/Table'
-import { useGetLocationsQuery } from '../../redux/APIs/storeApi'
-import { useGetProductsQuery } from '../../redux/APIs/productApi'
+import React, { useState, useEffect } from 'react';
+import Filter from '../../components/Filter/Filter';
+import Table from '../../components/Table/Table2';
+import { useGetLocationsQuery } from '../../redux/APIs/storeApi';
+import { useGetSalesRecordQuery, useDeleteSalesRecordMutation, useUpdateSalesRecordMutation } from '../../redux/APIs/salesRecordApi';
+import ConfirmationModal from '../../components/modals/ConfirmationModal';
+import EditSalesRecordModal from '../../components/modals/EditSalesRecordModal';
 
 const SalesRecord = () => {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [filterCategory, setFilterCategory] = useState('all')
-  const [categories, setCategories] = useState([])
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterCategory, setFilterCategory] = useState('all');
+  const [categories, setCategories] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [salesRecordIdToDelete, setSalesRecordIdToDelete] = useState(null);
+  const [salesRecordToUpdate, setSalesRecordToUpdate] = useState(null); // Track record to update
+  const { data: salesRecord, error: salesError, isLoading: salesLoading, refetch } = useGetSalesRecordQuery();
+  const [deleteSalesRecord] = useDeleteSalesRecordMutation();
+  const [updateSalesRecord] = useUpdateSalesRecordMutation();
 
-  // Fetch products using RTK Query
-  const { data: products, error, isLoading } = useGetProductsQuery()
+  const { data: locations, error: locationError, isLoading: locationLoading } = useGetLocationsQuery();
 
-  // Fetch locations
-  const {
-    data: locations,
-    error: locationError,
-    isLoading: locationLoading,
-  } = useGetLocationsQuery()
-
-  // Fetch categories
   useEffect(() => {
     const fetchCategories = async () => {
       const response = await fetch(
@@ -32,51 +32,111 @@ const SalesRecord = () => {
     fetchCategories()
   }, [])
 
-  // Handle search input
   const handleSearch = (term) => {
     setSearchTerm(term.toLowerCase())
   }
 
-  // Handle filter selection
   const handleFilter = (category) => {
     setFilterCategory(category)
   }
 
-  // Filter products based on search term and selected category
-  const filteredItems = products?.filter((item) => {
-    // Check if item matches the search term
-    const matchesSearch = item.name.toLowerCase().includes(searchTerm)
+  const handleDeleteSalesRecord = (id) => {
+    setSalesRecordIdToDelete(id);
+    setShowModal(true);
+  };
 
-    // Check if item matches the selected category
-    const matchesCategory =
-      filterCategory === 'all' || item.category === filterCategory
+  const confirmDeleteSalesRecord = () => {
+    if (!salesRecordIdToDelete) {
+      alert('No record selected for deletion');
+      return;
+    }
+
+    deleteSalesRecord(salesRecordIdToDelete)
+      .then(() => {
+        alert('Record deleted successfully!');
+        setShowModal(false);
+        setSalesRecordIdToDelete(null);
+      })
+      .catch((error) => alert('Error deleting record'));
+  };
+
+  //sales record update
+
+  const handleUpdateSalesRecord = (record) => {
+    setSalesRecordToUpdate(record);
+    setShowUpdateModal(true);
+  };
+
+  const confirmUpdateSalesRecord = (updatedData) => {
+    if (!salesRecordToUpdate) {
+      alert('No record selected for update');
+      return;
+    }
+
+    updateSalesRecord({ id: salesRecordToUpdate.id, updatedData })
+      .then(() => {
+        alert('Record updated successfully!');
+        setShowUpdateModal(false);
+        setSalesRecordToUpdate(null);
+        refetch()
+      })
+      .catch((error) => alert('Error updating record'));
+  };
+
+
+
+  //filter
+
+  const filteredItems = salesRecord?.filter((item) => {
+    const matchesSearch = item.paymentMethod.toLowerCase().includes(searchTerm);
+    const matchesCategory = filterCategory === 'all' || item.category === filterCategory;
 
     return matchesSearch && matchesCategory
   })
 
   return (
     <div>
-      {/* Filter Section */}
-      <Filter
-        handleSearch={handleSearch}
-        handleFilter={handleFilter}
-        direction="addProduct"
-        title="Sales Record"
-        button="+ Add Record"
-        location={locations} // Pass categories to the Filter component
-        search="search by name"
+      <Filter 
+        handleSearch={handleSearch} 
+        handleFilter={handleFilter} 
+        direction='addSaleRecord' 
+        title='Sales Record' 
+        button='+ Add Record' 
+        location={locations}  
+        categories={categories}  
+        search='search by payment method'
       />
+      
+      {
+        salesLoading || locationLoading ? ( 
+          <p>Loading...</p> 
+        ) : salesError || locationError ? ( 
+          <p>Error loading data</p> 
+        ) : (
+          <Table 
+            status='Payment method' 
+            date='Date added' 
+            api={filteredItems} 
+            deleted={(id) => handleDeleteSalesRecord(id)} 
+            updated={(record) => handleUpdateSalesRecord(record)} // Pass product record to update handler
+          />
+        )
+      }
 
-      {/* Products Table Section */}
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p>Error loading products</p>
-      ) : (
-        <Table status="Alert Status" date="Date" api={filteredItems} /> // Display filtered products
-      )}
+      <ConfirmationModal 
+        title={'sale record'}
+        showModal={showModal} 
+        setShowModal={setShowModal} 
+        handleDelete={confirmDeleteSalesRecord}  
+      />
+      <EditSalesRecordModal
+        showModal={showUpdateModal} 
+        setShowModal={setShowUpdateModal} 
+        record={salesRecordToUpdate} 
+        handleUpdate={confirmUpdateSalesRecord} 
+      />
     </div>
-  )
-}
+  );
+};
 
 export default SalesRecord

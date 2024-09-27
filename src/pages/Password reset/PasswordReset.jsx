@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import style from './passwordResetStyle.module.css';
 import { useRequestPasswordResetMutation } from '../../redux/APIs/passwordResetApi';
+import { Link } from 'react-router-dom';
 
 const PasswordReset = () => {
   const [email, setEmail] = useState('');

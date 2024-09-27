@@ -6,6 +6,7 @@ import style from './loginStyle.module.css'
 import { useNavigate } from 'react-router-dom'
 import { useRedirectOnMobile } from '../../utilities/mobileRedirect'
 import { EyeIcon, EyeOff } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -77,9 +78,9 @@ const Login = () => {
               </button>
             </div>
             <div className="flex justify-center mt-4">
-              <a href="/passwordReset" className={style.forgot}>
+              <Link to="/passwordReset" className={style.forgot}>
                 Forgot your password?
-              </a>
+              </Link>
             </div>
           </form>
         </div>
@@ -88,9 +89,9 @@ const Login = () => {
       <div className={style.right}>
         <h2>Don't have an account?</h2>
         <h3>Start your journey in one click</h3>
-        <a href="/signup" className={style.toSignUp}>
+        <Link to="/signup" className={style.toSignUp}>
           <button className={style.button}>Sign Up</button>
-        </a>
+        </Link>
       </div>
     </div>
   )

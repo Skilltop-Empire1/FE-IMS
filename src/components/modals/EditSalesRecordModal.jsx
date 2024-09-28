@@ -51,7 +51,7 @@ const EditSalesRecordModal = ({ showModal, setShowModal, record, handleUpdate })
   // Function to handle category selection
   const handleCategoryChange = (e) => {
     const selectedCategoryId = e.target.value;
-    const selectedCategory = categories.find(category => category.id === selectedCategoryId);
+    const selectedCategory = categories.categories.find(category => category.id === selectedCategoryId);
 
     setFormData((prev) => ({
       ...prev,

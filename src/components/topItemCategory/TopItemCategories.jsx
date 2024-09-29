@@ -1,26 +1,34 @@
 import React from 'react'
 import style from './TopItemCategories.module.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useGetSalesRecordQuery } from '../../redux/APIs/salesRecordApi'
 function TopItemCategories() {
-  const topCategoriesItems = [
-    { quantitySold: 3 },
-    { quantitySold: 3 },
-    { quantitySold: 3 },
-    { quantitySold: 3 },
-    { quantitySold: 3 },
-  ]
+  const { data: soldProductData } = useGetSalesRecordQuery()
+  console.log(typeof data)
+
+  const topCategoriesItems = Array.isArray(soldProductData)
+    ? soldProductData
+        .slice()
+        .sort((a, b) => b.quantity - a.quantity)
+        .slice(0, 6)
+    : []
+
+  console.log('topCategoriesItems', topCategoriesItems)
+
+  const navigate = useNavigate()
+
   return (
-    <div className={style.container}>
+    <div onClick={() => navigate('/app/products')} className={style.container}>
       <div className={style.header}>
         <p>Top Item Categories</p>
-        <Link>
+        <Link to="/app/salesRecords">
           <p>View All</p>
         </Link>
       </div>
       <div className={style.cardContainer}>
         {topCategoriesItems.map((item, index) => (
           <div key={index} className={style.topItemCategoryCard}>
-            <p>{item.quantitySold}</p>
+            <p>{item.quantity}</p>
           </div>
         ))}
       </div>

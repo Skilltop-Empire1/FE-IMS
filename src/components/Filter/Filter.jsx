@@ -1,8 +1,29 @@
 import React from 'react'
-import style from './filterstyle.module.css'
-import BUtton from '../Button/BUtton'
+import style from './filterStyle.module.css'
+import RedirectButton from '../Button/RedirectButton'
+import { useGetLocationsQuery } from '../../redux/APIs/storeApi'
 
-const Filter = ({handleFilter, handleSearch, direction, title, button}) => {
+const Filter = ({
+  handleFilter,
+  handleSearch,
+  direction,
+  title,
+  button,
+  location,
+  search,
+}) => {
+  // const Filter = ({
+  //   handleFilter,
+  //   handleSearch,
+  //   direction,
+  //   title,
+  //   button,
+  //   location,
+  // }) => {
+
+  // Fetch locations data using RTK query
+  const { data: locations, error, isLoading } = useGetLocationsQuery()
+
   return (
     <div className={`flex justify-between items-center px-4 ${style.body}`}>
       <div className={style.left}>
@@ -10,21 +31,34 @@ const Filter = ({handleFilter, handleSearch, direction, title, button}) => {
       </div>
       <div className={`flex ${style.right}`}>
         <input
-            type="text"
-            placeholder="Search items"
-            onChange={(e) => handleSearch(e.target.value)}
+          type="text"
+          placeholder={search}
+          onChange={(e) => handleSearch(e.target.value)}
         />
-        
-        {/* Select Filter */}
-        <select onChange={(e) => handleFilter(e.target.value)}>
-            <option value="all">Filter by</option>
-            <option value="fruits">Fruits</option>
-            <option value="vegetables">Vegetables</option>
-            <option value="dairy">Dairy</option>
-            
-        </select>
-        <BUtton buttonName={button} direction=  {direction} />
 
+        {/* Select Filter */}
+        {isLoading ? (
+          <select name="" id="">
+            <option value="">Loading locations...</option>
+          </select>
+        ) : error ? (
+          <select name="" id="">
+            <option value="">Failed to load locations</option>
+          </select>
+        ) : (
+          <div>
+            <select onChange={(e) => handleFilter(e.target.value)}>
+              <option value="all">Filter by location</option>
+              {location.map((location, idx) => (
+                <option value={location} key={idx}>
+                  {location}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+
+        <RedirectButton buttonName={button} direction={direction} />
       </div>
     </div>
   )

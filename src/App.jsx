@@ -1,3 +1,4 @@
+import React from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Login from './pages/login/Login'
 import Signup from './pages/signup/Signup'
@@ -11,16 +12,31 @@ import Settings from './pages/settings/Settings'
 import Stores from './pages/stores/Stores'
 import NotFound from './pages/notFound/NotFound'
 import AddProduct from './pages/addProduct/AddProduct'
-import Staff from './pages/staff/Staff'
+import Staff from './pages/addStaff/Staff'
 import AddStaff from './pages/addStaff/AddStaff'
 import CreateStore from './pages/createStore/CreateStore'
+import ProtectedRoute from './utilities/ProtectedRoute'
+import MobileWarning from './pages/mobileWarning/MobileWarning'
+import store from './redux/store'
+import { setCredentials } from './redux/slices/AuthSlice'
+import PasswordReset from './pages/Password reset/PasswordReset'
+import PasswordConfirmation from './pages/Password reset/PasswordConfirmation'
+import AddSaleRecord from './pages/addSalesRecord/AddSalesRecord'
+import { NotificationProvider } from './components/Notifications/NotificationContext'
 
 const router = createBrowserRouter([
   { path: '/', element: <Login /> },
-  { path: 'signup', element: <Signup /> },
+  { path: '/signup', element: <Signup /> },
+  { path: '/mobile-warning', element: <MobileWarning /> },
+  { path: '/passwordReset', element: <PasswordReset /> },
+  { path: '/passwordConfirmation', element: <PasswordConfirmation /> },
   {
     path: '/app',
-    element: <AppLayout />,
+    element: (
+      <ProtectedRoute>
+        <AppLayout />
+      </ProtectedRoute>
+    ),
     children: [
       { index: true, element: <Home /> },
       { path: 'accounts', element: <Account /> },
@@ -33,13 +49,22 @@ const router = createBrowserRouter([
       { path: 'staff', element: <Staff /> },
       { path: 'addStaff', element: <AddStaff /> },
       { path: 'createStore', element: <CreateStore /> },
+      { path: 'addSaleRecord', element: <AddSaleRecord /> },
     ],
   },
   { path: '*', element: <NotFound /> },
 ])
 
 function App() {
-  return <RouterProvider router={router} />
+  const token = localStorage.getItem('token')
+  if (token) {
+    store.dispatch(setCredentials({ token }))
+  }
+  return (
+  <NotificationProvider>
+    <RouterProvider router={router} />
+  </NotificationProvider>
+  )
 }
 
 export default App

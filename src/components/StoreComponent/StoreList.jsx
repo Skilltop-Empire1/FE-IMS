@@ -1,58 +1,43 @@
-import React from 'react'
-import style from './storeComponentStyle.module.css'
+import React, { useState } from 'react';
+import style from './storeComponentStyle.module.css';
+import { useGetStoresQuery } from '../../redux/APIs/storeApi';
 
+const StoreList = ({ onSelectStore, items }) => {
+  // Local state to track the selected store
+  const [selectedStoreId, setSelectedStoreId] = useState(null);
 
-const StoreList = ({onSelectStore}) => {
-    const data = [
-        {
-          location: 'Manchester UK',
-          employees: '23 employees',
-          items: '308 items',
-          revenue: '$600000',
-        },
-        {
-          location: 'London UK',
-          employees: '15 employees',
-          items: '210 items',
-          revenue: '$450000',
-        },
-        {
-          location: 'Birmingham UK',
-          employees: '18 employees',
-          items: '150 items',
-          revenue: '$300000',
-        },
-        {
-          location: 'Leeds UK',
-          employees: '20 employees',
-          items: '270 items',
-          revenue: '$550000',
-        },
-        {
-          location: 'Liverpool UK',
-          employees: '25 employees',
-          items: '320 items',
-          revenue: '$650000',
-        },
-        {
-          location: 'Glasgow UK',
-          employees: '22 employees',
-          items: '290 items',
-          revenue: '$620000',
-        },
-      ]
+  const { data: stores, error, isLoading } = useGetStoresQuery();
+
+  const handleStoreClick = (store) => {
+    // Set the selected store ID to the clicked one
+    setSelectedStoreId(store.storeId); // Assuming `store.id` is unique
+    onSelectStore(store); // Send the selected store to the parent component
+  };
 
   return (
-    <div className='flex flex-wrap gap-5 mt-5'>
-      {data.map((store, idx) =>{
-        return (
-            <div key={idx} className={style.store} onClick={()=>onSelectStore(store)}>
-                {store.location}
-            </div>
-        )
-      })}
+    <div className="flex flex-wrap gap-5 mt-5">
+      {stores?.length > 0 ? (
+        items.map((store, idx) => (
+          <div
+            key={idx}
+            className={`${style.store} ${selectedStoreId === store.storeId ? style.selected : ''}`} // Conditionally add the `selected` class
+            onClick={() => handleStoreClick(store)}
+            style={{
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundImage: `linear-gradient(0deg, rgb(121 0 255 / 25%), rgb(81 3 163 / 39%)),  url(${store.storePhoto})`,
+              filter: selectedStoreId === store.storeId ? 'brightness(0.2)' : '', // Darken the background of the selected store
+              transition: 'filter 0.3s ease', // Smooth transition when changing the background
+            }}
+          >
+            {store.location}
+          </div>
+        ))
+      ) : (
+        <div>No stores available</div>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default StoreList
+export default StoreList;

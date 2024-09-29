@@ -39,4 +39,7 @@
 .btn {
   margin-top: 19px;
   text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  align-items: end;
 }

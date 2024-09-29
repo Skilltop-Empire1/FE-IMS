@@ -1,9 +1,14 @@
 import React from 'react'
 import style from './qtyCard.module.css'
+import { useNavigate } from 'react-router-dom'
 
-function QtyCard({ cardName, quantity }) {
+function QtyCard({ cardName, quantity, page }) {
+  const navigate = useNavigate()
   return (
-    <div className={style.cardContainer}>
+    <div
+      onClick={() => navigate(`/app/${page}`)}
+      className={style.cardContainer}
+    >
       <div>
         <h4>{quantity}</h4>
       </div>

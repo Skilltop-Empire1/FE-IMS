@@ -2,13 +2,12 @@ import { PencilIcon } from 'lucide-react'
 import React, { useState } from 'react'
 import SelectPermission from './SelectPermission'
 
-const RolesPermissionsCard = ({ showExport = true }) => {
-  // State to store the currently selected role
+const RolesPermissionsCard = ({ showExport = true, onRoleChange }) => {
   const [selectedRole, setSelectedRole] = useState(roles[0].label)
 
   const handleRoleChange = (label) => {
-    // Set the selected role to the clicked checkbox label
     setSelectedRole(label)
+    onRoleChange(label) // Pass the selected role back to the parent
   }
 
   return (
@@ -19,24 +18,22 @@ const RolesPermissionsCard = ({ showExport = true }) => {
           <PencilIcon size={18} />
         </div>
         <div className="flex flex-col gap-3">
-          {roles.map(({ label }, index) => {
-            return (
-              <label
-                key={index}
-                htmlFor={label}
-                className="text-md flex items-center gap-2"
-              >
-                <input
-                  type="checkbox"
-                  className="h-5 w-5 rounded-full bg-imsLightPurple border-transparent focus:ring-0"
-                  id={label}
-                  checked={selectedRole === label} // Check if this role is selected
-                  onChange={() => handleRoleChange(label)} // Update state on change
-                />{' '}
-                <span>{label}</span>
-              </label>
-            )
-          })}
+          {roles.map(({ label }, index) => (
+            <label
+              key={index}
+              htmlFor={label}
+              className="text-md flex items-center gap-2"
+            >
+              <input
+                type="checkbox"
+                className="h-5 w-5 rounded-full bg-imsLightPurple border-transparent focus:ring-0"
+                id={label}
+                checked={selectedRole === label} // Check if this role is selected
+                onChange={() => handleRoleChange(label)} // Update state on change
+              />
+              <span>{label}</span>
+            </label>
+          ))}
         </div>
       </div>
 
@@ -57,6 +54,8 @@ const RolesPermissionsCard = ({ showExport = true }) => {
     </div>
   )
 }
+
+// export default Roles
 
 export default RolesPermissionsCard
 

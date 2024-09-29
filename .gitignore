@@ -27,3 +27,4 @@ dist-ssr
 # Ignore environment variable files
 .env
 demo.json
+src/components/Button/BUtton.jsx

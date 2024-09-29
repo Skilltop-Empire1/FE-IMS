@@ -19,8 +19,26 @@
   align-items: center;
 }
 
+.leftNavs {
+  display: flex;
+  gap: 120px;
+}
+
 .leftNavs li {
   margin-right: 90px;
+  cursor: pointer;
+}
+
+.searchContainer {
+  display: flex;
+  align-items: center;
+  border: 1px solid #e5d5f9;
+  height: 30px;
+  border-radius: 9px;
+}
+
+.searchContainer {
+  padding-left: 20px;
 }
 
 .rightNavs li {
@@ -28,8 +46,18 @@
 }
 
 .navContainer img {
-  max-height: 40px; /* Adjust this value as needed to fit the nav bar height */
-  width: auto; /* Maintain aspect ratio */
-  height: auto; /* Maintain aspect ratio */
-  object-fit: contain; /* Ensure image is contained within the element */
+  max-height: 40px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.profileImage {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid #8d46e2;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }

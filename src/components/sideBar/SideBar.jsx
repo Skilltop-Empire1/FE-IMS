@@ -1,6 +1,7 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
-import Button from '../button/Button'
+import React, { useState } from 'react'
+import Modal from 'react-modal'
+import { NavLink, useNavigate } from 'react-router-dom'
+import Button from '../Button/Button'
 import style from './Sidebar.module.css'
 import {
   Home,
@@ -11,11 +12,26 @@ import {
   User,
   Settings,
   PlusCircle,
-  LogOut,
   UserPlus,
 } from 'lucide-react'
+import { useDispatch } from 'react-redux'
+import { logout as clearAuth } from '../../redux/slices/AuthSlice'
+import Logout from '../../modals/logout/Logout'
+
+Modal.setAppElement('#root')
 
 function SideBar() {
+  const [modalIsOpen, setModalIsOpen] = useState(false)
+
+  const dispatch = useDispatch()
+
+  const openModal = () => setModalIsOpen(true)
+  const closeModal = () => setModalIsOpen(false)
+
+  const handleLogout = async () => {
+    dispatch(clearAuth())
+  }
+
   return (
     <nav className={style.navContainer}>
       <ul>
@@ -101,7 +117,7 @@ function SideBar() {
       <ul>
         <li>
           <NavLink
-            to="/app/addStaff"
+            to="/app/staff"
             className={({ isActive }) =>
               isActive ? style.activeLink : undefined
             }
@@ -122,9 +138,26 @@ function SideBar() {
           </NavLink>
         </li>
         <li className={style.logout}>
-          <Button className={style.logoutButton} buttonName="Logout" />
+          <Button
+            onClick={openModal}
+            className={style.logoutButton}
+            buttonName="Logout"
+          />
         </li>
       </ul>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Confirm Logout"
+        className={style.modal}
+        overlayClassName={style.overlay}
+      >
+        <Logout
+          className={style.modalButtons}
+          closeModal={closeModal}
+          handleLogout={handleLogout}
+        />
+      </Modal>
     </nav>
   )
 }

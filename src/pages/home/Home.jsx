@@ -1,13 +1,70 @@
 import React from 'react'
-import QtyCard from '../../components/quantityCard/qtyCard'
+import QtyCard from '../../components/quantityCard/QtyCard'
 import style from './Home.module.css'
 import Sales from '../../components/sales/Sales'
 import TopItemCategories from '../../components/topItemCategory/TopItemCategories'
 import StockStatus from '../../components/stockStatus/StockStatus'
 import StoreList from '../../components/storeList/StoreList'
-import Button from '../../components/button/Button'
+import Button from '../../components/Button/Button'
+import {
+  useGetStoresOverviewQuery,
+  useGetStoresQuery,
+} from '../../redux/APIs/storeApi'
+import { useGetProductsQuery } from '../../redux/APIs/productApi'
+import { Rings } from 'react-loader-spinner'
+import { useGetCategoriesQuery } from '../../redux/categoryApi'
 
 function Home() {
+  const { data: storeData = [] } = useGetStoresQuery()
+  const { data: productData = [], error, isLoading } = useGetProductsQuery()
+  const { data: storeOverview = [] } = useGetStoresOverviewQuery()
+  const { data: categoryData = [] } = useGetCategoriesQuery()
+
+  if (isLoading) {
+    return (
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          position: 'absolute',
+          right: 0,
+          left: 0,
+          top: 0,
+          bottom: 0,
+        }}
+      >
+        <Rings color="#7D2CE0" />
+      </div>
+    )
+  }
+
+  if (error) {
+    return <div>Error loading data</div>
+  }
+
+  const totalStores = storeData?.length || 0
+
+  const sortedProducts = productData
+    .slice()
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+
+  const totalRecentItems = sortedProducts.reduce(
+    (total, product) => total + (product.quantity || 0),
+    0,
+  )
+
+  const allCategories = categoryData?.categories?.length || 0
+  console.log('all categories', allCategories)
+
+  const lowStocks = productData
+    ?.filter((item) => item.alertStatus === 'low')
+    .reduce((acc, item) => acc + (item.quantity || 0), 0)
+
+  const lowCategories = productData.filter(
+    (item) => item.alertStatus === 'low',
+  ).length
+
   return (
     <div>
       <div className={style.header}>
@@ -16,13 +73,21 @@ function Home() {
 
       <div className={style.cardsContainer}>
         <div className={style.cards}>
-          <QtyCard cardName="Recent Products" quantity={740} />
+          <QtyCard
+            page="products"
+            cardName="Recent Items"
+            quantity={totalRecentItems}
+          />
         </div>
         <div className={style.cards}>
-          <QtyCard cardName="Category" quantity={123} />
+          <QtyCard
+            page="categories"
+            cardName="Category"
+            quantity={allCategories}
+          />
         </div>
         <div className={style.cards}>
-          <QtyCard cardName="Store" quantity={4} />
+          <QtyCard page="stores" cardName="Store" quantity={totalStores} />
         </div>
       </div>
       <div className={style.saleAndCatgoryContainer}>
@@ -30,9 +95,13 @@ function Home() {
         <TopItemCategories />
       </div>
       <div className={style.stockStatusAndStoreList}>
-        <StockStatus lowStockItems={12} lowStockCategories={6} />
-        <StoreList />
+        <StockStatus
+          lowStockItems={lowStocks}
+          lowStockCategories={lowCategories}
+        />
+        <StoreList data={storeOverview.data} />
       </div>
+
       <div className={style.btn}>
         <Button buttonName="Export" />
       </div>

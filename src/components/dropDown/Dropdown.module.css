@@ -1,0 +1,40 @@
+.container {
+  width: 250px;
+  height: max-content;
+  position: absolute;
+  background-color: #e5d5f9;
+  right: 50px;
+  top: 70px;
+  padding: 20px;
+  border-radius: 6px;
+  box-shadow: 0px 0px 1px 0px #171a1f12;
+  box-shadow: 0px 0px 2px 0px #171a1f1f;
+}
+
+.container ul {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.container li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.container li:hover,
+.container li.active {
+  background-color: #dcd7ff;
+  color: #5a18aa;
+  border-radius: 4px;
+  border: 1px solid #a78df3;
+  padding: 3px;
+  width: 205px;
+}

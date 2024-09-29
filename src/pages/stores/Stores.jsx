@@ -1,49 +1,93 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Filter from '../../components/Filter/Filter'
-import StoreList from '../../components/StoreComponent/StoreList';
-import StoreDetail from '../../components/StoreComponent/StoreDetail';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import StoreList from '../../components/StoreComponent/StoreList'
+import StoreDetail from '../../components/StoreComponent/StoreDetail'
+import {
+  useGetLocationsQuery,
+  useGetStoresQuery,
+} from '../../redux/APIs/storeApi'
 
 const Stores = () => {
   const [selectedStore, setSelectedStore] = useState(null)
-  const [items, setItems] = useState();
+  const [searchTerm, setSearchTerm] = useState('')
+  const [filterCategory, setFilterCategory] = useState('all')
+  const [filteredItems, setFilteredItems] = useState([])
 
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filterCategory, setFilterCategory] = useState('all');
+  // Fetch locations
+  const { data: locations = [], error: locationError, isLoading: locationLoading } = useGetLocationsQuery();
+  
+  // Fetch stores
+  const { data: stores = [], error: storesError, isLoading: storesLoading } = useGetStoresQuery();
 
+  // Handle search input
   const handleSearch = (term) => {
     setSearchTerm(term.toLowerCase());
   };
 
+  // Handle filter category
   const handleFilter = (category) => {
     setFilterCategory(category);
   };
 
-  // const filteredItems = items.filter((item) => {
-  //   // Check if item matches the search term
-  //   const matchesSearch = item.name.toLowerCase().includes(searchTerm);
-    
-  //   // Check if item matches the selected category
-  //   const matchesCategory = filterCategory === 'all' || item.category === filterCategory;
-    
-  //   return matchesSearch && matchesCategory;
-  // });
+  // Update filteredItems based on search and filter criteria
+  useEffect(() => {
+    if (stores.length) {
+      // Safely sort stores by location
+      const sortedData = stores?.slice().sort((a, b) => {
+        const locationA = a.location || '';
+        const locationB = b.location || '';
+        return locationA.localeCompare(locationB);
+      });
 
+      // Filter stores based on search term and category
+      const filtered = sortedData.filter((store) => {
+        // Match search term
+        const matchesSearch =
+          store.location.toLowerCase().includes(searchTerm) ||
+          store.storeName.toLowerCase().includes(searchTerm)
 
-  //recieving data
+        // Match selected category
+        const matchesCategory =
+          filterCategory === 'all' || store.location === filterCategory
 
+        return matchesSearch && matchesCategory;
+      });
+
+      setFilteredItems(filtered);
+    }
+  }, [stores, searchTerm, filterCategory])
+
+  // Handle selected store
   const handleSelectedStore = (store) => {
     setSelectedStore(store)
   }
 
   return (
     <div>
-      
-      <Filter handleSearch={handleSearch} handleFilter={handleFilter} direction='createStore' title='Stores' button='+ Create Store'/>
-      <StoreList onSelectStore={handleSelectedStore}/>
-      <StoreDetail selectedStore={selectedStore}/>
-    </div>
-  )
-}
+      {/* Filter Component */}
+      <Filter
+        handleSearch={handleSearch}
+        handleFilter={handleFilter}
+        direction="createStore"
+        title="Stores"
+        button="+ Create Store"
+        location={locations}
+        search="search"
+      />
 
-export default Stores
+      {/* Store List Component */}
+      {storesLoading ? (
+        <p>Loading stores...</p>
+      ) : storesError ? (
+        <p>Error loading stores.</p>
+      ) : (
+        <StoreList onSelectStore={handleSelectedStore} items={filteredItems} />
+      )}
+
+      {/* Store Detail Component */}
+      <StoreDetail selectedStore={selectedStore} />
+    </div>
+  );
+};
+
+export default Stores;

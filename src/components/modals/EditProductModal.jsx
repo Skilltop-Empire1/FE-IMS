@@ -14,36 +14,47 @@ const EditProductModal = ({ showUpdateModal, setShowUpdateModal, productToUpdate
   useEffect(() => {
     if (productToUpdate) {
       setUpdatedProduct({ ...productToUpdate });
-      setPreviewImage(productToUpdate?.prodPhoto || null); // Ensure safe access with a fallback
+      setPreviewImage(productToUpdate?.prodPhoto || null); // Ensure safe access
+      console.log('Product to Update:', productToUpdate);
     }
   }, [productToUpdate]);
 
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
-
+  
     // Handle file input for product photo
     if (name === 'prodPhoto' && files && files.length > 0) {
       const file = files[0];
-      const reader = new FileReader();
-
-      reader.onloadend = () => {
-        setPreviewImage(reader.result); // Preview the uploaded image
-      };
-
-      reader.readAsDataURL(file); // Read the file as a data URL to display the image
-
-      // Update state with file (for form submission)
-      setUpdatedProduct((prev) => ({
-        ...prev,
-        [name]: file,
-      }));
+      
+      // Ensure file is valid before using FileReader
+      if (file) {
+        const reader = new FileReader();
+  
+        reader.onloadend = () => {
+          setPreviewImage(reader.result); // Preview the uploaded image
+        };
+  
+        reader.readAsDataURL(file); // Read the file as a data URL to display the image
+  
+        // Update state with file (for form submission)
+        setUpdatedProduct((prev) => ({
+          ...prev,
+          [name]: file, // Store file for further use (e.g., uploading)
+        }));
+      }
     } else {
+      // For other inputs
       setUpdatedProduct((prev) => ({
         ...prev,
         [name]: value,
       }));
     }
   };
+
+
+console.log('Updated Product:', updatedProduct);
+// console.log('Preview Image:', previewImage);
+  
 
   const handleCategoryChange = (e) => {
     setUpdatedProduct((prev) => ({
@@ -90,9 +101,19 @@ const EditProductModal = ({ showUpdateModal, setShowUpdateModal, productToUpdate
                   placeholder="Enter Product Name"
                 />
               </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Product Price</label>
+                <input
+                  name="price"
+                  value={updatedProduct?.price || ''}
+                  onChange={handleInputChange}
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  placeholder="Enter Price"
+                />
+              </div>
 
               {/* Product Photo Input and Existing Image */}
-              <div>
+             <div>
                 <label className="block text-sm font-medium text-gray-700">Product Photo</label>
                 <div className="flex items-center space-x-4">
                   {/* File Input */}
@@ -101,20 +122,20 @@ const EditProductModal = ({ showUpdateModal, setShowUpdateModal, productToUpdate
                     name="prodPhoto"
                     onChange={handleInputChange}
                     className="mt-1 block px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                  />
+                  /> 
                   {/* Existing/Preview Image */}
-                  {previewImage && (
+                   {previewImage && (
                     <img
                       src={previewImage}
                       alt="Product preview"
                       className="w-16 h-16 object-cover rounded"
                     />
-                  )}
+                  )} 
                 </div>
                 {productToUpdate?.prodPhoto && !previewImage && (
                   <p className="text-xs text-gray-500 mt-1">Current Image: {productToUpdate.prodPhoto}</p>
                 )}
-              </div>
+              </div> 
 
               {/* Quantity */}
               <div>

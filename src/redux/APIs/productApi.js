@@ -35,6 +35,9 @@ export const productApi = createApi({
       query: ({ prodId, updatedProduct }) => ({
         url: `/api/IMS/product/${prodId}`,  // Endpoint for updating a specific product
         method: 'PUT',
+        // headers: {
+        //   'Content-Type': 'multipart/form-data',
+        // },
         body: updatedProduct,
       }),
     }),

@@ -126,27 +126,45 @@ const SalesRecord = () => {
       alert('No product selected for update');
       return;
     }
-
-    if (!productToUpdate.prodId) {
-      alert('Product ID is not defined');
-      return;
+  
+    const requiredFields = [
+      'prodId', 'name', 'price', 'itemCode', 'prodPhoto',
+      'alertStatus', 'quantity', 'categoryId', 'storeAvailable'
+    ];
+  
+    for (const field of requiredFields) {
+      if (!updatedData[field]) {
+        alert(`Missing required field: ${field}`);
+        return;
+      }
     }
+
+    const currentDate = new Date().toLocaleDateString(); // Formats the date
   
     const formData = new FormData();
+    // Append the updated fields to formData
+
+    formData.append('name', updatedData.name || productToUpdate.name);
+    formData.append('price', updatedData.price || productToUpdate.price);
+    formData.append('itemCode', updatedData.itemCode || productToUpdate.itemCode);
+    formData.append('alertStatus', updatedData.alertStatus || productToUpdate.alertStatus);
+    formData.append('quantity', updatedData.quantity || productToUpdate.quantity);
+    formData.append('categoryId', updatedData.categoryId || productToUpdate.categoryId);
+    formData.append('storeId', updatedData.storeId || productToUpdate.storeId);
+    formData.append('storeAvailable', updatedData.storeAvailable || productToUpdate.storeAvailable);
+    formData.append('prodDate', currentDate);
+    // formData.append('prodPhoto', productToUpdate.prodPhoto); // Keep the old URL
+    
+    // Append the photo file if a new one is uploaded
+    if (updatedData.prodPhoto instanceof File) {
+      formData.append('prodPhoto', updatedData.prodPhoto); // file object
+    } else {
+      formData.append('prodPhoto', productToUpdate.prodPhoto); // Keep the old URL
+    }
+    
   
-    // Add all required fields to formData
-    formData.append('prodId', productToUpdate.prodId); // Ensure you have the product ID
-    formData.append('name', updatedData.name);
-    formData.append('price', updatedData.price);
-    formData.append('itemCode', updatedData.itemCode);
-    formData.append('prodPhoto', updatedData.prodPhoto); // Ensure this is the correct file or URL
-    formData.append('alertStatus', updatedData.alertStatus);
-    formData.append('quantity', updatedData.quantity);
-    formData.append('categoryId', updatedData.categoryId); // Assuming this is the correct field
-    formData.append('storeId', updatedData.storeAvailable); // Make sure storeId corresponds with what your backend expects
-  
-    // Log the formData to debug
-    for (let [key, value] of formData.entries()) {
+    // Log formData for debugging
+    for (let [key, value] of formData.entries()) {  
       console.log(key, value);
     }
   
@@ -161,6 +179,7 @@ const SalesRecord = () => {
         alert('Error updating product: ' + error.message);
       });
   };
+  
   
   
 

@@ -154,7 +154,7 @@ const AddProduct = () => {
               className={style.input}
               value={itemCode}
               onChange={(e) => setItemCode(e.target.value)}
-              required
+              // required
             />
           </div>
           {/* <div className={style.cont}>

@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const productApi = createApi({
   reducerPath: 'productApi',
-  baseQuery: fetchBaseQuery({ 
+  baseQuery: fetchBaseQuery({
     baseUrl: 'https://be-ims.onrender.com',
   prepareHeaders: (headers) => {
     const token = localStorage.getItem('token');
@@ -18,9 +18,9 @@ export const productApi = createApi({
       query: () => '/api/IMS/product', // Endpoint for fetching the list of products
     }),
     getSoldProducts: builder.query({
-      query: () => '/api/IMS/product/2',
+      query: () => '/api/IMS/product/',
     }),
-    
+
     // Create a new product
     createProduct: builder.mutation({
       query: (newProduct) => ({
@@ -30,18 +30,18 @@ export const productApi = createApi({
       }),
     }),
 
-    getSoldProducts: builder.query({
-      query: () => '/api/IMS/product/2',
-    }),
+
 
     // Edit (Update) a product
     updateProduct: builder.mutation({
       query: ({ prodId, updatedProduct }) => ({
-        url: `/api/IMS/product/${prodId}`,  // Endpoint for updating a specific product
+        url: `/api/IMS/product/${prodId}`,
         method: 'PUT',
-        body: updatedProduct,
+        body: updatedProduct,  // No need to stringify, fetchBaseQuery handles it
       }),
     }),
+
+
 
     // Delete a product
     deleteProduct: builder.mutation({
@@ -54,9 +54,9 @@ export const productApi = createApi({
 })
 
 export const { 
-  useGetProductsQuery, 
+  useGetProductsQuery,
   useCreateProductMutation, 
-  useUpdateProductMutation, 
+  useUpdateProductMutation,
   useDeleteProductMutation,
   useGetSoldProductsQuery
 } = productApi;

@@ -5,6 +5,7 @@ import { useGetLocationsQuery } from '../../redux/APIs/storeApi';
 import { useGetProductsQuery, useDeleteProductMutation, useUpdateProductMutation } from '../../redux/APIs/productApi';
 import ConfirmationModal from '../../components/modals/ConfirmationModal';
 import EditProductModal from '../../components/modals/EditProductModal';
+import { useNavigate } from 'react-router-dom';
 
 
 const SalesRecord = () => {
@@ -67,8 +68,10 @@ const SalesRecord = () => {
     console.log("Attempting to delete product with ID:", productIdToDelete); // Debugging log
 
     deleteProduct(productIdToDelete) // Ensure correct productIdToDelete is passed here
+    // navigate = useNavigate()
       .then(() => {
         alert('Product deleted successfully!');
+       window.location.reload(false)
         setShowModal(false);
         setProductIdToDelete(null);
       })
@@ -155,10 +158,8 @@ const SalesRecord = () => {
 
   // Handle file upload
   if (updatedData.prodPhoto instanceof File) {
-    formData.append('prodPhoto', updatedData.prodPhoto); // New file object
-  } else {
-    formData.append('prodPhoto', productToUpdate.prodPhoto); // Existing URL
-  }
+    formData.append('prodPhoto', updatedData.prodPhoto);
+  } 
 
   // Debugging formData
   for (let [key, value] of formData.entries()) {
@@ -167,17 +168,15 @@ const SalesRecord = () => {
 
   // Call updateProduct function
   updateProduct({ prodId: productToUpdate.prodId, updatedProduct: formData })
-    .then((response) => {
-      // Check if the response is successful (HTTP status 200 or 201)
-      if (response.status === 200 || response.status === 201) {
-        alert('Product updated successfully!');
-        setShowUpdateModal(false);
-        setProductToUpdate(null);
-      } else {
-        // If status code is not successful, handle as an error
-        alert('Error updating product: ' + (response.data?.message || 'Unknown error'));
-      }
-    })
+  .then((response) => {
+    if (response.data) {
+      alert('Product updated successfully!');
+      setShowUpdateModal(false);
+      setProductToUpdate(null);
+    } else {
+      alert('Error updating product: ' + (response.error?.data?.message || 'Unknown error'));
+    }
+  })
     .catch((error) => {
       console.error("Update error:", error);
       // Handle errors caught by the catch block
@@ -276,6 +275,24 @@ const SalesRecord = () => {
       productToUpdate={productToUpdate}
       confirmUpdateProduct={confirmUpdateProduct}
     />
+
+    {/* <div>
+      <table className='w-full'>
+        <thead>
+        <tr className=''>
+           <th> </th>
+            <th>Product Photo</th>
+            <th>Product Name</th>
+            <th>Alert status</th>
+            <th>Quantity</th>
+            <th>Category</th>
+            <th>Store Name</th>
+            <th>Date added</th>
+            <th>Action</th> 
+          </tr>
+        </thead>
+      </table>
+    </div> */}
 
     </div>
   );

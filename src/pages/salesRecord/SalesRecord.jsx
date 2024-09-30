@@ -54,6 +54,7 @@ const SalesRecord = () => {
     deleteSalesRecord(salesRecordIdToDelete)
       .then(() => {
         alert('Record deleted successfully!');
+        window.location.reload(false)
         setShowModal(false);
         setSalesRecordIdToDelete(null);
       })
@@ -89,7 +90,7 @@ const SalesRecord = () => {
   //filter
 
   const filteredItems = salesRecord?.filter((item) => {
-    const matchesSearch = item.paymentMethod.toLowerCase().includes(searchTerm);
+    const matchesSearch = item.Product.name.toLowerCase().includes(searchTerm);
     const matchesCategory = filterCategory === 'all' || item.category === filterCategory;
 
     return matchesSearch && matchesCategory
@@ -105,7 +106,7 @@ const SalesRecord = () => {
         button='+ Add Record' 
         location={locations}  
         categories={categories}  
-        search='search by payment method'
+        search='search by product name'
       />
       
       {

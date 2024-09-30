@@ -95,6 +95,7 @@
   padding: 2px 10px;
   border: 1px solid #bea3de;
   border-radius: 14px;
+  font-weight: normal;
 }
 
 ::placeholder {

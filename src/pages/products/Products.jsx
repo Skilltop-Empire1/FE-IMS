@@ -6,6 +6,7 @@ import { useGetProductsQuery, useDeleteProductMutation, useUpdateProductMutation
 import ConfirmationModal from '../../components/modals/ConfirmationModal';
 import EditProductModal from '../../components/modals/EditProductModal';
 
+
 const SalesRecord = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterCategory, setFilterCategory] = useState('all');
@@ -121,64 +122,75 @@ const SalesRecord = () => {
   
   
   
-  const confirmUpdateProduct = (updatedData) => {
-    if (!productToUpdate) {
-      alert('No product selected for update');
+ const confirmUpdateProduct = (updatedData) => {
+  if (!productToUpdate) {
+    alert('No product selected for update');
+    return;
+  }
+
+  const requiredFields = [
+    'prodId', 'name', 'price', 'itemCode', 'prodPhoto',
+    'alertStatus', 'quantity', 'categoryId', 'storeAvailable'
+  ];
+
+  for (const field of requiredFields) {
+    if (!updatedData[field]) {
+      alert(`Missing required field: ${field}`);
       return;
     }
-  
-    const requiredFields = [
-      'prodId', 'name', 'price', 'itemCode', 'prodPhoto',
-      'alertStatus', 'quantity', 'categoryId', 'storeAvailable'
-    ];
-  
-    for (const field of requiredFields) {
-      if (!updatedData[field]) {
-        alert(`Missing required field: ${field}`);
-        return;
-      }
-    }
+  }
 
-    const currentDate = new Date().toLocaleDateString(); // Formats the date
-  
-    const formData = new FormData();
-    // Append the updated fields to formData
+  const currentDate = new Date().toLocaleDateString(); // Formats the date
 
-    formData.append('name', updatedData.name || productToUpdate.name);
-    formData.append('price', updatedData.price || productToUpdate.price);
-    formData.append('itemCode', updatedData.itemCode || productToUpdate.itemCode);
-    formData.append('alertStatus', updatedData.alertStatus || productToUpdate.alertStatus);
-    formData.append('quantity', updatedData.quantity || productToUpdate.quantity);
-    formData.append('categoryId', updatedData.categoryId || productToUpdate.categoryId);
-    formData.append('storeId', updatedData.storeId || productToUpdate.storeId);
-    formData.append('storeAvailable', updatedData.storeAvailable || productToUpdate.storeAvailable);
-    formData.append('prodDate', currentDate);
-    // formData.append('prodPhoto', productToUpdate.prodPhoto); // Keep the old URL
-    
-    // Append the photo file if a new one is uploaded
-    if (updatedData.prodPhoto instanceof File) {
-      formData.append('prodPhoto', updatedData.prodPhoto); // file object
-    } else {
-      formData.append('prodPhoto', productToUpdate.prodPhoto); // Keep the old URL
-    }
-    
-  
-    // Log formData for debugging
-    for (let [key, value] of formData.entries()) {  
-      console.log(key, value);
-    }
-  
-    updateProduct({ prodId: productToUpdate.prodId, updatedProduct: formData })
-      .then(() => {
+  const formData = new FormData();
+  formData.append('name', updatedData.name || productToUpdate.name);
+  formData.append('price', updatedData.price || productToUpdate.price);
+  formData.append('itemCode', updatedData.itemCode || productToUpdate.itemCode);
+  formData.append('alertStatus', updatedData.alertStatus || productToUpdate.alertStatus);
+  formData.append('quantity', updatedData.quantity || productToUpdate.quantity);
+  formData.append('categoryId', updatedData.categoryId || productToUpdate.categoryId);
+  formData.append('storeId', updatedData.storeId || productToUpdate.storeId);
+  formData.append('storeAvailable', updatedData.storeAvailable || productToUpdate.storeAvailable);
+  formData.append('prodDate', currentDate);
+
+  // Handle file upload
+  if (updatedData.prodPhoto instanceof File) {
+    formData.append('prodPhoto', updatedData.prodPhoto); // New file object
+  } else {
+    formData.append('prodPhoto', productToUpdate.prodPhoto); // Existing URL
+  }
+
+  // Debugging formData
+  for (let [key, value] of formData.entries()) {
+    console.log(key, value);
+  }
+
+  // Call updateProduct function
+  updateProduct({ prodId: productToUpdate.prodId, updatedProduct: formData })
+    .then((response) => {
+      // Check if the response is successful (HTTP status 200 or 201)
+      if (response.status === 200 || response.status === 201) {
         alert('Product updated successfully!');
         setShowUpdateModal(false);
         setProductToUpdate(null);
-      })
-      .catch((error) => {
-        console.error("Update error:", error);
+      } else {
+        // If status code is not successful, handle as an error
+        alert('Error updating product: ' + (response.data?.message || 'Unknown error'));
+      }
+    })
+    .catch((error) => {
+      console.error("Update error:", error);
+      // Handle errors caught by the catch block
+      if (error.response && error.response.data && error.response.data.message) {
+        alert('Error updating product: ' + error.response.data.message);
+      } else if (error.message) {
         alert('Error updating product: ' + error.message);
-      });
-  };
+      } else {
+        alert('Error updating product: An unknown error occurred');
+      }
+    });
+};
+
   
   
   

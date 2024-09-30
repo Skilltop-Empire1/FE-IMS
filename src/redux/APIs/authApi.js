@@ -30,6 +30,7 @@ export const authApi = createApi({
       }),
       transformResponse: (response) => {
         if (response && response.token) {
+
           return response.token
         }
         throw new Error('Token missing in response')

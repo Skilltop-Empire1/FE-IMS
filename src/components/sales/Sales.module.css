@@ -36,4 +36,11 @@
   font-weight: 400;
   line-height: 22px;
   text-align: left;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.salesContainer ul li span:first-child {
+  color: #5a18aa;
 }

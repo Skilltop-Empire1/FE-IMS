@@ -18,7 +18,7 @@ export const productApi = createApi({
       query: () => '/api/IMS/product', // Endpoint for fetching the list of products
     }),
     getSoldProducts: builder.query({
-      query: () => '/api/IMS/product/',
+      query: () => '/api/IMS/product/2',
     }),
 
     // Create a new product
@@ -37,7 +37,10 @@ export const productApi = createApi({
       query: ({ prodId, updatedProduct }) => ({
         url: `/api/IMS/product/${prodId}`,
         method: 'PUT',
-        body: updatedProduct,  // No need to stringify, fetchBaseQuery handles it
+        // headers: {
+        //   'Content-Type': 'multipart/form-data',
+        // },
+        body: updatedProduct,
       }),
     }),
 

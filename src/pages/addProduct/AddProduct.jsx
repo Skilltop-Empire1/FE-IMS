@@ -109,7 +109,7 @@ const AddProduct = () => {
       console.error('Failed to create product:', err)
 
       if (err?.data?.message) {
-        setFormError(err.data.message); // Use the error message from the backend
+        setFormError(err.data.msg); // Use the error message from the backend
       } else if (err?.error) {
         setFormError(err.error); // Fallback for RTK Query error message
       } else {
@@ -154,7 +154,7 @@ const AddProduct = () => {
               className={style.input}
               value={itemCode}
               onChange={(e) => setItemCode(e.target.value)}
-              required
+              // required
             />
           </div>
           {/* <div className={style.cont}>

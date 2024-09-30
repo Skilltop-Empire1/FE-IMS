@@ -33,7 +33,7 @@ export const salesRecordApi = createApi({
 // Export hooks for the queries and mutations
 export const { 
   useGetSalesRecordQuery, 
-  useCreateSalesRecordMutation, 
+  useCreateSalesRecordMutation,
   useDeleteSalesRecordMutation,
   useUpdateSalesRecordMutation 
 } = salesRecordApi;

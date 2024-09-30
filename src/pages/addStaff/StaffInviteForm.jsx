@@ -42,6 +42,7 @@ const StaffInviteForm = () => {
     try {
       setLoading(true)
       // Call the mutation with form data
+      console.log({ email, password, username, role })
       await createStaff({ email, password, username, role }).unwrap()
       setEmail('')
       setPassword('')

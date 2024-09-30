@@ -1,13 +1,17 @@
 // src/api/baseApi.js
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+let backendUrl = 'https://be-ims.onrender.com'
+// let backendUrl = 'http://localhost:5000'
 
-const baseApiUrl = 'https://be-ims.onrender.com' // Centralized Base URL
-
+const baseApiUrl = backendUrl // Centralized Base URL
 export const baseQuery = fetchBaseQuery({
   baseUrl: baseApiUrl,
   // You can add global headers, authorization, etc., here if needed
-  prepareHeaders: (headers) => {
-    // Optionally, add any headers like authorization tokens here
+  prepareHeaders: (headers, { getState }) => {
+    const token = getState().auth.token
+    if (token) {
+      headers.set('Authorization', `Bearer ${token}`)
+    }
     headers.set('Content-Type', 'application/json')
     return headers
   },

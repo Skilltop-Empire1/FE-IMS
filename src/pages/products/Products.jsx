@@ -246,7 +246,29 @@ const SalesRecord = () => {
       {/* Products Table Section */}
       {
         isLoading ? ( 
-          <p>Loading...</p> 
+          <div className=' animate-pulse'>
+            <table className='w-full' >
+              <thead>
+              <tr className='text-'>
+                <th> </th>
+                  <th>Product Photo</th>
+                  <th>Product Name</th>
+                  <th>Alert status</th>
+                  <th>Quantity</th>
+                  <th>Category</th>
+                  <th>Store Name</th>
+                  <th>Date added</th>
+                  <th>Action</th> 
+                </tr>
+              </thead>
+
+            </table>
+            <div class="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+            <div class="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+            <div class="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+            <div class="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+            <div class="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+          </div> 
         ) : error ? ( 
           <p>Error loading products</p> 
         ) : (
@@ -276,23 +298,7 @@ const SalesRecord = () => {
       confirmUpdateProduct={confirmUpdateProduct}
     />
 
-    {/* <div>
-      <table className='w-full'>
-        <thead>
-        <tr className=''>
-           <th> </th>
-            <th>Product Photo</th>
-            <th>Product Name</th>
-            <th>Alert status</th>
-            <th>Quantity</th>
-            <th>Category</th>
-            <th>Store Name</th>
-            <th>Date added</th>
-            <th>Action</th> 
-          </tr>
-        </thead>
-      </table>
-    </div> */}
+    
 
     </div>
   );

@@ -77,7 +77,13 @@ const Stores = () => {
 
       {/* Store List Component */}
       {storesLoading ? (
-        <p>Loading stores...</p>
+         <div className='animate-pulse flex gap-4'>
+            <div className='h-44 w-44 bg-slate-300 rounded-3xl'></div>
+            <div className='h-44 w-44 bg-slate-300 rounded-3xl'></div>
+            <div className='h-44 w-44 bg-slate-300 rounded-3xl'></div>
+            <div className='h-44 w-44 bg-slate-300 rounded-3xl'></div>
+            <div className='h-44 w-44 bg-slate-300 rounded-3xl'></div>  
+        </div>
       ) : storesError ? (
         <p>Error loading stores.</p>
       ) : (
@@ -86,6 +92,7 @@ const Stores = () => {
 
       {/* Store Detail Component */}
       <StoreDetail selectedStore={selectedStore} />
+     
     </div>
   );
 };

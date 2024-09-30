@@ -111,7 +111,29 @@ const SalesRecord = () => {
       
       {
         salesLoading || locationLoading ? ( 
-          <p>Loading...</p> 
+          <div className=' animate-pulse'>
+            <table className='w-full' >
+              <thead>
+              <tr className='text-'>
+                <th> </th>
+                  <th>Product Photo</th>
+                  <th>Product Name</th>
+                  <th>Alert status</th>
+                  <th>Quantity</th>
+                  <th>Category</th>
+                  <th>Store Name</th>
+                  <th>Date added</th>
+                  <th>Action</th> 
+                </tr>
+              </thead>
+
+            </table>
+            <div class="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+            <div class="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+            <div class="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+            <div class="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+            <div class="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+          </div>
         ) : salesError || locationError ? ( 
           <p>Error loading data</p> 
         ) : (

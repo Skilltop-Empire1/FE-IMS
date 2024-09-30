@@ -23,7 +23,7 @@ function NavBar({ dropdownRef }) {
   const { data: profilePic, isLoading, error } = useGetPictureQuery()
   console.log('profile picture data', profilePic)
 
-  const { notifications, hasNewNotification, setHasNewNotification } = useContext(NotificationContext);
+  const { notifications, hasNewNotification, setHasNewNotification, isConnected, alertMessage } = useContext(NotificationContext);
 
   const handleNotificationClick = () => {
     setIsOpen(!isOpen)

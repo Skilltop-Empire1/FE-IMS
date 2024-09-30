@@ -23,7 +23,7 @@ const SalesRecord = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       const response = await fetch(
-        'https://be-ims.onrender.com/api/IMS/store/filter',
+        'https://be-ims-production.up.railway.app/api/IMS/store/filter',
       )
       const data = await response.json()
       setCategories(data.categories)

@@ -45,13 +45,13 @@ function NavBar({ dropdownRef }) {
       </ul>
       <ul className={style.rightNavs}>
         {/* WebSocket connection status indicator */}
-        <li className="relative">
+        {/* <li className="relative">
           {isConnected ? (
             <span className="text-green-500">Connected</span>
           ) : (
             <span className="text-red-500">Disconnected</span>
           )}
-        </li>
+        </li> */}
 
         {/* Notifications Icon */}
         <li>
@@ -63,7 +63,7 @@ function NavBar({ dropdownRef }) {
             <Bell size={24} style={iconStyle} />
             {/* Render the notification badge */}
             {hasNewNotification && (
-              <span className="absolute top-0 right-0 block h-2 w-2 rounded-full ring-2 ring-white bg-red-500"></span>
+              <span className="absolute top-0 right-0 block h-2 w-2 rounded-full ring-2 ring-white bg-green-500"></span>
             )}
           </button>
 

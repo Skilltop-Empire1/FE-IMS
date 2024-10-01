@@ -20,7 +20,7 @@ function Home() {
   const { data: storeOverview = [] } = useGetStoresOverviewQuery()
   const { data: categoryData = [] } = useGetCategoriesQuery()
 
-  console.log('product data', productData)
+  // console.log('product data', productData)
 
   if (isLoading) {
     return (
@@ -57,7 +57,7 @@ function Home() {
   )
 
   const allCategories = categoryData?.categories?.length || 0
-  console.log('all categories', allCategories)
+  // console.log('all categories', allCategories)
 
   const lowStocks = productData
     ?.filter((item) => item.alertStatus >= item.quantity)

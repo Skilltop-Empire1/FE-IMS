@@ -34,7 +34,7 @@ export const NotificationProvider = ({ children }) => {
       // Register the user when the socket connection is established
       socket.on('connect', () => {
         setIsConnected(true); // Update connection status
-        console.log('Connected to WebSocket server');
+        // console.log('Connected to WebSocket server');
         
         // Emit the "register" event to register the userId with the server
         socket.emit('register', userId);
@@ -42,7 +42,7 @@ export const NotificationProvider = ({ children }) => {
 
       // Listen for "productAlert" event from the server
       socket.on('productAlert', (data) => {
-        console.log('Product alert received:', data);
+        // console.log('Product alert received:', data);
         setAlertMessage(data.message); // Update alert message
         setNotifications((prevNotifications) => [...prevNotifications, data.message]); // Add to notifications
         setHasNewNotification(true); // Set flag for new notification
@@ -50,7 +50,7 @@ export const NotificationProvider = ({ children }) => {
 
       // Handle socket disconnect
       socket.on('disconnect', () => {
-        console.log('Disconnected from WebSocket server');
+        // console.log('Disconnected from WebSocket server');
         setIsConnected(false); // Update connection status
       });
 

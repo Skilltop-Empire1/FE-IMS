@@ -24,9 +24,9 @@ const PasswordConfirmation = () => {
     }
   
     // Log the email and passwords to verify they are set
-    console.log('Email:', email);
-    console.log('Password:', password);
-    console.log('Confirm Password:', confirmPassword);
+    // console.log('Email:', email);
+    // console.log('Password:', password);
+    // console.log('Confirm Password:', confirmPassword);
   
     try {
       // Call the resetPassword mutation with the correct payload
@@ -34,7 +34,7 @@ const PasswordConfirmation = () => {
       setTimeout(()=>{
         navigate('/')
       }, 2000)
-      console.log('Response:', response); // Log response for debugging
+      // console.log('Response:', response); // Log response for debugging
     } catch (err) {
       console.error('Failed to reset password:', err);
       alert('Failed to reset password');

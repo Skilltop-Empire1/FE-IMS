@@ -15,7 +15,7 @@ const EditProductModal = ({ showUpdateModal, setShowUpdateModal, productToUpdate
     if (productToUpdate) {
       setUpdatedProduct({ ...productToUpdate });
       setPreviewImage(productToUpdate?.prodPhoto || null); // Ensure safe access
-      console.log('Product to Update:', productToUpdate);
+      // console.log('Product to Update:', productToUpdate);
     }
   }, [productToUpdate]);
 
@@ -52,7 +52,7 @@ const EditProductModal = ({ showUpdateModal, setShowUpdateModal, productToUpdate
   };
 
 
-console.log('Updated Product:', updatedProduct);
+// console.log('Updated Product:', updatedProduct);
 // console.log('Preview Image:', previewImage);
   
 

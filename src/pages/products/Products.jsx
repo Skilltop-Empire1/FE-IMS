@@ -65,7 +65,7 @@ const SalesRecord = () => {
       return;
     }
 
-    console.log("Attempting to delete product with ID:", productIdToDelete); // Debugging log
+    // console.log("Attempting to delete product with ID:", productIdToDelete); // Debugging log
 
     deleteProduct(productIdToDelete) // Ensure correct productIdToDelete is passed here
     // navigate = useNavigate()
@@ -87,7 +87,7 @@ const SalesRecord = () => {
 
   //handle product update
   const handleProductUpdate = (product) => {
-    console.log("Selected product for update:", product);
+    // console.log("Selected product for update:", product);
     setProductToUpdate(product);
     setShowUpdateModal(true)
   }
@@ -163,7 +163,7 @@ const SalesRecord = () => {
 
   // Debugging formData
   for (let [key, value] of formData.entries()) {
-    console.log(key, value);
+    // console.log(key, value);
   }
 
   // Call updateProduct function

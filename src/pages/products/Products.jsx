@@ -236,7 +236,7 @@ const SalesRecord = () => {
       <Filter
         handleSearch={handleSearch}
         handleFilter={handleFilter}
-        direction="addProduct"
+        direction="/app/addProduct"
         title="Products"
         button="+ Add Product"
         location={locations} // Pass categories to the Filter component
@@ -263,11 +263,11 @@ const SalesRecord = () => {
               </thead>
 
             </table>
-            <div class="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
-            <div class="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
-            <div class="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
-            <div class="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
-            <div class="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+            <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+            <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+            <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+            <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+            <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
           </div> 
         ) : error ? ( 
           <p>Error loading products</p> 

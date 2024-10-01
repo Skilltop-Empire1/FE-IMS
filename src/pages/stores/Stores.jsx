@@ -68,7 +68,7 @@ const Stores = () => {
       <Filter
         handleSearch={handleSearch}
         handleFilter={handleFilter}
-        direction="createStore"
+        direction="/app/createStore"
         title="Stores"
         button="+ Create Store"
         location={locations}

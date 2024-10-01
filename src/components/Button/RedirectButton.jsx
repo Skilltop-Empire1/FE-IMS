@@ -1,15 +1,15 @@
 import React from 'react'
 import style from './Button.module.css'
-// import 
+import { Link } from 'react-router-dom'
 
 function RedirectButton({ buttonName, onClick, className = '', direction }) {
   const btnClassName = `${style.buttonName} ${className}`
   return (
-    <a href={direction}>
+    <Link to={direction}>
       <button className={btnClassName} onClick={onClick}>
         {buttonName}
       </button>
-    </a>
+    </Link>
   )
 }
 

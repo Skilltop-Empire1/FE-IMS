@@ -101,7 +101,7 @@ const SalesRecord = () => {
       <Filter 
         handleSearch={handleSearch} 
         handleFilter={handleFilter} 
-        direction='addSaleRecord' 
+        direction='/app/addSaleRecord' 
         title='Sales Record' 
         button='+ Add Record' 
         location={locations}  
@@ -128,11 +128,11 @@ const SalesRecord = () => {
               </thead>
 
             </table>
-            <div class="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
-            <div class="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
-            <div class="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
-            <div class="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
-            <div class="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+            <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+            <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+            <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+            <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+            <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
           </div>
         ) : salesError || locationError ? ( 
           <p>Error loading data</p> 

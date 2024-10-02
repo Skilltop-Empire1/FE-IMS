@@ -36,7 +36,7 @@ const SalesRecord = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       const response = await fetch(
-        'https://be-ims.onrender.com/api/IMS/store/filter',
+        'https://be-ims-production.up.railway.app/api/IMS/store/filter',
       )
       const data = await response.json()
       setCategories(data.categories)
@@ -56,7 +56,7 @@ const SalesRecord = () => {
       return
     }
 
-    console.log('Attempting to delete product with ID:', productIdToDelete) // Debugging log
+    // console.log("Attempting to delete product with ID:", productIdToDelete); // Debugging log
 
     deleteProduct(productIdToDelete) // Ensure correct productIdToDelete is passed here
       // navigate = useNavigate()
@@ -74,7 +74,7 @@ const SalesRecord = () => {
 
   // Handle product update
   const handleProductUpdate = (product) => {
-    console.log('Selected product for update:', product)
+    // console.log("Selected product for update:", product);
     setProductToUpdate(product)
     setShowUpdateModal(true)
   }
@@ -167,7 +167,7 @@ const SalesRecord = () => {
 
     // Debugging formData
     for (let [key, value] of formData.entries()) {
-      console.log(key, value)
+      // console.log(key, value);
     }
 
     // Call updateProduct function
@@ -232,7 +232,7 @@ const SalesRecord = () => {
       <Filter
         handleSearch={handleSearch}
         handleFilter={handleFilter}
-        direction="addProduct"
+        direction="/app/addProduct"
         title="Products"
         button="+ Add Product"
         location={locations}
@@ -250,7 +250,7 @@ const SalesRecord = () => {
           date="Date added"
           api={filteredItems}
           record="hidden"
-          deleted={(id) => handleDeleteProduct(id)}
+          deleted={(id) => handleDeleteProduct(id)} // Pass product ID to the handleDeleteProduct function
           updated={(product) => handleProductUpdate(product)}
         />
       )}
@@ -269,24 +269,6 @@ const SalesRecord = () => {
         productToUpdate={productToUpdate}
         confirmUpdateProduct={confirmUpdateProduct}
       />
-
-      {/* <div>
-      <table className='w-full'>
-        <thead>
-        <tr className=''>
-           <th> </th>
-            <th>Product Photo</th>
-            <th>Product Name</th>
-            <th>Alert status</th>
-            <th>Quantity</th>
-            <th>Category</th>
-            <th>Store Name</th>
-            <th>Date added</th>
-            <th>Action</th> 
-          </tr>
-        </thead>
-      </table>
-    </div> */}
     </div>
   )
 }

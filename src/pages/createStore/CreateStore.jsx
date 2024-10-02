@@ -32,7 +32,7 @@ const CreateStore = () => {
     if (token) {
       const decodedToken = jwtDecode(token);
       setUserId(decodedToken.user); // Assuming the token contains a userId field
-      console.log(userId)
+      // console.log(userId)
     }
   }, []);
 

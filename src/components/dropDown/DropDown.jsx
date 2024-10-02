@@ -80,7 +80,11 @@ function DropDown({ dropdownRef }) {
         isOpen={modalType === 'logout'}
         onClose={closeModal}
         content={
-          <Logout className={styles.modalButtons} handleLogout={handleLogout} />
+          <Logout
+            closeModal={closeModal}
+            className={styles.modalButtons}
+            handleLogout={handleLogout}
+          />
         }
       />
     </div>

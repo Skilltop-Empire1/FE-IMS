@@ -5,7 +5,7 @@ import { useUploadMutation } from '../../redux/APIs/profilePictureUploadApi'
 const ImagePicker = ({ onSelectImage }) => {
   const [imageFile, setImageFile] = useState(null)
   const [imagePreview, setImagePreview] = useState(null)
-  const [upload, { isLoading, error }] = useUploadMutation()
+  const [upload, { isLoading, error, data, isSuccess }] = useUploadMutation()
 
   const handleImageChange = (event) => {
     const file = event.target.files[0]
@@ -43,6 +43,12 @@ const ImagePicker = ({ onSelectImage }) => {
 
   return (
     <div className={style.container}>
+      {isSuccess && <p style={{ color: 'green' }}>{data?.message} 😊</p>}
+      {error && (
+        <p style={{ color: 'red' }}>
+          {error?.data?.msg || 'Error uploading file, please try again'} 😔
+        </p>
+      )}
       {imagePreview && (
         <div className={style.preview}>
           <img

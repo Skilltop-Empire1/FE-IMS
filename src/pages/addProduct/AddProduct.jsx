@@ -31,7 +31,7 @@ const AddProduct = () => {
     if (token) {
       const decodedToken = jwtDecode(token);
       setUserId(decodedToken.user); // Assuming the token contains a userId field
-      console.log(userId)
+      // console.log(userId)
     }
   }, []);
 
@@ -40,21 +40,21 @@ const AddProduct = () => {
   useEffect(() => {
     const fetchStores = async () => {
       const response = await fetch(
-        'https://be-ims.onrender.com/api/IMS/store/all',
+        'https://be-ims-production.up.railway.app/api/IMS/store/all',
       )
       const data = await response.json()
       setStores(data)
-      console.log(data)
+      // console.log(data)
     }
 
     const fetchCategories = async () => {
       const response = await fetch(
-        'https://be-ims.onrender.com/api/IMS/category',
+        'https://be-ims-production.up.railway.app/api/IMS/category',
       )
       const data2 = await response.json()
       setCategories(data2.categories)
-      console.log(data2)
-      console.log(categories)
+      // console.log(data2)
+      // console.log(categories)
     }
 
     fetchStores()

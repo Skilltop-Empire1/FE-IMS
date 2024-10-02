@@ -2,8 +2,8 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const productApi = createApi({
   reducerPath: 'productApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'https://be-ims.onrender.com',
+  baseQuery: fetchBaseQuery({ 
+    baseUrl: 'https://be-ims-production.up.railway.app/',
   prepareHeaders: (headers) => {
     const token = localStorage.getItem('token');
     if (token) {

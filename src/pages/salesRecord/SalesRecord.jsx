@@ -23,7 +23,7 @@ const SalesRecord = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       const response = await fetch(
-        'https://be-ims.onrender.com/api/IMS/store/filter',
+        'https://be-ims-production.up.railway.app/api/IMS/store/filter',
       )
       const data = await response.json()
       setCategories(data.categories)
@@ -101,7 +101,7 @@ const SalesRecord = () => {
       <Filter 
         handleSearch={handleSearch} 
         handleFilter={handleFilter} 
-        direction='addSaleRecord' 
+        direction='/app/addSaleRecord' 
         title='Sales Record' 
         button='+ Add Record' 
         location={locations}  
@@ -111,7 +111,29 @@ const SalesRecord = () => {
       
       {
         salesLoading || locationLoading ? ( 
-          <p>Loading...</p> 
+          <div className=' animate-pulse'>
+            <table className='w-full' >
+              <thead>
+              <tr className='text-'>
+                <th> </th>
+                  <th>Product Photo</th>
+                  <th>Product Name</th>
+                  <th>Alert status</th>
+                  <th>Quantity</th>
+                  <th>Category</th>
+                  <th>Store Name</th>
+                  <th>Date added</th>
+                  <th>Action</th> 
+                </tr>
+              </thead>
+
+            </table>
+            <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+            <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+            <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+            <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+            <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+          </div>
         ) : salesError || locationError ? ( 
           <p>Error loading data</p> 
         ) : (

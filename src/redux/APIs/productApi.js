@@ -17,7 +17,11 @@ export const productApi = createApi({
     getProducts: builder.query({
       query: () => '/api/IMS/product', // Endpoint for fetching the list of products
     }),
+    getSoldProducts: builder.query({
+      query: () => '/api/IMS/product/2',
+    }),
 
+    // Create a new product
     createProduct: builder.mutation({
       query: (newProduct) => ({
         url: '/api/IMS/product',
@@ -26,14 +30,12 @@ export const productApi = createApi({
       }),
     }),
 
-    getSoldProducts: builder.query({
-      query: () => '/api/IMS/product/2',
-    }),
+
 
     // Edit (Update) a product
     updateProduct: builder.mutation({
       query: ({ prodId, updatedProduct }) => ({
-        url: `/api/IMS/product/${prodId}`,  // Endpoint for updating a specific product
+        url: `/api/IMS/product/${prodId}`,
         method: 'PUT',
         // headers: {
         //   'Content-Type': 'multipart/form-data',
@@ -41,6 +43,8 @@ export const productApi = createApi({
         body: updatedProduct,
       }),
     }),
+
+
 
     // Delete a product
     deleteProduct: builder.mutation({
@@ -53,9 +57,9 @@ export const productApi = createApi({
 })
 
 export const { 
-  useGetProductsQuery, 
+  useGetProductsQuery,
   useCreateProductMutation, 
-  useUpdateProductMutation, 
+  useUpdateProductMutation,
   useDeleteProductMutation,
   useGetSoldProductsQuery
 } = productApi;

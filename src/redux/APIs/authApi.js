@@ -30,9 +30,13 @@ export const authApi = createApi({
       }),
       transformResponse: (response) => {
         if (response && response.token) {
-
-          return response.token
-        }
+          console.log("response", response)
+          return {
+            token: response.token,
+            id: response.id,
+            role: response.role,
+            email: response.email,
+          };        }
         throw new Error('Token missing in response')
       },
       async onQueryStarted(_, { dispatch, queryFulfilled }) {

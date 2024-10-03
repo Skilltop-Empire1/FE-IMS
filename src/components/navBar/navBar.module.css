@@ -30,7 +30,7 @@
 }
 
 .searchContainer {
-  display: flex;
+  display: none;
   align-items: center;
   border: 1px solid #e5d5f9;
   height: 30px;

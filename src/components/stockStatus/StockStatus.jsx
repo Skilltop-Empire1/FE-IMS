@@ -1,10 +1,12 @@
 import React from 'react'
 import style from './StockStatus.module.css'
+import { useNavigate } from 'react-router-dom'
 
 function StockStatus({ lowStockItems, lowStockCategories }) {
+  const navigate = useNavigate()
   return (
     <div className={style.container}>
-      <div>
+      <div onClick={() => navigate('/app/products')}>
         <h3>Stock Alert Status</h3>
       </div>
       <div className={style.contentStatus}>

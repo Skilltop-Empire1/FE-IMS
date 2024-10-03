@@ -4,15 +4,18 @@ import style from './Dropdown.module.css'
 import ModalContainer from '../../modals/ModalContainer'
 import ImagePicker from '../../modals/imagePicker/ImagePicker'
 import Logout from '../../modals/logout/Logout'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../../redux/slices/AuthSlice'
 import LoggedReset from '../../pages/Password reset/LoggedReset'
 
 import styles from '../../components/sideBar/Sidebar.module.css'
+import { useLoginMutation } from '../../redux/APIs/authApi'
 
 function DropDown({ dropdownRef }) {
   const [modalType, setModalType] = useState(null)
   const [activeItem, setActiveItem] = useState(null)
+
+  const { username, role, id } = useSelector((state) => state.auth.token)
 
   const dispatch = useDispatch()
 
@@ -32,6 +35,18 @@ function DropDown({ dropdownRef }) {
 
   return (
     <div className={style.container} ref={dropdownRef}>
+      <div className={style.userData}>
+        <p>
+          <span>user:</span> {username}
+        </p>
+        <p>
+          <span>Role:</span> {role}
+        </p>
+        <p>
+          <span>ID:</span> {id}
+        </p>
+      </div>
+
       <ul>
         <li
           onClick={openModal('add-profile-picture')}

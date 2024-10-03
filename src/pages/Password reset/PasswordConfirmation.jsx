@@ -91,7 +91,7 @@ const PasswordConfirmation = () => {
           <button className='mb-4' type="submit" disabled={isLoading}>
             {isLoading ? 'Resetting...' : 'Reset Password'}
           </button>
-        </form>
+        </form>              
 
         {isSuccess && <p>Password reset successful!</p>}
         {isError && <p className='mt-4'>Error resetting password: {error?.data?.message || 'Something went wrong'}</p>}

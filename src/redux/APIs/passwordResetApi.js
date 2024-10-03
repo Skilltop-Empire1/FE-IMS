@@ -18,7 +18,14 @@ export const passwordReset = createApi({
         body: payload,
       }),
     }),
+     changePassword: builder.mutation({
+      query: (payload) => ({
+        url: '/api/IMS/user/change-password',
+        method: 'PUT', // or 'POST' depending on your server
+        body: payload,
+      }),
+    }),
   }),
 });
 
-export const { useRequestPasswordResetMutation, useResetPasswordMutation } = passwordReset;
+export const { useRequestPasswordResetMutation, useResetPasswordMutation, useChangePasswordMutation } = passwordReset;

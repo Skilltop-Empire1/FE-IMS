@@ -241,6 +241,7 @@ const SalesRecord = () => {
         button="+ Add Product"
         location={locations} // Pass categories to the Filter component
         search="Search by name"
+        display='hidden'
       />
 
       {/* Products Table Section */}

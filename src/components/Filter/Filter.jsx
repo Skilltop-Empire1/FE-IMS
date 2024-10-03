@@ -11,6 +11,7 @@ const Filter = ({
   button,
   location,
   search,
+  display
 }) => {
   // const Filter = ({
   //   handleFilter,
@@ -37,26 +38,28 @@ const Filter = ({
         />
 
         {/* Select Filter */}
-        {isLoading ? (
-          <select name="" id="">
-            <option value="">Loading locations...</option>
-          </select>
-        ) : error ? (
-          <select name="" id="">
-            <option value="">Failed to load locations</option>
-          </select>
-        ) : (
-          <div>
-            <select onChange={(e) => handleFilter(e.target.value)}>
-              <option value="all">Filter by location</option>
-              {location.map((location, idx) => (
-                <option value={location} key={idx}>
-                  {location}
-                </option>
-              ))}
+        <span className={display}>
+          {isLoading ? (
+            <select name="" id="" className={display}>
+              <option value="">Loading locations...</option>
             </select>
-          </div>
-        )}
+          ) : error ? (
+            <select name="" id="">
+              <option value="">Failed to load locations</option>
+            </select>
+          ) : (
+            <div>
+              <select onChange={(e) => handleFilter(e.target.value)}>
+                <option value="all">Filter by location</option>
+                {location.map((location, idx) => (
+                  <option value={location} key={idx}>
+                    {location}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+        </span>
 
         <RedirectButton buttonName={button} direction={direction} />
       </div>

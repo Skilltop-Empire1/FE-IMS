@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { useCreateSalesRecordMutation  } from '../../redux/APIs/salesRecordApi' // Import createSale mutation hook
 import style from './addSalesRecordStyle.module.css'
 import { useNavigate } from 'react-router-dom'
+import { jwtDecode } from 'jwt-decode'
 
 const AddSaleRecord = () => {
-  const [userId, setUserId] = useState('10') // Assuming user ID is predefined
+  const [userId, setUserId] = useState() // Assuming user ID is predefined
   const [productId, setProductId] = useState('')
   const [paymentMethod, setPaymentMethod] = useState('cash') // Default to cash
   const [quantity, setQuantity] = useState('')
@@ -13,6 +14,7 @@ const AddSaleRecord = () => {
   const [success, setSuccess] = useState('hidden')
   const [stores, setStores] = useState([])
   const [categories, setCategories] = useState([])
+  const [addAnother, setAddAnother]= useState(false)
   const [products, setProducts] = useState([]) // Assuming you also need a product list
   
   const [createSalesRecord, { isLoading, error }] = useCreateSalesRecordMutation () // Using the mutation hook
@@ -49,6 +51,15 @@ const AddSaleRecord = () => {
     fetchProducts()
   }, [])
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setUserId(decodedToken.user); // Assuming the token contains a userId field
+      // console.log(userId)
+    }
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault()
 
@@ -72,7 +83,18 @@ const AddSaleRecord = () => {
           setSuccess('hidden') 
         }, 3000)
 
-      navigate('/app/salesRecords')
+        if(addAnother) {
+          setPaymentMethod('cash')
+          setCategories(data.categories)
+          setProducts(data)
+          setQuantity('')
+          setStores(data)
+          
+        }
+        else {
+          navigate('/app/salesRecords')
+        }
+
     } catch (err) {
       console.error('Failed to create sale record:', err)
     }
@@ -170,6 +192,16 @@ const AddSaleRecord = () => {
             </select>
           </div>
             <br />
+            <div className="mt-8 flex items-center gap-4">
+            <input
+              type="checkbox"
+              name="check"
+              checked={addAnother}
+              onChange={(e) => setAddAnother(e.target.checked)}
+              className={`${style.check} flex items-center justify-center`}
+            />
+            <label htmlFor="check">Add another product</label>
+          </div>
           <div className="mt-5">
             <button type="submit" className={style.submit} disabled={isLoading}>
               {isLoading ? 'Saving...' : 'Save Sale Record'}

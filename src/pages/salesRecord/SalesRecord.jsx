@@ -103,10 +103,11 @@ const SalesRecord = () => {
         handleFilter={handleFilter} 
         direction='/app/addSaleRecord' 
         title='Sales Record' 
-        button='+ Add Record' 
+        button='+ Add Sales' 
         location={locations}  
         categories={categories}  
         search='search by product name'
+        display='hidden'
       />
       
       {

@@ -57,7 +57,6 @@ function Home() {
   )
 
   const allCategories = categoryData?.categories?.length || 0
-  // console.log('all categories', allCategories)
 
   const lowStocks = productData
     ?.filter((item) => item.alertStatus >= item.quantity)

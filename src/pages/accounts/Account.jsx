@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import AccountSummary from '../../components/accountSummary/AccountSummary'
 import Button from '../../components/Button/Button'
 import style from './Account.module.css'
@@ -7,7 +7,8 @@ import { useGetProductsQuery } from '../../redux/APIs/productApi'
 import { useGetSalesRecordQuery } from '../../redux/APIs/salesRecordApi'
 
 function Account() {
-  const [duration, setDuration] = useState('')
+  const [startDuration, setStartDuration] = useState(months[0])
+  const [endDuration, setEndDuration] = useState(months[11])
   const [selectedProducts, setSelectedProducts] = useState('')
   const [stockValue, setStockValue] = useState(0)
   const [totalSales, setTotalSales] = useState(0)
@@ -18,39 +19,67 @@ function Account() {
   const category = productData?.map((item) => item.name) || []
   const currentYear = new Date().getFullYear()
 
-  const handleDuration = (e) => {
-    setDuration(e.target.value)
+  const handleStartDuration = (e) => {
+    const startMonth = e.target.value
+    setStartDuration(startMonth)
+
+    // If the selected start month is greater than the current end month, reset the end month
+    if (months.indexOf(startMonth) > months.indexOf(endDuration)) {
+      setEndDuration(startMonth)
+    }
   }
 
-  const handleSelectWears = (e) => {
-    const productName = e.target.value
-    setSelectedProducts(productName)
+  const handleEndDuration = (e) => {
+    const endMonth = e.target.value
+    // Only update end duration if it is greater than or equal to start duration
+    if (months.indexOf(endMonth) >= months.indexOf(startDuration)) {
+      setEndDuration(endMonth)
+    }
+  }
 
-    const productDataItem = productData.find(
-      (item) => item.name === productName,
-    )
+  const handleSelectProduct = (e) => {
+    setSelectedProducts(e.target.value)
+  }
 
-    if (productDataItem) {
-      const productPrice = productDataItem.price
-      const productQuantity = productDataItem.quantity
-      const salesForProduct = salesData.filter(
-        (sale) => sale.Product.name === productName,
+  const getLastDateOfMonth = (month, year) => {
+    return new Date(year, months.indexOf(month) + 1, 0)
+  }
+
+  useEffect(() => {
+    if (selectedProducts) {
+      const productDataItem = productData.find(
+        (item) => item.name === selectedProducts,
       )
 
-      const totalSalesAmount = salesForProduct.reduce(
-        (total, sale) => total + sale.quantity * sale.Product.price,
-        0,
-      )
+      if (productDataItem) {
+        const productPrice = productDataItem.price
+        const productQuantity = productDataItem.quantity
 
-      setStockValue(productPrice * productQuantity)
-      setTotalSales(totalSalesAmount)
+        const endDate = getLastDateOfMonth(endDuration, currentYear)
+
+        const salesForProduct = salesData.filter((sale) => {
+          const soldDate = new Date(sale.soldDate)
+          return sale.Product.name === selectedProducts && soldDate <= endDate
+        })
+
+        const totalSalesAmount = salesForProduct.reduce(
+          (total, sale) => total + sale.quantity * sale.Product.price,
+          0,
+        )
+
+        setStockValue(productPrice * productQuantity)
+        setTotalSales(totalSalesAmount)
+      } else {
+        setStockValue(0)
+        setTotalSales(0)
+      }
     } else {
       setStockValue(0)
       setTotalSales(0)
     }
-  }
+  }, [startDuration, endDuration, selectedProducts, productData, salesData])
 
-  const sumTotal = stockValue - totalSales
+  const sumTotal = stockValue + totalSales
 
   if (isLoading) {
     return <div>Loading data, please wait...</div>
@@ -68,8 +97,8 @@ function Account() {
       <div className={style.selectOptionsContainer}>
         <div className={style.selectOptions}>
           <div className={style.selectBox}>
-            <select onChange={handleDuration} value={duration || ''}>
-              <option value="">View Range</option>
+            <select onChange={handleStartDuration} value={startDuration}>
+              <option value="">Start Month</option>
               {months.map((month) => (
                 <option key={month} value={month}>
                   {month}
@@ -77,9 +106,19 @@ function Account() {
               ))}
             </select>
           </div>
-          {duration ? (
+          <div className={style.selectBox}>
+            <select onChange={handleEndDuration} value={endDuration}>
+              <option value="">End Month</option>
+              {months.map((month) => (
+                <option key={month} value={month}>
+                  {month}
+                </option>
+              ))}
+            </select>
+          </div>
+          {startDuration && endDuration ? (
             <p>
-              {months[0]} <span>{currentYear}</span> to {duration}{' '}
+              {startDuration} <span>{currentYear}</span> to {endDuration}{' '}
               <span>{currentYear}</span>
             </p>
           ) : (
@@ -88,10 +127,10 @@ function Account() {
         </div>
         <div className={style.selectOptions}>
           <div className={style.selectBox}>
-            <select onChange={handleSelectWears} value={selectedProducts || ''}>
+            <select onChange={handleSelectProduct} value={selectedProducts}>
               <option value="">Select Product</option>
-              {category.map((item, index) => (
-                <option key={index} value={item}>
+              {category.map((item) => (
+                <option key={item} value={item}>
                   {item}
                 </option>
               ))}
@@ -120,7 +159,6 @@ function Account() {
           container={style.summaryContainer}
           valueStyle={style.valueStyle}
         />
-
         <AccountSummary
           percentageIncrease="1.6%"
           summaryName="Sum Total"

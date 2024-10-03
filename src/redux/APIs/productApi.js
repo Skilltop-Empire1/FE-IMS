@@ -3,9 +3,9 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const productApi = createApi({
   reducerPath: 'productApi',
   baseQuery: fetchBaseQuery({ 
-    baseUrl: 'https://be-ims-production.up.railway.app/',
-  prepareHeaders: (headers) => {
-    const token = localStorage.getItem('token');
+    baseUrl: 'https://be-ims.onrender.com',
+  prepareHeaders: (headers, { getState }) => {
+    const token = getState().auth.token
     if (token) {
       headers.set('Authorization', `Bearer ${token}`); // Attach the token to the header
       console.log('Token attached to headers:', headers.get('Authorization')); // Log token to verify

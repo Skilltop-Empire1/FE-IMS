@@ -40,7 +40,7 @@ const AddProduct = () => {
   useEffect(() => {
     const fetchStores = async () => {
       const response = await fetch(
-        'https://be-ims-production.up.railway.app/api/IMS/store/all',
+        'https://be-ims.onrender.com/api/IMS/store/all',
       )
       const data = await response.json()
       setStores(data)
@@ -49,7 +49,7 @@ const AddProduct = () => {
 
     const fetchCategories = async () => {
       const response = await fetch(
-        'https://be-ims-production.up.railway.app/api/IMS/category',
+        'https://be-ims.onrender.com/api/IMS/category',
       )
       const data2 = await response.json()
       setCategories(data2.categories)

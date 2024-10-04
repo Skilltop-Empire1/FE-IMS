@@ -8,7 +8,6 @@ export const profilePictureApi = createApi({
       const token = getState().auth.token;
       if (token) {
         headers.set('Authorization', `Bearer ${token}`);
-        console.log(`JWT Token retrieved from Redux: ${token}`);
       }
       return headers;
     },

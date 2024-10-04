@@ -14,7 +14,7 @@ const AddProduct = () => {
   const [alertLimit, setAlertLimit] = useState('')
   const [price, setPrice] = useState('')
   const [productPhoto, setProductPhoto] = useState(null)
-  const [formError, setFormError] = useState('');
+  const [formError, setFormError] = useState('')
   const [addAnother, setAddAnother] = useState(false)
   const [saveMessage, setSaveMessage] = useState(false)
   const [success, setSuccess] = useState('hidden')
@@ -25,16 +25,13 @@ const AddProduct = () => {
 
   const [createProduct, { isLoading, error }] = useCreateProductMutation() // Using the mutation hook
 
-
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token')
     if (token) {
-      const decodedToken = jwtDecode(token);
-      setUserId(decodedToken.user); // Assuming the token contains a userId field
-      // console.log(userId)
+      const decodedToken = jwtDecode(token)
+      setUserId(decodedToken.user) // Assuming the token contains a userId field
     }
-  }, []);
-
+  }, [])
 
   // Fetch stores and categories
   useEffect(() => {
@@ -44,7 +41,6 @@ const AddProduct = () => {
       )
       const data = await response.json()
       setStores(data)
-      // console.log(data)
     }
 
     const fetchCategories = async () => {
@@ -53,8 +49,6 @@ const AddProduct = () => {
       )
       const data2 = await response.json()
       setCategories(data2.categories)
-      // console.log(data2)
-      // console.log(categories)
     }
 
     fetchStores()
@@ -82,11 +76,11 @@ const AddProduct = () => {
       await createProduct(formData).unwrap()
       setSaveMessage(true)
       setSuccess('')
-      // revert success message 
+      // revert success message
       setTimeout(() => {
-        setSuccess('hidden')  // Revert success message
+        setSuccess('hidden') // Revert success message
       }, 3000)
-      
+
       if (addAnother) {
         setProductName('')
         setItemCode('')
@@ -99,21 +93,18 @@ const AddProduct = () => {
         setProductPhoto(null)
         setAddAnother(false)
         setSaveMessage(false)
-
-
-      }
-      else {
+      } else {
         navigate('/app/products')
       }
     } catch (err) {
       console.error('Failed to create product:', err)
 
       if (err?.data?.message) {
-        setFormError(err.data.msg); // Use the error message from the backend
+        setFormError(err.data.msg) // Use the error message from the backend
       } else if (err?.error) {
-        setFormError(err.error); // Fallback for RTK Query error message
+        setFormError(err.error) // Fallback for RTK Query error message
       } else {
-        setFormError('An unexpected error occurred. Please try again.');
+        setFormError('An unexpected error occurred. Please try again.')
       }
     }
   }
@@ -129,8 +120,13 @@ const AddProduct = () => {
 
   return (
     <div className={`${style.body} relative`}>
-      <div className='absolute w-full ease-in-out duration-300'>
-        <p className={`text-center bg-green-400 py-3 ${success}`} style={{ color: '#fff' }}>Product saved successfully</p>
+      <div className="absolute w-full ease-in-out duration-300">
+        <p
+          className={`text-center bg-green-400 py-3 ${success}`}
+          style={{ color: '#fff' }}
+        >
+          Product saved successfully
+        </p>
       </div>
       <div className={style.top}>
         <h2 className={style.title}>Add Product</h2>
@@ -265,7 +261,11 @@ const AddProduct = () => {
             </button>
           </div>
 
-          {error && <p className="error mt-5" style={{ color: 'red' }}>{formError}</p>}
+          {error && (
+            <p className="error mt-5" style={{ color: 'red' }}>
+              {formError}
+            </p>
+          )}
         </form>
       </div>
     </div>

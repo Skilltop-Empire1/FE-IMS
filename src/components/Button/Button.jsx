@@ -4,7 +4,6 @@ import style from './Button.module.css'
 const Button = ({ buttonName, className, onClick }) => {
   const handlePrint = () => {
     window.print()
-    // console.log(buttonName)
   }
 
   return (

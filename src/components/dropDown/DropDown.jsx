@@ -15,7 +15,7 @@ function DropDown({ dropdownRef }) {
   const [modalType, setModalType] = useState(null)
   const [activeItem, setActiveItem] = useState(null)
 
-  const { username, role, id } = useSelector((state) => state.auth.token)
+  const { email, role, id } = JSON.parse(localStorage.getItem('user'))
 
   const dispatch = useDispatch()
 
@@ -37,7 +37,7 @@ function DropDown({ dropdownRef }) {
     <div className={style.container} ref={dropdownRef}>
       <div className={style.userData}>
         <p>
-          <span>user:</span> {username}
+          <span>user:</span> user
         </p>
         <p>
           <span>Role:</span> {role}

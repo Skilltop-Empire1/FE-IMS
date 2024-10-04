@@ -25,7 +25,6 @@ const StaffTable = () => {
     error: staffDataError,
     refetch,
   } = useGetStaffQuery({ page: currentPage, limit: pageSize })
-  console.log(staffData)
   const getStatusBadgeColor = (status) => {
     switch (status) {
       case 'active':

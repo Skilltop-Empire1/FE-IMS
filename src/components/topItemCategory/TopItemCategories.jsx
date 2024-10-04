@@ -4,7 +4,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useGetSalesRecordQuery } from '../../redux/APIs/salesRecordApi'
 function TopItemCategories() {
   const { data: soldProductData } = useGetSalesRecordQuery()
-  console.log(typeof data)
 
   const topCategoriesItems = Array.isArray(soldProductData)
     ? soldProductData
@@ -12,8 +11,6 @@ function TopItemCategories() {
         .sort((a, b) => b.quantity - a.quantity)
         .slice(0, 6)
     : []
-
-  console.log('topCategoriesItems', topCategoriesItems)
 
   const navigate = useNavigate()
 

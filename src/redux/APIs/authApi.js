@@ -30,7 +30,6 @@ export const authApi = createApi({
       }),
       transformResponse: (response) => {
         if (response && response.token) {
-          console.log("response", response)
           return {
             token: response.token,
             id: response.id,

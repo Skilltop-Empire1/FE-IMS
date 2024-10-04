@@ -1,104 +1,103 @@
-import React, { useState, useEffect } from 'react';
-import style from './createStoreStyle.module.css';
-import { useCreateStoreMutation } from '../../redux/APIs/storeApi';
-import { useNavigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
-
-
-
+import React, { useState, useEffect } from 'react'
+import style from './createStoreStyle.module.css'
+import { useCreateStoreMutation } from '../../redux/APIs/storeApi'
+import { useNavigate } from 'react-router-dom'
+import { jwtDecode } from 'jwt-decode'
 
 const CreateStore = () => {
-  const [storeName, setStoreName] = useState('');
-  const [location, setLocation] = useState('');
-  const [description, setDescription] = useState('');
-  const [numberOfStaff, setNumberOfStaff] = useState('');
+  const [storeName, setStoreName] = useState('')
+  const [location, setLocation] = useState('')
+  const [description, setDescription] = useState('')
+  const [numberOfStaff, setNumberOfStaff] = useState('')
   const [success, setSuccess] = useState('hidden')
   const [saveMessage, setSaveMessage] = useState(false)
-  const [storeManager, setStoreManager] = useState('');
-  const [storeContact, setStoreContact] = useState('');
-  const [storePhoto, setStorePhoto] = useState(null);
-  const [addAnotherStore, setAddAnotherStore] = useState(false);
-  const [formError, setFormError] = useState('');
-  const navigate = useNavigate();
+  const [storeManager, setStoreManager] = useState('')
+  const [storeContact, setStoreContact] = useState('')
+  const [storePhoto, setStorePhoto] = useState(null)
+  const [addAnotherStore, setAddAnotherStore] = useState(false)
+  const [formError, setFormError] = useState('')
+  const navigate = useNavigate()
   const [userId, setUserId] = useState(null)
 
   // RTK Query mutation hook
-  const [createStore, { isLoading, error }] = useCreateStoreMutation();
-
+  const [createStore, { isLoading, error }] = useCreateStoreMutation()
 
   // Extract userId from token
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token')
     if (token) {
-      const decodedToken = jwtDecode(token);
-      setUserId(decodedToken.user); // Assuming the token contains a userId field
-      // console.log(userId)
+      const decodedToken = jwtDecode(token)
+      setUserId(decodedToken.user) // Assuming the token contains a userId field
     }
-  }, []);
+  }, [])
 
   // Handle form submission
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     // Clear previous form error
-    setFormError('');
+    setFormError('')
 
     // Create form data
-    const formData = new FormData();
+    const formData = new FormData()
     // formData.append('userId', parseInt(userId));
-    formData.append('storeName', storeName);
-    formData.append('location', location);
-    formData.append('storeContact', storeContact);
-    formData.append('description', description);
-    formData.append('noOfStaff', parseInt(numberOfStaff));
-    formData.append('storeManager', storeManager);
+    formData.append('storeName', storeName)
+    formData.append('location', location)
+    formData.append('storeContact', storeContact)
+    formData.append('description', description)
+    formData.append('noOfStaff', parseInt(numberOfStaff))
+    formData.append('storeManager', storeManager)
 
     if (storePhoto) {
-      formData.append('storePhoto', storePhoto);
+      formData.append('storePhoto', storePhoto)
     }
 
     try {
-        const response = await createStore(formData).unwrap();
-        setSaveMessage(true)
-        setSuccess('')
+      const response = await createStore(formData).unwrap()
+      setSaveMessage(true)
+      setSuccess('')
 
-        // revert success message 
-        setTimeout(() => {
-          setSuccess('hidden') 
-        }, 3000)
-
+      // revert success message
+      setTimeout(() => {
+        setSuccess('hidden')
+      }, 3000)
 
       if (addAnotherStore) {
         // Clear form if the user wants to add another store
-        setStoreName('');
-        setLocation('');
-        setDescription('');
-        setNumberOfStaff('');
-        setStoreManager('');
-        setStoreContact('');
-        setStorePhoto(null);
+        setStoreName('')
+        setLocation('')
+        setDescription('')
+        setNumberOfStaff('')
+        setStoreManager('')
+        setStoreContact('')
+        setStorePhoto(null)
       } else {
-        alert('Store created successfully!');
-        navigate('/app/stores');
+        alert('Store created successfully!')
+        navigate('/app/stores')
       }
     } catch (err) {
-      console.error('Failed to create store:', err);
+      console.error('Failed to create store:', err)
 
       // Display the backend error message if available
       if (err?.data?.error) {
-        setFormError(err.data.error); // Use the error message from the backend
+        setFormError(err.data.error) // Use the error message from the backend
       } else if (err?.error) {
-        setFormError(err.error); // Fallback for RTK Query error message
+        setFormError(err.error) // Fallback for RTK Query error message
       } else {
-        setFormError('An unexpected error occurred. Please try again.');
+        setFormError('An unexpected error occurred. Please try again.')
       }
     }
-  };
+  }
 
   return (
     <div className={`${style.body} relative`}>
-      <div className='absolute w-full ease-in-out duration-300'>
-        <p className={`text-center bg-green-400 py-3 ${success}`} style={{ color: '#fff' }}>Product saved successfully</p>
+      <div className="absolute w-full ease-in-out duration-300">
+        <p
+          className={`text-center bg-green-400 py-3 ${success}`}
+          style={{ color: '#fff' }}
+        >
+          Product saved successfully
+        </p>
       </div>
       <div className={style.top}>
         <h2 className={style.title}>Create Store</h2>
@@ -194,7 +193,7 @@ const CreateStore = () => {
         </form>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CreateStore;
+export default CreateStore

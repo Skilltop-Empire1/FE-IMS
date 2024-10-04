@@ -6,7 +6,6 @@ import { useGetSalesRecordQuery } from '../../redux/APIs/salesRecordApi'
 function Sales({}) {
   const navigate = useNavigate()
   const { data } = useGetSalesRecordQuery()
-  console.log('sales', data)
 
   const posPayments = data
     ?.map((sale) => sale.paymentMethod === 'pos')

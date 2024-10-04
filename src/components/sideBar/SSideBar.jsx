@@ -18,7 +18,6 @@ import { Link, useLocation } from 'react-router-dom'
 
 function SSideBar() {
   const { pathname } = useLocation()
-  console.log({ pathname })
   return (
     <div className="w-72 h-[calc(100vh-4.2rem)] mt-20 max-h-screen bg-imsPurple flex flex-col justify-between py-10 fixed">
       <div className=" px-2 flex flex-col gap-1">

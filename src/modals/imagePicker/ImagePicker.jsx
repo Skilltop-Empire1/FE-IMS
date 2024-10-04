@@ -26,7 +26,6 @@ const ImagePicker = ({ onSelectImage }) => {
     if (!imageFile) return
     try {
       await upload(imageFile).unwrap()
-      console.log('Upload successful')
       setImageFile(null)
       setImagePreview(null)
     } catch (err) {

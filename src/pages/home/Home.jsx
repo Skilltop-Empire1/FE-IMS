@@ -20,8 +20,6 @@ function Home() {
   const { data: storeOverview = [] } = useGetStoresOverviewQuery()
   const { data: categoryData = [] } = useGetCategoriesQuery()
 
-  // console.log('product data', productData)
-
   if (isLoading) {
     return (
       <div

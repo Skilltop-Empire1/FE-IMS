@@ -187,13 +187,16 @@ const AddProduct = () => {
             >
               <option value="">Select store</option>
               {/* <option value="">Select Store</option> */}
-              {stores.map((store) => {
+              { stores.length > 0 ? stores.map((store) => {
                 return (
                   <option key={store.storeId} value={store.storeId}>
                     {store.storeName}
                   </option>
                 )
-              })}
+              }) : 
+              <option value=''>
+                    No store created
+                  </option>}
             </select>
           </div>
 
@@ -207,9 +210,13 @@ const AddProduct = () => {
               required
             >
               <option value="">Select Category</option>
-              {categories.map((category) => {
+              { categories.length > 0 ? categories.map((category) => {
                 return <option value={category.catId}>{category.name}</option>
-              })}
+              }) :
+              <option value="">
+                    No category created
+                  </option>
+              }
             </select>
           </div>
 

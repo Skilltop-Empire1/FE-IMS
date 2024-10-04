@@ -121,11 +121,15 @@ const AddSaleRecord = () => {
               required
             >
               <option value="">Select Product</option>
-              {products.map((product) => (
+              {products.length > 0 ? products.map((product) => (
                 <option key={product.prodId} value={product.prodId}>
                   {product.name}
                 </option>
-              ))}
+              )) :
+              <option value="">
+                    No product created
+                  </option>
+              }
             </select>
           </div>
 
@@ -166,11 +170,15 @@ const AddSaleRecord = () => {
               required
             >
               <option value="">Select Store</option>
-              {stores.map((store) => (
+              { stores.length > 0 ? stores.map((store) => (
                 <option key={store.storeId} value={store.storeId}>
                   {store.storeName}
                 </option>
-              ))}
+              )) :
+              <option  value="">
+                    No store created
+                  </option>
+              }
             </select>
           </div>
 
@@ -184,11 +192,15 @@ const AddSaleRecord = () => {
               required
             >
               <option value="">Select Category</option>
-              {categories.map((category) => (
+              {categories.length > 0 ? categories.map((category) => (
                 <option key={category.catId} value={category.catId}>
                   {category.name}
                 </option>
-              ))}
+              )) :
+              <option  value="">
+                    No category created
+                  </option>
+              }
             </select>
           </div>
             <br />

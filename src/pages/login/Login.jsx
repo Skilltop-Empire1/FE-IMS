@@ -18,12 +18,24 @@ const Login = () => {
     e.preventDefault()
 
     try {
-      const token = await login({
+      const data = await login({
         email,
         password,
       }).unwrap()
-      dispatch(setCredentials({ token }))
-      navigate('/app') // Navigate to the dashboard or another page
+      const { token, id, role } = data
+      dispatch(setCredentials({ token, role, id }))
+      localStorage.setItem('token', token)
+
+      localStorage.setItem(
+        'user',
+        JSON.stringify({
+          id: id,
+          role: role,
+          email: email,
+        }),
+      )
+
+      navigate('/app')
     } catch (err) {
       console.error('Failed to login:', err)
       alert('Login failed! Please check your credentials and try again.')

@@ -73,9 +73,8 @@ const ImagePicker = ({ onSelectImage }) => {
       </button>
       {error && (
         <p className={style.error}>
-          {/* Ensure to handle the error message correctly */}
           {typeof error.data === 'object'
-            ? JSON.stringify(error.data) // This will prevent rendering an object directly
+            ? JSON.stringify(error.data.message)
             : error.message || 'An error occurred while uploading.'}
         </p>
       )}

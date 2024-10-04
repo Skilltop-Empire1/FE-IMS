@@ -6,6 +6,7 @@ export const profilePictureApi = createApi({
     baseUrl: 'https://be-ims-production.up.railway.app/',
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.token;
+    console.log("Token: ", token);
       if (token) {
         headers.set('Authorization', `Bearer ${token}`);
         console.log(`JWT Token retrieved from Redux: ${token}`);

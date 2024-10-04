@@ -5,10 +5,12 @@ export const productApi = createApi({
   baseQuery: fetchBaseQuery({ 
     baseUrl: 'https://be-ims.onrender.com',
   prepareHeaders: (headers, { getState }) => {
-    const token = getState().auth.token
+    const getToken = getState().auth.token
+    const token = getToken.token
+    console.log('Token in state:', token);
     if (token) {
       headers.set('Authorization', `Bearer ${token}`); // Attach the token to the header
-      // console.log('Token attached to headers:', headers.get('Authorization')); // Log token to verify
+      console.log('Token attached to headers:', headers.get('Authorization')); // Log token to verify
     }
     return headers;
   }, }), // Base URL

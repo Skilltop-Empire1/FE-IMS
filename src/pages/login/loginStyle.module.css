@@ -150,8 +150,11 @@
   font-size: 17px;
   font-weight: 400;
   line-height: 26px;
-  text-align: left;
+  text-align: center;
   color: #aba3d5;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
 
 .sum {

@@ -38,7 +38,7 @@ const Filter = ({
         />
 
         {/* Select Filter */}
-        {/* <span className={display}>
+        <span className={display}>
           {isLoading ? (
             <select name="" id="" className={display}>
               <option value="">Loading locations...</option>
@@ -59,7 +59,7 @@ const Filter = ({
               </select>
             </div>
           )}
-        </span> */}
+        </span>
 
         <RedirectButton buttonName={button} direction={direction} />
       </div>

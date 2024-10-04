@@ -3,6 +3,7 @@ import style from './signUpStyle.module.css'
 import { useNavigate } from 'react-router-dom'
 import { useSignupMutation } from '../../redux/APIs/authApi'
 import { EyeIcon, EyeOff } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 function Signup() {
   const navigate = useNavigate()
@@ -103,9 +104,9 @@ function Signup() {
       <div className={style.right}>
         <h2>Have an account?</h2>
         <h3>Continue your journey in one click</h3>
-        <a href="/" className={style.toSignUp}>
+        <Link to="/" className={style.toSignUp}>
           <button className={style.button}>Sign In</button>
-        </a>
+        </Link>
       </div>
     </div>
   )

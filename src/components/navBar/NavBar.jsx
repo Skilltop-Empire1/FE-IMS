@@ -22,6 +22,9 @@ function NavBar({ dropdownRef }) {
   const navigate = useNavigate()
   const { data: profilePic, isLoading, error } = useGetPictureQuery()
 
+  const { role } = JSON.parse(localStorage.getItem('user'))
+  const isSuperAdmin = role === 'superAdmin'
+
   const {
     notifications,
     hasNewNotification,
@@ -95,9 +98,12 @@ function NavBar({ dropdownRef }) {
         </li>
 
         {/* Settings and Profile */}
-        <li onClick={() => navigate('/app/settings')} aria-label="Settings">
-          <Cog size={24} style={iconStyle} />
-        </li>
+        {isSuperAdmin && (
+          <li onClick={() => navigate('/app/settings')} aria-label="Settings">
+            <Cog size={24} style={iconStyle} />
+          </li>
+        )}
+
         <li
           onClick={() => dispatch(toggleDropdown())}
           aria-label="User Dropdown"

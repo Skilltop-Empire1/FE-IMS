@@ -7,8 +7,7 @@ import { EyeIcon, EyeOff } from 'lucide-react'
 function Signup() {
   const navigate = useNavigate()
   const [signup, { isLoading, error }] = useSignupMutation()
-  const [passwordVisibility, setPasswordVisibility]= useState(false)
-
+  const [passwordVisibility, setPasswordVisibility] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -43,7 +42,7 @@ function Signup() {
                 <input
                   type="text"
                   name="username"
-                  placeholder="Enter Username"
+                  placeholder="Enter Username or Organization Name"
                   required
                 />
               </div>
@@ -61,14 +60,20 @@ function Signup() {
             <div className={style.input2}>
               <label htmlFor="password">Password</label>
               <br />
-              <div className={`flex items-center justify-between gap-3 ${style.sum}`}>
+              <div
+                className={`flex items-center justify-between gap-3 ${style.sum}`}
+              >
                 <input
-                  type={passwordVisibility? 'text' : 'password'}
+                  type={passwordVisibility ? 'text' : 'password'}
                   name="password"
                   placeholder="Enter password"
                   required
                 />
-              {passwordVisibility ? <EyeIcon onClick={showPassword} className={style.icon}/> : <EyeOff onClick={showPassword} className={style.icon}/>}
+                {passwordVisibility ? (
+                  <EyeIcon onClick={showPassword} className={style.icon} />
+                ) : (
+                  <EyeOff onClick={showPassword} className={style.icon} />
+                )}
               </div>
             </div>
             {error && <p className={style.error}>{error.message}</p>}{' '}
@@ -78,7 +83,6 @@ function Signup() {
                 type="submit"
                 className={style.button2}
                 disabled={isLoading}
-               
               >
                 {isLoading ? 'Signing Up...' : 'SIGN UP'}
               </button>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 // Custom Toggle Switch Component
 const ToggleSwitch = ({ isOn, handleToggle }) => {
@@ -18,33 +18,79 @@ const ToggleSwitch = ({ isOn, handleToggle }) => {
   )
 }
 
-const permissions = [
-  { label: 'Store' },
-  { label: 'Products' },
-  { label: 'Users' },
-  { label: 'Settings' },
-  { label: 'Sales Records' },
-  { label: 'Accounts' },
+const initialPermissions = [
+  { label: 'Store', view: false, create: false, edit: false, approval: false },
+  {
+    label: 'Products',
+    view: false,
+    create: false,
+    edit: false,
+    approval: false,
+  },
+  {
+    label: 'Categories',
+    view: false,
+    create: false,
+    edit: false,
+    approval: false,
+  },
+  { label: 'Users', view: false, create: false, edit: false, approval: false },
+  {
+    label: 'Settings',
+    view: false,
+    create: false,
+    edit: false,
+    approval: false,
+  },
+  {
+    label: 'Sales Records',
+    view: false,
+    create: false,
+    edit: false,
+    approval: false,
+  },
+  {
+    label: 'Accounts',
+    view: false,
+    create: false,
+    edit: false,
+    approval: false,
+  },
 ]
 
-const SelectPermission = () => {
-  // State to track the toggle switch values
-  const [toggleState, setToggleState] = useState(
-    Array(6).fill(Array(4).fill(false)), // 5 rows, 4 toggle columns
+const SelectPermission = ({ onPermissionsChange, loadedPermissions }) => {
+  const [permissions, setPermissions] = useState(
+    loadedPermissions || initialPermissions,
   )
 
-  // Handle the toggle switch change
-  const handleToggleChange = (rowIndex, colIndex) => {
-    const newToggleState = toggleState.map((row, i) =>
-      i === rowIndex ? row.map((col, j) => (j === colIndex ? !col : col)) : row,
-    )
-    setToggleState(newToggleState)
+  console.log({ loadedPermissions, permissions })
+  const handleToggleChange = (rowIndex, permissionType) => {
+    const updatedPermissions = permissions.map((permission, index) => {
+      if (index === rowIndex) {
+        return {
+          ...permission,
+          [permissionType]: !permission[permissionType],
+        }
+      }
+      return permission
+    })
+    setPermissions(updatedPermissions)
+    onPermissionsChange(updatedPermissions)
   }
+  useEffect(() => {
+    if (loadedPermissions) {
+      console.log('first')
+      setPermissions(loadedPermissions)
+    } else {
+      setPermissions(initialPermissions)
+      console.log('else')
+    }
+  }, [loadedPermissions])
 
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full divide-y divide-gray-200">
-        <thead className="">
+        <thead>
           <tr>
             <th className="px-4 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
             <th className="px-4 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -62,18 +108,16 @@ const SelectPermission = () => {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {permissions.map(({ label }, rowIndex) => (
+          {permissions.map((permission, rowIndex) => (
             <tr key={rowIndex}>
-              {/* Text in the first columpermissions */}
               <td className="px-4 py-2 whitespace-nowrap text-sm font-medium text-gray-900">
-                {label}
+                {permission.label}
               </td>
-              {/* Toggle switches in the rest of the columns */}
-              {[1, 2, 3, 4].map((_, colIndex) => (
-                <td key={colIndex} className="px-4 py-2 text-center">
+              {['view', 'create', 'edit', 'approval'].map((type) => (
+                <td key={type} className="px-4 py-2 text-center">
                   <ToggleSwitch
-                    isOn={toggleState[rowIndex][colIndex]}
-                    handleToggle={() => handleToggleChange(rowIndex, colIndex)}
+                    isOn={permission[type]}
+                    handleToggle={() => handleToggleChange(rowIndex, type)}
                   />
                 </td>
               ))}

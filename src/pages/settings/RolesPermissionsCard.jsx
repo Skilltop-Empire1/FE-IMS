@@ -1,14 +1,37 @@
 import { PencilIcon } from 'lucide-react'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import SelectPermission from './SelectPermission'
 
-const RolesPermissionsCard = ({ showExport = true, onRoleChange }) => {
+const RolesPermissionsCard = ({
+  showExport = true,
+  onRoleChange,
+  onPermissionsChange,
+}) => {
   const [selectedRole, setSelectedRole] = useState(roles[0].label)
+  const [permissions, setPermissions] = useState(initialPermissions)
 
+  // Handle role change
   const handleRoleChange = (label) => {
     setSelectedRole(label)
-    onRoleChange(label) // Pass the selected role back to the parent
+    if (onRoleChange) {
+      onRoleChange(label) // Pass the selected role back to the parent
+    }
   }
+
+  // Handle permissions change
+  const handlePermissionsChange = (updatedPermissions) => {
+    setPermissions(updatedPermissions)
+    if (onPermissionsChange) {
+      onPermissionsChange(updatedPermissions) // Pass updated permissions back to the parent
+    }
+  }
+
+  // Pass initial permissions to parent on mount
+  useEffect(() => {
+    if (onPermissionsChange) {
+      onPermissionsChange(permissions)
+    }
+  }, [])
 
   return (
     <div className="grid grid-cols-2 gap-4 my-5">
@@ -43,7 +66,10 @@ const RolesPermissionsCard = ({ showExport = true, onRoleChange }) => {
           <PencilIcon size={18} />
         </div>
         <div className="flex flex-col gap-4">
-          <SelectPermission />
+          <SelectPermission
+            permissions={permissions}
+            onPermissionsChange={handlePermissionsChange}
+          />
           {showExport && (
             <button className="self-end py-1 px-6 bg-imsPurple text-white rounded-full">
               Export
@@ -55,15 +81,20 @@ const RolesPermissionsCard = ({ showExport = true, onRoleChange }) => {
   )
 }
 
-// export default Roles
-
 export default RolesPermissionsCard
 
-const roles = [
+export const roles = [
   { label: 'Manager' },
   { label: 'Super Admin' },
   { label: 'Employee' },
   { label: 'Sales Employee' },
   { label: 'Admin' },
   { label: 'Finance' },
+]
+
+const initialPermissions = [
+  { label: 'View', value: false },
+  { label: 'Create', value: false },
+  { label: 'Edit', value: false },
+  { label: 'Delete', value: false },
 ]

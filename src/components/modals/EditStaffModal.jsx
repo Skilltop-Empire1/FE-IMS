@@ -160,6 +160,7 @@ const EditStaffModal = ({ visible, onClose, staffInfo, refetch }) => {
                   <option>Loading Stores...</option>
                 ) : (
                   stores &&
+                  stores.length > 0 &&
                   stores.map((store) => (
                     <option key={store.storeId} value={store.storeId}>
                       {store.storeName}
@@ -227,7 +228,7 @@ const EditStaffModal = ({ visible, onClose, staffInfo, refetch }) => {
             type="submit"
             className="text-white text-center flex-grow bg-imsPurple rounded-full font-semibold px-8 py-2.5 text-xs focus:ring-imsLightPurple focus:ring-offset-2 focus:ring-1"
           >
-            {loading ? 'Please wait...' : 'Edit Staff'}
+            {loading ? 'Please wait...' : 'Save'}
           </button>
         </div>
       </form>

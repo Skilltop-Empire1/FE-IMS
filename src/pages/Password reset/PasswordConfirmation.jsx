@@ -103,7 +103,7 @@ const PasswordConfirmation = () => {
           <button className="mb-4" type="submit" disabled={isLoading}>
             {isLoading ? 'Resetting...' : 'Reset Password'}
           </button>
-        </form>
+        </form>              
 
         {isSuccess && <p>Password reset successful!</p>}
         {isError && (

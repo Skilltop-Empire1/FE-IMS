@@ -20,17 +20,17 @@ const SalesRecord = () => {
 
   const { data: locations, error: locationError, isLoading: locationLoading } = useGetLocationsQuery();
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      const response = await fetch(
-        'https://be-ims-production.up.railway.app/api/IMS/store/filter',
-      )
-      const data = await response.json()
-      setCategories(data.categories)
-    }
+  // useEffect(() => {
+  //   const fetchCategories = async () => {
+  //     const response = await fetch(
+  //       'https://be-ims.onrender.com  /api/IMS/store/filter',
+  //     )
+  //     const data = await response.json()
+  //     setCategories(data.categories)
+  //   }
 
-    fetchCategories()
-  }, [])
+  //   fetchCategories()
+  // }, [])
 
   const handleSearch = (term) => {
     setSearchTerm(term.toLowerCase())
@@ -103,10 +103,11 @@ const SalesRecord = () => {
         handleFilter={handleFilter} 
         direction='/app/addSaleRecord' 
         title='Sales Record' 
-        button='+ Add Record' 
+        button='+ Add Sales' 
         location={locations}  
         categories={categories}  
         search='search by product name'
+        display='hidden'
       />
       
       {

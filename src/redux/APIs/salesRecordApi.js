@@ -2,7 +2,19 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const salesRecordApi = createApi({
   reducerPath: 'salesRecordApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://be-ims-production.up.railway.app/' }),
+  baseQuery: fetchBaseQuery({
+     baseUrl: 'https://be-ims.onrender.com',
+     prepareHeaders: (headers, { getState }) => {
+      const token = getState().auth.token
+
+      console.log('Token in state:', token);
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`); // Attach the token to the header
+        console.log('Token attached to headers:', headers.get('Authorization')); // Log token to verify
+      }
+      return headers;
+    },
+     }),
   endpoints: (builder) => ({
     getSalesRecord: builder.query({
       query: () => '/api/IMS/sales/get',

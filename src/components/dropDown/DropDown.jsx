@@ -6,6 +6,7 @@ import ImagePicker from '../../modals/imagePicker/ImagePicker'
 import Logout from '../../modals/logout/Logout'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../../redux/slices/AuthSlice'
+import LoggedReset from '../../pages/Password reset/LoggedReset'
 
 import styles from '../../components/sideBar/Sidebar.module.css'
 import { useLoginMutation } from '../../redux/APIs/authApi'
@@ -89,7 +90,7 @@ function DropDown({ dropdownRef }) {
       <ModalContainer
         isOpen={modalType === 'change-password'}
         onClose={closeModal}
-        content={<div>Change your account password.</div>}
+        content={<LoggedReset/>}
       />
       <ModalContainer
         isOpen={modalType === 'logout'}

@@ -37,7 +37,7 @@ const AddProduct = () => {
   useEffect(() => {
     const fetchStores = async () => {
       const response = await fetch(
-        'https://be-ims-production.up.railway.app/api/IMS/store/all',
+        'https://be-ims.onrender.com/api/IMS/store/all',
       )
       const data = await response.json()
       setStores(data)
@@ -45,7 +45,7 @@ const AddProduct = () => {
 
     const fetchCategories = async () => {
       const response = await fetch(
-        'https://be-ims-production.up.railway.app/api/IMS/category',
+        'https://be-ims.onrender.com/api/IMS/category',
       )
       const data2 = await response.json()
       setCategories(data2.categories)
@@ -183,13 +183,16 @@ const AddProduct = () => {
             >
               <option value="">Select store</option>
               {/* <option value="">Select Store</option> */}
-              {stores.map((store) => {
+              { stores.length > 0 ? stores.map((store) => {
                 return (
                   <option key={store.storeId} value={store.storeId}>
                     {store.storeName}
                   </option>
                 )
-              })}
+              }) : 
+              <option value=''>
+                    No store created
+                  </option>}
             </select>
           </div>
 
@@ -203,9 +206,13 @@ const AddProduct = () => {
               required
             >
               <option value="">Select Category</option>
-              {categories.map((category) => {
+              { categories.length > 0 ? categories.map((category) => {
                 return <option value={category.catId}>{category.name}</option>
-              })}
+              }) :
+              <option value="">
+                    No category created
+                  </option>
+              }
             </select>
           </div>
 

@@ -38,9 +38,22 @@ export const staffApi = createApi({
     // Update an existing staff member by ID
     updateStaff: builder.mutation({
       query: ({ id, updatedStaff }) => ({
-        url: `/api/IMS/staff/${id}`, // Update staff member by ID
+        url: `/api/IMS/staff/update/${id}`, // Update staff member by ID
         method: 'PUT',
         body: JSON.stringify(updatedStaff),
+        headers: {
+          'Content-Type': 'application/json', // Ensure proper content-type for JSON
+        },
+      }),
+      invalidatesTags: (result, error, { id }) => [{ type: 'Staff', id }], // Invalidate cache for the updated staff member
+    }),
+
+    // Update an existing staff member permission by ID
+    updateStaffPermission: builder.mutation({
+      query: ({ id, updatedStaffPermission }) => ({
+        url: `/api/IMS/staff/updatepem/${id}`, // Update staff member by ID
+        method: 'PUT',
+        body: JSON.stringify(updatedStaffPermission),
         headers: {
           'Content-Type': 'application/json', // Ensure proper content-type for JSON
         },
@@ -65,5 +78,6 @@ export const {
   useGetStaffByIdQuery,
   useCreateStaffMutation,
   useUpdateStaffMutation,
+  useUpdateStaffPermissionMutation,
   useDeleteStaffMutation,
 } = staffApi

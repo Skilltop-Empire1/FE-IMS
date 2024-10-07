@@ -1,8 +1,15 @@
 import React, { useState } from 'react'
-import { useGetStaffQuery } from '../../redux/staffApi' // Import the API hook
+import {
+  useGetStaffQuery,
+  useUpdateStaffMutation,
+  useUpdateStaffPermissionMutation,
+} from '../../redux/staffApi'
 import moment from 'moment'
 import { capitalizedWords } from '../../utils/helpers'
 import EditStaffModal from '../../components/modals/EditStaffModal'
+import { PencilIcon } from 'lucide-react'
+import RolesPermissionsCard, { roles } from './RolesPermissionsCard'
+import SelectPermission from './SelectPermission'
 
 const StaffTableSkeleton = () => (
   <div className="animate-pulse">
@@ -14,17 +21,21 @@ const StaffTableSkeleton = () => (
 
 const StaffTable = () => {
   const [staffInfo, setStaffInfo] = useState(null)
+  const [role, setRole] = useState('') // State for selected role
+  const [permissions, setPermissions] = useState([]) // State for permissions
   const [showEditStaffModal, setShowEditStaffModal] = useState(false)
   const [currentPage, setCurrentPage] = useState(1) // Page state for pagination
   const pageSize = 10 // Set page size
 
-  // Fetch staff data with pagination parameters (page number and page size)
   const {
     data: staffData,
     isLoading,
     error: staffDataError,
     refetch,
   } = useGetStaffQuery({ page: currentPage, limit: pageSize })
+  const [updateStaff] = useUpdateStaffMutation() // Mutation hook for updating staff
+  const [updateStaffPermission] = useUpdateStaffPermissionMutation() // Mutation hook for updating staff permission
+
   const getStatusBadgeColor = (status) => {
     switch (status) {
       case 'active':
@@ -38,7 +49,41 @@ const StaffTable = () => {
     }
   }
 
-  const editStaff = (id, staff) => {
+  const handleStaffSelect = (staff) => {
+    if (staffInfo?.staffId === staff.staffId) {
+      setStaffInfo(null) // Uncheck if already selected
+      setRole('')
+      setPermissions([])
+    } else {
+      setStaffInfo(staff) // Select the new staff member
+      setRole(staff.role)
+      setPermissions(staff?.permissions)
+    }
+  }
+
+  const handleRoleChange = (newRole) => {
+    setRole(newRole)
+  }
+
+  const handleUpdateRole = async () => {
+    if (staffInfo) {
+      await updateStaff({ staffId: staffInfo.staffId, role }) // Update the role
+      refetch() // Refetch staff data after update
+    }
+  }
+
+  const handleUpdatePermission = async () => {
+    if (staffInfo) {
+      let data = await updateStaffPermission({
+        id: staffInfo.staffId,
+        permissions,
+      }) // Update the role
+      console.log({ data })
+      refetch() // Refetch staff data after update
+    }
+  }
+
+  const editStaff = (staff) => {
     setStaffInfo(staff)
     setShowEditStaffModal(true)
   }
@@ -52,83 +97,102 @@ const StaffTable = () => {
     setCurrentPage(newPage)
   }
 
+  // Handle permissions change
+  const handlePermissionsChange = (updatedPermissions) => {
+    setPermissions(updatedPermissions)
+    // if (onPermissionsChange) {
+    //   onPermissionsChange(updatedPermissions) // Pass updated permissions back to the parent
+    // }
+  }
+
   const totalPages = staffData?.pagination?.totalPages || 1
 
   return (
     <div className="py-5 bg-white">
+      {/* {JSON.stringify(staffInfo)} */}
       <div className="container mx-auto p-4">
         {isLoading || staffDataError ? (
-          <StaffTableSkeleton /> // Display skeleton loader when data is loading
+          <StaffTableSkeleton />
         ) : (
           <div className="overflow-x-auto">
             <table className="min-w-full bg-white">
               <thead>
                 <tr>
-                  <th className="py-2 px-4 bg-gray-100 border-b text-left text-sm font-semibold text-gray-700">
-                    Username
-                  </th>
-                  <th className="py-2 px-4 bg-gray-100 border-b text-left text-sm font-semibold text-gray-700">
-                    Email
-                  </th>
-                  <th className="py-2 px-4 bg-gray-100 border-b text-left text-sm font-semibold text-gray-700">
-                    Added Date
-                  </th>
-                  <th className="py-2 px-4 bg-gray-100 border-b text-left text-sm font-semibold text-gray-700">
-                    Status
-                  </th>
-                  <th className="py-2 px-4 bg-gray-100 border-b text-left text-sm font-semibold text-gray-700">
-                    Role
-                  </th>
-                  <th className="py-2 px-4 bg-gray-100 border-b text-left text-sm font-semibold text-gray-700">
-                    Action
-                  </th>
-                  <th className="py-2 px-4 bg-gray-100 border-b text-left text-sm font-semibold text-gray-700">
-                    Store Name
-                  </th>
+                  {[
+                    'Select',
+                    'Username',
+                    'Email',
+                    'Added Date',
+                    'Status',
+                    'Role',
+                    'Store Name',
+                    'Action',
+                  ].map((header) => (
+                    <th
+                      key={header}
+                      className="py-2 px-4 bg-gray-100 border-b text-left text-sm font-semibold text-gray-700"
+                    >
+                      {header}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
                 {staffData?.data?.length === 0 ? (
                   <tr>
                     <td
-                      colSpan="7"
+                      colSpan="8"
                       className="py-2 px-4 text-center text-sm text-gray-500"
                     >
                       No staff members found.
                     </td>
                   </tr>
                 ) : (
-                  staffData?.data?.map((staff, index) => (
-                    <tr key={index}>
+                  staffData?.data?.map((staff) => (
+                    <tr
+                      key={staff.staffId}
+                      className={`cursor-pointer ${staffInfo?.staffId === staff.staffId ? 'bg-blue-100' : ''}`}
+                    >
                       <td className="py-2 px-4 border-b text-sm">
-                        {staff.username || 'N/A'}
+                        <input
+                          type="checkbox"
+                          checked={staffInfo?.staffId === staff.staffId}
+                          onChange={() => handleStaffSelect(staff)}
+                        />
                       </td>
-                      <td className="py-2 px-4 border-b text-sm">
-                        {staff.email}
-                      </td>
-                      <td className="py-2 px-4 border-b text-sm">
-                        {moment(staff.added_date).format('DD/MM/yyyy')}
-                      </td>
-                      <td className="py-2 px-4 border-b text-sm">
-                        <span
-                          className={`px-2 py-1 text-xs font-semibold rounded-full ${getStatusBadgeColor(staff.status)}`}
+                      {[
+                        'username',
+                        'email',
+                        'added_date',
+                        'status',
+                        'role',
+                        'storeName',
+                      ].map((key, index) => (
+                        <td
+                          key={index}
+                          className="py-2 px-4 border-b text-sm"
+                          onClick={() => handleStaffSelect(staff)}
                         >
-                          {capitalizedWords(staff?.status?.split(' '))}
-                        </span>
-                      </td>
-                      <td className="py-2 px-4 border-b text-sm">
-                        {staff.role}
-                      </td>
+                          {key === 'added_date' ? (
+                            moment(staff[key]).format('DD/MM/yyyy')
+                          ) : key === 'status' ? (
+                            <span
+                              className={`px-2 py-1 text-xs font-semibold rounded-full ${getStatusBadgeColor(staff.status)}`}
+                            >
+                              {capitalizedWords(staff.status.split(' '))}
+                            </span>
+                          ) : (
+                            staff[key] || 'N/A'
+                          )}
+                        </td>
+                      ))}
                       <td className="py-2 px-4 border-b text-sm">
                         <button
                           className="text-blue-600 hover:underline"
-                          onClick={() => editStaff(staff.staffId, staff)}
+                          onClick={() => editStaff(staff)}
                         >
                           Edit
                         </button>
-                      </td>
-                      <td className="py-2 px-4 border-b text-sm">
-                        {staff?.storeName || 'No Store'}
                       </td>
                     </tr>
                   ))
@@ -157,6 +221,58 @@ const StaffTable = () => {
           </button>
         </div>
       </div>
+
+      {staffInfo && (
+        <div className="grid grid-cols-1 gap-4 my-5">
+          {/* <div className="flex flex-col gap-4 bg-gray-100 rounded-lg px-8 py-10">
+            <div className="flex items-center gap-2">
+              <span className="text-2xl font-bold">Role</span>
+              <PencilIcon size={18} />
+            </div>
+            <div className="flex flex-col gap-3">
+              {roles.map(({ label }) => (
+                <label
+                  key={label}
+                  htmlFor={label}
+                  className="text-md flex items-center gap-2"
+                >
+                  <input
+                    type="radio"
+                    name="role"
+                    className="h-5 w-5 rounded-full bg-imsLightPurple border-transparent focus:ring-0"
+                    id={label}
+                    checked={role === label}
+                    onChange={() => handleRoleChange(label)}
+                  />
+                  <span>{label}</span>
+                </label>
+              ))}
+            </div>
+          </div> */}
+
+          <div className="flex flex-col gap-4 bg-gray-100 rounded-lg px-4 py-10">
+            <div className="flex items-center gap-2">
+              <span className="text-2xl font-bold">
+                Permissions for {staffInfo?.username}
+              </span>
+              <PencilIcon size={18} />
+            </div>
+            <div className="flex flex-col gap-4">
+              <SelectPermission
+                loadedPermissions={staffInfo?.permissions || permissions}
+                permissions={staffInfo?.permissions || permissions}
+                onPermissionsChange={handlePermissionsChange}
+              />
+              <button
+                className="mt-4 px-4 py-2 bg-imsDarkPurple text-white rounded"
+                onClick={handleUpdatePermission}
+              >
+                Update Permission
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {staffInfo && showEditStaffModal && (
         <EditStaffModal

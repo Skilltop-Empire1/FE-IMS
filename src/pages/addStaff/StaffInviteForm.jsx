@@ -9,6 +9,15 @@ const staffInviteSchema = z.object({
   email: z.string().email('Invalid email address'),
   password: z.string().min(6, 'Password must be at least 6 characters'),
   role: z.string().min(1, 'Role is required'), // Add validation for role
+  permissions: z.array(
+    z.object({
+      label: z.string(),
+      view: z.boolean(),
+      create: z.boolean(),
+      edit: z.boolean(),
+      approval: z.boolean(),
+    }),
+  ),
 })
 
 const StaffInviteForm = () => {
@@ -16,6 +25,7 @@ const StaffInviteForm = () => {
   const [password, setPassword] = useState('')
   const [username, setUsername] = useState('')
   const [role, setRole] = useState('') // State for selected role
+  const [permissions, setPermissions] = useState([]) // State for permissions
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState({})
   const [createStaff, { isLoading, isSuccess, isError }] =
@@ -31,6 +41,7 @@ const StaffInviteForm = () => {
       password,
       username,
       role, // Include role in validation
+      permissions,
     })
 
     if (!validationResult.success) {
@@ -39,14 +50,29 @@ const StaffInviteForm = () => {
       return
     }
 
+    console.log({
+      email,
+      password,
+      username,
+      role,
+      permissions,
+    })
+
     try {
       setLoading(true)
       // Call the mutation with form data
-      await createStaff({ email, password, username, role }).unwrap()
+      await createStaff({
+        email,
+        password,
+        username,
+        role,
+        permissions,
+      }).unwrap()
       setEmail('')
       setPassword('')
       setUsername('')
       setRole('')
+      setPermissions([])
       setLoading(false)
       alert('Invite sent successfully!')
     } catch (error) {
@@ -118,43 +144,40 @@ const StaffInviteForm = () => {
           </div>
         </div>
 
+        {/* Roles & Permissions */}
         <div className="mt-14">
           <RolesPermissionsCard
             showExport={false}
             onRoleChange={(role) => setRole(role)} // Pass handler to update role
+            onPermissionsChange={(permissions) => setPermissions(permissions)} // Pass handler to update permissions
           />
           {errors?.role && (
             <p className="text-red-600 text-sm mt-1">{errors.role._errors}</p>
           )}
         </div>
 
+        {/* Submit Button */}
         <div className="mt-6 flex justify-center gap-4">
           <button
             type="submit"
-            className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-imsPurple hover:bg-imsDarkPurple focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-imsLightPurple"
-            disabled={isLoading}
+            className="bg-imsDarkPurple text-white py-2 px-6 rounded-md shadow-md hover:bg-imsPurple focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-imsPurple"
+            disabled={loading || isLoading}
           >
-            {isLoading ? 'Sending...' : 'Send Invite'}
-          </button>
-          <button
-            type="reset"
-            disabled={loading}
-            className="disabled:cursor-not-allowed inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-imsLightPurple"
-            onClick={() => {
-              setEmail('')
-              setUsername('')
-              setPassword('')
-              setRole('') // Reset role as well
-            }}
-          >
-            Cancel
+            {loading || isLoading ? 'Sending Invite...' : 'Send Invite'}
           </button>
         </div>
 
+        {/* Success/Error Messages */}
         {isSuccess && (
-          <p className="text-green-600 mt-4">Invite sent successfully!</p>
+          <p className="text-green-600 text-sm mt-4">
+            Invite sent successfully!
+          </p>
         )}
-        {isError && <p className="text-red-600 mt-4">Failed to send invite.</p>}
+        {isError && (
+          <p className="text-red-600 text-sm mt-4">
+            Failed to send invite. Please try again.
+          </p>
+        )}
       </form>
     </div>
   )

@@ -35,6 +35,7 @@ export const authApi = createApi({
             id: response.id,
             role: response.role,
             email: response.email,
+            username: response.username
           };        }
         throw new Error('Token missing in response')
       },

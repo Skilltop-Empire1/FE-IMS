@@ -38,7 +38,7 @@ const Filter = ({
         />
 
         {/* Select Filter */}
-        <span className={display}>
+        {/* <span className={display}>
           {isLoading ? (
             <select name="" id="" className={display}>
               <option value="">Loading locations...</option>
@@ -51,7 +51,7 @@ const Filter = ({
             <div>
               <select onChange={(e) => handleFilter(e.target.value)}>
                 <option value="all">Filter by location</option>
-                {location.map((location, idx) => (
+                {locations.map((location, idx) => (
                   <option value={location} key={idx}>
                     {location}
                   </option>
@@ -59,7 +59,7 @@ const Filter = ({
               </select>
             </div>
           )}
-        </span>
+        </span> */}
 
         <RedirectButton buttonName={button} direction={direction} />
       </div>

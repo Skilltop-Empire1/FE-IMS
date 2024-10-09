@@ -1,7 +1,7 @@
-import React from 'react';
-import style from './tableStyle.module.css';
-import BUtton from '../Button/Button';
-import { Trash, Edit2Icon } from 'lucide-react';
+import React from 'react'
+import style from './tableStyle.module.css'
+import BUtton from '../Button/Button'
+import { Trash, Edit2Icon } from 'lucide-react'
 
 const Table = ({ status, date, api, prod, deleted, updated }) => {
   return (
@@ -14,6 +14,7 @@ const Table = ({ status, date, api, prod, deleted, updated }) => {
             <th>Product Name</th>
             <th>{status}</th>
             <th>Quantity</th>
+            <th>Price</th>
             <th>Category</th>
             <th>Store Name</th>
             <th>{date}</th>
@@ -36,13 +37,14 @@ const Table = ({ status, date, api, prod, deleted, updated }) => {
                     product.quantity > product.alertStatus
                       ? 'Active'
                       : product.quantity === 0
-                      ? 'Empty'
-                      : 'Low'
+                        ? 'Empty'
+                        : 'Low'
                   }
                   className="me-5"
                 />
               </td>
               <td>{product.quantity}</td>
+              <td>{product.price}</td>
               <td>{product.categoryId}</td>
               <td>
                 {product.storeAvailable.length > 8
@@ -51,10 +53,10 @@ const Table = ({ status, date, api, prod, deleted, updated }) => {
               </td>
               <td>{product.createdAt.substr(0, 10)}</td>
               <td className="flex gap-1">
-                <Edit2Icon 
-                className={style.icon}
-                onClick={()=>updated(product)}
-                 />
+                <Edit2Icon
+                  className={style.icon}
+                  onClick={() => updated(product)}
+                />
                 <Trash
                   className={style.icon}
                   onClick={() => deleted(product.prodId)} // Pass the product ID to the delete function
@@ -65,7 +67,7 @@ const Table = ({ status, date, api, prod, deleted, updated }) => {
         </tbody>
       </table>
     </div>
-  );
-};
+  )
+}
 
-export default Table;
+export default Table

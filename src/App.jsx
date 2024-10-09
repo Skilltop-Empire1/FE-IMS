@@ -1,58 +1,193 @@
-import React from 'react'
+import React, { Suspense, lazy } from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Login from './pages/login/Login'
-import Signup from './pages/signup/Signup'
-import AppLayout from './components/appLayout/AppLayout'
-import Account from './pages/accounts/Account'
-import Home from './pages/home/Home'
-import Categories from './pages/categories/Categories'
-import Products from './pages/products/Products'
-import SalesRecord from './pages/salesRecord/SalesRecord'
-import Settings from './pages/settings/Settings'
-import Stores from './pages/stores/Stores'
-import NotFound from './pages/notFound/NotFound'
-import AddProduct from './pages/addProduct/AddProduct'
-import Staff from './pages/addStaff/Staff'
-import AddStaff from './pages/addStaff/AddStaff'
-import CreateStore from './pages/createStore/CreateStore'
 import ProtectedRoute from './utilities/ProtectedRoute'
-import MobileWarning from './pages/mobileWarning/MobileWarning'
+import { NotificationProvider } from './components/Notifications/NotificationContext'
 import store from './redux/store'
 import { setCredentials } from './redux/slices/AuthSlice'
-import PasswordReset from './pages/Password reset/PasswordReset'
-import PasswordConfirmation from './pages/Password reset/PasswordConfirmation'
-import AddSaleRecord from './pages/addSalesRecord/AddSalesRecord'
-import { NotificationProvider } from './components/Notifications/NotificationContext'
+import Loader from './components/loaderElement/Loader' // Ensure this path is correct
+
+// Lazy load components
+const Login = lazy(() => import('./pages/login/Login'))
+const Signup = lazy(() => import('./pages/signup/Signup'))
+const AppLayout = lazy(() => import('./components/appLayout/AppLayout'))
+const Account = lazy(() => import('./pages/accounts/Account'))
+const Home = lazy(() => import('./pages/home/Home'))
+const Categories = lazy(() => import('./pages/categories/Categories'))
+const Products = lazy(() => import('./pages/products/Products'))
+const SalesRecord = lazy(() => import('./pages/salesRecord/SalesRecord'))
+const Settings = lazy(() => import('./pages/settings/Settings'))
+const Stores = lazy(() => import('./pages/stores/Stores'))
+const NotFound = lazy(() => import('./pages/notFound/NotFound'))
+const AddProduct = lazy(() => import('./pages/addProduct/AddProduct'))
+const Staff = lazy(() => import('./pages/addStaff/Staff'))
+const AddStaff = lazy(() => import('./pages/addStaff/AddStaff'))
+const CreateStore = lazy(() => import('./pages/createStore/CreateStore'))
+const MobileWarning = lazy(() => import('./pages/mobileWarning/MobileWarning'))
+const PasswordReset = lazy(() => import('./pages/Password reset/PasswordReset'))
+const PasswordConfirmation = lazy(
+  () => import('./pages/Password reset/PasswordConfirmation'),
+)
+const AddSaleRecord = lazy(
+  () => import('./pages/addSalesRecord/AddSalesRecord'),
+)
 
 const router = createBrowserRouter([
-  { path: '/', element: <Login /> },
-  { path: '/signup', element: <Signup /> },
-  { path: '/mobile-warning', element: <MobileWarning /> },
-  { path: '/passwordReset', element: <PasswordReset /> },
-  { path: '/passwordConfirmation', element: <PasswordConfirmation /> },
+  {
+    path: '/',
+    element: (
+      <Suspense fallback={<Loader />}>
+        <Login />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/signup',
+    element: (
+      <Suspense fallback={<Loader />}>
+        <Signup />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/mobile-warning',
+    element: (
+      <Suspense fallback={<Loader />}>
+        <MobileWarning />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/passwordReset',
+    element: (
+      <Suspense fallback={<Loader />}>
+        <PasswordReset />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/passwordConfirmation',
+    element: (
+      <Suspense fallback={<Loader />}>
+        <PasswordConfirmation />
+      </Suspense>
+    ),
+  },
   {
     path: '/app',
     element: (
       <ProtectedRoute>
-        <AppLayout />
+        <Suspense fallback={<Loader />}>
+          <AppLayout />
+        </Suspense>
       </ProtectedRoute>
     ),
     children: [
-      { index: true, element: <Home /> },
-      { path: 'accounts', element: <Account /> },
-      { path: 'products', element: <Products /> },
-      { path: 'salesRecords', element: <SalesRecord /> },
-      { path: 'settings', element: <Settings /> },
-      { path: 'stores', element: <Stores /> },
-      { path: 'categories', element: <Categories /> },
-      { path: 'addProduct', element: <AddProduct /> },
-      { path: 'staff', element: <Staff /> },
-      { path: 'addStaff', element: <AddStaff /> },
-      { path: 'createStore', element: <CreateStore /> },
-      { path: 'addSaleRecord', element: <AddSaleRecord /> },
+      {
+        index: true,
+        element: (
+          <Suspense fallback={<Loader />}>
+            <Home />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'accounts',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <Account />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'products',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <Products />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'salesRecords',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <SalesRecord />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'settings',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <Settings />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'stores',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <Stores />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'categories',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <Categories />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'addProduct',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <AddProduct />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'staff',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <Staff />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'addStaff',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <AddStaff />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'createStore',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <CreateStore />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'addSaleRecord',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <AddSaleRecord />
+          </Suspense>
+        ),
+      },
     ],
   },
-  { path: '*', element: <NotFound /> },
+  {
+    path: '*',
+    element: (
+      <Suspense fallback={<Loader />}>
+        <NotFound />
+      </Suspense>
+    ),
+  },
 ])
 
 function App() {
@@ -60,10 +195,11 @@ function App() {
   if (token) {
     store.dispatch(setCredentials({ token }))
   }
+
   return (
-  <NotificationProvider>
-    <RouterProvider router={router} />
-  </NotificationProvider>
+    <NotificationProvider>
+      <RouterProvider router={router} />
+    </NotificationProvider>
   )
 }
 

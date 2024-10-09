@@ -15,7 +15,7 @@ function DropDown({ dropdownRef }) {
   const [modalType, setModalType] = useState(null)
   const [activeItem, setActiveItem] = useState(null)
 
-  const { email, role, id } = JSON.parse(localStorage.getItem('user'))
+  const { username, role, id } = JSON.parse(localStorage.getItem('user'))
 
   const dispatch = useDispatch()
 
@@ -37,7 +37,7 @@ function DropDown({ dropdownRef }) {
     <div className={style.container} ref={dropdownRef}>
       <div className={style.userData}>
         <p>
-          <span>user:</span> user
+          <span>user:</span> {username}
         </p>
         <p>
           <span>Role:</span> {role}
@@ -90,7 +90,7 @@ function DropDown({ dropdownRef }) {
       <ModalContainer
         isOpen={modalType === 'change-password'}
         onClose={closeModal}
-        content={<LoggedReset/>}
+        content={<LoggedReset />}
       />
       <ModalContainer
         isOpen={modalType === 'logout'}

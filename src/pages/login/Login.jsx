@@ -22,8 +22,9 @@ const Login = () => {
         email,
         password,
       }).unwrap()
-      const { token, id, role } = data
-      dispatch(setCredentials({ token, role, id }))
+      const { token, id, role, username } = data
+      console.log('Logged in:', data)
+      dispatch(setCredentials({ token, role, id, username }))
       localStorage.setItem('token', token)
 
       localStorage.setItem(
@@ -32,6 +33,7 @@ const Login = () => {
           id: id,
           role: role,
           email: email,
+          username: username,
         }),
       )
 

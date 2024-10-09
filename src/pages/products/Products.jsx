@@ -24,6 +24,7 @@ const SalesRecord = () => {
   const { data: products, error, isLoading } = useGetProductsQuery()
   const [deleteProduct] = useDeleteProductMutation()
   const [updateProduct] = useUpdateProductMutation()
+  console.log('Product', products)
 
   // Fetch locations
   const {
@@ -233,7 +234,7 @@ const SalesRecord = () => {
         button="+ Add Product"
         location={locations}
         search="Search by name"
-        display='hidden'
+        display="hidden"
       />
 
       {/* Products Table Section */}

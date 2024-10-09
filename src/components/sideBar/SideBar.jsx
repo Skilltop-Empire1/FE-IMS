@@ -23,6 +23,9 @@ Modal.setAppElement('#root')
 function SideBar() {
   const [modalIsOpen, setModalIsOpen] = useState(false)
 
+  const { role } = JSON.parse(localStorage.getItem('user'))
+  const isSuperAdmin = role === 'superAdmin'
+
   const dispatch = useDispatch()
 
   const openModal = () => setModalIsOpen(true)
@@ -102,17 +105,19 @@ function SideBar() {
             <span>Accounts</span>
           </NavLink>
         </li>
-        <li>
-          <NavLink
-            to="/app/settings"
-            className={({ isActive }) =>
-              isActive ? style.activeLink : undefined
-            }
-          >
-            <Settings className={style.iconStyle} />
-            <span>Settings</span>
-          </NavLink>
-        </li>
+        {isSuperAdmin && (
+          <li>
+            <NavLink
+              to="/app/settings"
+              className={({ isActive }) =>
+                isActive ? style.activeLink : undefined
+              }
+            >
+              <Settings className={style.iconStyle} />
+              <span>Settings</span>
+            </NavLink>
+          </li>
+        )}
       </ul>
       <ul>
         <li>

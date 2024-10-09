@@ -249,7 +249,7 @@ const EditProductModal = ({
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                  className="px-4 py-2  text-white rounded-md bg-purple-800 hover:bg-purple-950"
                 >
                   Update Product
                 </button>

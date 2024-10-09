@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import { useCreateProductMutation } from '../../redux/APIs/productApi' // Import createProduct mutation hook
+import { useCreateProductMutation } from '../../redux/APIs/productApi'
 import style from './AddProduct.module.css'
-import { Navigate, useNavigate } from 'react-router-dom'
-import { jwtDecode } from 'jwt-decode'
+import { useNavigate } from 'react-router-dom'
+import {jwtDecode} from 'jwt-decode'
+import { useGetStoresQuery } from '../../redux/APIs/storeApi'
+import { useGetCategoriesQuery } from '../../redux/categoryApi'
 
 const AddProduct = () => {
   const [productName, setProductName] = useState('')
   const [itemCode, setItemCode] = useState('')
   const [description, setDescription] = useState('')
   const [quantity, setQuantity] = useState('')
-  const [selectedStore, setSelectedStore] = useState({ id: '', name: '' }) // Store ID and Name
+  const [selectedStore, setSelectedStore] = useState({ id: '', name: '' })
   const [category, setCategory] = useState('')
   const [alertLimit, setAlertLimit] = useState('')
   const [price, setPrice] = useState('')
@@ -23,37 +25,30 @@ const AddProduct = () => {
   const [userId, setUserId] = useState(null)
   const navigate = useNavigate()
 
-  const [createProduct, { isLoading, error }] = useCreateProductMutation() // Using the mutation hook
+  const { data: store, isLoading: storeLoading, error: storeError } = useGetStoresQuery()
+  const { data: categorys, isLoading: categorysLoading, error: categorysError } = useGetCategoriesQuery()
+
+  const [createProduct, { isLoading, error }] = useCreateProductMutation()
 
   useEffect(() => {
     const token = localStorage.getItem('token')
     if (token) {
       const decodedToken = jwtDecode(token)
-      setUserId(decodedToken.user) // Assuming the token contains a userId field
+      setUserId(decodedToken.user)
     }
   }, [])
 
-  // Fetch stores and categories
   useEffect(() => {
-    const fetchStores = async () => {
-      const response = await fetch(
-        'https://be-ims.onrender.com/api/IMS/store/all',
-      )
-      const data = await response.json()
-      setStores(data)
+    if (store) {
+      setStores(store) // Ensure store is set only if data exists
     }
+  }, [store])
 
-    const fetchCategories = async () => {
-      const response = await fetch(
-        'https://be-ims.onrender.com/api/IMS/category',
-      )
-      const data2 = await response.json()
-      setCategories(data2.categories)
+  useEffect(() => {
+    if (categorys) {
+      setCategories(categorys) // Ensure categories are set only if data exists
     }
-
-    fetchStores()
-    fetchCategories()
-  }, [])
+  }, [categorys])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -61,10 +56,9 @@ const AddProduct = () => {
     const formData = new FormData()
     formData.append('name', productName)
     formData.append('itemCode', itemCode)
-    // formData.append('description', description);
     formData.append('quantity', quantity)
-    formData.append('storeId', Number(selectedStore.id)) // Submit the store ID
-    formData.append('storeAvailable', selectedStore.name) // submit the store name
+    formData.append('storeId', Number(selectedStore.id))
+    formData.append('storeAvailable', selectedStore.name)
     formData.append('categoryId', category)
     formData.append('alertStatus', alertLimit)
     formData.append('price', price)
@@ -76,9 +70,8 @@ const AddProduct = () => {
       await createProduct(formData).unwrap()
       setSaveMessage(true)
       setSuccess('')
-      // revert success message
       setTimeout(() => {
-        setSuccess('hidden') // Revert success message
+        setSuccess('hidden')
       }, 3000)
 
       if (addAnother) {
@@ -100,9 +93,9 @@ const AddProduct = () => {
       console.error('Failed to create product:', err)
 
       if (err?.data?.message) {
-        setFormError(err.data.msg) // Use the error message from the backend
+        setFormError(err.data.msg)
       } else if (err?.error) {
-        setFormError(err.error) // Fallback for RTK Query error message
+        setFormError(err.error)
       } else {
         setFormError('An unexpected error occurred. Please try again.')
       }
@@ -110,21 +103,18 @@ const AddProduct = () => {
   }
 
   const handleStoreChange = (e) => {
-    const selectedStoreId = Number(e.target.value) // Get the selected store ID
-    const store = stores.find((store) => store.storeId === selectedStoreId) // Find the selected store object
+    const selectedStoreId = Number(e.target.value)
+    const store = stores.find((store) => store.storeId === selectedStoreId)
 
     if (store) {
-      setSelectedStore({ id: store.storeId, name: store.storeName }) // Store both id and name
+      setSelectedStore({ id: store.storeId, name: store.storeName })
     }
   }
 
   return (
     <div className={`${style.body} relative`}>
       <div className="absolute w-full ease-in-out duration-300">
-        <p
-          className={`text-center bg-green-400 py-3 ${success}`}
-          style={{ color: '#fff' }}
-        >
+        <p className={`text-center bg-green-400 py-3 ${success}`} style={{ color: '#fff' }}>
           Product saved successfully
         </p>
       </div>
@@ -150,18 +140,8 @@ const AddProduct = () => {
               className={style.input}
               value={itemCode}
               onChange={(e) => setItemCode(e.target.value)}
-              // required
             />
           </div>
-          {/* <div className={style.cont}>
-            <label className={style.label}>Description:</label>
-            <input
-              type="text"
-              className={style.input}
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </div> */}
           <div className={style.cont}>
             <label className={style.label}>Quantity:</label>
             <input
@@ -182,17 +162,17 @@ const AddProduct = () => {
               required
             >
               <option value="">Select store</option>
-              {/* <option value="">Select Store</option> */}
-              { stores.length > 0 ? stores.map((store) => {
-                return (
+              {storeLoading ? (
+                <option value="">Loading stores</option>
+              ) : storeError ? (
+                <option value="">Error loading stores</option>
+              ) : (
+                store.map((store) => (
                   <option key={store.storeId} value={store.storeId}>
                     {store.storeName}
                   </option>
-                )
-              }) : 
-              <option value=''>
-                    No store created
-                  </option>}
+                ))
+              )}
             </select>
           </div>
 
@@ -206,13 +186,17 @@ const AddProduct = () => {
               required
             >
               <option value="">Select Category</option>
-              { categories.length > 0 ? categories.map((category) => {
-                return <option value={category.catId}>{category.name}</option>
-              }) :
-              <option value="">
-                    No category created
+              {categorysLoading ? (
+                <option value="">Loading Categories</option>
+              ) : categorysError ? (
+                <option value="">Error Loading Categories</option>
+              ) : (
+                categorys.categories.map((category) => (
+                  <option key={category.catId} value={category.catId}>
+                    {category.name}
                   </option>
-              }
+                ))
+              )}
             </select>
           </div>
 
@@ -236,14 +220,13 @@ const AddProduct = () => {
             />
           </div>
           <div className={style.cont}>
-            <label className={style.label}>Product photo:</label>
+            <label className={style.label}>Product Photo*</label>
             <input
               type="file"
               className={style.input}
               onChange={(e) => setProductPhoto(e.target.files[0])}
             />
           </div>
-
           <div className="mt-8 flex items-center gap-4">
             <input
               type="checkbox"

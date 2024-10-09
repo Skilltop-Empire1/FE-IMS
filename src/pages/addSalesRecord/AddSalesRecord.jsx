@@ -3,6 +3,10 @@ import { useCreateSalesRecordMutation  } from '../../redux/APIs/salesRecordApi' 
 import style from './addSalesRecordStyle.module.css'
 import { useNavigate } from 'react-router-dom'
 import { jwtDecode } from 'jwt-decode'
+import { useGetStoresQuery } from '../../redux/APIs/storeApi'
+import { useGetCategoriesQuery } from '../../redux/categoryApi'
+import {  useGetProductsQuery } from '../../redux/APIs/productApi'
+
 
 const AddSaleRecord = () => {
   const [userId, setUserId] = useState() // Assuming user ID is predefined
@@ -17,39 +21,13 @@ const AddSaleRecord = () => {
   const [addAnother, setAddAnother]= useState(false)
   const [products, setProducts] = useState([]) // Assuming you also need a product list
   
+  const { data: store, isLoading: storeLoading, error: storeError } = useGetStoresQuery()
+  const { data: categorys, isLoading: categorysLoading, error: categorysError } = useGetCategoriesQuery()
+  const { data: product, error: productError, isLoading: productLoading } = useGetProductsQuery()
   const [createSalesRecord, { isLoading, error }] = useCreateSalesRecordMutation () // Using the mutation hook
   const navigate = useNavigate()
 
-  // Fetch stores, categories, and products
-  useEffect(() => {
-    const fetchStores = async () => {
-      const response = await fetch(
-        'https://be-ims.onrender.com/api/IMS/store/all',
-      )
-      const data = await response.json()
-      setStores(data)
-    }
-
-    const fetchCategories = async () => {
-      const response = await fetch(
-        'https://be-ims.onrender.com/api/IMS/category',
-      )
-      const data = await response.json()
-      setCategories(data.categories)
-    }
-
-    const fetchProducts = async () => {
-      const response = await fetch(
-        'https://be-ims.onrender.com/api/IMS/product',
-      )
-      const data = await response.json()
-      setProducts(data)
-    }
-
-    fetchStores()
-    fetchCategories()
-    fetchProducts()
-  }, [])
+ 
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -121,15 +99,17 @@ const AddSaleRecord = () => {
               required
             >
               <option value="">Select Product</option>
-              {products.length > 0 ? products.map((product) => (
-                <option key={product.prodId} value={product.prodId}>
-                  {product.name}
-                </option>
-              )) :
-              <option value="">
-                    No product created
+              { productLoading ? (
+                <option value="">Loading product</option>
+              ) : productError ? (
+                <option value="">Error loading product</option>
+              ) : (
+                product.map((product) => (
+                  <option key={product.prodId} value={product.prodId}>
+                    {product.name}
                   </option>
-              }
+                 ))
+                 )}
             </select>
           </div>
 
@@ -169,16 +149,18 @@ const AddSaleRecord = () => {
               onChange={(e) => setStoreId(e.target.value)}
               required
             >
-              <option value="">Select Store</option>
-              { stores.length > 0 ? stores.map((store) => (
-                <option key={store.storeId} value={store.storeId}>
-                  {store.storeName}
-                </option>
-              )) :
-              <option  value="">
-                    No store created
+              <option value="">Select store</option>
+              {storeLoading ? (
+                <option value="">Loading stores</option>
+              ) : storeError ? (
+                <option value="">Error loading stores</option>
+              ) : (
+                store.map((store) => (
+                  <option key={store.storeId} value={store.storeId}>
+                    {store.storeName}
                   </option>
-              }
+                ))
+              )}
             </select>
           </div>
 
@@ -192,17 +174,21 @@ const AddSaleRecord = () => {
               required
             >
               <option value="">Select Category</option>
-              {categories.length > 0 ? categories.map((category) => (
-                <option key={category.catId} value={category.catId}>
-                  {category.name}
-                </option>
-              )) :
-              <option  value="">
-                    No category created
+              {categorysLoading ? (
+                <option value="">Loading Categories</option>
+              ) : categorysError ? (
+                <option value="">Error Loading Categories</option>
+              ) : (
+                categorys.categories.map((category) => (
+                  <option key={category.catId} value={category.catId}>
+                    {category.name}
                   </option>
-              }
+                ))
+              )}
             </select>
           </div>
+
+
             <br />
             <div className="mt-8 flex items-center gap-4">
             <input

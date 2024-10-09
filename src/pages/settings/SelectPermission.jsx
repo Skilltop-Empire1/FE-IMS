@@ -19,7 +19,7 @@ const ToggleSwitch = ({ isOn, handleToggle }) => {
 }
 
 const initialPermissions = [
-  { label: 'Store', view: false, create: false, edit: false, approval: false },
+  { label: 'Store', view: true, create: false, edit: false, approval: false },
   {
     label: 'Products',
     view: false,
@@ -37,7 +37,7 @@ const initialPermissions = [
   { label: 'Users', view: false, create: false, edit: false, approval: false },
   {
     label: 'Settings',
-    view: false,
+    view: true,
     create: false,
     edit: false,
     approval: false,

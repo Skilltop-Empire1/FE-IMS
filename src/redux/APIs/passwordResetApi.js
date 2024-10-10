@@ -2,7 +2,18 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const passwordReset = createApi({
   reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://be-ims-production.up.railway.app/' }),
+  baseQuery: fetchBaseQuery({ 
+    baseUrl: 'https://be-ims-production.up.railway.app/' ,
+    prepareHeaders: (headers, { getState }) => {
+      const token = getState().auth.token
+
+      // console.log('Token in state:', token);
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`); // Attach the token to the header
+      }
+      return headers;
+    },
+  }),
   endpoints: (builder) => ({
     requestPasswordReset: builder.mutation({
       query: (email) => ({

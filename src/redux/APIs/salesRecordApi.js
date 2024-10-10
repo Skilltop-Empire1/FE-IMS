@@ -18,6 +18,7 @@ export const salesRecordApi = createApi({
   endpoints: (builder) => ({
     getSalesRecord: builder.query({
       query: () => '/api/IMS/sales/get',
+      refetchOnMountOrArgChange: true,
     }),
     createSalesRecord: builder.mutation({
       query: (newSalesRecord) => ({

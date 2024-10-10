@@ -17,9 +17,11 @@ export const productApi = createApi({
     // Fetch products
     getProducts: builder.query({
       query: () => '/api/IMS/product', // Endpoint for fetching the list of products
+      refetchOnMountOrArgChange: true,
     }),
     getSoldProducts: builder.query({
       query: () => '/api/IMS/product/2',
+      refetchOnMountOrArgChange: true,
     }),
 
     // Create a new product

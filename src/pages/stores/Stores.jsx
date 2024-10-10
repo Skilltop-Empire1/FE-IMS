@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import Filter from '../../components/Filter/Filter'
 import StoreList from '../../components/StoreComponent/StoreList'
 import StoreDetail from '../../components/StoreComponent/StoreDetail'
@@ -17,7 +18,14 @@ const Stores = () => {
   const { data: locations = [], error: locationError, isLoading: locationLoading } = useGetLocationsQuery();
   
   // Fetch stores
-  const { data: stores = [], error: storesError, isLoading: storesLoading } = useGetStoresQuery();
+  const { data: stores = [], error: storesError, isLoading: storesLoading, refetch } = useGetStoresQuery();
+  // const currentUser = useSelector((state) => state.auth.user);
+
+  // useEffect(() => {
+  //   if (currentUser) {
+  //     refetch(); // Refetch stores when the user switches
+  //   }
+  // }, [currentUser, refetch]);
 
   // Handle search input
   const handleSearch = (term) => {

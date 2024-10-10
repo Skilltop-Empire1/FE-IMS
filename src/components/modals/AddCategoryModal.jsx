@@ -13,17 +13,18 @@ const initialState = {
 // Schema for form validation
 export const categorySchema = z.object({
   name: z.string().min(1, 'Category Name is required'),
-  storeId: z
-    .union([z.number(), z.string()]) // Accepts number or string
-    .refine(
-      (val) => {
-        const parsed = parseInt(val) // Try to parse the value as a number
-        return !isNaN(parsed) // Ensure it's a valid number
-      },
-      {
-        message: 'Select a Store', // Error message when it's not a number
-      },
-    ),
+  storeId: z.string().min(1, 'Select a Store'),
+  // storeId: z
+  //   .union([z.number(), z.string()]) // Accepts number or string
+  //   .refine(
+  //     (val) => {
+  //       const parsed = parseInt(val) // Try to parse the value as a number
+  //       return !isNaN(parsed) // Ensure it's a valid number
+  //     },
+  //     {
+  //       message: 'Select a Store', // Error message when it's not a number
+  //     },
+  //   ),
 })
 
 const AddCategoryModal = ({ show, onClose }) => {
@@ -145,7 +146,7 @@ const AddCategoryModal = ({ show, onClose }) => {
                 Select Store
               </label>
               <select
-                value={Number(formData.storeId)}
+                value={formData.storeId}
                 onChange={(e) => handleChange('storeId', e.target.value)}
                 className="z-10 block w-full rounded border border-gray-300 p-[14px] text-sm focus:border-imsLightPurple focus:outline-none"
               >
@@ -155,7 +156,7 @@ const AddCategoryModal = ({ show, onClose }) => {
                 ) : (
                   stores &&
                   stores.map((store) => (
-                    <option key={store.storeId} value={Number(store.storeId)}>
+                    <option key={store.storeId} value={store.storeId}>
                       {store.storeName}
                     </option>
                   ))

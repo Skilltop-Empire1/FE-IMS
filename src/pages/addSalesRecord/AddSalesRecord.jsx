@@ -104,11 +104,13 @@ const AddSaleRecord = () => {
               ) : productError ? (
                 <option value="">Error loading product</option>
               ) : (
+                product.length > 0 ?
                 product.map((product) => (
                   <option key={product.prodId} value={product.prodId}>
                     {product.name}
                   </option>
-                 ))
+                 )) :
+                 <option value="">No products Created</option>
                  )}
             </select>
           </div>
@@ -149,17 +151,19 @@ const AddSaleRecord = () => {
               onChange={(e) => setStoreId(e.target.value)}
               required
             >
-              <option value="">Select store</option>
+               <option value="">Select store</option>
               {storeLoading ? (
                 <option value="">Loading stores</option>
               ) : storeError ? (
                 <option value="">Error loading stores</option>
               ) : (
+                store.lenght > 0 ? 
                 store.map((store) => (
                   <option key={store.storeId} value={store.storeId}>
                     {store.storeName}
-                  </option>
-                ))
+                  </option> 
+                )) :
+                  <option value="">No stores available</option>
               )}
             </select>
           </div>
@@ -179,11 +183,13 @@ const AddSaleRecord = () => {
               ) : categorysError ? (
                 <option value="">Error Loading Categories</option>
               ) : (
+                categorys.categories.length > 0 ?
                 categorys.categories.map((category) => (
                   <option key={category.catId} value={category.catId}>
                     {category.name}
                   </option>
-                ))
+                )) :
+                <option value="">No category has been created</option>
               )}
             </select>
           </div>

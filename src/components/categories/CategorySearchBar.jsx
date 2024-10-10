@@ -116,12 +116,13 @@ const CategorySearchBar = () => {
               {storesLoading || storesError ? (
                 <option>Loading Stores...</option>
               ) : (
-                stores &&
+                stores.length > 0 ?
                 stores.map((store) => (
                   <option key={store.storeId} value={Number(store.storeId)}>
                     {store.storeName}
                   </option>
-                ))
+                )) :
+                <option>No Stores Found</option>
               )}
             </select>
             {errors?.storeId && (

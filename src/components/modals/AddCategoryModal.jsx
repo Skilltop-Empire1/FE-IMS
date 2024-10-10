@@ -73,7 +73,7 @@ const AddCategoryModal = ({ show, onClose }) => {
       setLoading(false)
       onClose() // Close modal on success
     } catch (error) {
-      console.log({ error })
+      // console.log({ error })
       // Handle validation errors
       if (error.errors) {
         const fieldErrors = {}

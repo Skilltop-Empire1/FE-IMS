@@ -27,7 +27,7 @@ const Table2 = ({ status, date, api, deleted, updated }) => {
               <td>{product.Product.name}</td>
               <td>{product.paymentMethod}</td>
               <td>{product.quantity}</td>
-              <td>{product.Product.price * product.quantity}</td>
+              <td>₦{product.Product.price * product.quantity}</td>
               <td>{product.Store.storeName.length > 8 ? product.Store.storeName.substr(0, 8) + '...' : product.Store.storeName}</td>
               <td>{product.createdAt.substr(0, 10)}</td>
               <td className='flex gap-1'>

@@ -68,7 +68,7 @@ const EditStaffModal = ({ visible, onClose, staffInfo, refetch }) => {
       setLoading(false)
       onClose()
     } catch (error) {
-      console.log({ error })
+      // console.log({ error })
       // Handle validation errors
       if (error.errors) {
         const fieldErrors = {}

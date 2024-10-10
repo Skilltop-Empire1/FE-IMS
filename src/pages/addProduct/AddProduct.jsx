@@ -63,7 +63,7 @@ const AddProduct = () => {
     formData.append('alertStatus', alertLimit)
     formData.append('price', price)
     if (productPhoto) {
-      formData.append('image', productPhoto)
+      formData.append('prodPhoto', productPhoto)
     }
 
     try {

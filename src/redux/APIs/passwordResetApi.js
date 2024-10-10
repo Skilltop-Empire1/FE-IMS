@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const passwordReset = createApi({
   reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://be-ims.onrender.com' }),
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://be-ims-production.up.railway.app/' }),
   endpoints: (builder) => ({
     requestPasswordReset: builder.mutation({
       query: (email) => ({

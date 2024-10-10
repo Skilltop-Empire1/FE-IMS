@@ -4,7 +4,7 @@ import { useChangePasswordMutation } from '../../redux/APIs/passwordResetApi';
 import { EyeIcon, EyeOff } from 'lucide-react';
 import { jwtDecode } from 'jwt-decode'; 
 
-const LoggedReset = () => {
+const LoggedReset = ({onSuccess}) => {
   const [email, setEmail] = useState('');
   const [oldPassword, setOldPassword] = useState('');
   const [password, setPassword] = useState('');
@@ -45,6 +45,9 @@ const LoggedReset = () => {
       await changePassword({ email, oldPassword, password, confirmPassword }).unwrap();
       setTimeout(() => {
         setSuccessful('')
+        if (onSuccess) {
+          onSuccess(); // Trigger the callback to close the modal
+        }
       }, 2000);
     } catch (err) {
       console.error('Failed to reset password:', err);

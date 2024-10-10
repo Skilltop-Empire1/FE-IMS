@@ -75,9 +75,7 @@ function Signup() {
               <div
                 className={`flex items-center justify-between gap-3 ${style.sum}`}
               >
-              <div
-                className={`flex items-center justify-between gap-3 ${style.sum}`}
-              >
+              
                 <input
                   type={passwordVisibility ? 'text' : 'password'}     
                   name="password"
@@ -89,12 +87,8 @@ function Signup() {
                 ) : (
                   <EyeOff onClick={showPassword} className={style.icon} />
                 )}
-                {passwordVisibility ? (
-                  <EyeIcon onClick={showPassword} className={style.icon} />
-                ) : (
-                  <EyeOff onClick={showPassword} className={style.icon} />
-                )}
-              </div>
+                
+              
             </div>
             </div>
             {error && <p className={style.error}>{error.message}</p>}{' '}

@@ -33,17 +33,8 @@ const SalesRecord = () => {
     isLoading: locationLoading,
   } = useGetLocationsQuery()
 
-  // Fetch categories
-  useEffect(() => {
-    const fetchCategories = async () => {
-      const response = await fetch(
-        'https://be-ims.onrender.com/api/IMS/store/filter',
-      )
-      const data = await response.json()
-      setCategories(data.categories)
-    }
-    fetchCategories()
-  }, [])
+
+  
 
   // Handle delete product action
   const handleDeleteProduct = (prodId) => {

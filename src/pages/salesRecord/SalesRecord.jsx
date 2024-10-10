@@ -13,31 +13,19 @@ const SalesRecord = () => {
   const [showModal, setShowModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [salesRecordIdToDelete, setSalesRecordIdToDelete] = useState(null);
-  const [salesRecordToUpdate, setSalesRecordToUpdate] = useState(null); // Track record to update
+  const [salesRecordToUpdate, setSalesRecordToUpdate] = useState(null);
+  
   const { data: salesRecord, error: salesError, isLoading: salesLoading, refetch } = useGetSalesRecordQuery();
   const [deleteSalesRecord] = useDeleteSalesRecordMutation();
   const [updateSalesRecord] = useUpdateSalesRecordMutation();
-
   const { data: locations, error: locationError, isLoading: locationLoading } = useGetLocationsQuery();
 
-  // useEffect(() => {
-  //   const fetchCategories = async () => {
-  //     const response = await fetch(
-  //       'https://be-ims.onrender.com  /api/IMS/store/filter',
-  //     )
-  //     const data = await response.json()
-  //     setCategories(data.categories)
-  //   }
-
-  //   fetchCategories()
-  // }, [])
-
   const handleSearch = (term) => {
-    setSearchTerm(term.toLowerCase())
+    setSearchTerm(term.toLowerCase());
   }
 
   const handleFilter = (category) => {
-    setFilterCategory(category)
+    setFilterCategory(category);
   }
 
   const handleDeleteSalesRecord = (id) => {
@@ -45,56 +33,53 @@ const SalesRecord = () => {
     setShowModal(true);
   };
 
-  const confirmDeleteSalesRecord = () => {
+  const confirmDeleteSalesRecord = async () => {
     if (!salesRecordIdToDelete) {
       alert('No record selected for deletion');
       return;
     }
 
-    deleteSalesRecord(salesRecordIdToDelete)
-      .then(() => {
-        alert('Record deleted successfully!');
-        window.location.reload(false)
-        setShowModal(false);
-        setSalesRecordIdToDelete(null);
-      })
-      .catch((error) => alert('Error deleting record'));
+    try {
+      await deleteSalesRecord(salesRecordIdToDelete).unwrap();
+      alert('Record deleted successfully!');
+      setShowModal(false);
+      setSalesRecordIdToDelete(null);
+      refetch(); // Refresh sales records after deletion
+    } catch (error) {
+      console.error('Error deleting record:', error);
+      alert('Error deleting record');
+    }
   };
-
-  //sales record update
 
   const handleUpdateSalesRecord = (record) => {
     setSalesRecordToUpdate(record);
     setShowUpdateModal(true);
   };
 
-  const confirmUpdateSalesRecord = (updatedData) => {
-    if (!salesRecordToUpdate || !salesRecordToUpdate.saleId) { // Ensure there's a valid saleId
+  const confirmUpdateSalesRecord = async (updatedData) => {
+    if (!salesRecordToUpdate || !salesRecordToUpdate.saleId) {
       alert('No record selected for update');
       return;
     }
-  
-    updateSalesRecord({ id: salesRecordToUpdate.saleId, updatedData }) // Use the correct saleId
-      .then(() => {
-        alert('Record updated successfully!');
-        setShowUpdateModal(false);
-        setSalesRecordToUpdate(null);
-        refetch();
-      })
-      .catch((error) => alert('Error updating record'));
+
+    try {
+      await updateSalesRecord({ id: salesRecordToUpdate.saleId, updatedData }).unwrap();
+      alert('Record updated successfully!');
+      setShowUpdateModal(false);
+      setSalesRecordToUpdate(null);
+      refetch(); // Refresh sales records after updating
+    } catch (error) {
+      console.error('Error updating record:', error);
+      alert('Error updating record');
+    }
   };
-  
 
+  // const filteredItems = salesRecord?.filter((item) => {
+  //   const matchesSearch = item.Product.name.toLowerCase().includes(searchTerm);
+  //   // const matchesCategory = filterCategory === 'all' || item.category === filterCategory;
 
-
-  //filter
-
-  const filteredItems = salesRecord?.filter((item) => {
-    const matchesSearch = item.Product.name.toLowerCase().includes(searchTerm);
-    const matchesCategory = filterCategory === 'all' || item.category === filterCategory;
-
-    return matchesSearch && matchesCategory
-  })
+  //   return matchesSearch ;
+  // });
 
   return (
     <div>
@@ -110,43 +95,40 @@ const SalesRecord = () => {
         display='hidden'
       />
       
-      {
-        salesLoading || locationLoading ? ( 
-          <div className=' animate-pulse'>
-            <table className='w-full' >
-              <thead>
-              <tr className='text-'>
-                <th> </th>
-                  <th>Product Photo</th>
-                  <th>Product Name</th>
-                  <th>Alert status</th>
-                  <th>Quantity</th>
-                  <th>Category</th>
-                  <th>Store Name</th>
-                  <th>Date added</th>
-                  <th>Action</th> 
-                </tr>
-              </thead>
-
-            </table>
-            <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
-            <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
-            <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
-            <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
-            <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
-          </div>
-        ) : salesError || locationError ? ( 
-          <p>Error loading data</p> 
-        ) : (
-          <Table 
-            status='Payment method' 
-            date='Date added' 
-            api={filteredItems} 
-            deleted={(id) => handleDeleteSalesRecord(id)} 
-            updated={(record) => handleUpdateSalesRecord(record)} // Pass product record to update handler
-          />
-        )
-      }
+      {salesLoading || locationLoading ? ( 
+        <div className='animate-pulse'>
+          <table className='w-full'>
+            <thead>
+              <tr>
+                <th></th>
+                <th>Product Photo</th>
+                <th>Product Name</th>
+                <th>Alert Status</th>
+                <th>Quantity</th>
+                <th>Category</th>
+                <th>Store Name</th>
+                <th>Date Added</th>
+                <th>Action</th> 
+              </tr>
+            </thead>
+          </table>
+          <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+          <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+          <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+          <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+          <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+        </div>
+      ) : salesError || locationError ? ( 
+        <p>Error loading data</p> 
+      ) : (
+        <Table 
+          status='Payment method' 
+          date='Date added' 
+          api={salesRecord} 
+          deleted={handleDeleteSalesRecord} 
+          updated={handleUpdateSalesRecord} 
+        />
+      )}
 
       <ConfirmationModal 
         title={'sale record'}
@@ -164,4 +146,4 @@ const SalesRecord = () => {
   );
 };
 
-export default SalesRecord
+export default SalesRecord;

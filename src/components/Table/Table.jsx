@@ -9,7 +9,7 @@ const Table = ({ status, date, api, prod, deleted, updated }) => {
       <table className={style.table}>
         <thead>
           <tr className={style.tr}>
-            <th> </th>
+            {/* <th> </th> */}
             <th>Product Photo</th>
             <th>Product Name</th>
             <th>{status}</th>
@@ -24,9 +24,9 @@ const Table = ({ status, date, api, prod, deleted, updated }) => {
         <tbody className={prod}>
           {api.map((product, idx) => (
             <tr key={idx}>
-              <td>
+              {/* <td>
                 <input type="checkbox" />
-              </td>
+              </td> */}
               <td>
                 <img src={product.prodPhoto} alt={product.name} />
               </td>
@@ -48,7 +48,7 @@ const Table = ({ status, date, api, prod, deleted, updated }) => {
               <td>{product.categoryId}</td>
               <td>
                 {product.storeAvailable.length > 8
-                  ? product.storeAvailable.substr(0, 8) + '...'
+                  ? product.storeAvailable.substr(0,10) + '...'
                   : product.storeAvailable}
               </td>
               <td>{product.createdAt.substr(0, 10)}</td>

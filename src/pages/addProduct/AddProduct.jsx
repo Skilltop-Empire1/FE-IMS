@@ -57,7 +57,7 @@ const AddProduct = () => {
     formData.append('name', productName)
     formData.append('itemCode', itemCode)
     formData.append('quantity', quantity)
-    formData.append('storeId', Number(selectedStore.id))
+    formData.append('storeId', selectedStore.id)
     formData.append('storeAvailable', selectedStore.name)
     formData.append('categoryId', category)
     formData.append('alertStatus', alertLimit)
@@ -103,13 +103,20 @@ const AddProduct = () => {
   }
 
   const handleStoreChange = (e) => {
-    const selectedStoreId = Number(e.target.value)
-    const store = stores.find((store) => store.storeId === selectedStoreId)
-
-    if (store) {
-      setSelectedStore({ id: store.storeId, name: store.storeName })
+    const selectedStoreId = e.target.value; // Get the selected store ID as a string
+    console.log('Selected Store ID:', selectedStoreId); // Debug log
+  
+    // Check if the selectedStoreId is valid
+    const selected = stores.find((s) => s.storeId === selectedStoreId);
+    if (selected) {
+      console.log('Selected Store:', selected); // Debug log
+      setSelectedStore({ id: selected.storeId, name: selected.storeName });
     }
-  }
+  };
+  
+  
+  
+
 
   return (
     <div className={`${style.body} relative`}>
@@ -155,9 +162,10 @@ const AddProduct = () => {
           {/* Stores Dropdown */}
           <div className={style.cont}>
             <label className={style.label}>Stores Available:</label>
+
             <select
               className={style.input}
-              value={selectedStore.id}
+              value={selectedStore.id} // Use selectedStore.id here
               onChange={handleStoreChange}
               required
             >
@@ -166,16 +174,17 @@ const AddProduct = () => {
                 <option value="">Loading stores</option>
               ) : storeError ? (
                 <option value="">Error loading stores</option>
-              ) : (
-                store.lenght > 0 ? 
-                store.map((store) => (
+              ) : stores.length > 0 ? (
+                stores.map((store) => (
                   <option key={store.storeId} value={store.storeId}>
                     {store.storeName}
-                  </option> 
-                )) :
-                  <option value="">No stores available</option>
+                  </option>
+                ))
+              ) : (
+                <option value="">No stores available</option>
               )}
             </select>
+
           </div>
 
           {/* Categories Dropdown */}
@@ -227,6 +236,7 @@ const AddProduct = () => {
             <label className={style.label}>Product Photo*</label>
             <input
               type="file"
+              accept="image/*"
               className={style.input}
               onChange={(e) => setProductPhoto(e.target.files[0])}
             />

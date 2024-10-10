@@ -157,7 +157,7 @@ const AddSaleRecord = () => {
               ) : storeError ? (
                 <option value="">Error loading stores</option>
               ) : (
-                store.lenght > 0 ? 
+                store.length > 0 ? 
                 store.map((store) => (
                   <option key={store.storeId} value={store.storeId}>
                     {store.storeName}
@@ -204,7 +204,7 @@ const AddSaleRecord = () => {
               onChange={(e) => setAddAnother(e.target.checked)}
               className={`${style.check} flex items-center justify-center`}
             />
-            <label htmlFor="check">Add another product</label>
+            <label htmlFor="check">Add another record</label>
           </div>
           <div className="mt-5">
             <button type="submit" className={style.submit} disabled={isLoading}>

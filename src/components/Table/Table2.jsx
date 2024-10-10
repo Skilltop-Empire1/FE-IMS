@@ -23,12 +23,12 @@ const Table2 = ({ status, date, api, deleted, updated }) => {
           {api.map((product, idx) => (
             <tr key={idx}>
               <td><input type="checkbox" /></td>
-              <td><img src={product.Product.prodPhoto} alt={product.Product.name} /></td>
-              <td>{product.Product.name}</td>
+              {/* <td><img src={product.Product.prodPhoto} alt={product.Product.name} /></td> */}
+              {/* <td>{product.Product.name}</td> */}
               <td>{product.paymentMethod}</td>
               <td>{product.quantity}</td>
-              <td>₦{product.Product.price * product.quantity}</td>
-              <td>{product.Store.storeName.length > 8 ? product.Store.storeName.substr(0, 8) + '...' : product.Store.storeName}</td>
+              {/* <td>₦{product.Product.price * product.quantity}</td> */}
+              {/* <td>{product.Store.storeName.length > 8 ? product.Store.storeName.substr(0,10) + '...' : product.Store.storeName}</td> */}
               <td>{product.createdAt.substr(0, 10)}</td>
               <td className='flex gap-1'>
                 <Edit2Icon className={style.icon} onClick={() => updated(product)} /> {/* Pass product record to update handler */}

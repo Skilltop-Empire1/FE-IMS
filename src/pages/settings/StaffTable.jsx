@@ -34,7 +34,10 @@ const StaffTable = () => {
     refetch,
   } = useGetStaffQuery({ page: currentPage, limit: pageSize })
   const [updateStaff] = useUpdateStaffMutation() // Mutation hook for updating staff
-  const [updateStaffPermission] = useUpdateStaffPermissionMutation() // Mutation hook for updating staff permission
+  const [
+    updateStaffPermission,
+    { isLoading: isLoadingMutation, isSuccess, isError, error },
+  ] = useUpdateStaffPermissionMutation() // Mutation hook for updating staff permission
 
   const getStatusBadgeColor = (status) => {
     switch (status) {
@@ -71,14 +74,12 @@ const StaffTable = () => {
       refetch() // Refetch staff data after update
     }
   }
-
   const handleUpdatePermission = async () => {
     if (staffInfo) {
       let data = await updateStaffPermission({
         id: staffInfo.staffId,
-        permissions,
+        permissions: { permissions },
       }) // Update the role
-      console.log({ data })
       refetch() // Refetch staff data after update
     }
   }
@@ -263,11 +264,21 @@ const StaffTable = () => {
                 permissions={staffInfo?.permissions || permissions}
                 onPermissionsChange={handlePermissionsChange}
               />
+              <div className="text-center">
+                {isSuccess && (
+                  <p className="text-green-400">
+                    Permissions Updated Successfully!
+                  </p>
+                )}
+
+                {isError && <p>Error Updating Permissions</p>}
+              </div>
               <button
                 className="mt-4 px-4 py-2 bg-imsDarkPurple text-white rounded"
                 onClick={handleUpdatePermission}
+                disabled={isLoadingMutation}
               >
-                Update Permission
+                {isLoadingMutation ? 'Updating' : 'Update Permission'}
               </button>
             </div>
           </div>

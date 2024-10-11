@@ -50,10 +50,10 @@ export const staffApi = createApi({
 
     // Update an existing staff member permission by ID
     updateStaffPermission: builder.mutation({
-      query: ({ id, updatedStaffPermission }) => ({
+      query: ({ id, permissions }) => ({
         url: `/api/IMS/staff/updatepem/${id}`, // Update staff member by ID
         method: 'PUT',
-        body: JSON.stringify(updatedStaffPermission),
+        body: JSON.stringify(permissions),
         headers: {
           'Content-Type': 'application/json', // Ensure proper content-type for JSON
         },

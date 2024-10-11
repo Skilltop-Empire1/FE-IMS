@@ -7,7 +7,6 @@ export const storesApi = createApi({
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.token
 
-      console.log('Token in state:', token);
       if (token) {
         headers.set('Authorization', `Bearer ${token}`); // Attach the token to the header
       }

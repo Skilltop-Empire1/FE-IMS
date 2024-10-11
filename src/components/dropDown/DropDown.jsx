@@ -12,10 +12,13 @@ import styles from '../../components/sideBar/Sidebar.module.css'
 import { useLoginMutation } from '../../redux/APIs/authApi'
 
 function DropDown({ dropdownRef }) {
+  const { username, role, id } = JSON.parse(localStorage.getItem('user'))
+
   const [modalType, setModalType] = useState(null)
   const [activeItem, setActiveItem] = useState(null)
+  const [showFullId, setShowFullId] = useState(false)
 
-  const { username, role, id } = JSON.parse(localStorage.getItem('user'))
+  const slicedId = id.slice(0, 5)
 
   const dispatch = useDispatch()
 
@@ -42,9 +45,13 @@ function DropDown({ dropdownRef }) {
         <p>
           <span>Role:</span> {role}
         </p>
-        <p>
-          <span>ID:</span> {id}
+        <p
+          style={{ cursor: 'pointer' }}
+          onClick={() => setShowFullId((prev) => !prev)}
+        >
+          <span>ID:</span> {slicedId}...
         </p>
+        {showFullId && <p>{id}</p>}
       </div>
 
       <ul>
@@ -80,12 +87,12 @@ function DropDown({ dropdownRef }) {
       <ModalContainer
         isOpen={modalType === 'add-profile-picture'}
         onClose={closeModal}
-        content={<ImagePicker />}
+        content={<ImagePicker closeModal={closeModal} />}
       />
       <ModalContainer
         isOpen={modalType === 'update-profile-picture'}
         onClose={closeModal}
-        content={<ImagePicker />}
+        content={<ImagePicker closeModal={closeModal} />}
       />
       <ModalContainer
         isOpen={modalType === 'change-password'}

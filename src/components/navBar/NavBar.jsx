@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { BellIcon, CogIcon, Settings, User2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { NotificationContext } from '../Notifications/NotificationContext'
@@ -38,6 +38,22 @@ function NavBar({ dropdownRef }) {
     setHasNewNotification(false) // Mark the notification as seen
   }
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false) // Close the dropdown if clicked outside
+      }
+    }
+
+    // Add event listener to detect clicks outside
+    document.addEventListener('mousedown', handleClickOutside)
+
+    // Cleanup event listener
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [dropdownRef])
+
   return (
     <nav className={`${style.navContainer} navbar`} ref={dropdownRef}>
       <ul className={style.leftNavs}>
@@ -68,7 +84,7 @@ function NavBar({ dropdownRef }) {
               className="text-white relative"
               onClick={handleNotificationClick}
             >
-              <Bell size={24} style={iconStyle} />
+              <Bell size={24} style={iconStyle} className='cursor-pointer'/>
               {/* Render the notification badge */}
               {hasNewNotification && (
                 <span className="absolute top-0 right-0 block h-2 w-2 rounded-full ring-2 ring-white bg-green-500"></span>
@@ -77,12 +93,12 @@ function NavBar({ dropdownRef }) {
 
             {/* Notification Dropdown */}
             {isOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg overflow-hidden">
+              <div className="absolute right-0 mt-2 w-72 py-5 bg-white shadow-lg rounded-lg overflow-hidden">
                 {notifications.length > 0 ? (
                   notifications.map((notification, index) => (
                     <div
                       key={index}
-                      className="px-4 py-2 text-sm text-gray-700 border-b border-gray-200 hover:bg-gray-100"
+                      className="px-4 py-5 text-sm text-gray-700 border-b border-gray-200 hover:bg-gray-100"
                     >
                       {notification}
                     </div>
@@ -100,7 +116,7 @@ function NavBar({ dropdownRef }) {
         {/* Settings and Profile */}
         {isSuperAdmin && (
           <li onClick={() => navigate('/app/settings')} aria-label="Settings">
-            <Cog size={24} style={iconStyle} />
+            <Cog size={24} style={iconStyle}  className='cursor-pointer'/>
           </li>
         )}
 
@@ -111,7 +127,7 @@ function NavBar({ dropdownRef }) {
           {isLoading ? (
             <div>Loading...</div>
           ) : error ? (
-            <User size={24} style={iconStyle} />
+            <User size={24} style={iconStyle}  className='cursor-pointer'/>
           ) : (
             <img
               src={profilePic.profilePic}
@@ -124,11 +140,11 @@ function NavBar({ dropdownRef }) {
       {isShowDropDown && <DropDown />}
 
       {/* Alert message banner (optional) */}
-      {alertMessage && (
+      {/* {alertMessage && (
         <div className="absolute bottom-0 left-0 w-full bg-yellow-100 text-yellow-800 px-4 py-2">
           <p>{alertMessage}</p>
         </div>
-      )}
+      )} */}
     </nav>
   )
 }

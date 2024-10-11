@@ -48,7 +48,7 @@ const LoggedReset = ({onSuccess}) => {
         if (onSuccess) {
           onSuccess(); // Trigger the callback to close the modal
         }
-      }, 2000);
+      }, 3000);
     } catch (err) {
       console.error('Failed to reset password:', err);
       alert('Failed to reset password');
@@ -118,6 +118,7 @@ const LoggedReset = ({onSuccess}) => {
           {isLoading ? 'Resetting...' : 'Reset Password'}
         </button>
       </form>
+      <p className='text-green-500'>{isSuccess && 'Password changes successfully'}</p>
     </div>
   );
 };

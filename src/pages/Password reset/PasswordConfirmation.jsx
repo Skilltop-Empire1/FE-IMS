@@ -70,7 +70,7 @@ const PasswordConfirmation = () => {
           >
             <input
               type={passwordVisibility ? 'text' : 'password'}
-              placeholder="Enter password"
+              placeholder="Enter new password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -87,7 +87,7 @@ const PasswordConfirmation = () => {
           >
             <input
               type={passwordVisibility2 ? 'text' : 'password'}
-              placeholder="Confirm password"
+              placeholder="Confirm new password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
@@ -105,9 +105,9 @@ const PasswordConfirmation = () => {
           </button>
         </form>              
 
-        {isSuccess && <p>Password reset successful!</p>}
+        {isSuccess && <p className='text-green-500'>Password reset successful!</p>}
         {isError && (
-          <p className="mt-4">
+          <p className="mt-4 text-red-500">
             Error resetting password:{' '}
             {error?.data?.message || 'Something went wrong'}
           </p>

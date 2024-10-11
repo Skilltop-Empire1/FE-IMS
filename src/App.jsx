@@ -196,6 +196,8 @@ function App() {
     store.dispatch(setCredentials({ token }))
   }
 
+ 
+
   return (
     <NotificationProvider>
       <RouterProvider router={router} />

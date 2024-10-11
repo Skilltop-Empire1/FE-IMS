@@ -77,9 +77,9 @@ const Login = () => {
                 required
               />
               {passwordVisibility ? (
-                <EyeIcon onClick={showPassword} />
+                <EyeIcon onClick={showPassword} className={style.icon}/>
               ) : (
-                <EyeOff onClick={showPassword} />
+                <EyeOff onClick={showPassword} className={style.icon}/>
               )}
             </div>
           </div>

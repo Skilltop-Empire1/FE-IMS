@@ -45,7 +45,7 @@ const Table = ({ status, date, api, prod, deleted, updated }) => {
               </td>
               <td>{product.quantity}</td>
               <td>₦{product.price}</td>
-              <td>{product.categoryId}</td>
+              <td>{product.Category.name}</td>
               <td>
                 {product.storeAvailable.length > 8
                   ? product.storeAvailable.substr(0,10) + '...'

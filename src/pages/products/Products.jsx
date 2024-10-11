@@ -10,6 +10,7 @@ import {
 import ConfirmationModal from '../../components/modals/ConfirmationModal'
 import EditProductModal from '../../components/modals/EditProductModal'
 import { useNavigate } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
 const SalesRecord = () => {
   const [searchTerm, setSearchTerm] = useState('')
@@ -21,7 +22,7 @@ const SalesRecord = () => {
   const [productToUpdate, setProductToUpdate] = useState(null)
 
   // Fetch products using RTK Query
-  const { data: products, error, isLoading } = useGetProductsQuery()
+  const { data: products, error, isLoading, isFetching, refetch } = useGetProductsQuery()
   const [deleteProduct] = useDeleteProductMutation()
   const [updateProduct] = useUpdateProductMutation()
   // console.log('Product', products)
@@ -31,6 +32,7 @@ const SalesRecord = () => {
     data: locations,
     error: locationError,
     isLoading: locationLoading,
+
   } = useGetLocationsQuery()
 
 
@@ -162,9 +164,11 @@ const SalesRecord = () => {
     updateProduct({ prodId: productToUpdate.prodId, updatedProduct: formData })
       .then((response) => {
         if (response.data) {
+          refetch()
           alert('Product updated successfully!')
           setShowUpdateModal(false)
           setProductToUpdate(null)
+
         } else {
           alert(
             'Error updating product: ' +
@@ -214,6 +218,15 @@ const SalesRecord = () => {
     return matchesSearch && matchesCategory
   })
 
+
+  const location = useLocation()
+
+  useEffect(() => {
+    if (location.pathname === '/app/products') {
+      refetch(); // Refetch stores when the user switches
+    }
+  }, [location.pathname, refetch]);
+
   return (
     <div>
       {/* Filter Section */}
@@ -229,7 +242,7 @@ const SalesRecord = () => {
       />
 
       {/* Products Table Section */}
-      {isLoading ? (
+      {isLoading || isFetching ? (
          <div className='animate-pulse'>
             <table className='w-full' >
               <thead>
@@ -247,11 +260,9 @@ const SalesRecord = () => {
               </thead>
 
             </table>
-            <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
-            <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
-            <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
-            <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
-            <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+            {Array(5).fill().map((_, i) => (
+              <div key={i} className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+            ))}
           </div>
       ) : error ? (
         <p>Error loading products</p>

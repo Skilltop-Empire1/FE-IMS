@@ -48,7 +48,7 @@ function Account() {
   useEffect(() => {
     if (selectedProducts) {
       const productDataItem = productData.find(
-        (item) => item.name === selectedProducts,
+        (item) => item?.name === selectedProducts,
       )
 
       if (productDataItem) {
@@ -59,7 +59,7 @@ function Account() {
 
         const salesForProduct = salesData.filter((sale) => {
           const soldDate = new Date(sale.soldDate)
-          return sale.Product.name === selectedProducts && soldDate <= endDate
+          return sale.Product?.name === selectedProducts && soldDate <= endDate
         })
 
         const totalSalesAmount = salesForProduct.reduce(

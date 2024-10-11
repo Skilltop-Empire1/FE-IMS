@@ -44,12 +44,12 @@ const AddSaleRecord = () => {
     const currentDate = new Date().toISOString() // Get the current date in ISO format
 
     const saleRecordData = {
-      userId: Number(userId) , 
-      productId: Number(productId),
+      userId: (userId) , 
+      productId: (productId),
       paymentMethod,
-      quantity: Number(quantity),
-      categoryId: Number(categoryId),
-      storeId: Number(storeId),
+      quantity: (quantity),
+      categoryId: (categoryId),
+      storeId: (storeId),
       soldDate: currentDate, // Automatically set the current date
     }
 
@@ -125,7 +125,7 @@ const AddSaleRecord = () => {
               required
             >
               <option value="cash">Cash</option>
-              <option value="credit">POS</option>
+              <option value="POS">POS</option>
               <option value="transfer">Bank Transfer</option>
             </select>
           </div>

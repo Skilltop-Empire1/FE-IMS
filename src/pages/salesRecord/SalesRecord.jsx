@@ -5,6 +5,7 @@ import { useGetLocationsQuery } from '../../redux/APIs/storeApi';
 import { useGetSalesRecordQuery, useDeleteSalesRecordMutation, useUpdateSalesRecordMutation } from '../../redux/APIs/salesRecordApi';
 import ConfirmationModal from '../../components/modals/ConfirmationModal';
 import EditSalesRecordModal from '../../components/modals/EditSalesRecordModal';
+import { useLocation } from 'react-router';
 
 const SalesRecord = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -15,7 +16,7 @@ const SalesRecord = () => {
   const [salesRecordIdToDelete, setSalesRecordIdToDelete] = useState(null);
   const [salesRecordToUpdate, setSalesRecordToUpdate] = useState(null);
   
-  const { data: salesRecord, error: salesError, isLoading: salesLoading, refetch } = useGetSalesRecordQuery();
+  const { data: salesRecord, error: salesError, isLoading: salesLoading, refetch, isFetching } = useGetSalesRecordQuery();
   const [deleteSalesRecord] = useDeleteSalesRecordMutation();
   const [updateSalesRecord] = useUpdateSalesRecordMutation();
   const { data: locations, error: locationError, isLoading: locationLoading } = useGetLocationsQuery();
@@ -64,6 +65,7 @@ const SalesRecord = () => {
 
     try {
       await updateSalesRecord({ id: salesRecordToUpdate.saleId, updatedData }).unwrap();
+      refetch()
       alert('Record updated successfully!');
       setShowUpdateModal(false);
       setSalesRecordToUpdate(null);
@@ -74,12 +76,21 @@ const SalesRecord = () => {
     }
   };
 
-  // const filteredItems = salesRecord?.filter((item) => {
-  //   const matchesSearch = item.Product.name.toLowerCase().includes(searchTerm);
-  //   // const matchesCategory = filterCategory === 'all' || item.category === filterCategory;
+  const filteredItems = salesRecord?.filter((item) => {
+    const matchesSearch = item?.Product?.name?.toLowerCase().includes(searchTerm);
+    // const matchesCategory = filterCategory === 'all' || item.category === filterCategory;
 
-  //   return matchesSearch ;
-  // });
+    return matchesSearch ;
+  });
+
+
+  const location = useLocation()
+
+  useEffect(() => {
+    if (location.pathname === '/app/salesRecords') {
+      refetch(); // Refetch stores when the user switches
+    }
+  }, [location.pathname,refetch]);
 
   return (
     <div>
@@ -95,7 +106,7 @@ const SalesRecord = () => {
         display='hidden'
       />
       
-      {salesLoading || locationLoading ? ( 
+      {salesLoading || isFetching || locationLoading ? ( 
         <div className='animate-pulse'>
           <table className='w-full'>
             <thead>
@@ -112,11 +123,9 @@ const SalesRecord = () => {
               </tr>
             </thead>
           </table>
-          <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
-          <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
-          <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
-          <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
-          <div className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+          {Array(5).fill().map((_, i) => (
+            <div key={i} className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+          ))}
         </div>
       ) : salesError || locationError ? ( 
         <p>Error loading data</p> 
@@ -124,7 +133,7 @@ const SalesRecord = () => {
         <Table 
           status='Payment method' 
           date='Date added' 
-          api={salesRecord} 
+          api={filteredItems} 
           deleted={handleDeleteSalesRecord} 
           updated={handleUpdateSalesRecord} 
         />

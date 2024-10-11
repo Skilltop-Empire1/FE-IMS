@@ -39,8 +39,8 @@ const PasswordReset = () => {
 
         </form>
 
-        {isSuccess && <p className='mt-3'>An email has been sent to you with a link to reset your password. If not seen in your inbox, please check your spam.</p>}
-        {isError && <p>Error: {error?.data?.msg || 'Something went wrong.'}</p>}
+        {isSuccess && <p className='mt-3 mx-3'>An email has been sent to you with a link to reset your password. If not seen in your inbox, please check your spam.</p>}
+        {isError && <p className='mt-5'> {'Something went wrong. Ensure your email is correct'}</p>}
       </div>
     </div>
   );

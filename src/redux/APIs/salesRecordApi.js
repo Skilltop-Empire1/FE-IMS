@@ -7,10 +7,8 @@ export const salesRecordApi = createApi({
      prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.token
 
-      console.log('Token in state:', token);
       if (token) {
         headers.set('Authorization', `Bearer ${token}`); // Attach the token to the header
-        console.log('Token attached to headers:', headers.get('Authorization')); // Log token to verify
       }
       return headers;
     },

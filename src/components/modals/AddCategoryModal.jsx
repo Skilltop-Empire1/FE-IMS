@@ -41,7 +41,8 @@ const AddCategoryModal = ({ show, onClose }) => {
   } = useGetStoresQuery()
 
   // Create category mutation
-  const [createCategory] = useCreateCategoryMutation()
+  const [createCategory, { isLoading, isSuccess, isError, error }] =
+    useCreateCategoryMutation()
 
   // Handle input changes
   const handleChange = (field, value) => {

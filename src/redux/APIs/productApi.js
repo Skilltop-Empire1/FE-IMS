@@ -3,11 +3,11 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const productApi = createApi({
   reducerPath: 'productApi',
   baseQuery: fetchBaseQuery({ 
-    baseUrl: 'https://be-ims.onrender.com',
+    baseUrl: 'https://be-ims-production.up.railway.app/',
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.token
 
-    console.log('Token in state:', token);
+    // console.log('Token in state:', token);
     if (token) {
       headers.set('Authorization', `Bearer ${token}`); // Attach the token to the header
     }
@@ -17,9 +17,11 @@ export const productApi = createApi({
     // Fetch products
     getProducts: builder.query({
       query: () => '/api/IMS/product', // Endpoint for fetching the list of products
+      refetchOnMountOrArgChange: true,
     }),
     getSoldProducts: builder.query({
       query: () => '/api/IMS/product/2',
+      refetchOnMountOrArgChange: true,
     }),
 
     // Create a new product

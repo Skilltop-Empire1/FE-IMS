@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import Filter from '../../components/Filter/Filter'
 import StoreList from '../../components/StoreComponent/StoreList'
 import StoreDetail from '../../components/StoreComponent/StoreDetail'
+import { useLocation } from 'react-router'
 import {
   useGetLocationsQuery,
   useGetStoresQuery,
@@ -17,7 +19,15 @@ const Stores = () => {
   const { data: locations = [], error: locationError, isLoading: locationLoading } = useGetLocationsQuery();
   
   // Fetch stores
-  const { data: stores = [], error: storesError, isLoading: storesLoading } = useGetStoresQuery();
+  const { data: stores = [], error: storesError, isLoading: storesLoading, refetch, isFetching } = useGetStoresQuery();
+  // const currentUser = useSelector((state) => state.auth.user);
+  const location = useLocation()
+
+  useEffect(() => {
+    if (location.pathname === '/app/stores') {
+      refetch(); // Refetch stores when the user switches
+    }
+  }, [location.pathname, refetch]);
 
   // Handle search input
   const handleSearch = (term) => {
@@ -76,13 +86,12 @@ const Stores = () => {
       />
 
       {/* Store List Component */}
-      {storesLoading ? (
+      {storesLoading || isFetching ? (
          <div className='animate-pulse flex gap-4'>
-            <div className='h-44 w-44 bg-slate-300 rounded-3xl'></div>
-            <div className='h-44 w-44 bg-slate-300 rounded-3xl'></div>
-            <div className='h-44 w-44 bg-slate-300 rounded-3xl'></div>
-            <div className='h-44 w-44 bg-slate-300 rounded-3xl'></div>
-            <div className='h-44 w-44 bg-slate-300 rounded-3xl'></div>  
+          {Array(3).fill().map((_, i) => (        
+            <div key={i} className='h-44 w-44 bg-slate-300 rounded-3xl'></div>
+          ))}
+             
         </div>
       ) : storesError ? (
         <p>Error loading stores.</p>

@@ -23,7 +23,7 @@ const Login = () => {
         password,
       }).unwrap()
       const { token, id, role, username } = data
-      console.log('Logged in:', data)
+      // console.log('Logged in:', data)
       dispatch(setCredentials({ token, role, id, username }))
       localStorage.setItem('token', token)
 
@@ -77,9 +77,9 @@ const Login = () => {
                 required
               />
               {passwordVisibility ? (
-                <EyeIcon onClick={showPassword} />
+                <EyeIcon onClick={showPassword} className={style.icon}/>
               ) : (
-                <EyeOff onClick={showPassword} />
+                <EyeOff onClick={showPassword} className={style.icon}/>
               )}
             </div>
           </div>

@@ -29,11 +29,13 @@ const authSlice = createSlice({
       localStorage.removeItem('token');
       localStorage.removeItem('user');
     },
+    
     setUser: (state, action) => {
       state.user = action.payload
 
     },
   },
+  
 })
 
 export const { setCredentials, logout, setUser } = authSlice.actions

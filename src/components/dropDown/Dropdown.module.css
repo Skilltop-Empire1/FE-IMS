@@ -12,6 +12,7 @@
   display: flex;
   flex-direction: column;
   gap: 30px;
+  transition: all ease-in-out .2s;
 }
 
 .userData {
@@ -40,8 +41,9 @@
   gap: 7px;
   cursor: pointer;
   transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
+  background-color 0.3s ease,
+  color 0.3s ease;
+  transition: ease-in-out .2s;
 }
 
 .container li:hover,

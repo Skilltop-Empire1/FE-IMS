@@ -4,7 +4,7 @@ import { logout as logoutAction, setCredentials } from '../slices/AuthSlice'
 export const authApi = createApi({
   reducerPath: 'passwordReset',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://be-ims.onrender.com',
+    baseUrl: 'https://be-ims-production.up.railway.app/',
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.token
       if (token) {

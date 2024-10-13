@@ -13,17 +13,17 @@ const initialState = {
 // Schema for form validation
 export const categorySchema = z.object({
   name: z.string().min(1, 'Category Name is required'),
-  storeId: z
-    .union([z.number(), z.string()]) // Accepts number or string
-    .refine(
-      (val) => {
-        const parsed = parseInt(val) // Try to parse the value as a number
-        return !isNaN(parsed) // Ensure it's a valid number
-      },
-      {
-        message: 'Select a Store', // Error message when it's not a number
-      },
-    ),
+  storeId: z.string().min(1, 'Select a Store'),
+  // .union([z.number(), z.string()]) // Accepts number or string
+  // .refine(
+  //   (val) => {
+  //     const parsed = parseInt(val) // Try to parse the value as a number
+  //     return !isNaN(parsed) // Ensure it's a valid number
+  //   },
+  //   {
+  //     message: 'Select a Store', // Error message when it's not a number
+  //   },
+  // ),
 })
 
 const CategorySearchBar = () => {
@@ -108,20 +108,21 @@ const CategorySearchBar = () => {
           {/* Select dropdown */}
           <div className="flex-grow">
             <select
-              value={Number(formData.storeId)}
+              value={formData.storeId}
               onChange={(e) => handleChange('storeId', e.target.value)}
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-imsDarkPurple"
             >
               <option value={null}>Select Store</option>
               {storesLoading || storesError ? (
                 <option>Loading Stores...</option>
-              ) : (
-                stores &&
+              ) : stores.length > 0 ? (
                 stores.map((store) => (
-                  <option key={store.storeId} value={Number(store.storeId)}>
+                  <option key={store.storeId} value={store.storeId}>
                     {store.storeName}
                   </option>
                 ))
+              ) : (
+                <option>No Stores Found</option>
               )}
             </select>
             {errors?.storeId && (

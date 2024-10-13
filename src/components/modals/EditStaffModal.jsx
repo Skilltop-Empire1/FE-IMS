@@ -37,7 +37,7 @@ const EditStaffModal = ({ visible, onClose, staffInfo, refetch }) => {
   } = useGetStoresQuery()
 
   // Update staff mutation
-  const [updateStaff] = useUpdateStaffMutation()
+  const [updateStaff, { isLoading }] = useUpdateStaffMutation()
 
   // Handle input changes
   const handleChange = (field, value) => {
@@ -53,22 +53,20 @@ const EditStaffModal = ({ visible, onClose, staffInfo, refetch }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setErrors({})
-    setLoading(true)
 
     // Validate form data
     try {
       staffSchema.parse(formData)
-
       // Call API to update staff
       const updatedStaff = { ...formData }
+      delete updatedStaff.permissions
       await updateStaff({ id: staffInfo.staffId, updatedStaff }).unwrap()
       refetch()
       // Reset form and close modal on success
       setFormData(initialState)
-      setLoading(false)
       onClose()
     } catch (error) {
-      console.log({ error })
+      // console.log({ error })
       // Handle validation errors
       if (error.errors) {
         const fieldErrors = {}
@@ -79,7 +77,6 @@ const EditStaffModal = ({ visible, onClose, staffInfo, refetch }) => {
       } else {
         setApiError(['Error updating staff.'])
       }
-      setLoading(false)
     }
   }
 
@@ -205,6 +202,7 @@ const EditStaffModal = ({ visible, onClose, staffInfo, refetch }) => {
                 <option disabled value="">
                   Select Status
                 </option>
+                <option value="pending">Pending</option>
                 <option value="active">Active</option>
                 <option value="inactive">Inactive</option>
               </select>
@@ -224,11 +222,11 @@ const EditStaffModal = ({ visible, onClose, staffInfo, refetch }) => {
             Cancel
           </button>
           <button
-            disabled={loading}
+            disabled={isLoading}
             type="submit"
             className="text-white text-center flex-grow bg-imsPurple rounded-full font-semibold px-8 py-2.5 text-xs focus:ring-imsLightPurple focus:ring-offset-2 focus:ring-1"
           >
-            {loading ? 'Please wait...' : 'Save'}
+            {isLoading ? 'Please wait...' : 'Save'}
           </button>
         </div>
       </form>

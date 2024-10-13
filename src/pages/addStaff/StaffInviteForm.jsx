@@ -50,14 +50,6 @@ const StaffInviteForm = () => {
       return
     }
 
-    console.log({
-      email,
-      password,
-      username,
-      role,
-      permissions,
-    })
-
     try {
       setLoading(true)
       // Call the mutation with form data

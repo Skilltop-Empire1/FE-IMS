@@ -9,6 +9,7 @@ import {
 } from '../../redux/APIs/salesRecordApi'
 import ConfirmationModal from '../../components/modals/ConfirmationModal'
 import EditSalesRecordModal from '../../components/modals/EditSalesRecordModal'
+import { useLocation } from 'react-router'
 
 const SalesRecord = () => {
   const [searchTerm, setSearchTerm] = useState('')
@@ -17,33 +18,22 @@ const SalesRecord = () => {
   const [showModal, setShowModal] = useState(false)
   const [showUpdateModal, setShowUpdateModal] = useState(false)
   const [salesRecordIdToDelete, setSalesRecordIdToDelete] = useState(null)
-  const [salesRecordToUpdate, setSalesRecordToUpdate] = useState(null) // Track record to update
+  const [salesRecordToUpdate, setSalesRecordToUpdate] = useState(null)
+
   const {
     data: salesRecord,
     error: salesError,
     isLoading: salesLoading,
     refetch,
+    isFetching,
   } = useGetSalesRecordQuery()
   const [deleteSalesRecord] = useDeleteSalesRecordMutation()
   const [updateSalesRecord] = useUpdateSalesRecordMutation()
-
   const {
     data: locations,
     error: locationError,
     isLoading: locationLoading,
   } = useGetLocationsQuery()
-
-  // useEffect(() => {
-  //   const fetchCategories = async () => {
-  //     const response = await fetch(
-  //       'https://be-ims.onrender.com  /api/IMS/store/filter',
-  //     )
-  //     const data = await response.json()
-  //     setCategories(data.categories)
-  //   }
-
-  //   fetchCategories()
-  // }, [])
 
   const handleSearch = (term) => {
     setSearchTerm(term.toLowerCase())
@@ -58,32 +48,31 @@ const SalesRecord = () => {
     setShowModal(true)
   }
 
-  const confirmDeleteSalesRecord = () => {
+  const confirmDeleteSalesRecord = async () => {
     if (!salesRecordIdToDelete) {
       alert('No record selected for deletion')
       return
     }
 
-    deleteSalesRecord(salesRecordIdToDelete)
-      .then(() => {
-        alert('Record deleted successfully!')
-        window.location.reload(false)
-        setShowModal(false)
-        setSalesRecordIdToDelete(null)
-      })
-      .catch((error) => alert('Error deleting record'))
+    try {
+      await deleteSalesRecord(salesRecordIdToDelete).unwrap()
+      alert('Record deleted successfully!')
+      setShowModal(false)
+      setSalesRecordIdToDelete(null)
+      refetch() // Refresh sales records after deletion
+    } catch (error) {
+      console.error('Error deleting record:', error)
+      alert('Error deleting record')
+    }
   }
-
-  //sales record update
 
   const handleUpdateSalesRecord = (record) => {
     setSalesRecordToUpdate(record)
     setShowUpdateModal(true)
   }
 
-  const confirmUpdateSalesRecord = (updatedData) => {
+  const confirmUpdateSalesRecord = async (updatedData) => {
     if (!salesRecordToUpdate || !salesRecordToUpdate.saleId) {
-      // Ensure there's a valid saleId
       alert('No record selected for update')
       return
     }
@@ -101,12 +90,21 @@ const SalesRecord = () => {
   //filter
 
   const filteredItems = salesRecord?.filter((item) => {
-    const matchesSearch = item.Product.name.toLowerCase().includes(searchTerm)
-    const matchesCategory =
-      filterCategory === 'all' || item.category === filterCategory
+    const matchesSearch = item?.Product?.name
+      ?.toLowerCase()
+      .includes(searchTerm)
+    // const matchesCategory = filterCategory === 'all' || item.category === filterCategory;
 
-    return matchesSearch && matchesCategory
+    return matchesSearch
   })
+
+  const location = useLocation()
+
+  useEffect(() => {
+    if (location.pathname === '/app/salesRecords') {
+      refetch() // Refetch stores when the user switches
+    }
+  }, [location.pathname, refetch])
 
   return (
     <div>

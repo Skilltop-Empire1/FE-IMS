@@ -149,7 +149,7 @@ function Account() {
         <AccountSummary
           percentageIncrease="1.4%"
           summaryName="Stock Value"
-          summaryValue={`$${stockValue.toFixed(2)}`}
+          summaryValue={formatNaira(stockValue.toFixed(2))}
           container={style.summaryContainer}
           valueStyle={style.valueStyle}
         />
@@ -163,7 +163,7 @@ function Account() {
         <AccountSummary
           percentageIncrease="1.6%"
           summaryName="Sum Total"
-          summaryValue={`$${sumTotal.toFixed(2)}`}
+          summaryValue={formatNaira(sumTotal.toFixed(2))}
           container={style.summaryContainer}
           valueStyle={style.valueStyle}
         />

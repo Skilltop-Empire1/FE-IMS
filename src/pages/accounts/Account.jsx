@@ -5,6 +5,7 @@ import style from './Account.module.css'
 import { months } from './data'
 import { useGetProductsQuery } from '../../redux/APIs/productApi'
 import { useGetSalesRecordQuery } from '../../redux/APIs/salesRecordApi'
+import { formatNaira } from '../../utils/nairaSign'
 
 function Account() {
   const [startDuration, setStartDuration] = useState(months[0])
@@ -148,21 +149,21 @@ function Account() {
         <AccountSummary
           percentageIncrease="1.4%"
           summaryName="Stock Value"
-          summaryValue={`$${stockValue.toFixed(2)}`}
+          summaryValue={formatNaira(stockValue.toFixed(2))}
           container={style.summaryContainer}
           valueStyle={style.valueStyle}
         />
         <AccountSummary
           percentageIncrease="2%"
           summaryName="Total Sales"
-          summaryValue={`$${totalSales.toFixed(2)}`}
+          summaryValue={formatNaira(totalSales.toFixed(2))}
           container={style.summaryContainer}
           valueStyle={style.valueStyle}
         />
         <AccountSummary
           percentageIncrease="1.6%"
           summaryName="Sum Total"
-          summaryValue={`$${sumTotal.toFixed(2)}`}
+          summaryValue={formatNaira(sumTotal.toFixed(2))}
           container={style.summaryContainer}
           valueStyle={style.valueStyle}
         />

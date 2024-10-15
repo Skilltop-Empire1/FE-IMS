@@ -74,7 +74,7 @@ function Home() {
         <div className={style.cards}>
           <QtyCard
             page="products"
-            cardName="Recent Items"
+            cardName="All Products"
             quantity={totalRecentItems}
           />
         </div>

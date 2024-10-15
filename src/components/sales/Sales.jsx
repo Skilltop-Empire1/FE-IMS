@@ -6,10 +6,10 @@ import { useGetSalesRecordQuery } from '../../redux/APIs/salesRecordApi'
 function Sales({}) {
   const navigate = useNavigate()
   const { data } = useGetSalesRecordQuery()
-
   const posPayments = data
-    ?.map((sale) => sale.paymentMethod === 'pos')
+    ?.map((sale) => sale.paymentMethod === 'POS')
     .reduce((a, b) => a + b, 0)
+  console.log(posPayments)
 
   const cashPayments = data
     ?.map((sale) => sale.paymentMethod === 'cash')

@@ -9,7 +9,7 @@ function Sales({}) {
   const posPayments = data
     ?.map((sale) => sale.paymentMethod === 'POS')
     .reduce((a, b) => a + b, 0)
-  console.log(posPayments)
+  // console.log(posPayments)
 
   const cashPayments = data
     ?.map((sale) => sale.paymentMethod === 'cash')

@@ -48,7 +48,7 @@ const Table = ({ status, date, api, prod, deleted, updated }) => {
               <td>{product.Category.name}</td>
               <td>
                 {product.storeAvailable.length > 8
-                  ? product.storeAvailable.substr(0,10) + '...'
+                  ? product.storeAvailable.substr(0,12) + '...'
                   : product.storeAvailable}
               </td>
               <td>{product.createdAt.substr(0, 10)}</td>

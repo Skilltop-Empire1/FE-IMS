@@ -77,11 +77,11 @@ const LoggedReset = ({onSuccess}) => {
             onChange={(e) => setOldPassword(e.target.value)}
             required
           />
-          {passwordVisibility ? (
+          {/* {passwordVisibility ? (
             <EyeIcon onClick={showPassword} className={style.icon} />
           ) : (
             <EyeOff onClick={showPassword} className={style.icon} />
-          )}
+          )} */}
         </div>
         <div className={`flex items-center justify-between gap-3 ${style.visi}`}>
           <input
@@ -91,11 +91,11 @@ const LoggedReset = ({onSuccess}) => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          {passwordVisibility ? (
+          {/* {passwordVisibility ? (
             <EyeIcon onClick={showPassword} className={style.icon} />
           ) : (
             <EyeOff onClick={showPassword} className={style.icon} />
-          )}
+          )} */}
         </div>
 
         <div className={`flex items-center justify-between gap-3 ${style.visi}`}>
@@ -106,11 +106,11 @@ const LoggedReset = ({onSuccess}) => {
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
-          {passwordVisibility2 ? (
+          {/* {passwordVisibility2 ? (
             <EyeIcon onClick={showPassword2} className={style.icon} />
           ) : (
             <EyeOff onClick={showPassword2} className={style.icon} />
-          )}
+          )} */}
         </div>
 
         <br />

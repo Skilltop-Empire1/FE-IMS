@@ -149,16 +149,15 @@ const SalesRecord = () => {
       'storeAvailable',
       updatedData.storeAvailable || productToUpdate.storeAvailable,
     )
-    formData.append('prodDate', currentDate)
+ 
 
     // Handle file upload
     if (updatedData.prodPhoto instanceof File) {
       formData.append('prodPhoto', updatedData.prodPhoto)
     }
 
-    // Debugging formData
-    for (let [key, value] of formData.entries()) {
-    }
+
+
 
     // Call updateProduct function
     updateProduct({ prodId: productToUpdate.prodId, updatedProduct: formData })
@@ -214,7 +213,7 @@ const SalesRecord = () => {
     const matchesSearch = item.name.toLowerCase().includes(searchTerm)
     const matchesCategory =
       filterCategory === 'all' || item.category === filterCategory
-
+  
     return matchesSearch && matchesCategory
   })
 
@@ -252,6 +251,7 @@ const SalesRecord = () => {
                   <th>Product Name</th>
                   <th>Alert status</th>
                   <th>Quantity</th>
+                  <th>Unit price</th>
                   <th>Category</th>
                   <th>Store Name</th>
                   <th>Date added</th>
@@ -293,6 +293,6 @@ const SalesRecord = () => {
       />
     </div>
   )
-}
+  }
 
 export default SalesRecord

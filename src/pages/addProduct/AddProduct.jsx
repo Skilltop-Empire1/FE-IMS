@@ -93,9 +93,11 @@ const AddProduct = () => {
       console.error('Failed to create product:', err)
 
       if (err?.data?.message) {
-        setFormError(err.data.msg)
+        setFormError(err.data.message)
+        alert(err.data.message)
       } else if (err?.error) {
         setFormError(err.error)
+        alert(err.error)
       } else {
         setFormError('An unexpected error occurred. Please try again.')
       }

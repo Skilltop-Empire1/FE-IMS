@@ -63,7 +63,7 @@ function Account() {
         })
 
         const totalSalesAmount = salesForProduct.reduce(
-          (total, sale) => total + sale.quantity * sale.Product.price,
+          (total, sale) => total + sale.quantity * sale.productPrice,
           0,
         )
 
@@ -148,21 +148,21 @@ function Account() {
         <AccountSummary
           percentageIncrease="1.4%"
           summaryName="Stock Value"
-          summaryValue={`$${stockValue.toFixed(2)}`}
+          summaryValue={`₦ ${stockValue.toFixed(2)}`}
           container={style.summaryContainer}
           valueStyle={style.valueStyle}
         />
         <AccountSummary
           percentageIncrease="2%"
           summaryName="Total Sales"
-          summaryValue={`$${totalSales.toFixed(2)}`}
+          summaryValue={`₦ ${totalSales.toFixed(2)}`}
           container={style.summaryContainer}
           valueStyle={style.valueStyle}
         />
         <AccountSummary
           percentageIncrease="1.6%"
           summaryName="Sum Total"
-          summaryValue={`$${sumTotal.toFixed(2)}`}
+          summaryValue={`₦ ${sumTotal.toFixed(2)}`}
           container={style.summaryContainer}
           valueStyle={style.valueStyle}
         />

@@ -81,7 +81,7 @@ const AddSaleRecord = () => {
   return (
     <div className={`${style.body} relative`}>
       <div className='absolute w-full ease-in-out duration-300'>
-        <p className={`text-center bg-green-400 py-3 ${success}`} style={{ color: '#fff' }}>Product saved successfully</p>
+        <p className={`text-center bg-green-400 py-3 ${success}`} style={{ color: '#fff' }}>record saved successfully</p>
       </div>
       <div className={style.top}>
         <h2 className={style.title}>Add Sale Record</h2>

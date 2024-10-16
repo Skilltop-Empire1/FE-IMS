@@ -111,14 +111,13 @@ const SalesRecord = () => {
           <table className='w-full'>
             <thead>
               <tr>
-                <th></th>
                 <th>Product Photo</th>
                 <th>Product Name</th>
                 <th>Alert Status</th>
                 <th>Quantity</th>
                 <th>Category</th>
                 <th>Store Name</th>
-                <th>Date Added</th>
+                <th>Sold Date</th>
                 <th>Action</th> 
               </tr>
             </thead>
@@ -132,7 +131,7 @@ const SalesRecord = () => {
       ) : (
         <Table 
           status='Payment method' 
-          date='Date added' 
+          date=' Sold Date' 
           api={filteredItems} 
           deleted={handleDeleteSalesRecord} 
           updated={handleUpdateSalesRecord} 

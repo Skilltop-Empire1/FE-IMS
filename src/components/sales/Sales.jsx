@@ -8,7 +8,7 @@ function Sales({}) {
   const { data } = useGetSalesRecordQuery()
 
   const posPayments = data
-    ?.map((sale) => sale.paymentMethod === 'pos')
+    ?.map((sale) => sale.paymentMethod === 'POS')
     .reduce((a, b) => a + b, 0)
 
   const cashPayments = data

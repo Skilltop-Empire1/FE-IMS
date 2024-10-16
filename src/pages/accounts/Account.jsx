@@ -5,6 +5,7 @@ import style from './Account.module.css'
 import { months } from './data'
 import { useGetProductsQuery } from '../../redux/APIs/productApi'
 import { useGetSalesRecordQuery } from '../../redux/APIs/salesRecordApi'
+import { formatNaira } from '../../utils/nairaSign'
 
 function Account() {
   const [startDuration, setStartDuration] = useState(months[0])

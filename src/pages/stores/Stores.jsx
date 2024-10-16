@@ -94,7 +94,7 @@ const Stores = () => {
              
         </div>
       ) : storesError ? (
-        <p>Error loading stores.</p>
+        <p className='text-red-500'>Error loading stores. {storesError.data?.message || "An error occurred"}</p>
       ) : (
         <StoreList onSelectStore={handleSelectedStore} items={filteredItems} />
       )}

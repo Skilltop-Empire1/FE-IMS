@@ -50,7 +50,7 @@ const SalesRecord = () => {
       return
     }
 
-    deleteProduct(productIdToDelete) // Ensure correct productIdToDelete is passed here
+    deleteProduct(productIdToDelete).unwrap() // Ensure correct productIdToDelete is passed here
       // navigate = useNavigate()
       .then(() => {
         alert('Product deleted successfully!')
@@ -60,7 +60,7 @@ const SalesRecord = () => {
       })
       .catch((error) => {
         console.error('Delete error:', error)
-        alert('Error deleting product: ' + error.message)
+        alert('Error deleting product: ' + error?.data?.message)
       })
   }
 
@@ -265,7 +265,8 @@ const SalesRecord = () => {
             ))}
           </div>
       ) : error ? (
-        <p>Error loading products</p>
+        <p className='text-red-500'>Error loading products. {error.data?.message || "An error occurred"}</p>
+        
       ) : (
         <Table
           status="Alert Status"

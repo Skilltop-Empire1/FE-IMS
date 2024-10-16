@@ -94,10 +94,10 @@ const AddProduct = () => {
 
       if (err?.data?.message) {
         setFormError(err.data.message)
-        alert(err.data.message)
+        // alert(err.data.message)
       } else if (err?.error) {
         setFormError(err.error)
-        alert(err.error)
+        // alert(err.error)
       } else {
         setFormError('An unexpected error occurred. Please try again.')
       }

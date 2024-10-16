@@ -61,8 +61,8 @@ const SalesRecord = () => {
       setSalesRecordIdToDelete(null)
       refetch() // Refresh sales records after deletion
     } catch (error) {
-      console.error('Error deleting record:', error)
-      alert('Error deleting record')
+      // console.error('Error deleting record:', error)
+      alert(`Error deleting record. ${error.data.message}`)
     }
   }
 
@@ -77,14 +77,14 @@ const SalesRecord = () => {
       return
     }
 
-    updateSalesRecord({ id: salesRecordToUpdate.saleId, updatedData }) // Use the correct saleId
+    updateSalesRecord({ id: salesRecordToUpdate.saleId, updatedData }).unwrap() // Use the correct saleId
       .then(() => {
         alert('Record updated successfully!')
         setShowUpdateModal(false)
         setSalesRecordToUpdate(null)
         refetch()
       })
-      .catch((error) => alert('Error updating record'))
+      .catch((error) => alert(`Error updating record. ${error.data?.message}`))
   }
 
   //filter
@@ -141,7 +141,13 @@ const SalesRecord = () => {
           ))}
         </div>
       ) : salesError || locationError ? (
-        <p>Error loading data</p>
+        <div className="text-red-500">
+           <p>Error loading data</p>
+        
+            {/* {salesError.data?.message || "An error occurred"} */}
+          </div>
+        
+       
       ) : (
         <Table 
           status='Payment method' 

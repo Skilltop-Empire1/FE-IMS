@@ -18,6 +18,7 @@ const AddSaleRecord = () => {
   const [success, setSuccess] = useState('hidden')
   const [stores, setStores] = useState([])
   const [categories, setCategories] = useState([])
+  const [formError, setFormError] = useState('')
   const [addAnother, setAddAnother]= useState(false)
   const [products, setProducts] = useState([]) // Assuming you also need a product list
   
@@ -75,6 +76,16 @@ const AddSaleRecord = () => {
 
     } catch (err) {
       console.error('Failed to create sale record:', err)
+
+      if (err?.data?.msg) {
+        setFormError(err.data.msg)
+        // alert(err.data.msg)
+      } else if (err?.error) {
+        setFormError(err.error)
+        // alert(err.error)
+      } else {
+        setFormError('An unexpected error occurred. Please try again.')
+      }
     }
   }
 
@@ -212,7 +223,7 @@ const AddSaleRecord = () => {
             </button>
           </div>
             <br />
-          {error && <p className="error mt-5 text-red-500">Error: Unable to create sale record</p>}
+          {error && <p className="error mt-5 text-red-500">{error.data.msg || error.data.msg.Forbidden}</p>}
         </form>
       </div>
     </div>

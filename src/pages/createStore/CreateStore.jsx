@@ -80,7 +80,7 @@ const CreateStore = () => {
 
       // Display the backend error message if available
       if (err?.data?.message) {
-        setFormError(err.data.message) // Use the error message from the backend
+        setFormError(err.data?.message) // Use the error message from the backend
       } else if (err?.error) {
         setFormError(err.error) // Fallback for RTK Query error message
       } else {

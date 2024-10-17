@@ -29,8 +29,8 @@ const Table2 = ({ status, date, api, deleted, updated }) => {
               <td>{product.paymentMethod}</td>
               <td>{product.quantity}</td>
               <td>₦ {product.productPrice * product.quantity}</td>
-              <td>{product.Store.storeName.length > 8 ? product.Store.storeName.substr(0,12) + '...' : product.Store.storeName}</td>
-              <td>{product.soldDate.substr(0,10)}</td>
+              <td>{product.Store.storeName.length > 8 ? product.Store?.storeName.substr(0,12) + '...' : product.Store.storeName}</td>
+              <td>{product.soldDate?.substr(0,10)}</td>
               <td className='flex gap-1'>
                 <Edit2Icon className={style.icon} onClick={() => updated(product)} /> {/* Pass product record to update handler */}
                 <Trash className={style.icon} onClick={() => deleted(product.saleId)} />

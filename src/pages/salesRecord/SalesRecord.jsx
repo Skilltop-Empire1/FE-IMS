@@ -142,9 +142,9 @@ const SalesRecord = () => {
         </div>
       ) : salesError || locationError ? (
         <div className="text-red-500">
-           <p>Error loading data</p>
+           <p>Error loading data. {salesError?.data?.message || "An error occurred"}</p>
         
-            {/* {salesError.data?.message || "An error occurred"} */}
+            {/* {salesError?.data?.message || "An error occurred"} */}
           </div>
         
        

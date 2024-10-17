@@ -66,7 +66,7 @@ const CategoryGrid = () => {
       {isLoading ? (
         <CategoryGridSkeleton />
       ) : error ? (
-        <p className="text-red-500">Failed to load categories</p>
+        <p className="text-red-500">Failed to load categories {error?.data?.message}</p>
       ) : (
         <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
           {categories?.map((category) => (

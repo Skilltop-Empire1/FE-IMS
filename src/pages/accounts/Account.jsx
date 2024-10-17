@@ -87,7 +87,7 @@ function Account() {
   }
 
   if (error) {
-    return <div>Error fetching product data: {error.message}</div>
+    return <div className='text-red-500'>Error fetching product data: {error?.data?.message}</div>
   }
 
   return (

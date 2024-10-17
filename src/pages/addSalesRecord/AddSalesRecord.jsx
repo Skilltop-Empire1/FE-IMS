@@ -222,8 +222,7 @@ const AddSaleRecord = () => {
               {isLoading ? 'Saving...' : 'Save Sale Record'}
             </button>
           </div>
-            <br />
-          {error && <p className="error mt-5 text-red-500">{error.data.msg || error.data.msg.Forbidden}</p>}
+          {error && <p className="error mt-5 text-red-500">{error.data?.message }</p>}
         </form>
       </div>
     </div>

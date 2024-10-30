@@ -199,9 +199,9 @@ function App() {
  
 
   return (
-    <NotificationProvider>
+
       <RouterProvider router={router} />
-    </NotificationProvider>
+
   )
 }
 

@@ -40,6 +40,25 @@ export const storesApi = createApi({
       query: () => '/api/IMS/store/filter', // endpoint to get locations
       refetchOnMountOrArgChange: true,
     }),
+
+    //delete a store
+
+    deleteStore: builder.mutation({
+      query: (id) => ({
+        url: `/api/IMS/store/delete/${id}`,
+        method: 'DELETE',
+      }),
+    }),
+
+    //update a store
+
+    updateStore: builder.mutation({
+      query: ({ id, updatedData }) => ({
+        url: `/api/IMS/store/edit/${id}`,
+        method: 'PUT',
+        body: updatedData,
+      }),
+    }),
   }),
 })
 
@@ -48,4 +67,6 @@ export const {
   useCreateStoreMutation,
   useGetLocationsQuery,
   useGetStoresOverviewQuery,
+  useDeleteStoreMutation,
+  useUpdateStoreMutation
 } = storesApi;

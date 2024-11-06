@@ -34,7 +34,7 @@ const EditStoreModal = ({ store, onClose, onUpdate }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white w-full max-w-md mx-4 p-6 rounded-lg shadow-lg relative">
+      <div className="bg-white w-full max-w-md mx-4 p-6 rounded-lg shadow-lg relative h-96 overflow-y-auto">
         <h3 className="text-xl font-semibold mb-4 text-center">Edit Store</h3>
         
         {/* Form Fields */}

@@ -7,6 +7,7 @@ import { setCredentials } from './redux/slices/AuthSlice'
 import Loader from './components/loaderElement/Loader' // Ensure this path is correct
 
 // Lazy load components
+const LandingPage = lazy(() => import('./pages/landing'))
 const Login = lazy(() => import('./pages/login/Login'))
 const Signup = lazy(() => import('./pages/signup/Signup'))
 const AppLayout = lazy(() => import('./components/appLayout/AppLayout'))
@@ -34,6 +35,14 @@ const AddSaleRecord = lazy(
 const router = createBrowserRouter([
   {
     path: '/',
+    element: (
+      <Suspense fallback={<Loader />}>
+        <LandingPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/login',
     element: (
       <Suspense fallback={<Loader />}>
         <Login />
@@ -196,13 +205,7 @@ function App() {
     store.dispatch(setCredentials({ token }))
   }
 
- 
-
-  return (
-
-      <RouterProvider router={router} />
-
-  )
+  return <RouterProvider router={router} />
 }
 
 export default App

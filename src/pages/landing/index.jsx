@@ -2,10 +2,12 @@ import {
   ArrowRight,
   BriefcaseBusiness,
   Clock5,
+  Menu,
   TriangleAlert,
 } from 'lucide-react'
 import { motion, useInView } from 'framer-motion'
 import React, { useRef } from 'react'
+import Navbar from '../../components/Landing/Navbar'
 
 const LandingPage = () => {
   // Animation variants
@@ -31,33 +33,7 @@ const LandingPage = () => {
     <motion.div className="w-full">
       <div className="w-full flex flex-col">
         {/* Navbar */}
-        <motion.nav
-          className="flex max-w-7xl mx-auto items-center w-full"
-          variants={fadeInUp}
-          initial="hidden"
-          animate="visible"
-        >
-          <img src="/images/logo.png" alt="ims-logo" className="w-24" />
-          <ul className="text-sm flex-grow flex-wrap flex justify-center gap-8 items-center">
-            {['About Product', 'Demo', 'Videos', 'Support', 'Contact'].map(
-              (item, index) => (
-                <motion.li
-                  key={index}
-                  whileHover={{ scale: 1.1 }}
-                  className="cursor-pointer"
-                >
-                  {item}
-                </motion.li>
-              ),
-            )}
-          </ul>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            className="bg-imsPurple text-white px-8 py-1.5 rounded-md"
-          >
-            Login
-          </motion.button>
-        </motion.nav>
+        <Navbar />
 
         {/* Hero Section */}
         <motion.div

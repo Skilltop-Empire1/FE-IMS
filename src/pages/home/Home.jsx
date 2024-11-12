@@ -13,12 +13,22 @@ import {
 import { useGetProductsQuery } from '../../redux/APIs/productApi'
 import { Rings } from 'react-loader-spinner'
 import { useGetCategoriesQuery } from '../../redux/categoryApi'
+import { useGetStaffByIdQuery } from '../../redux/staffApi'
 
 function Home() {
   const { data: storeData = [] } = useGetStoresQuery()
   const { data: productData = [], error, isLoading } = useGetProductsQuery()
   const { data: storeOverview = [] } = useGetStoresOverviewQuery()
   const { data: categoryData = [] } = useGetCategoriesQuery()
+
+  const { id } = JSON.parse(localStorage.getItem('user'))
+  console.log('staff id', id)
+  const {
+    data: staff,
+    error: staffError,
+    isLoading: staffLoading,
+  } = useGetStaffByIdQuery(id)
+  console.log('staff data', staff, 'error', staffError) // Log to see if there's any error
 
   if (isLoading) {
     return (

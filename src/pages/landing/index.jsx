@@ -11,6 +11,7 @@ import Navbar from '../../components/Landing/Navbar'
 
 import Icon1 from '../../../public/images/sb1.svg'
 import ClientLogoCarousel from '../../components/Landing/ClientLogoCarousel'
+import PricingPlan from '../../components/Landing/PricingPlan'
 // import Icon2 from '../../public/images/sb2.svg'
 // import Icon3 from '../../public/images/sb3.svg'
 // import Icon4 from '../../public/images/sb4.svg'
@@ -279,6 +280,22 @@ const LandingPage = () => {
               </div>
             </div>
           </div>
+        </div>
+        <div className="w-full bg-gray-50 py-10">
+          <div className="flex flex-col gap-8 items-center w-full max-w-5xl mx-auto my-10">
+            <h2 className="text-2xl font-bold">
+              Unlock Seamless Inventory Management with Skilltop IMS
+            </h2>
+            <p className="text-center text-gray-700 text-base">
+              Discover how our users have transformed their business operations
+              and streamlined workflows with real-time updates and powerful
+              features
+            </p>
+          </div>
+        </div>
+        {/* Pricing Section */}
+        <div className="w-full bg-black">
+          <PricingPlan />
         </div>
       </div>
     </motion.div>

@@ -111,13 +111,15 @@ const Navbar = () => {
               </motion.ul>
             )}
           </div>
-          <motion.li
-            whileHover={{ scale: 1.1 }} // Add hover animation
-            className="cursor-pointer text-center py-4"
-          // onClick={() => handleScroll(item.id)} // Call handleScroll with the ID
-          >
-            Contact
-          </motion.li>
+          <motion.div whileHover={{ scale: 1.1 }} className="cursor-pointer text-center py-4">
+            <a
+              href="https://skilltopempire.com/contact"
+              target="_blank"
+              className="text-inherit"
+            >
+              Contact
+            </a>
+          </motion.div>
         </ul>
 
         {/* Login button (desktop only) */}

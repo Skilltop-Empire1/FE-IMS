@@ -18,6 +18,7 @@ const Table = ({ status, date, api, prod, deleted, updated }) => {
             <th>Category</th>
             <th>Store Name</th>
             <th>{date}</th>
+            <th>Transfer</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -48,10 +49,15 @@ const Table = ({ status, date, api, prod, deleted, updated }) => {
               <td>{product.Category.name}</td>
               <td>
                 {product.storeAvailable.length > 8
-                  ? product.storeAvailable.substr(0,12) + '...'
+                  ? product.storeAvailable.substr(0, 12) + '...'
                   : product.storeAvailable}
               </td>
               <td>{product.createdAt.substr(0, 10)}</td>
+              <td>
+                <Link to={`products/transfer/${product.productId}`}>
+                  Transfer
+                </Link>
+              </td>
               <td className="flex gap-1">
                 <Edit2Icon
                   className={style.icon}

@@ -15,6 +15,7 @@ const Account = lazy(() => import('./pages/accounts/Account'))
 const Home = lazy(() => import('./pages/home/Home'))
 const Categories = lazy(() => import('./pages/categories/Categories'))
 const Products = lazy(() => import('./pages/products/Products'))
+const TransferProduct = lazy(() => import('./pages/products/TransferProduct'))
 const SalesRecord = lazy(() => import('./pages/salesRecord/SalesRecord'))
 const Settings = lazy(() => import('./pages/settings/Settings'))
 const Stores = lazy(() => import('./pages/stores/Stores'))
@@ -112,6 +113,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<Loader />}>
             <Products />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'products/transfer/:productId',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <TransferProduct />
           </Suspense>
         ),
       },

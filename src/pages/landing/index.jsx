@@ -8,18 +8,10 @@ import {
 import { motion, useInView } from 'framer-motion'
 import React, { useRef } from 'react'
 import Navbar from '../../components/Landing/Navbar'
-
-import Icon1 from '../../../public/images/sb1.svg'
 import ClientLogoCarousel from '../../components/Landing/ClientLogoCarousel'
 import PricingPlan from '../../components/Landing/PricingPlan'
-// import Icon2 from '../../public/images/sb2.svg'
-// import Icon3 from '../../public/images/sb3.svg'
-// import Icon4 from '../../public/images/sb4.svg'
-// import Icon5 from '../../public/images/sb5.svg'
-// import Icon6 from '../../public/images/sb6.svg'
-// import Icon7 from '../../public/images/sb7.svg'
-// import Icon8 from '../../public/images/sb8.svg'
-// import Icon9 from '../../public/images/sb9.svg'
+import { Link } from 'react-router-dom'
+
 
 const LandingPage = () => {
   // Animation variants
@@ -40,6 +32,16 @@ const LandingPage = () => {
     once: true,
     margin: '-100px',
   })
+
+  // Function to handle scrolling to the section
+  const handleScroll = (id) => {
+    const section = document.getElementById(id) // Get the section by ID
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' }) // Smooth scrolling
+    }
+  }
+
+
 
   return (
     <motion.div className="w-full">
@@ -67,14 +69,15 @@ const LandingPage = () => {
             </motion.p>
             <div className="justify-center flex items-center gap-4 mt-10">
               <motion.button
-                className="bg-imsPurple border font-light border-imsPurple text-white px-8 py-2 rounded-md flex items-center gap-4"
+                className="bg-imsPurple border font-light border-imsPurple text-white px-8 py-3 rounded-md flex items-center gap-4"
                 whileHover={{ scale: 1.05 }}
+                onClick={() => { handleScroll("pricing") }}
               >
                 <span>Get Started</span>
                 <ArrowRight size={16} />
               </motion.button>
               <motion.button
-                className="border-imsPurple border text-imsPurple px-8 py-2 rounded-md"
+                className="border-imsPurple border text-imsPurple px-8 py-3 rounded-md"
                 whileHover={{ scale: 1.05 }}
               >
                 Learn More
@@ -203,7 +206,7 @@ const LandingPage = () => {
         </motion.div>
 
         {/* Partners Section */}
-        <div className="flex flex-col w-full max-w-7xl mx-auto my-10">
+        <div className="flex flex-col w-full max-w-7xl mx-auto my-10" id="partners">
           <h2 className="text-2xl font-bold text-center">
             Our Partners/Clients
           </h2>
@@ -291,13 +294,166 @@ const LandingPage = () => {
               and streamlined workflows with real-time updates and powerful
               features
             </p>
+            <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="flex flex-col items-center gap-4 mx-auto max-w-sm">
+                <img src="/images/testimony.png" />
+                <h2 className="font-bold">Sunny Fidelis</h2>
+                <p className="text-center text-sm">
+                  Skilltop offers your business access to ease in business
+                  transaction models. They're prompt and very reliable, and I
+                  strongly recommend them.
+                </p>
+                <p className="text-center text-sm">
+                  They're easily accessible, and they prioritize customer
+                  satisfaction at its peak.
+                </p>
+              </div>
+              <div className="flex flex-col items-center gap-4 mx-auto max-w-sm">
+                <img src="/images/testimony.png" />
+                <h2 className="font-bold">Goodness Chinaza</h2>
+                <p className="text-center text-sm">
+                  Good service rendered. The ability to monitor my business
+                  activities through their web application is a good one for me.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
         {/* Pricing Section */}
-        <div className="w-full bg-black">
+        <div className="w-full bg-black py-10" id="pricing">
           <PricingPlan />
+          <div className="w-full max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div className="flex gap-3 items-start max-w-lg">
+              <div className="w-8 h-8 flex-shrink-0 flex justify-center items-center bg-green-500 rounded-full text-white">
+                ?
+              </div>
+              <div className="text-white flex flex-col gap-4">
+                <h3 className="text-lg font-medium">What is Skilltop IMS?</h3>
+                <p className="text-gray-600">
+                  Skilltop IMS is a comprehensive business management solution
+                  designed to help businesses manage inventories, streamline
+                  operations, and improve customer satisfaction. It provides
+                  real-time tracking and ensures that businesses maintain
+                  efficiency.
+                </p>
+                <Link to="" className="text-green-500">
+                  Click to learn more
+                </Link>
+              </div>
+            </div>
+            <div className="flex gap-3 items-start max-w-lg">
+              <div className="w-8 h-8 flex-shrink-0 flex justify-center items-center bg-green-500 rounded-full text-white">
+                ?
+              </div>
+              <div className="text-white flex flex-col gap-4">
+                <h3 className="text-lg font-medium">
+                  What support options are available for Skilltop IMS?
+                </h3>
+                <p className="text-gray-600">
+                  Our team at Skilltop Empire offers full support, including
+                  onboarding, installation, integration, customization, and
+                  troubleshooting. We also provide training resources to help
+                  you get the most out of our systems and solutions.
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-3 items-start max-w-lg">
+              <div className="w-8 h-8 flex-shrink-0 flex justify-center items-center bg-green-500 rounded-full text-white">
+                ?
+              </div>
+              <div className="text-white flex flex-col gap-4">
+                <h3 className="text-lg font-medium">
+                  Is Skilltop IMS scalable for growing businesses?
+                </h3>
+                <p className="text-gray-600">
+                  Yes, Skilltop IMS is designed to scale with your business as
+                  it grows. Whether you're managing a small or large business,
+                  the system can handle the demands of a growing organization.
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-3 items-start max-w-lg">
+              <div className="w-8 h-8 flex-shrink-0 flex justify-center items-center bg-green-500 rounded-full text-white">
+                ?
+              </div>
+              <div className="text-white flex flex-col gap-4">
+                <h3 className="text-lg font-medium">
+                  How can I get started with Skilltop IMS?
+                </h3>
+                <p className="text-gray-600">
+                  You can get started by contacting us at +234-806-2675-088 or
+                  visiting our website at skilltopempire.com. We will provide a
+                  detailed guide and set up a demo tailored to your business
+                  needs.
+                </p>
+              </div>
+            </div>
+            <div className="col-span-2 text-center text-white mb-10">
+              Haven't got your answer?{' '}
+              <span className="text-green-500">Contact our support now</span>
+            </div>
+          </div>
+        </div>
+        <div className="max-w-7xl w-full mx-auto bg-white">
+          <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-10 py-10">
+            <div className="col-span-1 flex flex-col gap-4">
+              <h2 className="text-2xl font-bold">
+                Streamline Your Business Operations and Management Fast
+              </h2>
+              <p className="text-sm text-gray-600">
+                With a variety of powerful tools, you can efficiently manage
+                your business operations, including inventory, without complex
+                setups. Simplify your entire workflow today
+              </p>
+              <div className="flex items-center gap-4">
+                <img src="/images/logo.png" alt="ims-logo" className="w-20" />
+                <p className="font-semibold text-gray-600">
+                  Product of Skilltop Empire
+                </p>
+              </div>
+              <div className="flex items-center gap-3">
+                <a href="https://www.facebook.com/profile.php?id=61560962855881" target='_blank'>
+                  <img src="/images/socials/facebook.png" />
+                </a>
+                <a href="https://www.youtube.com/@SkilltopEmpire" target='_blank'>
+                  <img src="/images/socials/youtube.png" />
+                </a>
+                <a href="https://x.com/Skilltopempire?t=Ufx26aerHIdhxQO7rtmsRA&s=08" target='_blank'>
+                  <img src="/images/socials/twitter.png" />
+                </a>
+                <a href="https://www.linkedin.com/company/skilltop-empire/" target='_blank'>
+                  <img src="/images/socials/linkedin.png" />
+                </a>
+                <a href="https://www.instagram.com/skilltopempire?igsh=YzljYTk1ODg3Zg==" target='_blank'>
+                  <img src="/images/socials/instagram.png" />
+                </a>
+              </div>
+            </div>
+            <div className="col-span-1">
+              <div className="justify-center flex items-center gap-4 mt-10">
+                <motion.button
+                  className="border-imsPurple border text-imsPurple px-8 py-3 text-sm rounded-md flex items-center gap-4 font-semibold"
+                  whileHover={{ scale: 1.05 }}
+                >
+                  <span>Learn More</span>
+                  <ArrowRight size={16} />
+                </motion.button>
+                <motion.button
+                  className="bg-imsPurple border border-imsPurple text-white text-sm px-8 py-3 rounded-md flex items-center gap-4 font-semibold"
+                  whileHover={{ scale: 1.05 }}
+                >
+                  <span>Get it now</span>
+                  <ArrowRight size={16} />
+                </motion.button>
+              </div>
+            </div>
+          </div>
+          <div className="text-center w-full py-4 border-t-2">
+            Copyrights - © 2024 Skilltop Empire Concept
+          </div>
         </div>
       </div>
+
     </motion.div>
   )
 }

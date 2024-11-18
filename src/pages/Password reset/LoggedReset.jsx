@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import style from './passwordResetStyle.module.css';
 import { useChangePasswordMutation } from '../../redux/APIs/passwordResetApi';
 import { EyeIcon, EyeOff } from 'lucide-react';
-import { jwtDecode } from 'jwt-decode'; 
+import { jwtDecode } from 'jwt-decode';
 
-const LoggedReset = ({onSuccess}) => {
+const LoggedReset = ({ onSuccess }) => {
   const [email, setEmail] = useState('');
   const [oldPassword, setOldPassword] = useState('');
   const [password, setPassword] = useState('');
@@ -64,8 +64,8 @@ const LoggedReset = ({onSuccess}) => {
   };
 
   return (
-    <div className={`${style.container} mx-5 px-3 relative`}> 
-        <div className={`absolute bottom-0 text-white bg-green-400 w-full text-center ${successful}`}>Password changed successfully</div>
+    <div className={`${style.container} mx-5 px-3 relative`}>
+      <div className={`absolute bottom-0 text-white bg-green-400 w-full text-center ${successful}`}>Password changed successfully</div>
       <form onSubmit={handleSubmit} className="x-3">
         <h2 className="my-3">Set New Password</h2>
 

@@ -1,0 +1,50 @@
+.container {
+  overflow-x: scroll;
+}
+
+.titleContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  align-items: center;
+}
+
+.titleContainer h3 {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 48px;
+  text-align: left;
+}
+
+.searchContainer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+.searchContainer button {
+  width: 183px;
+
+  height: 48px;
+  padding: 10px;
+  border-radius: 8px;
+  background: #9825f8;
+  border: 1px solid #ffffff;
+  color: #ffffff;
+}
+
+.searchBar {
+  width: 21.9375rem;
+  height: 3rem;
+  padding: 0.625rem 0.875rem 0.625rem 0.875rem;
+  border-radius: 6.25rem;
+  background-color: #ffffff;
+  border: 0.0625rem solid #dcdcdc;
+  display: flex;
+  flex-direction: row;
+}
+
+.searchBar input {
+  width: 100%;
+}

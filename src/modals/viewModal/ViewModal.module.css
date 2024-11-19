@@ -1,0 +1,104 @@
+.container {
+  width: 60vw;
+  height: 85vh;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.formTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 3rem;
+  position: absolute;
+  left: 2rem;
+  top: 1rem;
+}
+
+.formRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 3rem;
+}
+
+.formColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.formGroup label {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.75rem;
+  text-align: left;
+}
+
+.formGroup select {
+  width: 25rem;
+  height: 3rem;
+  padding: 0.625rem;
+  gap: 14.0625rem;
+  border-radius: 0.5rem;
+  border: 0.0625rem solid #3d3d3d;
+}
+
+.formGroup input {
+  height: 3rem;
+  padding: 0.625rem;
+  gap: 23.9375rem;
+  border-radius: 0.5rem;
+  border: 0.0625rem;
+  border: 0.0625rem solid #3d3d3d;
+}
+
+.formGroup textarea {
+  height: 98px;
+  padding: 10px;
+  gap: 10px;
+  border-radius: 8px;
+  border: 1px solid #3d3d3d;
+}
+
+.actionBtn {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+
+.actionContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 70px;
+  margin-top: 1.8rem;
+}
+
+.actionBtn button {
+  width: 200px;
+  height: 60px;
+  padding: 16px 68px 16px 68px;
+  border-radius: 8px;
+}
+
+.actionBtn button:first-child {
+  border: 1px solid #8315db;
+  color: #8315db;
+  box-shadow: 0px 0px 1px 0px #171a1f12;
+  box-shadow: 0px 0px 2px 0px #171a1f1f;
+}
+
+.actionBtn button:last-child {
+  background: #8315db;
+  box-shadow: 0px 0px 1px 0px #171a1f12;
+  box-shadow: 0px 0px 2px 0px #171a1f1f;
+  color: #ffffff;
+}

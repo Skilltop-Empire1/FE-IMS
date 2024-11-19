@@ -6,6 +6,9 @@ import { months } from './data'
 import { useGetProductsQuery } from '../../redux/APIs/productApi'
 import { useGetSalesRecordQuery } from '../../redux/APIs/salesRecordApi'
 import { formatNaira } from '../../utils/nairaSign'
+import ExpenseButton from '../../components/expenseButton/ExpenseButton'
+import usePrint from '../../utilities/usePrint'
+import { useNavigate } from 'react-router-dom'
 
 function Account() {
   const [startDuration, setStartDuration] = useState(months[0])
@@ -14,8 +17,25 @@ function Account() {
   const [stockValue, setStockValue] = useState(0)
   const [totalSales, setTotalSales] = useState(0)
 
-  const { data: productData = [], error, isLoading } = useGetProductsQuery()
-  const { data: salesData = [] } = useGetSalesRecordQuery()
+  const navigate = useNavigate()
+
+  const { printRef, triggerPrint } = usePrint()
+
+  const printPage = () => {
+    triggerPrint()
+    console.log('i got clicked')
+  }
+
+  const {
+    data: productData = [],
+    error: productError,
+    isLoading: productLoading,
+  } = useGetProductsQuery()
+  const {
+    data: salesData = [],
+    error: salesError,
+    isLoading: salesLoading,
+  } = useGetSalesRecordQuery()
 
   const category = productData?.map((item) => item.name) || []
   const currentYear = new Date().getFullYear()
@@ -24,7 +44,6 @@ function Account() {
     const startMonth = e.target.value
     setStartDuration(startMonth)
 
-    // If the selected start month is greater than the current end month, reset the end month
     if (months.indexOf(startMonth) > months.indexOf(endDuration)) {
       setEndDuration(startMonth)
     }
@@ -32,7 +51,6 @@ function Account() {
 
   const handleEndDuration = (e) => {
     const endMonth = e.target.value
-    // Only update end duration if it is greater than or equal to start duration
     if (months.indexOf(endMonth) >= months.indexOf(startDuration)) {
       setEndDuration(endMonth)
     }
@@ -82,22 +100,27 @@ function Account() {
 
   const sumTotal = stockValue + totalSales
 
-  if (isLoading) {
+  if (productLoading || salesLoading) {
     return <div>Loading data, please wait...</div>
   }
 
-  if (error) {
-    return <div>Error fetching product data: {error.message}</div>
+  if (productError) {
+    return <div>Error fetching product data: {productError.message}</div>
+  }
+
+  if (salesError) {
+    return <div>Error fetching sales data: {salesError.message}</div>
   }
 
   return (
-    <div className={style.container}>
+    <div ref={printRef} className={style.container}>
       <div className={style.header}>
         <h3>Accounts</h3>
       </div>
       <div className={style.selectOptionsContainer}>
-        <div className={style.selectOptions}>
+        <div className={style.durationContainer}>
           <div className={style.selectBox}>
+            <p>Month A</p>
             <select onChange={handleStartDuration} value={startDuration}>
               <option value="">Start Month</option>
               {months.map((month) => (
@@ -107,7 +130,11 @@ function Account() {
               ))}
             </select>
           </div>
+          <div>
+            <p>To</p>
+          </div>
           <div className={style.selectBox}>
+            <p>Month B</p>
             <select onChange={handleEndDuration} value={endDuration}>
               <option value="">End Month</option>
               {months.map((month) => (
@@ -117,17 +144,17 @@ function Account() {
               ))}
             </select>
           </div>
-          {startDuration && endDuration ? (
-            <p>
-              {startDuration} <span>{currentYear}</span> to {endDuration}{' '}
-              <span>{currentYear}</span>
-            </p>
-          ) : (
-            <p>Select Duration</p>
-          )}
         </div>
+        {startDuration && endDuration && (
+          <p>
+            {startDuration} <span>{currentYear}</span> to {endDuration}{' '}
+            <span>{currentYear}</span>
+          </p>
+        )}
+
         <div className={style.selectOptions}>
           <div className={style.selectBox}>
+            <p>Product Name</p>
             <select onChange={handleSelectProduct} value={selectedProducts}>
               <option value="">Select Product</option>
               {category.map((item) => (
@@ -137,11 +164,6 @@ function Account() {
               ))}
             </select>
           </div>
-          {selectedProducts ? (
-            <p>{selectedProducts}</p>
-          ) : (
-            <p>Select a product to view stock</p>
-          )}
         </div>
       </div>
 
@@ -150,23 +172,38 @@ function Account() {
           percentageIncrease="1.4%"
           summaryName="Stock Value"
           summaryValue={formatNaira(stockValue.toFixed(2))}
-          container={style.summaryContainer}
+          summaryStyle={style.summaryContainer}
           valueStyle={style.valueStyle}
         />
         <AccountSummary
           percentageIncrease="2%"
           summaryName="Total Sales"
           summaryValue={formatNaira(totalSales.toFixed(2))}
-          container={style.summaryContainer}
+          summaryStyle={style.summaryContainer}
           valueStyle={style.valueStyle}
         />
         <AccountSummary
           percentageIncrease="1.6%"
           summaryName="Sum Total"
           summaryValue={formatNaira(sumTotal.toFixed(2))}
-          container={style.summaryContainer}
+          summaryStyle={style.summaryContainer}
           valueStyle={style.valueStyle}
         />
+      </div>
+      <div className={style.expenditureContainer}>
+        <div>
+          <p>Expenditure Summary</p>
+        </div>
+        <div className={style.expenditures}>
+          <ExpenseButton
+            handleClick={() => navigate('/app/accounts/opex')}
+            name="OPEX"
+          />
+          <ExpenseButton
+            handleClick={() => navigate('/app/accounts/capex')}
+            name="CAPEX"
+          />
+        </div>
       </div>
 
       <div className={style.breakdown}>
@@ -174,7 +211,7 @@ function Account() {
       </div>
 
       <div className={style.btn}>
-        <Button buttonName="Export" />
+        <Button onClick={printPage} buttonName="Export" />
       </div>
     </div>
   )

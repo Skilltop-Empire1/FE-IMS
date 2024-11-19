@@ -1,0 +1,62 @@
+.container {
+  padding: 1.5rem 0rem;
+  width: 100%;
+}
+
+.formTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 3rem;
+  text-align: left;
+}
+
+.formRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.formColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.formGroup label {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.75rem;
+  text-align: left;
+}
+
+.formGroup select {
+  width: 25rem;
+  height: 3rem;
+  padding: 0.625rem;
+  gap: 14.0625rem;
+  border-radius: 0.5rem;
+  border: 0.0625rem solid #3d3d3d;
+}
+
+.formGroup input {
+  height: 3rem;
+  padding: 0.625rem;
+  gap: 23.9375rem;
+  border-radius: 0.5rem;
+  border: 0.0625rem;
+  border: 0.0625rem solid #3d3d3d;
+}
+
+.formGroup textarea {
+  height: 98px;
+  padding: 10px;
+  gap: 10px;
+  border-radius: 8px;
+  border: 1px solid #3d3d3d;
+}

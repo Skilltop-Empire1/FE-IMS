@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import ModalContainer from '../../modals/ModalContainer'
+import { useCreateRequestDemoMutation } from '../../redux/APIs/requestDemoApi';
 
 const Navbar = () => {
   // State to track the mobile menu visibility
@@ -229,87 +230,185 @@ const Navbar = () => {
 export default Navbar
 
 const DemoContent = () => {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    state: '',
+    title: '',
+    company: '',
+  });
+
+  const [errors, setErrors] = useState({});
+  const [createRequestDemo, { isLoading, error }] = useCreateRequestDemoMutation()
+
+  // Handle input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  // Validate form
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.firstName) newErrors.firstName = 'First Name is required';
+    if (!formData.lastName) newErrors.lastName = 'Last Name is required';
+    if (!formData.email) newErrors.email = 'Email is required';
+    if (!formData.phone) newErrors.phone = 'Phone Number is required';
+    if (!formData.state) newErrors.state = 'State is required';
+    if (!formData.title) newErrors.title = 'Title is required';
+    if (!formData.company) newErrors.company = 'Company is required';
+    return newErrors;
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formErrors = validateForm();
+    if (Object.keys(formErrors).length > 0) {
+      setErrors(formErrors);
+    } else {
+      setErrors({});
+      console.log('Form submitted:', formData);
+      try {
+
+        const response = await createRequestDemo(formData).unwrap();
+        console.log({ response })
+      } catch (error) {
+        console.log("Error: ", error)
+      }
+    }
+  };
+
   return (
     <div className="max-w-lg w-full flex flex-col gap-4 items-center relative">
       <h2 className="text-imsPurple text-xl">Watch Our Demo Video</h2>
-      <form className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
+      <form onSubmit={handleSubmit} className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* First Name */}
         <div className="col-span-2 md:col-span-1">
           <label className="mb-2 block text-sm font-semibold">
             First Name <span className="text-red-600">*</span>
           </label>
           <input
             type="text"
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleInputChange}
             placeholder="John"
             className="border border-gray-300 rounded-sm text-sm py-2 px-1 w-full block"
           />
+          {errors.firstName && <p className="text-red-600 text-xs mt-1">{errors.firstName}</p>}
         </div>
+
+        {/* Last Name */}
         <div className="col-span-2 md:col-span-1">
           <label className="mb-2 block text-sm font-semibold">
             Last Name <span className="text-red-600">*</span>
           </label>
           <input
             type="text"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleInputChange}
             placeholder="Georgia"
             className="border border-gray-300 rounded-sm text-sm py-2 px-1 w-full block"
           />
+          {errors.lastName && <p className="text-red-600 text-xs mt-1">{errors.lastName}</p>}
         </div>
+
+        {/* Email */}
         <div className="col-span-2">
           <label className="mb-2 block text-sm font-semibold">
             Email Address <span className="text-red-600">*</span>
           </label>
           <input
             type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
             placeholder="georgia.young@example.com"
             className="border border-gray-300 rounded-sm text-sm py-2 px-1 w-full"
           />
+          {errors.email && <p className="text-red-600 text-xs mt-1">{errors.email}</p>}
         </div>
+
+        {/* Phone Number */}
         <div className="col-span-2 md:col-span-1">
           <label className="mb-2 block text-sm font-semibold">
             Phone Number <span className="text-red-600">*</span>
           </label>
           <input
             type="text"
+            name="phone"
+            value={formData.phone}
+            onChange={handleInputChange}
             placeholder="(406) 555-0120"
             className="border border-gray-300 rounded-sm text-sm py-2 px-1 w-full block"
           />
+          {errors.phone && <p className="text-red-600 text-xs mt-1">{errors.phone}</p>}
         </div>
+
+        {/* State */}
         <div className="col-span-2 md:col-span-1">
           <label className="mb-2 block text-sm font-semibold">
             State <span className="text-red-600">*</span>
           </label>
           <select
-            placeholder="Select"
+            name="state"
+            value={formData.state}
+            onChange={handleInputChange}
             className="border border-gray-300 rounded-sm text-sm py-2 px-1 w-full"
           >
+            <option value="">Select</option>
             <option>State 1</option>
             <option>State 2</option>
           </select>
+          {errors.state && <p className="text-red-600 text-xs mt-1">{errors.state}</p>}
         </div>
+
+        {/* Title */}
         <div className="col-span-2 md:col-span-1">
           <label className="mb-2 block text-sm font-semibold">
             Title <span className="text-red-600">*</span>
           </label>
           <select
-            placeholder="Select"
+            name="title"
+            value={formData.title}
+            onChange={handleInputChange}
             className="border border-gray-300 rounded-sm text-sm py-2 px-1 w-full"
           >
+            <option value="">Select</option>
             <option>Title 1</option>
             <option>Title 2</option>
           </select>
+          {errors.title && <p className="text-red-600 text-xs mt-1">{errors.title}</p>}
         </div>
+
+        {/* Company */}
         <div className="col-span-2 md:col-span-1">
           <label className="mb-2 block text-sm font-semibold">
             Company <span className="text-red-600">*</span>
           </label>
           <input
             type="text"
+            name="company"
+            value={formData.company}
+            onChange={handleInputChange}
             placeholder="Kelly Resources"
             className="border border-gray-300 rounded-sm text-sm py-2 px-1 w-full block"
           />
+          {errors.company && <p className="text-red-600 text-xs mt-1">{errors.company}</p>}
         </div>
+
+        {/* Submit Button */}
         <div className="col-span-2 items-center justify-center py-4 flex flex-col gap-4">
-          <button className="bg-imsPurple text-white rounded px-10 text-sm py-2">
-            Submit
+          <button
+            type="submit"
+            disabled={isLoading}
+            className={`bg-imsPurple text-white rounded px-10 text-sm py-2 ${isLoading && "cursor-not-allowed !bg-imsLightPurple"}`}
+          >
+            {isLoading ? "Submitting" :  "Submit"}
           </button>
           <p className="text-xs">
             By Clicking the Button above, you are agreeing to our Privacy Policy
@@ -317,5 +416,7 @@ const DemoContent = () => {
         </div>
       </form>
     </div>
-  )
-}
+  );
+};
+
+

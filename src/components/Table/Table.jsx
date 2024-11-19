@@ -2,8 +2,11 @@ import React from 'react'
 import style from './tableStyle.module.css'
 import BUtton from '../Button/Button'
 import { Trash, Edit2Icon } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 const Table = ({ status, date, api, prod, deleted, updated }) => {
+
+  console.log({ api })
   return (
     <div className="pt-3">
       <table className={style.table}>
@@ -48,13 +51,13 @@ const Table = ({ status, date, api, prod, deleted, updated }) => {
               <td>₦ {product.price}</td>
               <td>{product.Category.name}</td>
               <td>
-                {product.storeAvailable.length > 8
+                {product?.storeAvailable?.length > 8
                   ? product.storeAvailable.substr(0, 12) + '...'
                   : product.storeAvailable}
               </td>
               <td>{product.createdAt.substr(0, 10)}</td>
               <td>
-                <Link to={`products/transfer/${product.productId}`}>
+                <Link to={`/app/products/transfer/${product.prodId}`}>
                   Transfer
                 </Link>
               </td>

@@ -2,21 +2,27 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const productApi = createApi({
   reducerPath: 'productApi',
-  baseQuery: fetchBaseQuery({ 
-    baseUrl: 'https://be-ims-production.up.railway.app/',
-  prepareHeaders: (headers, { getState }) => {
-    const token = getState().auth.token
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'https://be-ims.onrender.com',
+    prepareHeaders: (headers, { getState }) => {
+      const token = getState().auth.token
 
-    // console.log('Token in state:', token);
-    if (token) {
-      headers.set('Authorization', `Bearer ${token}`); // Attach the token to the header
-    }
-    return headers;
-  }, }), // Base URL
+      // console.log('Token in state:', token);
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`); // Attach the token to the header
+      }
+      return headers;
+    },
+  }), // Base URL
   endpoints: (builder) => ({
     // Fetch products
     getProducts: builder.query({
       query: () => '/api/IMS/product', // Endpoint for fetching the list of products
+      refetchOnMountOrArgChange: true,
+    }),
+    // Fetch product by  id
+    getProductById: builder.query({
+      query: (prodId) => ({ url: `/api/IMS/product/${prodId}`}), // Endpoint for fetching the list of products
       refetchOnMountOrArgChange: true,
     }),
     getSoldProducts: builder.query({
@@ -59,9 +65,10 @@ export const productApi = createApi({
   }),
 })
 
-export const { 
+export const {
   useGetProductsQuery,
-  useCreateProductMutation, 
+  useGetProductByIdQuery,
+  useCreateProductMutation,
   useUpdateProductMutation,
   useDeleteProductMutation,
   useGetSoldProductsQuery

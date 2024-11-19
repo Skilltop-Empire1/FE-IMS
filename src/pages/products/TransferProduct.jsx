@@ -1,142 +1,216 @@
-import React, { useEffect, useState } from 'react';
-import { useGetStoresQuery } from '../../redux/APIs/storeApi';
-import { useGetCategoriesQuery } from '../../redux/categoryApi';
-import { useParams } from 'react-router-dom';
-import { useGetProductByIdQuery } from '../../redux/APIs/productApi';
-
+import React, { useEffect, useState } from 'react'
+import { useGetStoresQuery } from '../../redux/APIs/storeApi'
+import { useGetCategoriesQuery } from '../../redux/categoryApi'
+import { useParams } from 'react-router-dom'
+import {
+  useGetProductByIdQuery,
+  useTransferProductMutation,
+} from '../../redux/APIs/productApi'
 
 // Initial form state
 const initialState = {
-  name: '',
   storeId: null,
+  categoryId: null,
+  destinationStore: null,
+  destinationCategory: null,
+  quantity: '',
+  reasonForTransfer: '',
 }
-const TransferProduct = () => {
 
-  const { productId } = useParams();
+const TransferProduct = () => {
+  const { productId } = useParams()
   const [formData, setFormData] = useState(initialState)
   const [errors, setErrors] = useState({})
-  const [category, setCategory] = useState('')
 
+  // Fetch data from APIs
   const {
     data: stores,
-    error: storesError,
     isLoading: storesLoading,
+    error: storesError,
   } = useGetStoresQuery()
 
-  const { data: categories, isLoading: categorysLoading, error: categorysError } = useGetCategoriesQuery()
-  const { data: product, isLoading, error } = useGetProductByIdQuery(productId);
+  const {
+    data: categories,
+    isLoading: categoriesLoading,
+    error: categoriesError,
+  } = useGetCategoriesQuery()
 
-  console.log({ product, error, isLoading, productId })
+  const {
+    data: product,
+    isLoading: productLoading,
+    error: productError,
+  } = useGetProductByIdQuery(productId)
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error: {JSON.stringify(error)}</p>;
+  console.log(categories)
 
+  const [transferProduct, { isLoading: isTransferring }] =
+    useTransferProductMutation()
+
+  // Update form field value
+  const handleChange = (field, value) => {
+    setFormData((prev) => ({ ...prev, [field]: value }))
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    // Validate required fields
+    setErrors(prev => ({
+      ...prev,
+      apiError: null
+    }))
+    const newErrors = {}
+    if (!formData.storeId) newErrors.storeId = 'Destination Store is required'
+    if (!formData.categoryId) newErrors.categoryId = 'Category is required'
+    if (!formData.quantity || formData.quantity <= 0)
+      newErrors.quantity = 'Quantity must be greater than zero'
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors)
+      return
+    }
+
+    try {
+      await transferProduct({
+        name: product?.name,
+        currentStore: product?.storeName,
+        currentCategory: product?.categoryName,
+        ...formData, // Includes storeId, categoryId, quantity, and reasonForTransfer
+        quantity: Number(formData?.quantity),
+        destinationCategory: formData?.categoryId,
+        destinationStore: formData?.destinationStore
+      }).unwrap()
+      alert('Product transferred successfully!')
+    } catch (error) {
+      setErrors({ apiError: error?.data?.message })
+      console.error('Error transferring product:', error)
+    }
+  }
+
+  if (productLoading) return <p>Loading product details...</p>
+  if (productError) return <p>Error: {JSON.stringify(productError)}</p>
 
   return (
     <div className="container mx-auto py-5">
       <h1 className="text-2xl font-bold mb-6">Transfer Product</h1>
-      <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <form
+        className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        onSubmit={handleSubmit}
+      >
+        {errors?.apiError && (<div className="text-red-400 md:col-span-2">
+          {errors?.apiError}
+        </div>)}
         {/* Left Side */}
-        <div className="flex flex-col gap-1">
-          {/* Name */}
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 my-2">Name</label>
+        <div className="flex flex-col gap-4">
+          {/* Product Details */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Name
+            </label>
             <p className="text-gray-900">{product?.name}</p>
           </div>
-          {/* Current Store */}
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 my-2">Current Store</label>
-            <p className="text-gray-900">{product?.name}</p>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Current Store
+            </label>
+            <p className="text-gray-900">{product?.storeName}</p>
           </div>
-          {/* Current Category */}
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Current Category</label>
-            <p className="text-gray-900">Cake</p>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Current Category
+            </label>
+            <p className="text-gray-900">{product?.categoryName}</p>
           </div>
-          {/* Destination Store */}
 
-          <div className="flex-grow">
-            <label className="block text-sm font-medium text-gray-700 my-2">Destination Store</label>
+          {/* Destination Store */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Destination Store
+            </label>
             <select
-              value={formData.storeId}
+              value={formData.storeId || ''}
               onChange={(e) => handleChange('storeId', e.target.value)}
-              className="w-full border-gray-300 py-2 px-1 border rounded-lg shadow-sm focus:ring-imsLightPurple focus:border-imsLightPurple"
+              className="w-full border-gray-300 py-2 px-1 border rounded-lg shadow-sm focus:ring-purple-500 focus:border-purple-500"
             >
-              <option value={null}>Select Store</option>
-              {storesLoading || storesError ? (
+              <option value="">Select Store</option>
+              {storesLoading ? (
                 <option>Loading Stores...</option>
-              ) : stores.length > 0 ? (
+              ) : storesError ? (
+                <option>Error Loading Stores</option>
+              ) : (
                 stores.map((store) => (
-                  <option key={store.storeId} value={store.storeId}>
+                  <option key={store.storeId} value={store.storeName}>
                     {store.storeName}
                   </option>
                 ))
-              ) : (
-                <option>No Stores Found</option>
               )}
             </select>
-            {errors?.storeId && (
-              <p className="pt-1 text-xs text-red-500">{errors.storeId}</p>
+            {errors.storeId && (
+              <p className="text-xs text-red-500">{errors.storeId}</p>
             )}
           </div>
-
         </div>
 
         {/* Right Side */}
-        <div>
-          {/* Quantity to Transfer */}
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 my-2">Quantity to Transfer</label>
+        <div className="flex flex-col gap-4">
+          {/* Quantity */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Quantity to Transfer
+            </label>
             <input
               type="number"
+              value={formData.quantity}
+              onChange={(e) => handleChange('quantity', e.target.value)}
               placeholder="Enter Quantity"
-              className="w-full border-gray-300 py-2 px-1 border rounded-lg shadow-sm focus:ring-imsLightPurple focus:border-imsLightPurple"
+              className="w-full border-gray-300 py-2 px-1 border rounded-lg shadow-sm focus:ring-purple-500 focus:border-purple-500"
             />
+            {errors.quantity && (
+              <p className="text-xs text-red-500">{errors.quantity}</p>
+            )}
           </div>
+
           {/* Reason for Transfer */}
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 my-2">
-              Reason for Transfer <span className="text-gray-400">(optional)</span>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Reason for Transfer
             </label>
             <textarea
+              value={formData.reasonForTransfer}
+              onChange={(e) =>
+                handleChange('reasonForTransfer', e.target.value)
+              }
               placeholder="Describe Reason for Transfer"
-              className="w-full border-gray-300 py-2 px-1 border rounded-lg shadow-sm focus:ring-imsLightPurple focus:border-imsLightPurple"
+              className="w-full border-gray-300 py-2 px-1 border rounded-lg shadow-sm focus:ring-purple-500 focus:border-purple-500"
               rows="3"
             />
           </div>
+
           {/* Destination Category */}
-          {/* <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 my-2">Destination Category</label>
-            <select
-              className="w-full border-gray-300 py-2 px-1 border rounded-lg shadow-sm focus:ring-imsLightPurple focus:border-imsLightPurple"
-            >
-              <option>Select Destination Category</option>
-            
-            </select>
-          </div> */}
           <div>
-            <label>Category:</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Destination Category
+            </label>
             <select
-              className="w-full border-gray-300 py-2 px-1 border rounded-lg shadow-sm focus:ring-imsLightPurple focus:border-imsLightPurple"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              required
+              value={formData.categoryId || ''}
+              onChange={(e) => handleChange('categoryId', e.target.value)}
+              className="w-full border-gray-300 py-2 px-1 border rounded-lg shadow-sm focus:ring-purple-500 focus:border-purple-500"
             >
               <option value="">Select Category</option>
-              {categorysLoading ? (
-                <option value="">Loading Categories</option>
-              ) : categorysError ? (
-                <option value="">Error Loading Categories</option>
+              {categoriesLoading ? (
+                <option>Loading Categories...</option>
+              ) : categoriesError ? (
+                <option>Error Loading Categories</option>
               ) : (
-                categories.categories.length > 0 ?
-                  categories.categories.map((category) => (
-                    <option key={category.catId} value={category.catId}>
-                      {category.name}
-                    </option>
-                  )) :
-                  <option value="">No category has been created</option>
+                categories.categories.map((category) => (
+                  <option key={category.catId} value={category.name}>
+                    {category.name}
+                  </option>
+                ))
               )}
             </select>
+            {errors.categoryId && (
+              <p className="text-xs text-red-500">{errors.categoryId}</p>
+            )}
           </div>
         </div>
       </form>
@@ -145,19 +219,22 @@ const TransferProduct = () => {
       <div className="flex justify-center gap-4 mt-6">
         <button
           type="button"
+          onClick={() => { setFormData(initialState); setErrors({}) }}
           className="border border-purple-500 text-purple-500 w-[150px] py-2 rounded-lg hover:bg-purple-50 transition"
         >
           Cancel
         </button>
         <button
           type="submit"
-          className="bg-purple-500 text-white w-[150px] py-2 rounded-lg hover:bg-purple-600 transition"
+          onClick={handleSubmit}
+          className="bg-purple-500 text-white w-[150px] py-2 rounded-lg hover:bg-purple-600 transition disabled:cursor-not-allowed"
+          disabled={isTransferring}
         >
-          Transfer
+          {isTransferring ? 'Transferring...' : 'Transfer'}
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default TransferProduct;
+export default TransferProduct

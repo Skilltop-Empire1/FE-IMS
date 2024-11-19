@@ -100,12 +100,12 @@ const Navbar = () => {
                 className="absolute left-0 mt-2 w-32 bg-white border rounded-md shadow-lg"
               >
                 <li className="hover:bg-gray-100 py-2 px-4 text-sm">
-                  <a href="mailto:support@example.com" target="_blank" rel="noopener noreferrer">
+                  <a href="mailto:support@skilltopims.com" target="_blank" rel="noopener noreferrer">
                     Email
                   </a>
                 </li>
                 <li className="hover:bg-gray-100 py-2 px-4 text-sm">
-                  <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer">
+                  <a href="https://wa.me/+2348062675088" target="_blank" rel="noopener noreferrer">
                     Whatsapp
                   </a>
                 </li>
@@ -229,18 +229,21 @@ const Navbar = () => {
 
 export default Navbar
 
+const initialState = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  phone: '',
+  state: '',
+  title: '',
+  company: '',
+}
+
 const DemoContent = () => {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    state: '',
-    title: '',
-    company: '',
-  });
+  const [formData, setFormData] = useState(initialState);
 
   const [errors, setErrors] = useState({});
+  const [success, setSuccess] = useState(null);
   const [createRequestDemo, { isLoading, error }] = useCreateRequestDemoMutation()
 
   // Handle input changes
@@ -270,13 +273,15 @@ const DemoContent = () => {
       setErrors(formErrors);
     } else {
       setErrors({});
+      setSuccess(null);
       console.log('Form submitted:', formData);
       try {
-
         const response = await createRequestDemo(formData).unwrap();
-        console.log({ response })
+        setSuccess(response?.msg);
+        setFormData(initialState);
       } catch (error) {
-        console.log("Error: ", error)
+        setErrors({ apiError: error?.data })
+        console.log("Error: ", error?.data)
       }
     }
   };
@@ -286,6 +291,16 @@ const DemoContent = () => {
       <h2 className="text-imsPurple text-xl">Watch Our Demo Video</h2>
       <form onSubmit={handleSubmit} className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* First Name */}
+        {errors?.apiError && (
+          <div className="text-red-400">
+            {errors?.apiError}
+          </div>
+        )}
+        {success && (
+          <div className="text-green-400 md:col-span-2">
+            {success}
+          </div>
+        )}
         <div className="col-span-2 md:col-span-1">
           <label className="mb-2 block text-sm font-semibold">
             First Name <span className="text-red-600">*</span>
@@ -408,7 +423,7 @@ const DemoContent = () => {
             disabled={isLoading}
             className={`bg-imsPurple text-white rounded px-10 text-sm py-2 ${isLoading && "cursor-not-allowed !bg-imsLightPurple"}`}
           >
-            {isLoading ? "Submitting" :  "Submit"}
+            {isLoading ? "Submitting" : "Submit"}
           </button>
           <p className="text-xs">
             By Clicking the Button above, you are agreeing to our Privacy Policy

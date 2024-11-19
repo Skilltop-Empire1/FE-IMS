@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const salesRecordApi = createApi({
   reducerPath: 'salesRecordApi', // Unique key to identify the API slice
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://be-ims-production.up.railway.app' }), // Base URL for the API
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://be-ims.onrender.com' }), // Base URL for the API
   endpoints: (builder) => ({
     // GET request to fetch all sales records
     getSalesRecord: builder.query({

@@ -31,6 +31,8 @@ const MobileWarning = lazy(() => import('./pages/mobileWarning/MobileWarning'))
 const PasswordReset = lazy(() => import('./pages/Password reset/PasswordReset'))
 const AddOpex = lazy(() => import('./pages/accounts/opex/addOpex/AddOpex'))
 const AddCapex = lazy(() => import('./pages/accounts/capex/addCapex/AddCapex'))
+const Capex = lazy(() => import('./pages/accounts/capex/Capex'))
+const Opex = lazy(() => import('./pages/accounts/opex/Opex'))
 
 const PasswordConfirmation = lazy(
   () => import('./pages/Password reset/PasswordConfirmation'),

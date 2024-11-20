@@ -5,6 +5,8 @@ import { NotificationProvider } from './components/Notifications/NotificationCon
 import store from './redux/store'
 import { setCredentials } from './redux/slices/AuthSlice'
 import Loader from './components/loaderElement/Loader' // Ensure this path is correct
+import Opex from './pages/accounts/opex/Opex'
+import Capex from './pages/accounts/capex/Capex'
 
 // Lazy load components
 const Login = lazy(() => import('./pages/login/Login'))
@@ -24,6 +26,9 @@ const AddStaff = lazy(() => import('./pages/addStaff/AddStaff'))
 const CreateStore = lazy(() => import('./pages/createStore/CreateStore'))
 const MobileWarning = lazy(() => import('./pages/mobileWarning/MobileWarning'))
 const PasswordReset = lazy(() => import('./pages/Password reset/PasswordReset'))
+const AddOpex = lazy(() => import('./pages/accounts/opex/addOpex/AddOpex'))
+const AddCapex = lazy(() => import('./pages/accounts/capex/addCapex/AddCapex'))
+
 const PasswordConfirmation = lazy(
   () => import('./pages/Password reset/PasswordConfirmation'),
 )
@@ -95,6 +100,38 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<Loader />}>
             <Account />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'accounts/opex',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <Opex />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'accounts/capex/add-capex',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <AddCapex />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'accounts/opex/add-capex',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <AddOpex />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'accounts/capex',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <Capex />
           </Suspense>
         ),
       },
@@ -195,8 +232,6 @@ function App() {
   if (token) {
     store.dispatch(setCredentials({ token }))
   }
-
- 
 
   return (
     <NotificationProvider>

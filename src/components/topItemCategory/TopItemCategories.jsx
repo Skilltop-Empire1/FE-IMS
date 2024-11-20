@@ -15,7 +15,10 @@ function TopItemCategories() {
   const navigate = useNavigate()
 
   return (
-    <div onClick={() => navigate('/app/products')} className={style.container}>
+    <div
+      onClick={() => navigate('/app/salesRecords')}
+      className={style.container}
+    >
       <div className={style.header}>
         <p>Top Item Categories</p>
         <Link to="/app/salesRecords">

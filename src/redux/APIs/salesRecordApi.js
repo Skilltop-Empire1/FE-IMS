@@ -15,6 +15,7 @@ export const salesRecordApi = createApi({
       return headers;
     },
      }),
+
   endpoints: (builder) => ({
     getSalesRecord: builder.query({
       query: () => '/api/IMS/sales/get',

@@ -97,7 +97,7 @@ function DropDown({ dropdownRef }) {
       <ModalContainer
         isOpen={modalType === 'change-password'}
         onClose={closeModal}
-        content={<LoggedReset onSuccess={closeModal}/>}
+        content={<LoggedReset onSuccess={closeModal} />}
       />
       <ModalContainer
         isOpen={modalType === 'logout'}

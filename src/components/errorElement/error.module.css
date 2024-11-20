@@ -1,0 +1,11 @@
+.error-boundary {
+}
+
+.errorTitle {
+  font-size: 24px;
+  color: red;
+}
+
+.errorMessage {
+  font-size: 16px;
+}

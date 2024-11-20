@@ -5,12 +5,12 @@ function accountSummary({
   summaryName,
   summaryValue,
   percentageIncrease,
-  container,
+  summaryStyle,
   valueStyle,
 }) {
   return (
-    <div className={container}>
-      <strong>{summaryName}</strong>
+    <div className={summaryStyle}>
+      <p>{summaryName}</p>
       <div className={valueStyle}>
         <p>{summaryValue}</p>
         <span>{percentageIncrease}</span>

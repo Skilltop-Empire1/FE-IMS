@@ -3,9 +3,9 @@ import Table from '../../../components/expenseTable/Table'
 import style from './Capex.module.css'
 import { Search } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+import { useGetCapexQuery } from '../../../redux/APIs/accountApi'
 
 function Capex() {
-  // Dummy Capex data
   const dummyCapexData = [
     {
       id: 1,
@@ -49,8 +49,17 @@ function Capex() {
     },
   ]
 
-  // Initialize the state for Capex data
   const [data, setData] = useState(dummyCapexData)
+
+  const { data: capexData, isError, isLoading } = useGetCapexQuery()
+  console.log(
+    'capexData: ',
+    capexData,
+    'isError: ',
+    isError,
+    'isLoading: ',
+    isLoading,
+  )
 
   const navigate = useNavigate()
 

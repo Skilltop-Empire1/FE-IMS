@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const accountApi = createApi({
   reducerPath: "account",
   baseQuery: fetchBaseQuery({
-    baseURL: 'https://be-ims.onrender.com',
+    baseURL: 'https://www.be-ims.onrender.com',
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.token || localStorage.getItem('token');
       console.log("token is",token);
@@ -44,7 +44,7 @@ const accountApi = createApi({
     }),
     getCapex: builder.query({
       query: () => ({
-        url: '/api/IMS/',
+        url: '/api/IMS/expenditure/list?capex=true',
       }),
     }),
     updateCapex: builder.mutation({
@@ -84,3 +84,6 @@ export const {
 } = accountApi;
 
 export default accountApi;
+
+
+

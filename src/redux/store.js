@@ -11,6 +11,7 @@ import { staffApi } from './staffApi'
 import { salesRecordApi } from './APIs/salesRecordApi'
 import { passwordReset } from './APIs/passwordResetApi'
 import { profilePictureApi } from './APIs/profilePictureUploadApi'
+import  accountApi  from './APIs/accountApi'
 
 
 

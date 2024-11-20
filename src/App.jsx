@@ -29,6 +29,9 @@ const AddStaff = lazy(() => import('./pages/addStaff/AddStaff'))
 const CreateStore = lazy(() => import('./pages/createStore/CreateStore'))
 const MobileWarning = lazy(() => import('./pages/mobileWarning/MobileWarning'))
 const PasswordReset = lazy(() => import('./pages/Password reset/PasswordReset'))
+const AddOpex = lazy(() => import('./pages/accounts/opex/addOpex/AddOpex'))
+const AddCapex = lazy(() => import('./pages/accounts/capex/addCapex/AddCapex'))
+
 const PasswordConfirmation = lazy(
   () => import('./pages/Password reset/PasswordConfirmation'),
 )
@@ -108,6 +111,38 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<Loader />}>
             <Account />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'accounts/opex',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <Opex />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'accounts/capex/add-capex',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <AddCapex />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'accounts/opex/add-capex',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <AddOpex />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'accounts/capex',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <Capex />
           </Suspense>
         ),
       },

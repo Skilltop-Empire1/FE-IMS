@@ -1,26 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Table from '../../../components/expenseTable/Table'
 import style from './Opex.module.css'
 import { Search } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
-import ModalContainer from '../../../modals/ModalContainer'
 import { useGetOpexQuery } from '../../../redux/APIs/accountApi'
 
 function Opex() {
   const { data: opexData, isLoading, isError } = useGetOpexQuery()
-
-  console.log('Opex', opexData) // Log the data to check
-
-  if (isLoading) {
-    return <div>Loading...</div>
-  }
-
-  if (isError) {
-    return <div>Error loading data</div>
-  }
-
   const navigate = useNavigate()
 
+  // Initialize headers and state
   const headers = [
     'OPEX Category',
     'Expense Description',
@@ -30,32 +19,15 @@ function Opex() {
     'Action',
   ]
 
-  const fallbackData = [
-    {
-      id: 1,
-      category: 'Rent',
-      description: 'Office rent',
-      amount: 1000,
-      percentage: '10%',
-      momChange: '5%',
-    },
-    {
-      id: 2,
-      category: 'Salaries',
-      description: 'Employee salaries',
-      amount: 5000,
-      percentage: '50%',
-      momChange: '-2%',
-    },
-  ]
-
-  const [data, setData] = useState(fallbackData)
+  const [data, setData] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
 
+  // Handle search term change
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value)
   }
 
+  // Filter data based on search term
   const filterData = (data, searchTerm) => {
     return data.filter(
       (item) =>
@@ -64,31 +36,59 @@ function Opex() {
     )
   }
 
+  // Calculate total OPEX amount and update the data with percentage and MOM change
+  const calculatePercentagesAndMOM = (opexData) => {
+    const totalAmount = opexData.reduce((total, item) => total + item.amount, 0)
+
+    return opexData.map((item) => {
+      const percentage =
+        totalAmount > 0 ? ((item.amount / totalAmount) * 100).toFixed(2) : 0
+      const momChange = 'N/A' // Placeholder for MOM change (could be implemented with actual data)
+      return { ...item, percentage: `${percentage}%`, momChange }
+    })
+  }
+
+  // Only update state when opexData is valid and calculate total OPEX data
   useEffect(() => {
-    if (opexData) {
-      setData(opexData)
-    } else {
-      setData(fallbackData)
+    if (opexData && Array.isArray(opexData)) {
+      const processedData = calculatePercentagesAndMOM(opexData)
+      setData(processedData)
     }
   }, [opexData])
 
+  // Filter data on search term change
   useEffect(() => {
-    const filteredData = filterData(opexData || fallbackData, searchTerm)
+    const filteredData = filterData(data, searchTerm)
     setData(filteredData)
-  }, [searchTerm, opexData])
+  }, [searchTerm, data])
 
+  // Render each row of the table
   const renderRow = (item) => (
-    <>
+    <tr key={item.expendId}>
       <td>{item.category}</td>
       <td>{item.description}</td>
       <td>{item.amount}</td>
       <td>{item.percentage}</td>
       <td>{item.momChange}</td>
-      <td>{item.action}</td>
-    </>
+      <td>
+        <button
+          onClick={() =>
+            navigate(`/app/accounts/opex/edit-opex/${item.expendId}`)
+          }
+        >
+          Edit
+        </button>
+      </td>
+    </tr>
   )
 
-  const getId = (item) => item.id
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+
+  if (isError) {
+    return <div>Error loading data</div>
+  }
 
   return (
     <div className={style.container}>
@@ -117,7 +117,16 @@ function Opex() {
           renderRow={renderRow}
           headers={headers}
           data={data}
-          getId={getId}
+          totalAmount={data.reduce((sum, item) => sum + item.amount, 0)}
+          totalPercentOpex={data.reduce(
+            (sum, item) => sum + parseFloat(item.percentage.replace('%', '')),
+            0,
+          )}
+          totalMomChange={data.reduce(
+            (sum, item) =>
+              sum + (item.momChange === 'N/A' ? 0 : item.momChange),
+            0,
+          )}
         />
       </div>
     </div>

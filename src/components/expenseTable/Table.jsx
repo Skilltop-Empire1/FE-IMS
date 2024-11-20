@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import ViewOpexModal from '../../modals/viewModal/ViewOpexModal'
 import EditOpexModal from '../../modals/editModal/EditOpexModal'
 import DeleteModal from '../../modals/deleteModal/DeleteModal'
@@ -15,6 +15,7 @@ import ModalContainer from '../../modals/ModalContainer'
 import ViewCapexModal from '../../modals/viewModal/ViewCapexModal'
 import EditCapexModal from '../../modals/editModal/EditCapexModal'
 
+// Action Cell Component
 const ActionCell = React.memo(({ item, onView, onEdit, onDelete, onPrint }) => (
   <ul className={style.buttonRow}>
     <li onClick={() => onView(item)}>
@@ -35,6 +36,7 @@ const ActionCell = React.memo(({ item, onView, onEdit, onDelete, onPrint }) => (
   </ul>
 ))
 
+// Table Component
 function Table({
   headers,
   data,
@@ -46,8 +48,8 @@ function Table({
   totalAmount,
   totalMomChange,
   totalPercentOpex,
-  fetchData, // Assuming this is the function to fetch data
-  modalTypePrefix = 'opex', // Dynamic modal prefix (e.g. 'capex' or 'opex')
+  fetchData, // Function to fetch data
+  modalTypePrefix = 'opex', // Dynamic modal prefix
 }) {
   const [currentPage, setCurrentPage] = useState(1)
   const [activeActionCell, setActiveActionCell] = useState(null)
@@ -57,7 +59,8 @@ function Table({
   const actionDropDownRef = useRef(null)
   const actionIconRef = useRef(null)
 
-  const handleClickOutsideDropdown = (event) => {
+  // Close the dropdown when clicking outside
+  const handleClickOutsideDropdown = useCallback((event) => {
     if (
       actionDropDownRef.current &&
       !actionDropDownRef.current.contains(event.target) &&
@@ -66,31 +69,34 @@ function Table({
     ) {
       setActiveActionCell(null)
     }
-  }
+  }, [])
 
   useEffect(() => {
     document.addEventListener('click', handleClickOutsideDropdown)
     return () => {
       document.removeEventListener('click', handleClickOutsideDropdown)
     }
-  }, [])
+  }, [handleClickOutsideDropdown])
 
-  // Safeguard against undefined data
+  // Safeguard against undefined or empty data
   if (!data || data.length === 0) {
     return <p>No data available to display.</p>
   }
 
+  // Pagination calculations
   const totalPages = Math.ceil(data.length / itemsPerPage)
   const indexOfLastItem = currentPage * itemsPerPage
   const indexOfFirstItem = indexOfLastItem - itemsPerPage
   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem)
 
+  // Page change handler
   const handlePageChange = (pageNumber) => {
     if (pageNumber >= 1 && pageNumber <= totalPages) {
       setCurrentPage(pageNumber)
     }
   }
 
+  // Modal open/close logic
   const openModal = (type, item) => () => {
     setModalType(`${modalTypePrefix}-${type}`)
     setActiveItem(item)
@@ -101,27 +107,25 @@ function Table({
     setActiveItem(null)
   }
 
+  // Action cell toggle
   const toggleActionCell = (itemId) => {
     setActiveActionCell((prev) => (prev === itemId ? null : itemId))
   }
 
-  // Pagination helper function
+  // Pagination helper: display pages around current page
   const pageNumbersToDisplay = (totalPages, currentPage) => {
-    let pageNumbers = []
     const range = 2 // Show 2 pages before and after the current page
     let startPage = Math.max(1, currentPage - range)
     let endPage = Math.min(totalPages, currentPage + range)
-    for (let i = startPage; i <= endPage; i++) {
-      pageNumbers.push(i)
-    }
-    return pageNumbers
+    return Array.from(
+      { length: endPage - startPage + 1 },
+      (_, i) => startPage + i,
+    )
   }
 
-  // Retry functionality in case of an error
+  // Retry fetching data on error
   const retryFetchData = useCallback(() => {
-    if (fetchData) {
-      fetchData()
-    }
+    if (fetchData) fetchData()
   }, [fetchData])
 
   return (
@@ -141,8 +145,9 @@ function Table({
       <table className={style.table}>
         <thead>
           <tr>
-            {headers &&
-              headers.map((header, index) => <th key={index}>{header}</th>)}
+            {headers.map((header, index) => (
+              <th key={index}>{header}</th>
+            ))}
           </tr>
         </thead>
         <tbody>
@@ -206,14 +211,14 @@ function Table({
             disabled={currentPage === 1}
             className={style.pageButton}
           >
-            &lt;&lt; {/* First */}
+            &lt;&lt;
           </button>
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
             className={style.pageNextButton}
           >
-            &lt; {/* Previous */}
+            &lt;
           </button>
           {pageNumbersToDisplay(totalPages, currentPage).map((page) => (
             <button
@@ -229,14 +234,14 @@ function Table({
             disabled={currentPage === totalPages}
             className={style.pageNextButton}
           >
-            &gt; {/* Next */}
+            &gt;
           </button>
           <button
             onClick={() => handlePageChange(totalPages)}
             disabled={currentPage === totalPages}
             className={style.pageButton}
           >
-            &gt;&gt; {/* Last */}
+            &gt;&gt;
           </button>
         </div>
       </div>

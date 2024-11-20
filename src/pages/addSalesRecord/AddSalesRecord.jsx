@@ -313,7 +313,6 @@ const handleChange2 = (event) => {
               className={style.input}
               value={customerName}
               onChange={(e) => setCustomerName(e.target.value)}
-              required
             />
           </div>
           
@@ -325,7 +324,6 @@ const handleChange2 = (event) => {
               className={style.input}
               value={customerNumber}
               onChange={(e) => setCustomerNumber(e.target.value)}
-              required
             />
           </div>
          </div>

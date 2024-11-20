@@ -3,7 +3,7 @@ import { useReactToPrint } from "react-to-print";
 import style from "./tableStyle.module.css";
 import { Trash, Edit2Icon, EyeIcon, Printer } from "lucide-react";
 
-const Table2 = ({ status, date, api = [], deleted, updated, runPrint, printref, selectedRows, toggleRowSelection, selectAllRows }) => {
+const Table2 = ({ status, date, api = [], deleted, updated, view, runPrint, printref, selectedRows, toggleRowSelection, selectAllRows }) => {
   const [action, setAction] = useState({});
   // const [selectedRows, setSelectedRows] = useState([]);
   const actionRef = useRef(null);
@@ -207,8 +207,8 @@ const Table2 = ({ status, date, api = [], deleted, updated, runPrint, printref, 
                 {action[idx] && (
                   <div className={`${style.action}`} ref={actionRef}>
                     <p
-                      onClick={() => console.log("Viewing", product)}
                       className="flex gap-3 text-sm "
+                      onClick={() => view(product)}
                     >
                       <EyeIcon size={20} className={style.icon} />
                       View

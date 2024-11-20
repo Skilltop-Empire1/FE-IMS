@@ -10,6 +10,7 @@ import {
 } from '../../redux/APIs/salesRecordApi'
 import ConfirmationModal from '../../components/modals/ConfirmationModal'
 import EditSalesRecordModal from '../../components/modals/EditSalesRecordModal'
+import ViewSaleRecordModal from '../../components/modals/ViewSaleRecordModal'
 import { useLocation } from 'react-router'
 import { NavLink } from 'react-router-dom'
 import { Download, PlusIcon } from 'lucide-react'
@@ -20,8 +21,10 @@ const SalesRecord = () => {
   const [categories, setCategories] = useState([])
   const [showModal, setShowModal] = useState(false)
   const [showUpdateModal, setShowUpdateModal] = useState(false)
+  const [showViewModal, setShowViewModal] = useState(false)
   const [salesRecordIdToDelete, setSalesRecordIdToDelete] = useState(null)
   const [salesRecordToUpdate, setSalesRecordToUpdate] = useState(null)
+  const [salesRecordToView, setSalesRecordToView] = useState(null)
   const [selectedRows, setSelectedRows] = useState([]);
 
   const {
@@ -45,6 +48,12 @@ const SalesRecord = () => {
 
   const handleFilter = (category) => {
     setFilterCategory(category)
+  }
+
+  const viewToUpdate = (record) => {
+    setShowUpdateModal(true)
+    setShowViewModal(false)
+    setSalesRecordToUpdate(record)
   }
 
   const handleDeleteSalesRecord = (id) => {
@@ -73,6 +82,10 @@ const SalesRecord = () => {
   const handleUpdateSalesRecord = (record) => {
     setSalesRecordToUpdate(record)
     setShowUpdateModal(true)
+  }  
+  const handleViewSalesRecord = (record) => {
+    setSalesRecordToView(record)
+    setShowViewModal(true)
   }
 
   const confirmUpdateSalesRecord = async (updatedData) => {
@@ -190,10 +203,12 @@ const SalesRecord = () => {
           api={filteredItems} 
           deleted={handleDeleteSalesRecord} 
           updated={handleUpdateSalesRecord} 
+          view={handleViewSalesRecord}
           printref={contentRef}
           selectedRows={selectedRows}
           toggleRowSelection={toggleRowSelection}
           selectAllRows={selectAllRows}
+          
         />
       )}
         {/* <NavLink to={'/app/invoice'}>
@@ -211,6 +226,12 @@ const SalesRecord = () => {
         setShowModal={setShowUpdateModal}
         record={salesRecordToUpdate}
         handleUpdate={confirmUpdateSalesRecord}
+      />
+      <ViewSaleRecordModal
+        showModal={showViewModal}
+        setShowModal={setShowViewModal}
+        record={salesRecordToView}
+        handleUpdate={viewToUpdate}
       />
     </div>
   )

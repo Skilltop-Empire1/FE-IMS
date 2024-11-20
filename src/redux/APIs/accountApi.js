@@ -5,9 +5,9 @@ const accountApi = createApi({
   baseQuery: fetchBaseQuery({
     baseURL: 'https://be-ims.onrender.com',
     prepareHeaders: (headers, { getState }) => {
-      const token = getState().auth.token;
+      const token = getState().auth.token || localStorage.getItem('token');
       console.log("token is",token);
-      
+
       if (token) {
         headers.set('Authorization', `Bearer ${token}`);
       }

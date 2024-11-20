@@ -8,7 +8,7 @@ export const baseQuery = fetchBaseQuery({
   baseUrl: baseApiUrl,
   // You can add global headers, authorization, etc., here if needed
   prepareHeaders: (headers, { getState }) => {
-    const token = getState().auth.token
+    const token = getState().auth.token || localStorage.getItem('token');
     if (token) {
       headers.set('Authorization', `Bearer ${token}`)
     }

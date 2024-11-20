@@ -7,7 +7,18 @@ import ModalContainer from '../../../modals/ModalContainer'
 import { useGetOpexQuery } from '../../../redux/APIs/accountApi'
 
 function Opex() {
-  const { data: opexData, isLoading } = useGetOpexQuery() // Fetch the data
+  const { data: opexData, isLoading, isError } = useGetOpexQuery()
+
+  console.log('Opex', opexData) // Log the data to check
+
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+
+  if (isError) {
+    return <div>Error loading data</div>
+  }
+
   const navigate = useNavigate()
 
   const headers = [
@@ -19,7 +30,6 @@ function Opex() {
     'Action',
   ]
 
-  // Sample data (for fallback if API request fails)
   const fallbackData = [
     {
       id: 1,
@@ -39,16 +49,13 @@ function Opex() {
     },
   ]
 
-  // State to hold the filtered data and search input
   const [data, setData] = useState(fallbackData)
   const [searchTerm, setSearchTerm] = useState('')
 
-  // Handle search term change
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value)
   }
 
-  // Filter the data based on the search term
   const filterData = (data, searchTerm) => {
     return data.filter(
       (item) =>
@@ -57,20 +64,19 @@ function Opex() {
     )
   }
 
-  // Update the data when the search term changes
   useEffect(() => {
     if (opexData) {
       setData(opexData)
+    } else {
+      setData(fallbackData)
     }
   }, [opexData])
 
   useEffect(() => {
-    // Filter data every time the search term changes
     const filteredData = filterData(opexData || fallbackData, searchTerm)
     setData(filteredData)
   }, [searchTerm, opexData])
 
-  // Render each row in the table
   const renderRow = (item) => (
     <>
       <td>{item.category}</td>
@@ -82,7 +88,6 @@ function Opex() {
     </>
   )
 
-  // Generate unique ID for each row
   const getId = (item) => item.id
 
   return (

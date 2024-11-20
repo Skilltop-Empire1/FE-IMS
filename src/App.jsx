@@ -8,6 +8,7 @@ import Loader from './components/loaderElement/Loader' // Ensure this path is co
 // import Invoice from './pages/Invoice/Invoice'
 
 // Lazy load components
+const LandingPage = lazy(() => import('./pages/landing'))
 const Login = lazy(() => import('./pages/login/Login'))
 const Signup = lazy(() => import('./pages/signup/Signup'))
 const AppLayout = lazy(() => import('./components/appLayout/AppLayout'))
@@ -15,6 +16,8 @@ const Account = lazy(() => import('./pages/accounts/Account'))
 const Home = lazy(() => import('./pages/home/Home'))
 const Categories = lazy(() => import('./pages/categories/Categories'))
 const Products = lazy(() => import('./pages/products/Products'))
+const TransferProduct = lazy(() => import('./pages/products/TransferProduct'))
+const TransferProductHistory = lazy(() => import('./pages/products/TransferProductHistory'))
 const SalesRecord = lazy(() => import('./pages/salesRecord/SalesRecord'))
 const Invoice = lazy(() => import('./pages/Invoice/Invoice'))
 const Settings = lazy(() => import('./pages/settings/Settings'))
@@ -36,6 +39,14 @@ const AddSaleRecord = lazy(
 const router = createBrowserRouter([
   {
     path: '/',
+    element: (
+      <Suspense fallback={<Loader />}>
+        <LandingPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/login',
     element: (
       <Suspense fallback={<Loader />}>
         <Login />
@@ -77,11 +88,11 @@ const router = createBrowserRouter([
   {
     path: '/app',
     element: (
-      <ProtectedRoute>
+       <ProtectedRoute>
         <Suspense fallback={<Loader />}>
           <AppLayout />
         </Suspense>
-      </ProtectedRoute>
+       </ProtectedRoute>
     ),
     children: [
       {
@@ -105,6 +116,22 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<Loader />}>
             <Products />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'products/transfer/history',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <TransferProductHistory />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'products/transfer/:productId',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <TransferProduct />
           </Suspense>
         ),
       },
@@ -206,13 +233,7 @@ function App() {
     store.dispatch(setCredentials({ token }))
   }
 
- 
-
-  return (
-
-      <RouterProvider router={router} />
-
-  )
+  return <RouterProvider router={router} />
 }
 
 export default App

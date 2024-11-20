@@ -27,7 +27,7 @@ export const NotificationProvider = ({ children }) => {
   useEffect(() => {
     if (userId) {
       // Connect to WebSocket using socket.io-client
-      const socket = io('https://be-ims-production.up.railway.app', {
+      const socket = io('https://be-ims.onrender.com', {
         withCredentials: true, // Support CORS if necessary
       })
 

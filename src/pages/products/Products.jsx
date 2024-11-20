@@ -35,9 +35,6 @@ const SalesRecord = () => {
 
   } = useGetLocationsQuery()
 
-
-  
-
   // Handle delete product action
   const handleDeleteProduct = (prodId) => {
     setProductIdToDelete(prodId)
@@ -149,7 +146,7 @@ const SalesRecord = () => {
       'storeAvailable',
       updatedData.storeAvailable || productToUpdate.storeAvailable,
     )
- 
+
 
     // Handle file upload
     if (updatedData.prodPhoto instanceof File) {
@@ -171,7 +168,7 @@ const SalesRecord = () => {
         } else {
           alert(
             'Error updating product: ' +
-              (response.error?.data?.message || 'Unknown error'),
+            (response.error?.data?.message || 'Unknown error'),
           )
         }
       })
@@ -213,7 +210,7 @@ const SalesRecord = () => {
     const matchesSearch = item.name.toLowerCase().includes(searchTerm)
     const matchesCategory =
       filterCategory === 'all' || item.category === filterCategory
-  
+
     return matchesSearch && matchesCategory
   })
 
@@ -242,31 +239,32 @@ const SalesRecord = () => {
 
       {/* Products Table Section */}
       {isLoading || isFetching ? (
-         <div className='animate-pulse'>
-            <table className='w-full' >
-              <thead>
+        <div className='animate-pulse'>
+          <table className='w-full' >
+            <thead>
               <tr className='text-'>
                 <th> </th>
-                  <th>Product Photo</th>
-                  <th>Product Name</th>
-                  <th>Alert status</th>
-                  <th>Quantity</th>
-                  <th>Unit price</th>
-                  <th>Category</th>
-                  <th>Store Name</th>
-                  <th>Date added</th>
-                  <th>Action</th> 
-                </tr>
-              </thead>
+                <th>Product Photo</th>
+                <th>Product Name</th>
+                <th>Alert status</th>
+                <th>Quantity</th>
+                <th>Unit price</th>
+                <th>Category</th>
+                <th>Store Name</th>
+                <th>Date added</th>
+                <th>Transfer</th>
+                <th>Action</th>
+              </tr>
+            </thead>
 
-            </table>
-            {Array(5).fill().map((_, i) => (
-              <div key={i} className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
-            ))}
-          </div>
+          </table>
+          {Array(5).fill().map((_, i) => (
+            <div key={i} className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+          ))}
+        </div>
       ) : error ? (
         <p className='text-red-500'>Error loading products. {error.data?.message || "An error occurred"}</p>
-        
+
       ) : (
         <Table
           status="Alert Status"
@@ -294,6 +292,6 @@ const SalesRecord = () => {
       />
     </div>
   )
-  }
+}
 
 export default SalesRecord

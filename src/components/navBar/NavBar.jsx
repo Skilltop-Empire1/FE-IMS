@@ -22,8 +22,8 @@ function NavBar({ dropdownRef }) {
   const navigate = useNavigate()
   const { data: profilePic, isLoading, error } = useGetPictureQuery()
 
-  const { role } = JSON.parse(localStorage.getItem('user'))
-  const isSuperAdmin = role === 'superAdmin'
+ const  role  = JSON.parse(localStorage.getItem('user'))?.role
+  const isSuperAdmin = role && role  === 'superAdmin'
 
   const {
     notifications,

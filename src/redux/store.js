@@ -5,6 +5,7 @@ import userReducer from './slices/userSlice'
 import { authApi } from './APIs/authApi'
 import { storesApi } from './APIs/storeApi'
 import { productApi } from './APIs/productApi'
+import { requestDemoApi } from './APIs/requestDemoApi'
 import { categoryApi } from './categoryApi'
 import { staffApi } from './staffApi'
 import { salesRecordApi } from './APIs/salesRecordApi'
@@ -26,6 +27,7 @@ const store = configureStore({
     [salesRecordApi.reducerPath]: salesRecordApi.reducer, //  salesRecord API reducer
     [passwordReset.reducerPath]: passwordReset.reducer, //  passwordReset API reducer
     [profilePictureApi.reducerPath]: profilePictureApi.reducer,
+    [requestDemoApi.reducerPath]: requestDemoApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
@@ -36,7 +38,8 @@ const store = configureStore({
       .concat(staffApi.middleware)//staffApi middleware
       .concat(salesRecordApi.middleware) //salesRecordApi middleware
       .concat(passwordReset.middleware) //passwordReset middleware
-      .concat(profilePictureApi.middleware),
+      .concat(profilePictureApi.middleware)
+      .concat(requestDemoApi.middleware),
 })
 
 export default store

@@ -2,6 +2,7 @@ import React from 'react'
 import style from './filterStyle.module.css'
 import RedirectButton from '../Button/RedirectButton'
 import { useGetLocationsQuery } from '../../redux/APIs/storeApi'
+import { Download, PlusIcon } from 'lucide-react'
 
 const Filter = ({
   handleFilter,
@@ -11,7 +12,9 @@ const Filter = ({
   button,
   location,
   search,
-  display
+  display,
+  text,
+  print
 }) => {
   // const Filter = ({
   //   handleFilter,
@@ -60,8 +63,9 @@ const Filter = ({
             </div>
           )}
         </span> */}
+        <button onClick={print} className='text-[#8315DB] border-2 border-[#8315DB] w-52 py-2 rounded-md flex justify-center items-center gap-2'><Download/> Generate Invoice</button>
 
-        <RedirectButton buttonName={button} direction={direction} />
+        <RedirectButton buttonName={button} text={text} direction={direction} />
       </div>
     </div>
   )

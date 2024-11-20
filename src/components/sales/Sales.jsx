@@ -7,16 +7,16 @@ function Sales({}) {
   const navigate = useNavigate()
   const { data } = useGetSalesRecordQuery()
   const posPayments = data
-    ?.map((sale) => sale.paymentMethod === 'POS')
+    ?.data?.map((sale) => sale.paymentMethod === 'POS')
     .reduce((a, b) => a + b, 0)
   // console.log(posPayments)
 
   const cashPayments = data
-    ?.map((sale) => sale.paymentMethod === 'cash')
+    ?.data?.map((sale) => sale.paymentMethod === 'cash')
     .reduce((a, b) => a + b, 0)
 
   const transferPayments = data
-    ?.map((sale) => sale.paymentMethod === 'transfer')
+    ?.data?.map((sale) => sale.paymentMethod === 'transfer')
     .reduce((a, b) => a + b, 0)
 
   const totalPayments = posPayments + transferPayments + cashPayments

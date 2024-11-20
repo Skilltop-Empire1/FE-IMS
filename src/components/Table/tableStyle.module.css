@@ -18,21 +18,106 @@
 
 .table tbody tr td {
   font-family: Inter;
-  color: #bdc1ca;
+  color: #333333;
   padding: 5px 5px;
 }
 
+.table {
+  border-collapse: separate;
+  border-spacing: 0 1rem;
+}
+
+.table td {
+  border-bottom: 1px solid #000;
+}
+
+
+
+
+.pagination {
+  display: flex;
+  justify-content: left;
+  padding: 20px 0;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pagination button {
+  color: #171A1F;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: left;
+  margin-right: 2px;
+}
+
+.pageButton {
+  width: 34px;
+  height: 34px;
+  padding: 3px;
+  border-radius: 2px;
+  border: 1px solid #E0E0E0;
+  background-color: #ffffff;
+  color: #171A1F;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.pageButton:focus {
+  background-color: #6F17B2;
+  color: #fff;
+}
+
+.pageNextButton {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+  text-align: center;
+  background-color: #ffffff;;
+}
+
+.action {
+  /* top: 1px; */
+  position: absolute;
+  background-color: #fff;
+  padding: 10px ;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 150px;
+  width: 100px;
+  z-index: 1000;
+  text-align: center;
+  box-shadow: 0px 0px 16px 0px rgba(168,162,162,0.75);
+-webkit-box-shadow: 0px 0px 16px 0px rgba(168,162,162,0.75);
+-moz-box-shadow: 0px 0px 16px 0px rgba(168,162,162,0.75);
+}
+
+.action p {
+  text-align: left;
+}
+
+.actionMama:hover {
+  cursor: pointer;
+}
+
+.action p:hover {
+  cursor: pointer;
+}
+
+.identifier {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.actionMama {
+  position: relative;
+  /* margin-top: 16px; */
+}
+
 .icon {
-    color: #fff;
-    padding: 5px;
-    border-radius: 3px;
-    cursor: pointer;
-}
-
-.icon:nth-child(1) {
-    background-color: rgb(0, 183, 255);
-}
-
-.icon:nth-child(2) {
-    background-color: rgb(252, 6, 6);
+  font-size: 250px;
 }

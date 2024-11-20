@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { useReactToPrint } from 'react-to-print'
+import React, { useState, useEffect } from 'react'
 import Filter from '../../components/Filter/Filter'
-import Table from '../../components/Table/Table2'
+import Table3 from '../../components/Table/Table3'
 import { useGetLocationsQuery } from '../../redux/APIs/storeApi'
 import {
   useGetSalesRecordQuery,
@@ -11,10 +10,8 @@ import {
 import ConfirmationModal from '../../components/modals/ConfirmationModal'
 import EditSalesRecordModal from '../../components/modals/EditSalesRecordModal'
 import { useLocation } from 'react-router'
-import { NavLink } from 'react-router-dom'
-import { Download, PlusIcon } from 'lucide-react'
 
-const SalesRecord = () => {
+const Invoice = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [filterCategory, setFilterCategory] = useState('all')
   const [categories, setCategories] = useState([])
@@ -22,7 +19,6 @@ const SalesRecord = () => {
   const [showUpdateModal, setShowUpdateModal] = useState(false)
   const [salesRecordIdToDelete, setSalesRecordIdToDelete] = useState(null)
   const [salesRecordToUpdate, setSalesRecordToUpdate] = useState(null)
-  const [selectedRows, setSelectedRows] = useState([]);
 
   const {
     data: salesRecord,
@@ -93,7 +89,7 @@ const SalesRecord = () => {
 
   //filter
 
-  const filteredItems = salesRecord?.data?.filter((item) => {
+  const filteredItems = salesRecord?.filter((item) => {
     const matchesSearch = item?.Product?.name
       ?.toLowerCase()
       .includes(searchTerm)
@@ -110,49 +106,18 @@ const SalesRecord = () => {
     }
   }, [location.pathname, refetch])
 
-
-  const clearSelectedRows = () => {
-    setSelectedRows([])
-  }
-
-  //print functionality 
-  const contentRef = useRef();
-  const handlePrint = useReactToPrint({
-      contentRef,
-      onAfterPrint: clearSelectedRows,
-});
-
-
-
-
-  //selcting items to print
-  const toggleRowSelection = (saleId) => {
-          setSelectedRows((prevSelected) =>
-            prevSelected.includes(saleId)
-              ? prevSelected.filter((id) => id !== saleId)
-              : [...prevSelected, saleId]
-          );
-        };
-  
-    const selectAllRows = (isChecked) => {
-        setSelectedRows(isChecked ? currentData.map((item) => item.saleId) : []);
-    };
-
-
   return (
     <div>
       <Filter
         handleSearch={handleSearch}
         handleFilter={handleFilter}
         direction="/app/addSaleRecord"
-        title="Sales Record"
-        button={<PlusIcon/>}
-        text='Add Sales'
+        title="Invoice"
+        button="+ Add Sales"
         location={locations}
         categories={categories}
         search="search by product name"
         display="hidden"
-        print={handlePrint}
       />
 
       {salesLoading || locationLoading ? (
@@ -184,21 +149,14 @@ const SalesRecord = () => {
         
        
       ) : (
-        <Table 
+        <Table3 
           status='Payment method' 
           date=' Sold Date' 
           api={filteredItems} 
           deleted={handleDeleteSalesRecord} 
           updated={handleUpdateSalesRecord} 
-          printref={contentRef}
-          selectedRows={selectedRows}
-          toggleRowSelection={toggleRowSelection}
-          selectAllRows={selectAllRows}
         />
       )}
-        {/* <NavLink to={'/app/invoice'}>
-          invoice
-        </NavLink> */}
 
       <ConfirmationModal
         title={'sale record'}
@@ -216,4 +174,4 @@ const SalesRecord = () => {
   )
 }
 
-export default SalesRecord
+export default Invoice

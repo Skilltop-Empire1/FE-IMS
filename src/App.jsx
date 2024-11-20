@@ -5,6 +5,7 @@ import { NotificationProvider } from './components/Notifications/NotificationCon
 import store from './redux/store'
 import { setCredentials } from './redux/slices/AuthSlice'
 import Loader from './components/loaderElement/Loader' // Ensure this path is correct
+// import Invoice from './pages/Invoice/Invoice'
 
 // Lazy load components
 const Login = lazy(() => import('./pages/login/Login'))
@@ -15,6 +16,7 @@ const Home = lazy(() => import('./pages/home/Home'))
 const Categories = lazy(() => import('./pages/categories/Categories'))
 const Products = lazy(() => import('./pages/products/Products'))
 const SalesRecord = lazy(() => import('./pages/salesRecord/SalesRecord'))
+const Invoice = lazy(() => import('./pages/Invoice/Invoice'))
 const Settings = lazy(() => import('./pages/settings/Settings'))
 const Stores = lazy(() => import('./pages/stores/Stores'))
 const NotFound = lazy(() => import('./pages/notFound/NotFound'))
@@ -111,6 +113,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<Loader />}>
             <SalesRecord />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'invoice',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <Invoice />
           </Suspense>
         ),
       },

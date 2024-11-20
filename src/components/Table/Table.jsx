@@ -61,15 +61,17 @@ const Table = ({ status, date, api, prod, deleted, updated }) => {
                   Transfer
                 </Link>
               </td>
-              <td className="flex gap-1">
-                <Edit2Icon
-                  className={style.icon}
-                  onClick={() => updated(product)}
-                />
-                <Trash
-                  className={style.icon}
-                  onClick={() => deleted(product.prodId)} // Pass the product ID to the delete function
-                />
+              <td className="">
+                <div className='flex gap-1 items-center  justify-center'>
+                  <Edit2Icon
+                    className={style.icon}
+                    onClick={() => updated(product)}
+                  />
+                  <Trash
+                    className={style.icon}
+                    onClick={() => deleted(product.prodId)} // Pass the product ID to the delete function
+                  />
+                </div>
               </td>
             </tr>
           ))}

@@ -3,6 +3,7 @@ import style from './filterStyle.module.css'
 import RedirectButton from '../Button/RedirectButton'
 import { useGetLocationsQuery } from '../../redux/APIs/storeApi'
 import { Download, PlusIcon } from 'lucide-react'
+import { useLocation } from 'react-router'
 
 const Filter = ({
   handleFilter,
@@ -27,6 +28,8 @@ const Filter = ({
 
   // Fetch locations data using RTK query
   const { data: locations, error, isLoading } = useGetLocationsQuery()
+  const getLocation = useLocation()
+  console.log(getLocation.pathname)
 
   return (
     <div className={`flex justify-between items-center px-4 ${style.body}`}>
@@ -63,7 +66,7 @@ const Filter = ({
             </div>
           )}
         </span> */}
-        <button onClick={print} className='text-[#8315DB] border-2 border-[#8315DB] w-52 py-2 rounded-md flex justify-center items-center gap-2'><Download/> Generate Invoice</button>
+        <button onClick={print} className={`text-[#8315DB] border-2 border-[#8315DB] w-52 py-2 rounded-md flex justify-center items-center gap-2  ${getLocation.pathname !== '/app/salesRecords' ? 'hidden' : ''}`}><Download/> Generate Invoice</button>
 
         <RedirectButton buttonName={button} text={text} direction={direction} />
       </div>

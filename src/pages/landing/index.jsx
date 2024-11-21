@@ -325,7 +325,7 @@ const LandingPage = () => {
         <div className="w-full bg-black py-10" id="pricing">
           <PricingPlan />
           {/* <div className="w-full max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10"> */}
-          <div className="w-full max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 px-2 md:px-0 mb-8 gap-10">
+          <div className="w-full max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 px-2 md:px-0 mb-8 gap-10 ">
             <div className="flex gap-3 col-span-1 items-start px-2 md:max-w-lg mx-auto w-full relative">
               <div className="w-8 h-8 flex-shrink-0 flex justify-center items-center bg-green-500 rounded-full text-white">
                 ?
@@ -361,8 +361,8 @@ const LandingPage = () => {
               </div>
             </div>
           </div>
-          <div className="w-full max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 px-4 md:px-0 gap-10">
-            <div className="flex gap-3 items-start max-w-lg w-full relative">
+          <div className="w-full max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 px-2 md:px-0 mb-8 gap-10">
+            <div className="flex gap-3 col-span-1 items-start px-2 md:max-w-lg mx-auto w-full relative">
               <div className="w-8 h-8 flex-shrink-0 flex justify-center items-center bg-green-500 rounded-full text-white">
                 ?
               </div>
@@ -377,7 +377,7 @@ const LandingPage = () => {
                 </p>
               </div>
             </div>
-            <div className="flex gap-3 items-start max-w-lg">
+            <div className="flex gap-3 col-span-1 items-start px-2 md:max-w-lg mx-auto w-full relative">
               <div className="w-8 h-8 flex-shrink-0 flex justify-center items-center bg-green-500 rounded-full text-white">
                 ?
               </div>
@@ -393,8 +393,9 @@ const LandingPage = () => {
                 </p>
               </div>
             </div>
-            </div>
-            <div className="mt-4">
+          </div>
+          
+          <div className="mt-4">
             <div className="col-span-2 text-center text-white px-2 mb-10">
               Haven't got your answer?{' '}
               <span className="text-green-500">Contact our support now</span>

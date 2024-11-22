@@ -78,6 +78,9 @@ const LandingPage = () => {
               <motion.button
                 className="border-imsPurple border text-imsPurple px-4 md:px-8 py-3 rounded-md"
                 whileHover={{ scale: 1.05 }}
+                onClick={() => {
+                  handleScroll('learnmore')
+                }}
               >
                 Learn More
               </motion.button>
@@ -216,7 +219,7 @@ const LandingPage = () => {
             <ClientLogoCarousel />
           </div>
         </div>
-        <div className="flex flex-col gap-8 items-center w-full max-w-5xl px-2 mx-auto my-10">
+        <div className="flex flex-col gap-8 items-center w-full max-w-5xl px-2 mx-auto my-10" id="learnmore">
           <h2 className="px-2 text-center text-2xl font-bold">
             Easily Manage Your Business in Real-Time with Skilltop IMS
           </h2>
@@ -457,6 +460,9 @@ const LandingPage = () => {
                 <motion.button
                   className="border-imsPurple border text-imsPurple px-4 md:px-8 py-3 text-sm rounded-md flex items-center gap-4 font-semibold"
                   whileHover={{ scale: 1.05 }}
+                  onClick={() => {
+                    handleScroll('learnmore')
+                  }}
                 >
                   <span>Learn More</span>
                   <ArrowRight size={16} />
@@ -464,6 +470,9 @@ const LandingPage = () => {
                 <motion.button
                   className="bg-imsPurple border border-imsPurple text-white text-sm px-4 md:px-8 py-3 rounded-md flex items-center gap-4 font-semibold"
                   whileHover={{ scale: 1.05 }}
+                  onClick={() => {
+                    handleScroll('pricing')
+                  }}
                 >
                   <span>Get it now</span>
                   <ArrowRight size={16} />

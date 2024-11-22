@@ -57,7 +57,7 @@ const Table = ({ status, date, api, prod, deleted, updated }) => {
               </td>
               <td>{product.createdAt.substr(0, 10)}</td>
               <td>
-                <Link to={`/app/products/transfer/${product.prodId}`}>
+                <Link to={`/app/products/transfer/${product.prodId}`} className="hover:text-imsPurple" title="click to transfer product">
                   Transfer
                 </Link>
               </td>

@@ -1,17 +1,18 @@
 import React from 'react'
+import { motion } from 'framer-motion'
 import style from './tableStyle.module.css'
 import BUtton from '../Button/Button'
 import { Trash, Edit2Icon } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import clsx from 'clsx'
 
 const Table = ({ status, date, api, prod, deleted, updated }) => {
-
   console.log({ api })
   return (
     <div className="pt-3">
       <table className={style.table}>
         <thead>
-          <tr className={style.tr}>
+          <tr className={`${style.tr}`}>
             {/* <th> </th> */}
             <th>Product Photo</th>
             <th>Product Name</th>
@@ -27,7 +28,7 @@ const Table = ({ status, date, api, prod, deleted, updated }) => {
         </thead>
         <tbody className={prod}>
           {api.map((product, idx) => (
-            <tr key={idx}>
+            <tr key={idx} className="text-sm">
               {/* <td>
                 <input type="checkbox" />
               </td> */}
@@ -36,7 +37,7 @@ const Table = ({ status, date, api, prod, deleted, updated }) => {
               </td>
               <td>{product.name}</td>
               <td>
-                <BUtton
+                {/* <BUtton
                   buttonName={
                     product.quantity > product.alertStatus
                       ? 'Active'
@@ -49,7 +50,25 @@ const Table = ({ status, date, api, prod, deleted, updated }) => {
                     : product.quantity === 0
                       ? 'text-white'
                       : "!text-red-600"}`}
-                />
+                /> */}
+                <motion.div
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.9, opacity: 0 }}
+                  transition={{ duration: 0.3, ease: 'easeInOut' }}
+                  onClick={() => window.print()}
+                  className={clsx(
+                    `w-full max-w-[80px] rounded px-2 py-1.5 text-[13px] border flex items-center justify-center cursor-pointer`,
+                    {
+                      'border-green-600 text-green-600 hover:bg-green-600 hover:text-white':product.quantity > product.alertStatus,
+                      'border-red-600 text-red-600 hover:bg-red-600 hover:text-white':
+                        product.quantity <= product.alertStatus,
+                    },
+                  )}
+                >
+                  {product.quantity > product.alertStatus && 'ACTIVE'}{' '}
+                  {product.quantity <= product.alertStatus && 'LOW'}
+                </motion.div>
               </td>
               <td>{product.quantity}</td>
               <td>₦ {product.price}</td>
@@ -61,7 +80,11 @@ const Table = ({ status, date, api, prod, deleted, updated }) => {
               </td>
               <td>{product.createdAt.substr(0, 10)}</td>
               <td>
-                <Link to={`/app/products/transfer/${product.prodId}`} className="hover:text-imsPurple" title="click to transfer product">
+                <Link
+                  to={`/app/products/transfer/${product.prodId}`}
+                  className="text-imsPurple hover:text-imsDarkPurple"
+                  title="click to transfer product"
+                >
                   Transfer
                 </Link>
               </td>

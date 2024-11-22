@@ -12,7 +12,6 @@ import ClientLogoCarousel from '../../components/Landing/ClientLogoCarousel'
 import PricingPlan from '../../components/Landing/PricingPlan'
 import { Link } from 'react-router-dom'
 
-
 const LandingPage = () => {
   // Animation variants
   const fadeInUp = {
@@ -41,8 +40,6 @@ const LandingPage = () => {
     }
   }
 
-
-
   return (
     <motion.div className="w-full">
       <div className="w-full flex flex-col">
@@ -57,8 +54,8 @@ const LandingPage = () => {
           animate={isHeroInView ? 'visible' : 'hidden'}
           variants={fadeInUp}
         >
-          <div className="w-full flex items-center justify-center gap-4 mx-auto flex-col max-w-xl py-24 min-h-[400px]">
-            <motion.h1 className="text-center text-4xl">
+          <div className="w-full flex items-center justify-center px-2 gap-4 mx-auto flex-col max-w-xl py-24 min-h-[400px]">
+            <motion.h1 className="text-center text-3xl md:text-4xl">
               Streamline Your Business with Skilltop IMS
             </motion.h1>
             <motion.p className="text-center text-sm text-gray-600">
@@ -67,17 +64,19 @@ const LandingPage = () => {
               management, automate routine tasks, and enhance customer
               satisfaction, all from one easy-to-use platform.
             </motion.p>
-            <div className="justify-center flex items-center gap-4 mt-10">
+            <div className="justify-between md:justify-center flex items-center w-full md:w-auto gap-4 mt-10">
               <motion.button
-                className="bg-imsPurple border font-light border-imsPurple text-white px-8 py-3 rounded-md flex items-center gap-4"
+                className="bg-imsPurple border font-light border-imsPurple text-white px-4 md:px-8 py-3 rounded-md flex items-center gap-4"
                 whileHover={{ scale: 1.05 }}
-                onClick={() => { handleScroll("pricing") }}
+                onClick={() => {
+                  handleScroll('pricing')
+                }}
               >
                 <span>Get Started</span>
                 <ArrowRight size={16} />
               </motion.button>
               <motion.button
-                className="border-imsPurple border text-imsPurple px-8 py-3 rounded-md"
+                className="border-imsPurple border text-imsPurple px-4 md:px-8 py-3 rounded-md"
                 whileHover={{ scale: 1.05 }}
               >
                 Learn More
@@ -94,7 +93,7 @@ const LandingPage = () => {
           animate={isMainInView ? 'visible' : 'hidden'}
           variants={fadeInUp}
         >
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center px-2">
             <motion.img
               src="/images/preview.png"
               alt="IMS-preview"
@@ -115,7 +114,7 @@ const LandingPage = () => {
         >
           <h2 className="text-2xl font-bold">Why Choose Skilltop IMS?</h2>
           <motion.div
-            className="w-full max-w-7xl grid grid-cols-1 md:grid-cols-3 gap-5 flex-wrap mt-10"
+            className="w-full max-w-7xl grid grid-cols-1 md:grid-cols-3 gap-y-10 gap-5 flex-wrap mt-10"
             initial="hidden"
             animate="visible"
             variants={{
@@ -129,19 +128,19 @@ const LandingPage = () => {
           >
             {[
               {
-                icon: <Clock5 size={20} />,
+                icon: <Clock5 size={40} />,
                 title: 'Real-Time Inventory Management',
                 description:
                   'Keep track of your stock and overall product management.',
               },
               {
-                icon: <BriefcaseBusiness size={20} />,
+                icon: <BriefcaseBusiness size={40} />,
                 title: 'General Business Management',
                 description:
                   "Manage your business with full control and streamline access for staff's easy workflow.",
               },
               {
-                icon: <TriangleAlert size={20} />,
+                icon: <TriangleAlert size={40} />,
                 title: 'Improves Accuracy And Reduces Human Error',
                 description:
                   'Eliminate manual mistakes with automated processes.',
@@ -193,7 +192,7 @@ const LandingPage = () => {
                 <ArrowRight size={16} />
               </motion.button>
             </div>
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center px-2 md:px-0">
               <motion.img
                 src="/images/benefits_image.png"
                 alt="IMS-preview"
@@ -206,7 +205,10 @@ const LandingPage = () => {
         </motion.div>
 
         {/* Partners Section */}
-        <div className="flex flex-col w-full max-w-7xl mx-auto my-10" id="partners">
+        <div
+          className="flex flex-col w-full max-w-7xl mx-auto my-10"
+          id="partners"
+        >
           <h2 className="text-2xl font-bold text-center">
             Our Partners/Clients
           </h2>
@@ -214,8 +216,8 @@ const LandingPage = () => {
             <ClientLogoCarousel />
           </div>
         </div>
-        <div className="flex flex-col gap-8 items-center w-full max-w-5xl mx-auto my-10">
-          <h2 className="text-2xl font-bold">
+        <div className="flex flex-col gap-8 items-center w-full max-w-5xl px-2 mx-auto my-10">
+          <h2 className="px-2 text-center text-2xl font-bold">
             Easily Manage Your Business in Real-Time with Skilltop IMS
           </h2>
           <p className="text-center text-gray-700 text-base">
@@ -226,7 +228,7 @@ const LandingPage = () => {
           </p>
 
           <div className="gap-8 grid grid-cols-1 sm:grid-cols-2 max-w-6xl my-10 w-full mx-auto">
-            <div className="flex items-center justify-center">
+            <div className="flex px-2 items-center justify-center">
               <motion.img
                 src="/images/manage_image.png"
                 alt="IMS-preview"
@@ -285,8 +287,8 @@ const LandingPage = () => {
           </div>
         </div>
         <div className="w-full bg-gray-50 py-10">
-          <div className="flex flex-col gap-8 items-center w-full max-w-5xl mx-auto my-10">
-            <h2 className="text-2xl font-bold">
+          <div className="flex flex-col gap-8 items-center w-full max-w-5xl mx-auto my-10 px-2">
+            <h2 className="text-2xl text-center font-bold">
               Unlock Seamless Inventory Management with Skilltop IMS
             </h2>
             <p className="text-center text-gray-700 text-base">
@@ -322,8 +324,9 @@ const LandingPage = () => {
         {/* Pricing Section */}
         <div className="w-full bg-black py-10" id="pricing">
           <PricingPlan />
-          <div className="w-full max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
-            <div className="flex gap-3 items-start max-w-lg">
+          {/* <div className="w-full max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10"> */}
+          <div className="w-full max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 px-2 md:px-0 mb-8 gap-10 ">
+            <div className="flex gap-3 col-span-1 items-start px-2 md:max-w-lg mx-auto w-full relative">
               <div className="w-8 h-8 flex-shrink-0 flex justify-center items-center bg-green-500 rounded-full text-white">
                 ?
               </div>
@@ -341,7 +344,7 @@ const LandingPage = () => {
                 </Link>
               </div>
             </div>
-            <div className="flex gap-3 items-start max-w-lg">
+            <div className="flex gap-3 col-span-1 items-start px-2 md:max-w-lg  mx-auto w-full relative">
               <div className="w-8 h-8 flex-shrink-0 flex justify-center items-center bg-green-500 rounded-full text-white">
                 ?
               </div>
@@ -357,7 +360,9 @@ const LandingPage = () => {
                 </p>
               </div>
             </div>
-            <div className="flex gap-3 items-start max-w-lg">
+          </div>
+          <div className="w-full max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 px-2 md:px-0 mb-8 gap-10">
+            <div className="flex gap-3 col-span-1 items-start px-2 md:max-w-lg mx-auto w-full relative">
               <div className="w-8 h-8 flex-shrink-0 flex justify-center items-center bg-green-500 rounded-full text-white">
                 ?
               </div>
@@ -372,7 +377,7 @@ const LandingPage = () => {
                 </p>
               </div>
             </div>
-            <div className="flex gap-3 items-start max-w-lg">
+            <div className="flex gap-3 col-span-1 items-start px-2 md:max-w-lg mx-auto w-full relative">
               <div className="w-8 h-8 flex-shrink-0 flex justify-center items-center bg-green-500 rounded-full text-white">
                 ?
               </div>
@@ -388,7 +393,10 @@ const LandingPage = () => {
                 </p>
               </div>
             </div>
-            <div className="col-span-2 text-center text-white mb-10">
+          </div>
+          
+          <div className="mt-4">
+            <div className="col-span-2 text-center text-white px-2 mb-10">
               Haven't got your answer?{' '}
               <span className="text-green-500">Contact our support now</span>
             </div>
@@ -396,8 +404,8 @@ const LandingPage = () => {
         </div>
         <div className="max-w-7xl w-full mx-auto bg-white">
           <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-10 py-10">
-            <div className="col-span-1 flex flex-col gap-4">
-              <h2 className="text-2xl font-bold">
+            <div className="col-span-1 flex flex-col gap-4 px-2">
+              <h2 className="text-2xl px-2 text-center font-bold">
                 Streamline Your Business Operations and Management Fast
               </h2>
               <p className="text-sm text-gray-600">
@@ -411,35 +419,50 @@ const LandingPage = () => {
                   Product of Skilltop Empire
                 </p>
               </div>
-              <div className="flex items-center gap-3">
-                <a href="https://www.facebook.com/profile.php?id=61560962855881" target='_blank'>
+              <div className="flex items-center gap-3 justify-center md:justify-start">
+                <a
+                  href="https://www.facebook.com/profile.php?id=61560962855881"
+                  target="_blank"
+                >
                   <img src="/images/socials/facebook.png" />
                 </a>
-                <a href="https://www.youtube.com/@SkilltopEmpire" target='_blank'>
+                <a
+                  href="https://www.youtube.com/@SkilltopEmpire"
+                  target="_blank"
+                >
                   <img src="/images/socials/youtube.png" />
                 </a>
-                <a href="https://x.com/Skilltopempire?t=Ufx26aerHIdhxQO7rtmsRA&s=08" target='_blank'>
+                <a
+                  href="https://x.com/Skilltopempire?t=Ufx26aerHIdhxQO7rtmsRA&s=08"
+                  target="_blank"
+                >
                   <img src="/images/socials/twitter.png" />
                 </a>
-                <a href="https://www.linkedin.com/company/skilltop-empire/" target='_blank'>
+                <a
+                  href="https://www.linkedin.com/company/skilltop-empire/"
+                  target="_blank"
+                >
                   <img src="/images/socials/linkedin.png" />
                 </a>
-                <a href="https://www.instagram.com/skilltopempire?igsh=YzljYTk1ODg3Zg==" target='_blank'>
+                <a
+                  href="https://www.instagram.com/skilltopempire?igsh=YzljYTk1ODg3Zg=="
+                  target="_blank"
+                >
                   <img src="/images/socials/instagram.png" />
                 </a>
               </div>
             </div>
             <div className="col-span-1">
-              <div className="justify-center flex items-center gap-4 mt-10">
+              <div className="justify-between md:justify-center px-2 flex items-center gap-4 md:mt-10">
                 <motion.button
-                  className="border-imsPurple border text-imsPurple px-8 py-3 text-sm rounded-md flex items-center gap-4 font-semibold"
+                  className="border-imsPurple border text-imsPurple px-4 md:px-8 py-3 text-sm rounded-md flex items-center gap-4 font-semibold"
                   whileHover={{ scale: 1.05 }}
                 >
                   <span>Learn More</span>
                   <ArrowRight size={16} />
                 </motion.button>
                 <motion.button
-                  className="bg-imsPurple border border-imsPurple text-white text-sm px-8 py-3 rounded-md flex items-center gap-4 font-semibold"
+                  className="bg-imsPurple border border-imsPurple text-white text-sm px-4 md:px-8 py-3 rounded-md flex items-center gap-4 font-semibold"
                   whileHover={{ scale: 1.05 }}
                 >
                   <span>Get it now</span>
@@ -448,12 +471,11 @@ const LandingPage = () => {
               </div>
             </div>
           </div>
-          <div className="text-center w-full py-4 border-t-2">
+          <div className="text-center w-full py-4 text-sm border-t-2">
             Copyrights - © 2024 Skilltop Empire Concept
           </div>
         </div>
       </div>
-
     </motion.div>
   )
 }

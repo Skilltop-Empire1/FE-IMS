@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useGetStoresQuery } from '../../redux/APIs/storeApi'
 import { useGetCategoriesQuery } from '../../redux/categoryApi'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import {
   useGetProductByIdQuery,
   useTransferProductMutation,
@@ -21,6 +21,8 @@ const TransferProduct = () => {
   const { productId } = useParams()
   const [formData, setFormData] = useState(initialState)
   const [errors, setErrors] = useState({})
+  const navigate = useNavigate()
+
 
   // Fetch data from APIs
   const {
@@ -55,9 +57,9 @@ const TransferProduct = () => {
     e.preventDefault()
 
     // Validate required fields
-    setErrors(prev => ({
+    setErrors((prev) => ({
       ...prev,
-      apiError: null
+      apiError: null,
     }))
     const newErrors = {}
     if (!formData.storeId) newErrors.storeId = 'Destination Store is required'
@@ -69,17 +71,19 @@ const TransferProduct = () => {
       return
     }
 
+
     try {
       await transferProduct({
         name: product?.name,
-        currentStore: product?.storeName,
-        currentCategory: product?.categoryName,
-        ...formData, // Includes storeId, categoryId, quantity, and reasonForTransfer
         quantity: Number(formData?.quantity),
+        currentStore: product?.storeName,
+        reasonForTransfer : formData?.reasonForTransfer,
+        currentCategory: product?.categoryName,
+        destinationStore: formData?.storeId,
         destinationCategory: formData?.categoryId,
-        destinationStore: formData?.destinationStore
       }).unwrap()
-      alert('Product transferred successfully!')
+      alert('Product transferred successfully!');
+      navigate('/app/products/transfer/history')
     } catch (error) {
       setErrors({ apiError: error?.data?.message })
       console.error('Error transferring product:', error)
@@ -96,9 +100,9 @@ const TransferProduct = () => {
         className="grid grid-cols-1 md:grid-cols-2 gap-6"
         onSubmit={handleSubmit}
       >
-        {errors?.apiError && (<div className="text-red-400 md:col-span-2">
-          {errors?.apiError}
-        </div>)}
+        {errors?.apiError && (
+          <div className="text-red-400 md:col-span-2">{errors?.apiError}</div>
+        )}
         {/* Left Side */}
         <div className="flex flex-col gap-4">
           {/* Product Details */}
@@ -219,7 +223,10 @@ const TransferProduct = () => {
       <div className="flex justify-center gap-4 mt-6">
         <button
           type="button"
-          onClick={() => { setFormData(initialState); setErrors({}) }}
+          onClick={() => {
+            setFormData(initialState)
+            setErrors({})
+          }}
           className="border border-purple-500 text-purple-500 w-[150px] py-2 rounded-lg hover:bg-purple-50 transition"
         >
           Cancel

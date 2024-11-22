@@ -36,7 +36,7 @@ const Navbar = () => {
   return (
     <>
       <motion.nav
-        className="flex max-w-7xl justify-between mx-auto items-center w-full px-4"
+        className="flex max-w-7xl justify-between mx-auto items-center w-full px-2 md:px-4"
         variants={{
           hidden: { opacity: 0, y: -20 },
           visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
@@ -44,7 +44,7 @@ const Navbar = () => {
         initial="hidden"
         animate="visible"
       >
-        <img src="/images/logo.png" alt="ims-logo" className="w-24" />
+        <img src="/images/logo.png" alt="ims-logo" className="w-20 md:w-24" />
 
         {/* Desktop Menu */}
         <ul className="text-sm flex-grow hidden md:flex justify-center gap-8 items-center">

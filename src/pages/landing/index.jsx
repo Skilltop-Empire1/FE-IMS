@@ -472,7 +472,7 @@ const LandingPage = () => {
             </div>
           </div>
           <div className="text-center w-full py-4 text-sm border-t-2">
-            Copyrights - © 2024 Skilltop Empire Concept
+            Copyrights - © 2024 Skilltop Empire
           </div>
         </div>
       </div>

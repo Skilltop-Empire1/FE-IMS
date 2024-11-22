@@ -8,7 +8,7 @@ const Button = ({ buttonName, className, onClick }) => {
 
   return (
     <div className={`${style.buttonName} ${className}`}>
-      <button onClick={onClick ? onClick : handlePrint}>{buttonName}</button>
+      <button onClick={onClick ? onClick : handlePrint} className={className}>{buttonName}</button>
     </div>
   )
 }

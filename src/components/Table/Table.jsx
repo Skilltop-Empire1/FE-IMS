@@ -44,7 +44,11 @@ const Table = ({ status, date, api, prod, deleted, updated }) => {
                         ? 'Empty'
                         : 'Low'
                   }
-                  className="me-5"
+                  className={`me-5 !bg-[#6c30b6] text-white outline-none block w-full ${product.quantity > product.alertStatus
+                    ? "!text-green-600"
+                    : product.quantity === 0
+                      ? 'text-white'
+                      : "!text-red-600"}`}
                 />
               </td>
               <td>{product.quantity}</td>

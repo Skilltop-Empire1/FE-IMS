@@ -6,6 +6,7 @@ import { jwtDecode } from 'jwt-decode'
 import { useGetStoresQuery } from '../../redux/APIs/storeApi'
 import { useGetCategoriesQuery } from '../../redux/categoryApi'
 import {  useGetProductsQuery } from '../../redux/APIs/productApi'
+import { set } from 'zod'
 
 
 const AddSaleRecord = () => {
@@ -160,12 +161,22 @@ const handleChange2 = (event) => {
         }, 3000)
 
         if(addAnother) {
-          setPaymentMethod('cash')
-          setCategories(data.categories)
-          setProducts(data)
-          setQuantity('')
-          setStores(data)
-          
+          setProductId('');
+          setPaymentOption('');
+          setQuantity('');
+          setCustomerName('');
+          setCustomerNumber('');
+          setCategoryId('');
+          setStoreId('');
+          setPaymentDate('');
+          setPaymentDate2('');
+          setPaymentDate3('');
+          setTotalAmount('');
+          setTotalAmount2('');
+          setTotalAmount3('');
+          setCurrentAmount('');
+          setCurrentAmount2('');
+          setNextDueDate('');
         }
         else {
           setTimeout(()=>{
@@ -326,6 +337,31 @@ const handleChange2 = (event) => {
               onChange={(e) => setCustomerNumber(e.target.value)}
             />
           </div>
+          <div>
+
+          </div>
+          <div className="mt-8 flex items-center gap-4 text-purple-700">
+                <input
+                  type="checkbox"
+                  name="check"
+                  checked={addAnother}
+                  onChange={(e) => setAddAnother(e.target.checked)}
+                  className={`${style.check} flex items-center justify-center`}
+                />
+                <label htmlFor="check">Add another record</label>
+              </div>
+              <div className={style.cont}>
+                <div className="flex justify-between items-center mt-8 w-11/12">
+                  <button className={style.submit2} disabled={isLoading}>
+                    Cancel
+                  </button>
+                  <button type="submit" className={style.submit} disabled={isLoading}>
+                    {isLoading ? 'Saving...' : 'Save Sale Record'}
+                  </button>
+                </div>
+              </div>
+            
+            {error && <p className="error mt-5 text-red-500">{error.data?.message }</p>}
          </div>
 
 
@@ -506,27 +542,8 @@ const handleChange2 = (event) => {
 
 
             {/* <br /> */}
-            <div className='flex justify-between '>
-              <div className="mt-8 flex items-center gap-4 text-purple-700">
-                <input
-                  type="checkbox"
-                  name="check"
-                  checked={addAnother}
-                  onChange={(e) => setAddAnother(e.target.checked)}
-                  className={`${style.check} flex items-center justify-center`}
-                />
-                <label htmlFor="check">Add another record</label>
-              </div>
-              <div className="mt-5 flex gap-3">
-                <button className={style.submit2} disabled={isLoading}>
-                  Cancel
-                </button>
-                <button type="submit" className={style.submit} disabled={isLoading}>
-                  {isLoading ? 'Saving...' : 'Save Sale Record'}
-                </button>
-              </div>
-            </div>
-            {error && <p className="error mt-5 text-red-500">{error.data?.message }</p>}
+            
+              
         </form>
       </div>
     </div>

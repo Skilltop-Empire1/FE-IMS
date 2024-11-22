@@ -26,6 +26,7 @@
 .cont {
     display: flex;
     flex-direction: column;
+    /* width: 100%; */
 }
 
 .label {
@@ -38,7 +39,7 @@
 }
 
 .input {
-    width: 450px;
+    width: 90%;
     /* background: #F4F3F3; */
     height: 55px;
     border-radius: 15px;
@@ -51,7 +52,7 @@
 }
 
 .submit {
-    width: 300px;
+    width: 45%;
     height: 55px;
     background: #4B02A3;
     color: #E2D3F4;
@@ -59,7 +60,7 @@
 }
 
 .submit2 {
-    width: 300px;
+    width: 45%;
     height: 55px;
     border: 1px solid #4B02A3;
     color: #4B02A3;

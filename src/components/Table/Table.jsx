@@ -26,7 +26,10 @@ const Table = ({ status, date, api, prod, deleted, updated }) => {
           </tr>
         </thead>
         <tbody className={prod}>
-          {api.map((product, idx) => (
+          {api
+          .slice()
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .map((product, idx) => (
             <tr key={idx}>
               {/* <td>
                 <input type="checkbox" />

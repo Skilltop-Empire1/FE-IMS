@@ -72,7 +72,7 @@ const LoggedReset = ({ onSuccess }) => {
         <div className={`flex items-center justify-between gap-3 ${style.visi}`}>
           <input
             type={passwordVisibility ? 'text' : 'password'}
-            placeholder="Enter old password"
+            placeholder="Enter Old Password"
             value={oldPassword}
             onChange={(e) => setOldPassword(e.target.value)}
             required
@@ -86,7 +86,7 @@ const LoggedReset = ({ onSuccess }) => {
         <div className={`flex items-center justify-between gap-3 ${style.visi}`}>
           <input
             type={passwordVisibility ? 'text' : 'password'}
-            placeholder="Enter password"
+            placeholder="Enter New Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
@@ -101,7 +101,7 @@ const LoggedReset = ({ onSuccess }) => {
         <div className={`flex items-center justify-between gap-3 ${style.visi}`}>
           <input
             type={passwordVisibility2 ? 'text' : 'password'}
-            placeholder="Confirm password"
+            placeholder="Confirm New Password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required

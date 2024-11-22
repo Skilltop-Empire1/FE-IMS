@@ -78,7 +78,7 @@ const StoreDetail = ({ selectedStore, onClose }) => {
             showModal={showModal}
             setShowModal={setShowModal}
             handleDelete={handleDeleteStore}
-            title="store"
+            title="Store and any linked Categories and Products"
           />
         </div>
       ) : (

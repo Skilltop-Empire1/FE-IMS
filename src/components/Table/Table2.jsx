@@ -210,7 +210,7 @@ const Table2 = ({ status, date, api = [], deleted, updated, view, runPrint, prin
                       className="flex gap-3 text-sm "
                       onClick={() => view(product)}
                     >
-                      <EyeIcon size={20} className={style.icon} />
+                      <EyeIcon size={20} className={style.icon2} />
                       View
                     </p>
                     <hr />
@@ -218,12 +218,12 @@ const Table2 = ({ status, date, api = [], deleted, updated, view, runPrint, prin
                       onClick={() => updated(product)}
                       className="flex gap-3 text-sm "
                     >
-                      <Edit2Icon size={20} className={style.icon} />
+                      <Edit2Icon size={20} className={style.icon2} />
                       Edit
                     </p>
                     <hr />
                     <p className="flex gap-3 text-sm ">
-                      <Printer size={20} className={style.icon} />
+                      <Printer size={20} className={style.icon2} />
                       Print
                     </p>
                     <hr />
@@ -231,7 +231,7 @@ const Table2 = ({ status, date, api = [], deleted, updated, view, runPrint, prin
                       onClick={() => deleted(product.saleId)}
                       className="flex text-sm gap-3"
                     >
-                      <Trash size={20} className={style.icon} />
+                      <Trash size={20} className={style.icon2} />
                       Delete
                     </p>
                   </div>

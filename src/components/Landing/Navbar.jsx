@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import { Menu, X } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import ModalContainer from '../../modals/ModalContainer'
-import { useCreateRequestDemoMutation } from '../../redux/APIs/requestDemoApi';
+import { useCreateRequestDemoMutation } from '../../redux/APIs/requestDemoApi'
 
 const Navbar = () => {
   // State to track the mobile menu visibility
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false)
 
-  const [isOpen, setIsOpen] = useState(false); // Manage dropdown visibility
+  const [isOpen, setIsOpen] = useState(false) // Manage dropdown visibility
 
-  const toggleDropdown = (state) => setIsOpen(state);
+  const toggleDropdown = (state) => setIsOpen(state)
 
   // Toggle mobile menu visibility
   const toggleMobileMenu = () => setMobileMenuOpen(!isMobileMenuOpen)
@@ -50,19 +50,22 @@ const Navbar = () => {
         <ul className="text-sm flex-grow hidden md:flex justify-center gap-8 items-center">
           <motion.li
             whileHover={{ scale: 1.1 }} // Add hover animation
-            className="cursor-pointer text-center py-4"
+            className="cursor-pointer text-center py-4 hover:text-imsPurple"
             onClick={() => handleScroll('partners')}
           >
             About Product
           </motion.li>
           <motion.li
             whileHover={{ scale: 1.1 }} // Add hover animation
-            className="cursor-pointer text-center py-4"
+            className="cursor-pointer text-center py-4 hover:text-imsPurple"
             onClick={() => setShowModal(true)} // Call handleScroll with the ID
           >
             Demo
           </motion.li>
-          <motion.div whileHover={{ scale: 1.1 }} className="cursor-pointer text-center py-4">
+          <motion.div
+            whileHover={{ scale: 1.1 }}
+            className="cursor-pointer text-center py-4 hover:text-imsPurple"
+          >
             <a
               href="https://www.youtube.com/@SkilltopEmpire"
               target="_blank"
@@ -73,15 +76,15 @@ const Navbar = () => {
           </motion.div>
           {/* <motion.li
             whileHover={{ scale: 1.1 }} // Add hover animation
-            className="cursor-pointer text-center py-4"
+            className="cursor-pointer text-center py-4 hover:text-imsPurple"
           // onClick={() => handleScroll(item.id)} // Call handleScroll with the ID
           >
             Support
           </motion.li> */}
           <div
             className="relative cursor-pointer"
-            onMouseEnter={() => toggleDropdown(true)} // Open on hover
-            onMouseLeave={() => toggleDropdown(false)} // Close on mouse leave
+            onClick={() => toggleDropdown(!isOpen)} // Open on hover
+            // onMouseLeave={() => toggleDropdown(false)} // Close on mouse leave
           >
             {/* Support Menu Item */}
             <motion.div
@@ -100,19 +103,30 @@ const Navbar = () => {
                 className="absolute left-0 mt-2 w-32 bg-white border rounded-md shadow-lg"
               >
                 <li className="hover:bg-gray-100 py-2 px-4 text-sm">
-                  <a href="mailto:support@skilltopims.com" target="_blank" rel="noopener noreferrer">
+                  <a
+                    href="mailto:support@skilltopims.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     Email
                   </a>
                 </li>
                 <li className="hover:bg-gray-100 py-2 px-4 text-sm">
-                  <a href="https://wa.me/+2348062675088" target="_blank" rel="noopener noreferrer">
+                  <a
+                    href="https://wa.me/+2348062675088"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     Whatsapp
                   </a>
                 </li>
               </motion.ul>
             )}
           </div>
-          <motion.div whileHover={{ scale: 1.1 }} className="cursor-pointer text-center py-4">
+          <motion.div
+            whileHover={{ scale: 1.1 }}
+            className="cursor-pointer text-center py-4 hover:text-imsPurple"
+          >
             <a
               href="https://skilltopempire.com/contact"
               target="_blank"
@@ -152,8 +166,9 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         <motion.div
-          className={`fixed top-0 left-0 h-3/4 w-full bg-imsPurple text-white z-30 shadow-lg p-5 md:hidden ${isMobileMenuOpen ? 'block' : 'hidden'
-            }`}
+          className={`fixed top-0 left-0 h-3/4 w-full bg-imsPurple text-white z-30 shadow-lg p-5 md:hidden ${
+            isMobileMenuOpen ? 'block' : 'hidden'
+          }`}
           variants={mobileMenuVariant}
           initial="hidden"
           animate={isMobileMenuOpen ? 'visible' : 'hidden'}
@@ -169,8 +184,8 @@ const Navbar = () => {
               whileHover={{ scale: 1.1 }} // Add hover animation
               className="cursor-pointer block w-full border-b text-center py-4"
               onClick={() => {
-                handleScroll('partners');
-                setMobileMenuOpen(false);
+                handleScroll('partners')
+                setMobileMenuOpen(false)
               }}
             >
               About Product
@@ -179,13 +194,16 @@ const Navbar = () => {
               whileHover={{ scale: 1.1 }} // Add hover animation
               className="cursor-pointer block w-full border-b text-center py-4"
               onClick={() => {
-                setMobileMenuOpen(false);
-                setShowModal(true);
+                setMobileMenuOpen(false)
+                setShowModal(true)
               }} // Call handleScroll with the ID
             >
               Demo
             </motion.li>
-            <motion.div whileHover={{ scale: 1.1 }} className="cursor-pointer block w-full border-b text-center py-4">
+            <motion.div
+              whileHover={{ scale: 1.1 }}
+              className="cursor-pointer block w-full border-b text-center py-4"
+            >
               <a
                 href="https://www.youtube.com/@SkilltopEmpire"
                 target="_blank"
@@ -197,14 +215,14 @@ const Navbar = () => {
             <motion.li
               whileHover={{ scale: 1.1 }} // Add hover animation
               className="cursor-pointer block w-full border-b text-center py-4"
-            // onClick={() => handleScroll(item.id)} // Call handleScroll with the ID
+              // onClick={() => handleScroll(item.id)} // Call handleScroll with the ID
             >
               Support
             </motion.li>
             <motion.li
               whileHover={{ scale: 1.1 }} // Add hover animation
               className="cursor-pointer block w-full border-b text-center py-4"
-            // onClick={() => handleScroll(item.id)} // Call handleScroll with the ID
+              // onClick={() => handleScroll(item.id)} // Call handleScroll with the ID
             >
               Contact
             </motion.li>
@@ -239,67 +257,93 @@ const initialState = {
   company: '',
 }
 
-const DemoContent = () => {
-  const [formData, setFormData] = useState(initialState);
+function validatePhoneNumber(phone) {
+  // Regular expression to validate phone number
+  const phoneRegex =
+    /^(?:\+?\d{1,3})?[-.\s]?\(?\d{2,4}\)?[-.\s]?\d{3,4}[-.\s]?\d{4,9}$/
 
-  const [errors, setErrors] = useState({});
-  const [success, setSuccess] = useState(null);
-  const [createRequestDemo, { isLoading, error }] = useCreateRequestDemoMutation()
+  // Check if phone number matches the regex
+  if (!phoneRegex.test(phone)) {
+    return { valid: false, error: 'Invalid phone number format.' }
+  }
+
+  // Optional length validation (e.g., typical phone numbers are between 10 and 15 digits)
+  const digitsOnly = phone.replace(/\D/g, '') // Remove non-numeric characters
+  if (digitsOnly.length < 10 || digitsOnly.length > 15) {
+    return {
+      valid: false,
+      error: 'Phone number must be between 10 and 15 digits.',
+    }
+  }
+
+  return { valid: true, error: null }
+}
+
+const DemoContent = () => {
+  const [formData, setFormData] = useState(initialState)
+
+  const [errors, setErrors] = useState({})
+  const [success, setSuccess] = useState(null)
+  const [createRequestDemo, { isLoading, error }] =
+    useCreateRequestDemoMutation()
 
   // Handle input changes
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+    const { name, value } = e.target
+    setFormData({ ...formData, [name]: value })
+  }
 
   // Validate form
   const validateForm = () => {
-    const newErrors = {};
-    if (!formData.firstName) newErrors.firstName = 'First Name is required';
-    if (!formData.lastName) newErrors.lastName = 'Last Name is required';
-    if (!formData.email) newErrors.email = 'Email is required';
-    if (!formData.phone) newErrors.phone = 'Phone Number is required';
-    if (!formData.state) newErrors.state = 'State is required';
-    if (!formData.title) newErrors.title = 'Title is required';
-    if (!formData.company) newErrors.company = 'Company is required';
-    return newErrors;
-  };
+    const newErrors = {}
+    if (!formData.firstName) newErrors.firstName = 'First Name is required'
+    if (!formData.lastName) newErrors.lastName = 'Last Name is required'
+    if (!formData.email) newErrors.email = 'Email is required'
+    if (!formData.phone) newErrors.phone = 'Phone Number is required'
+    if (!formData.state) newErrors.state = 'State is required'
+    if (!formData.title) newErrors.title = 'Title is required'
+    if (!formData.company) newErrors.company = 'Company is required'
+    return newErrors
+  }
 
   // Handle form submission
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formErrors = validateForm();
+    e.preventDefault()
+    const formErrors = validateForm()
     if (Object.keys(formErrors).length > 0) {
-      setErrors(formErrors);
+      setErrors(formErrors)
     } else {
-      setErrors({});
-      setSuccess(null);
-      console.log('Form submitted:', formData);
+      if (!validatePhoneNumber(formData.phone).valid) {
+        setErrors((prev) => ({...prev, phone: 'Phone number is invalid' }))
+        return;
+      }
+      setErrors({})
+      setSuccess(null)
+      console.log('Form submitted:', formData)
       try {
-        const response = await createRequestDemo(formData).unwrap();
-        setSuccess(response?.msg);
-        setFormData(initialState);
+        const response = await createRequestDemo(formData).unwrap()
+        setSuccess(response?.msg)
+        setFormData(initialState)
       } catch (error) {
         setErrors({ apiError: error?.data })
-        console.log("Error: ", error?.data)
+        console.log('Error: ', error?.data)
       }
     }
-  };
+  }
 
   return (
     <div className="max-w-lg w-full flex flex-col gap-4 items-center relative">
       <h2 className="text-imsPurple text-xl">Watch Our Demo Video</h2>
-      <form onSubmit={handleSubmit} className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full grid grid-cols-1 md:grid-cols-2 gap-4"
+      >
         {/* First Name */}
         {errors?.apiError && (
-          <div className="text-red-400">
-            {errors?.apiError}
-          </div>
+          <div className="text-red-400">{errors?.apiError}</div>
         )}
         {success && (
-          <div className="text-green-400 md:col-span-2">
-            {success}
-          </div>
+          <div className="text-green-400 md:col-span-2">{success}</div>
         )}
         <div className="col-span-2 md:col-span-1">
           <label className="mb-2 block text-sm font-semibold">
@@ -313,7 +357,9 @@ const DemoContent = () => {
             placeholder="John"
             className="border border-gray-300 rounded-sm text-sm py-2 px-1 w-full block"
           />
-          {errors.firstName && <p className="text-red-600 text-xs mt-1">{errors.firstName}</p>}
+          {errors.firstName && (
+            <p className="text-red-600 text-xs mt-1">{errors.firstName}</p>
+          )}
         </div>
 
         {/* Last Name */}
@@ -329,7 +375,9 @@ const DemoContent = () => {
             placeholder="Georgia"
             className="border border-gray-300 rounded-sm text-sm py-2 px-1 w-full block"
           />
-          {errors.lastName && <p className="text-red-600 text-xs mt-1">{errors.lastName}</p>}
+          {errors.lastName && (
+            <p className="text-red-600 text-xs mt-1">{errors.lastName}</p>
+          )}
         </div>
 
         {/* Email */}
@@ -345,7 +393,9 @@ const DemoContent = () => {
             placeholder="georgia.young@example.com"
             className="border border-gray-300 rounded-sm text-sm py-2 px-1 w-full"
           />
-          {errors.email && <p className="text-red-600 text-xs mt-1">{errors.email}</p>}
+          {errors.email && (
+            <p className="text-red-600 text-xs mt-1">{errors.email}</p>
+          )}
         </div>
 
         {/* Phone Number */}
@@ -361,7 +411,9 @@ const DemoContent = () => {
             placeholder="(406) 555-0120"
             className="border border-gray-300 rounded-sm text-sm py-2 px-1 w-full block"
           />
-          {errors.phone && <p className="text-red-600 text-xs mt-1">{errors.phone}</p>}
+          {errors.phone && (
+            <p className="text-red-600 text-xs mt-1">{errors.phone}</p>
+          )}
         </div>
 
         {/* State */}
@@ -379,7 +431,9 @@ const DemoContent = () => {
             <option>State 1</option>
             <option>State 2</option>
           </select>
-          {errors.state && <p className="text-red-600 text-xs mt-1">{errors.state}</p>}
+          {errors.state && (
+            <p className="text-red-600 text-xs mt-1">{errors.state}</p>
+          )}
         </div>
 
         {/* Title */}
@@ -397,7 +451,9 @@ const DemoContent = () => {
             <option>Title 1</option>
             <option>Title 2</option>
           </select>
-          {errors.title && <p className="text-red-600 text-xs mt-1">{errors.title}</p>}
+          {errors.title && (
+            <p className="text-red-600 text-xs mt-1">{errors.title}</p>
+          )}
         </div>
 
         {/* Company */}
@@ -413,7 +469,9 @@ const DemoContent = () => {
             placeholder="Kelly Resources"
             className="border border-gray-300 rounded-sm text-sm py-2 px-1 w-full block"
           />
-          {errors.company && <p className="text-red-600 text-xs mt-1">{errors.company}</p>}
+          {errors.company && (
+            <p className="text-red-600 text-xs mt-1">{errors.company}</p>
+          )}
         </div>
 
         {/* Submit Button */}
@@ -421,9 +479,9 @@ const DemoContent = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className={`bg-imsPurple text-white rounded px-10 text-sm py-2 ${isLoading && "cursor-not-allowed !bg-imsLightPurple"}`}
+            className={`bg-imsPurple text-white rounded px-10 text-sm py-2 ${isLoading && 'cursor-not-allowed !bg-imsLightPurple'}`}
           >
-            {isLoading ? "Submitting" : "Submit"}
+            {isLoading ? 'Submitting' : 'Submit'}
           </button>
           <p className="text-xs">
             By Clicking the Button above, you are agreeing to our Privacy Policy
@@ -431,7 +489,5 @@ const DemoContent = () => {
         </div>
       </form>
     </div>
-  );
-};
-
-
+  )
+}

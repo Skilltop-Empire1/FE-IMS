@@ -4,8 +4,8 @@
 
 .tr th {
   font-family: Inter;
-  font-size: 13px;
-  font-weight: 400;
+  font-size: 15px;
+  font-weight: 600;
   line-height: 22px;
   text-align: left;
 }
@@ -18,21 +18,24 @@
 
 .table tbody tr td {
   font-family: Inter;
-  color: #333333;
+  color: #bdc1ca;
   padding: 5px 5px;
 }
 
-.table {
-  border-collapse: separate;
-  border-spacing: 0 1rem;
+.icon {
+    color: #fff;
+    padding: 5px;
+    border-radius: 3px;
+    cursor: pointer;
 }
 
-.table td {
-  border-bottom: 1px solid #000;
+.icon:nth-child(1) {
+    background-color: rgb(0, 183, 255);
 }
 
-
-
+.icon:nth-child(2) {
+    background-color: rgb(252, 6, 6);
+}
 
 .pagination {
   display: flex;
@@ -118,6 +121,11 @@
   /* margin-top: 16px; */
 }
 
-.icon {
-  font-size: 250px;
+.table {
+  border-collapse: separate;
+  border-spacing: 0 1rem;
+}
+
+.table td {
+  border-bottom: 1px solid #000;
 }

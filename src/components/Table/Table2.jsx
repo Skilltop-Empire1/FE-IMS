@@ -8,7 +8,7 @@ const Table2 = ({ status, date, api = [], deleted, updated, view, runPrint, prin
   // const [selectedRows, setSelectedRows] = useState([]);
   const actionRef = useRef(null);
 
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(api.length / itemsPerPage);
 
@@ -169,7 +169,7 @@ const Table2 = ({ status, date, api = [], deleted, updated, view, runPrint, prin
             </th>
             <th>Product Photo</th>
             <th>Product Name</th>
-            <th>{status}</th>
+            <th>Payment Option</th>
             <th>Quantity</th>
             <th>Price</th>
             <th>Store Name</th>
@@ -195,7 +195,7 @@ const Table2 = ({ status, date, api = [], deleted, updated, view, runPrint, prin
                 />
               </td>
               <td>{product.Product.name}</td>
-              <td>{product.paymentOption}</td>
+              <td>{product.paymentOption == 'full' ? 'Full Payment' : product.paymentOption == 'credit'? 'Credit' : 'Part Payment'}</td>
               <td>{product.quantity}</td>
               <td>₦ {product.totalAmount}</td>
               <td>{product.Store.storeName}</td>

@@ -205,7 +205,7 @@ const handleChange2 = (event) => {
         <p className={`text-center bg-green-400 py-3 ${success}`} style={{ color: '#fff' }}>record saved successfully</p>
       </div>
       <div className={style.top}>
-        <h2 className={style.title}>Add Sale Record</h2>
+        <h2 className={style.title}>Add Sales Record</h2>
       </div>
       <div>
         <form onSubmit={handleSubmit} className={`${style.form} mx-4 my-5 `}>
@@ -356,7 +356,7 @@ const handleChange2 = (event) => {
                     Cancel
                   </button>
                   <button type="submit" className={style.submit} disabled={isLoading}>
-                    {isLoading ? 'Saving...' : 'Save Sale Record'}
+                    {isLoading ? 'Saving...' : 'Save Sales Record'}
                   </button>
                 </div>
               </div>
@@ -471,7 +471,7 @@ const handleChange2 = (event) => {
             <div className={style.fullPayment}>
 
 
-              <div className='bg-white w-96 px-10 py-6 rounded-md h-2/5 overflow-y-auto'>
+              <div className='bg-white w-96 px-10 py-6 rounded-md h-[80%] overflow-y-auto'>
                 <div className='flex justify-between'>
                   <h2 className='font-bold text-2xl'>Part Payment</h2>
                   <p onClick={closeModal}className="cursor-pointer">X</p>

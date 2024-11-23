@@ -173,14 +173,14 @@ const SalesRecord = () => {
           <table className="w-full">
             <thead>
               <tr>
-                <th>Product Photo</th>
-                <th>Product Name</th>
-                <th>Alert status</th>
-                <th>Quantity</th>
-                <th>Category</th>
-                <th>Store Name</th>
-                <th>Sold Date</th>
-                <th>Action</th> 
+              <th>Product Photo</th>
+              <th>Product Name</th>
+              <th>Payment Option</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th>Store Name</th>
+              <th>Sold Date</th>
+              <th>Action</th>
               </tr>
             </thead>
           </table>

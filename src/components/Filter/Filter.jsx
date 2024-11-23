@@ -29,7 +29,7 @@ const Filter = ({
   // Fetch locations data using RTK query
   const { data: locations, error, isLoading } = useGetLocationsQuery()
   const getLocation = useLocation()
-  console.log(getLocation.pathname)
+  // console.log(getLocation.pathname)
 
   return (
     <div className={`flex justify-between items-center px-4 ${style.body}`}>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { ReactDOM } from 'react'
 import { User, Camera, Lock, LogOut } from 'lucide-react'
 import style from './Dropdown.module.css'
 import ModalContainer from '../../modals/ModalContainer'

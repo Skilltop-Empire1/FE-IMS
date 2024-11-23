@@ -13,7 +13,6 @@
   flex-direction: column;
   gap: 30px;
   transition: all ease-in-out .2s;
-  z-index: 1000;
 }
 
 .userData {

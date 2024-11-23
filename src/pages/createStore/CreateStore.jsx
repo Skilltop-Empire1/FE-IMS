@@ -166,6 +166,7 @@ const CreateStore = () => {
             <label className={style.label}>Store photo*</label>
             <input
               type="file"
+              className={style.input}
               onChange={(e) => setStorePhoto(e.target.files[0])}
             />
           </div>

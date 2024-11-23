@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import clsx from 'clsx'
 
 const Table = ({ status, date, api, prod, deleted, updated }) => {
-  console.log({ api })
+  // console.log({ api })
   return (
     <div className="pt-3">
       <table className={style.table}>

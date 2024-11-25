@@ -38,7 +38,12 @@ const Filter = ({
           <h2>{title}</h2>
         </div>
         <div className={`flex ${style.right}`}>
-          
+        <input
+            type="text"
+            placeholder={search}
+            onChange={(e) => handleSearch(e.target.value)}
+            className={` ${getLocation.pathname == '/app/salesRecords' ? 'hidden' : ''}`}
+          />
 
           {/* Select Filter */}
           <span className={display}>
@@ -52,7 +57,7 @@ const Filter = ({
               </select>
             ) : (
               <div>
-                <select onChange={(e) => handleFilter(e.target.value)} className='text-[#8315DB] border-2 border-[#8315DB] w-56 py-3 rounded-md flex justify-center items-center gap-2'>
+                <select onChange={(e) => handleFilter(e.target.value)} className={`text-[#8315DB] border-2 border-[#8315DB] w-56 py-3 rounded-md flex justify-center items-center gap-2 ${getLocation.pathname !== '/app/salesRecords' ? 'hidden' : ''}`}>
                   <option value="all">Filter by Payment Option</option>
                   <option value="full">Full Payment</option>
                   <option value="part_payment">Part Payment</option>
@@ -71,7 +76,7 @@ const Filter = ({
             type="text"
             placeholder={search}
             onChange={(e) => handleSearch(e.target.value)}
-            className=''
+            className={` ${getLocation.pathname !== '/app/salesRecords' ? 'hidden' : ''}`}
           />
       </div>
     </div>

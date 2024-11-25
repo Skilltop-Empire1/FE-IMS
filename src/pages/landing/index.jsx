@@ -11,6 +11,7 @@ import Navbar from '../../components/Landing/Navbar'
 import ClientLogoCarousel from '../../components/Landing/ClientLogoCarousel'
 import PricingPlan from '../../components/Landing/PricingPlan'
 import { Link } from 'react-router-dom'
+// import {logo} from 
 
 const LandingPage = () => {
   // Animation variants
@@ -97,7 +98,7 @@ const LandingPage = () => {
           variants={fadeInUp}
         >
           <div className="flex items-center justify-center px-2">
-            <motion.img
+            <img
               src="/images/preview.png"
               alt="IMS-preview"
               initial={{ opacity: 0, y: 20 }}
@@ -190,13 +191,14 @@ const LandingPage = () => {
               <motion.button
                 className="bg-imsPurple border font-light border-imsPurple text-white px-8 py-3 rounded-md flex items-center gap-4"
                 whileHover={{ scale: 1.05 }}
+                onClick={() => handleScroll("pricing")}
               >
                 <span className="text-sm">Get Started Today</span>
                 <ArrowRight size={16} />
               </motion.button>
             </div>
             <div className="flex items-center justify-center px-2 md:px-0">
-              <motion.img
+              <img
                 src="/images/benefits_image.png"
                 alt="IMS-preview"
                 initial={{ opacity: 0, y: 20 }}
@@ -232,7 +234,7 @@ const LandingPage = () => {
 
           <div className="gap-8 grid grid-cols-1 sm:grid-cols-2 max-w-6xl my-10 w-full mx-auto">
             <div className="flex px-2 items-center justify-center">
-              <motion.img
+              <img
                 src="/images/manage_image.png"
                 alt="IMS-preview"
                 initial={{ opacity: 0, y: 20 }}
@@ -335,16 +337,13 @@ const LandingPage = () => {
               </div>
               <div className="text-white flex flex-col gap-4">
                 <h3 className="text-lg font-medium">What is Skilltop IMS?</h3>
-                <p className="text-gray-600">
+                <p className="text-green-500">
                   Skilltop IMS is a comprehensive business management solution
                   designed to help businesses manage inventories, streamline
                   operations, and improve customer satisfaction. It provides
                   real-time tracking and ensures that businesses maintain
                   efficiency.
                 </p>
-                <Link to="" className="text-green-500">
-                  Click to learn more
-                </Link>
               </div>
             </div>
             <div className="flex gap-3 col-span-1 items-start px-2 md:max-w-lg  mx-auto w-full relative">
@@ -355,7 +354,7 @@ const LandingPage = () => {
                 <h3 className="text-lg font-medium">
                   What support options are available for Skilltop IMS?
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-green-500">
                   Our team at Skilltop Empire offers full support, including
                   onboarding, installation, integration, customization, and
                   troubleshooting. We also provide training resources to help
@@ -373,7 +372,7 @@ const LandingPage = () => {
                 <h3 className="text-lg font-medium">
                   Is Skilltop IMS scalable for growing businesses?
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-green-500">
                   Yes, Skilltop IMS is designed to scale with your business as
                   it grows. Whether you're managing a small or large business,
                   the system can handle the demands of a growing organization.
@@ -388,7 +387,7 @@ const LandingPage = () => {
                 <h3 className="text-lg font-medium">
                   How can I get started with Skilltop IMS?
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-green-500">
                   You can get started by contacting us at +234-806-2675-088 or
                   visiting our website at skilltopempire.com. We will provide a
                   detailed guide and set up a demo tailored to your business
@@ -397,11 +396,14 @@ const LandingPage = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="mt-4">
             <div className="col-span-2 text-center text-white px-2 mb-10">
               Haven't got your answer?{' '}
-              <span className="text-green-500">Contact our support now</span>
+
+              <a href="https://skilltopempire.com/contact"
+                target="_blank"
+                className="text-green-500">Contact our support now</a>
             </div>
           </div>
         </div>

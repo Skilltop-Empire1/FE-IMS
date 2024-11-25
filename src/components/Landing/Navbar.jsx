@@ -84,7 +84,7 @@ const Navbar = () => {
           <div
             className="relative cursor-pointer"
             onClick={() => toggleDropdown(!isOpen)} // Open on hover
-            // onMouseLeave={() => toggleDropdown(false)} // Close on mouse leave
+          // onMouseLeave={() => toggleDropdown(false)} // Close on mouse leave
           >
             {/* Support Menu Item */}
             <motion.div
@@ -166,9 +166,8 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         <motion.div
-          className={`fixed top-0 left-0 h-3/4 w-full bg-imsPurple text-white z-30 shadow-lg p-5 md:hidden ${
-            isMobileMenuOpen ? 'block' : 'hidden'
-          }`}
+          className={`fixed top-0 left-0 h-3/4 w-full bg-imsPurple text-white z-30 shadow-lg p-5 md:hidden ${isMobileMenuOpen ? 'block' : 'hidden'
+            }`}
           variants={mobileMenuVariant}
           initial="hidden"
           animate={isMobileMenuOpen ? 'visible' : 'hidden'}
@@ -215,14 +214,14 @@ const Navbar = () => {
             <motion.li
               whileHover={{ scale: 1.1 }} // Add hover animation
               className="cursor-pointer block w-full border-b text-center py-4"
-              // onClick={() => handleScroll(item.id)} // Call handleScroll with the ID
+            // onClick={() => handleScroll(item.id)} // Call handleScroll with the ID
             >
               Support
             </motion.li>
             <motion.li
               whileHover={{ scale: 1.1 }} // Add hover animation
               className="cursor-pointer block w-full border-b text-center py-4"
-              // onClick={() => handleScroll(item.id)} // Call handleScroll with the ID
+            // onClick={() => handleScroll(item.id)} // Call handleScroll with the ID
             >
               Contact
             </motion.li>
@@ -300,8 +299,8 @@ const DemoContent = () => {
     if (!formData.lastName) newErrors.lastName = 'Last Name is required'
     if (!formData.email) newErrors.email = 'Email is required'
     if (!formData.phone) newErrors.phone = 'Phone Number is required'
-    if (!formData.state) newErrors.state = 'State is required'
-    if (!formData.title) newErrors.title = 'Title is required'
+    // if (!formData.state) newErrors.state = 'State is required'
+    // if (!formData.title) newErrors.title = 'Title is required'
     if (!formData.company) newErrors.company = 'Company is required'
     return newErrors
   }
@@ -314,7 +313,7 @@ const DemoContent = () => {
       setErrors(formErrors)
     } else {
       if (!validatePhoneNumber(formData.phone).valid) {
-        setErrors((prev) => ({...prev, phone: 'Phone number is invalid' }))
+        setErrors((prev) => ({ ...prev, phone: 'Phone number is invalid' }))
         return;
       }
       setErrors({})
@@ -419,7 +418,7 @@ const DemoContent = () => {
         {/* State */}
         <div className="col-span-2 md:col-span-1">
           <label className="mb-2 block text-sm font-semibold">
-            State <span className="text-red-600">*</span>
+            State
           </label>
           <select
             name="state"
@@ -427,9 +426,44 @@ const DemoContent = () => {
             onChange={handleInputChange}
             className="border border-gray-300 rounded-sm text-sm py-2 px-1 w-full"
           >
-            <option value="">Select</option>
-            <option>State 1</option>
-            <option>State 2</option>
+            <option value="">Select State</option>
+            <option>ABUJA FCT</option>
+            <option>ABIA</option>
+            <option>ADAMAWA</option>
+            <option>AKWA IBOM</option>
+            <option>ANAMBRA</option>
+            <option>BAUCHI</option>
+            <option>BAYELSA</option>
+            <option>BENUE</option>
+            <option>BORNO</option>
+            <option>CROSS RIVER</option>
+            <option>DELTA</option>
+            <option>EBONYI</option>
+            <option>EDO</option>
+            <option>EKITI</option>
+            <option>ENUGU</option>
+            <option>GOMBE</option>
+            <option>IMO</option>
+            <option>JIGAWA</option>
+            <option>KADUNA</option>
+            <option>KANO</option>
+            <option>KATSINA</option>
+            <option>KEBBI</option>
+            <option>KOGI</option>
+            <option>KWARA</option>
+            <option>LAGOS</option>
+            <option>NASSARAWA</option>
+            <option>NIGER</option>
+            <option>OGUN</option>
+            <option>ONDO</option>
+            <option>OSUN</option>
+            <option>OYO</option>
+            <option>PLATEAU</option>
+            <option>RIVERS</option>
+            <option>SOKOTO</option>
+            <option>TARABA</option>
+            <option>YOBE</option>
+            <option>ZAMFARA</option>
           </select>
           {errors.state && (
             <p className="text-red-600 text-xs mt-1">{errors.state}</p>
@@ -439,7 +473,7 @@ const DemoContent = () => {
         {/* Title */}
         <div className="col-span-2 md:col-span-1">
           <label className="mb-2 block text-sm font-semibold">
-            Title <span className="text-red-600">*</span>
+            Title
           </label>
           <select
             name="title"
@@ -447,9 +481,13 @@ const DemoContent = () => {
             onChange={handleInputChange}
             className="border border-gray-300 rounded-sm text-sm py-2 px-1 w-full"
           >
-            <option value="">Select</option>
-            <option>Title 1</option>
-            <option>Title 2</option>
+            <option value="">Select Title</option>
+            <option>Mr</option>
+            <option>Mrs</option>
+            <option>Dr</option>
+            <option>Engr</option>
+            <option>Prof</option>
+            <option>Others</option>
           </select>
           {errors.title && (
             <p className="text-red-600 text-xs mt-1">{errors.title}</p>

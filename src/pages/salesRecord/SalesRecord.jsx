@@ -110,9 +110,9 @@ const SalesRecord = () => {
     const matchesSearch = item?.Product?.name
       ?.toLowerCase()
       .includes(searchTerm)
-    // const matchesCategory = filterCategory === 'all' || item.category === filterCategory;
+    const matchesCategory = filterCategory === 'all' || item?.paymentOption === filterCategory;
 
-    return matchesSearch
+    return matchesSearch && matchesCategory
   })
 
   const location = useLocation()
@@ -164,7 +164,7 @@ const SalesRecord = () => {
         location={locations}
         categories={categories}
         search="search by product name"
-        display="hidden"
+        display="x"
         print={handlePrint}
       />
 

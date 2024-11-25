@@ -155,7 +155,7 @@ function Account() {
         <div className={style.selectOptions}>
           <div className={style.selectBox}>
             <p>Product Name</p>
-            <select onChange={handleSelectProduct} value={selectedProducts}>
+            <select onChange={handleSelectProduct} value={selectedProducts} disabled>
               <option value="">Select Product</option>
               {category.map((item) => (
                 <option key={item} value={item}>
@@ -196,7 +196,7 @@ function Account() {
         </div>
         <div className={style.expenditures}>
           <ExpenseButton
-            handleClick={() => navigate('/app/accounts/opex')}
+            // handleClick={() => navigate('/app/accounts/opex')}
             name="OPEX"
           />
           <ExpenseButton

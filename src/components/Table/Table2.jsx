@@ -195,7 +195,7 @@ const Table2 = ({ status, date, api = [], deleted, updated, view, runPrint, prin
                 />
               </td>
               <td>{product.Product.name}</td>
-              <td>{product.paymentOption == 'full' ? 'Full Payment' : product.paymentOption == 'credit'? 'Credit' : 'Part Payment'}</td>
+              <td>{product.paymentOption == 'full' ? 'Full Payment' : product.paymentOption == 'credit'? 'Credit' : product.paymentOption == 'part_payment'? 'Part Payment' : ''}</td>
               <td>{product.quantity}</td>
               <td>₦ {product.totalAmount}</td>
               <td>{product.Store.storeName}</td>

@@ -193,16 +193,19 @@ const handleChange2 = (event) => {
       } else if (err?.error) {
         setFormError(err.error)
         // alert(err.error)
-      } else {
-        setFormError('An unexpected error occurred. Please try again.')
+      } else if (err?.data?.message) {
+        setFormError(err.data.message)
       }
+      else {
+          setFormError('An unexpected error occurred. Please try again.')
+        }
     }
-  }
+    }
 
   return (
     <div className={`${style.body} relative`}>
       <div className='absolute w-full ease-in-out duration-300'>
-        <p className={`text-center bg-green-400 py-3 ${success}`} style={{ color: '#fff' }}>record saved successfully</p>
+        <p className={`text-center bg-green-400 py-3 ${success}`} style={{ color: '#fff' }}>Record saved successfully</p>
       </div>
       <div className={style.top}>
         <h2 className={style.title}>Add Sales Record</h2>
@@ -361,7 +364,12 @@ const handleChange2 = (event) => {
                 </div>
               </div>
             
-            {error && <p className="error mt-5 text-red-500">{error.data?.message }</p>}
+              {formError && (
+                  <p className="error-message text-red-500">
+                      {formError}
+                  </p>
+              )}
+             
          </div>
 
 

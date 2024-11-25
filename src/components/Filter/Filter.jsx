@@ -71,7 +71,10 @@ const Filter = ({
           <RedirectButton buttonName={button} text={text} direction={direction} />
         </div>
       </div>
-      <div className='flex justify-center mt-5'>
+      <div className='flex  mt-5'>
+          <div className='w-[40%]'>
+
+          </div>
         <input
             type="text"
             placeholder={search}

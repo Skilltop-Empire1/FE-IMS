@@ -303,7 +303,7 @@ const LandingPage = () => {
             </p>
             <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex flex-col items-center gap-4 mx-auto max-w-sm">
-                <img src="/images/testimony.png" />
+                <img src="/images/avatar.png" className="w-16 h-16 rounded-full"/>
                 <h2 className="font-bold">Sunny Fidelis</h2>
                 <p className="text-center text-sm">
                   Skilltop offers your business access to ease in business
@@ -316,7 +316,7 @@ const LandingPage = () => {
                 </p>
               </div>
               <div className="flex flex-col items-center gap-4 mx-auto max-w-sm">
-                <img src="/images/testimony.png" />
+                <img src="/images/avatar.png" className="w-16 h-16 rounded-full" />
                 <h2 className="font-bold">Goodness Chinaza</h2>
                 <p className="text-center text-sm">
                   Good service rendered. The ability to monitor my business

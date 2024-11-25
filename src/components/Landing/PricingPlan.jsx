@@ -34,7 +34,7 @@ const PricingPlan = () => {
       title: 'Premium',
       price: 'Custom Pricing',
       info: 'VIP Plan',
-      buttonText: 'Contact Us',
+      buttonText: 'Get Started',
       features: [
         'All Yearly Plan Features',
         'Dedicated Account Manager',

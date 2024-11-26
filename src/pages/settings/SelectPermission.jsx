@@ -63,7 +63,7 @@ const SelectPermission = ({ onPermissionsChange, loadedPermissions }) => {
     loadedPermissions || initialPermissions,
   )
 
-  console.log({ loadedPermissions, permissions })
+  // console.log({ loadedPermissions, permissions })
   const handleToggleChange = (rowIndex, permissionType) => {
     const updatedPermissions = permissions.map((permission, index) => {
       if (index === rowIndex) {
@@ -79,11 +79,11 @@ const SelectPermission = ({ onPermissionsChange, loadedPermissions }) => {
   }
   useEffect(() => {
     if (loadedPermissions) {
-      console.log('first')
+      // console.log('first')
       setPermissions(loadedPermissions)
     } else {
       setPermissions(initialPermissions)
-      console.log('else')
+      // console.log('else')
     }
   }, [loadedPermissions])
 

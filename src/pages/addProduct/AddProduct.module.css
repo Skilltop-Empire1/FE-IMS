@@ -32,9 +32,10 @@
 
 .input {
   width: 450px;
-  background: #f4f3f3;
+  /* background: #f4f3f3; */
   height: 55px;
   border-radius: 15px;
+  border: 1px solid #3D3D3D;
   padding: 5px 10px;
 }
 

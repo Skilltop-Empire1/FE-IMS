@@ -23,8 +23,8 @@ Modal.setAppElement('#root')
 function SideBar() {
   const [modalIsOpen, setModalIsOpen] = useState(false)
 
-  const { role } = JSON.parse(localStorage.getItem('user'))
-  const isSuperAdmin = role === 'superAdmin'
+  const  role  = JSON.parse(localStorage.getItem('user'))?.role
+  const isSuperAdmin = role && role  === 'superAdmin'
 
   const dispatch = useDispatch()
 

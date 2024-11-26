@@ -35,9 +35,6 @@ const SalesRecord = () => {
 
   } = useGetLocationsQuery()
 
-
-  
-
   // Handle delete product action
   const handleDeleteProduct = (prodId) => {
     setProductIdToDelete(prodId)
@@ -50,7 +47,7 @@ const SalesRecord = () => {
       return
     }
 
-    deleteProduct(productIdToDelete) // Ensure correct productIdToDelete is passed here
+    deleteProduct(productIdToDelete).unwrap() // Ensure correct productIdToDelete is passed here
       // navigate = useNavigate()
       .then(() => {
         alert('Product deleted successfully!')
@@ -60,7 +57,7 @@ const SalesRecord = () => {
       })
       .catch((error) => {
         console.error('Delete error:', error)
-        alert('Error deleting product: ' + error.message)
+        alert('Error deleting product: ' + error?.data?.message)
       })
   }
 
@@ -149,16 +146,15 @@ const SalesRecord = () => {
       'storeAvailable',
       updatedData.storeAvailable || productToUpdate.storeAvailable,
     )
-    formData.append('prodDate', currentDate)
+
 
     // Handle file upload
     if (updatedData.prodPhoto instanceof File) {
       formData.append('prodPhoto', updatedData.prodPhoto)
     }
 
-    // Debugging formData
-    for (let [key, value] of formData.entries()) {
-    }
+
+
 
     // Call updateProduct function
     updateProduct({ prodId: productToUpdate.prodId, updatedProduct: formData })
@@ -172,7 +168,7 @@ const SalesRecord = () => {
         } else {
           alert(
             'Error updating product: ' +
-              (response.error?.data?.message || 'Unknown error'),
+            (response.error?.data?.message || 'Unknown error'),
           )
         }
       })
@@ -243,29 +239,32 @@ const SalesRecord = () => {
 
       {/* Products Table Section */}
       {isLoading || isFetching ? (
-         <div className='animate-pulse'>
-            <table className='w-full' >
-              <thead>
+        <div className='animate-pulse'>
+          <table className='w-full' >
+            <thead>
               <tr className='text-'>
                 <th> </th>
-                  <th>Product Photo</th>
-                  <th>Product Name</th>
-                  <th>Alert status</th>
-                  <th>Quantity</th>
-                  <th>Category</th>
-                  <th>Store Name</th>
-                  <th>Date added</th>
-                  <th>Action</th> 
-                </tr>
-              </thead>
+                <th>Product Photo</th>
+                <th>Product Name</th>
+                <th>Alert status</th>
+                <th>Quantity</th>
+                <th>Unit price</th>
+                <th>Category</th>
+                <th>Store Name</th>
+                <th>Date added</th>
+                <th>Transfer</th>
+                <th>Action</th>
+              </tr>
+            </thead>
 
-            </table>
-            {Array(5).fill().map((_, i) => (
-              <div key={i} className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
-            ))}
-          </div>
+          </table>
+          {Array(5).fill().map((_, i) => (
+            <div key={i} className="rounded-2xl bg-slate-200 h-10 w-full mt-3"></div>
+          ))}
+        </div>
       ) : error ? (
-        <p>Error loading products</p>
+        <p className='text-red-500'>Error loading products. {error.data?.message || "An error occurred"}</p>
+
       ) : (
         <Table
           status="Alert Status"

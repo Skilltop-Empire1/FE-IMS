@@ -57,24 +57,37 @@ const EditSalesRecordModal = ({ showModal, setShowModal, record, handleUpdate })
       ...prev,
       categoryId: selectedCategoryId,
       categoryName: selectedCategory ? selectedCategory.name : '',
+      
     }));
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+  
+    setFormData((prev) => {
+      // Check if the paymentOption is being updated to "full"
+      if (name === "paymentOption" && value === "full")  {
+        return {
+          ...prev,
+          [name]: value,
+          nextPaymentDate: null, // Automatically set nextPaymentDate to null
+        };
+      }
+      return { ...prev, [name]: value };
+    });
   };
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     handleUpdate(formData); // Submit the updated form data
   };
+ 
 
   if (!showModal) return null;
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-600 bg-opacity-50">
-      <div className="bg-white rounded-lg shadow-lg p-6 w-11/12 md:w-1/3">
+      <div className="bg-white rounded-lg shadow-lg p-6 w-11/12 md:w-1/3 h-4/5 overflow-y-auto">
         <h2 className="text-xl font-semibold mb-4">Edit Sales Record</h2>
         <form onSubmit={handleSubmit}>
           {/* Payment Method */}
@@ -85,12 +98,29 @@ const EditSalesRecordModal = ({ showModal, setShowModal, record, handleUpdate })
               value={formData?.paymentMethod || ''}
               onChange={handleChange}
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
-              required
+              disabled={formData.paymentOption === 'credit'} // Disable if full payment is selected
+              required={formData.paymentOption !== 'credit'} // Make required only if not full payment
             >
               <option value="">Select a payment method</option>
               <option value="POS">POS</option>
               <option value="cash">Cash</option>
               <option value="transfer">Transfer</option>
+            </select>
+          </div>
+          {/* Payment Option */}
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">Payment Option</label>
+            <select
+              name="paymentOption"
+              value={formData?.paymentOption || ''}
+              onChange={handleChange}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+              required
+            >
+              <option value="">Select a payment option</option>
+              <option value="full">Full Payment</option>
+              <option value="part_payment">Part Payment</option>
+              <option value="credit">Credit</option>
             </select>
           </div>
 
@@ -106,6 +136,99 @@ const EditSalesRecordModal = ({ showModal, setShowModal, record, handleUpdate })
               required
             />
           </div>
+           {/* customer Name */}
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">Customer's Name</label>
+            <input
+              type="text"
+              name="customerName"
+              value={formData.customerName || ''}
+              onChange={handleChange}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+              required
+            />
+          </div> {/* customer No */}
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">Customer's Number</label>
+            <input
+              type="number"
+              name="customerPhone"
+              value={formData.customerPhone || ''}
+              onChange={handleChange}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+              required
+            />
+          </div>
+
+           {/* total amount */}
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">Total Amount</label>
+            <input
+              type="number"
+              name="totalAmount"
+              value={formData.totalAmount || ''}
+              onChange={handleChange}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+              required
+              disabled
+            />
+          </div>
+
+          {/* current payment */}
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">Current Payment</label>
+            <input
+              type="number"
+              name="currentPayment"
+              value={formData.currentPayment || ''}
+              onChange={handleChange}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+              required
+            />
+          </div>
+          
+          {/* balance amount */}
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">Balance</label>
+            <input
+              type="number"
+              name="balance"
+              value={formData.balance || ''}
+              onChange={handleChange}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+              required
+              disabled
+            />
+          </div>
+
+              {/* Payment Date */}
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">Payment Date</label>
+            <input
+              type="date"
+              name="paymentDate"
+              value={formData.paymentDate?.slice(0,10) || ''}
+              onChange={handleChange}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+              required
+            />
+          </div>
+          
+              {/* Payment Due Date */}
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700">Next Payment Date</label>
+                <input
+                  type="date"
+                  name="nextPaymentDate"
+                  value={formData.nextPaymentDate?.slice(0, 10) || ''}
+                  onChange={handleChange}
+                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+                  disabled={formData.paymentOption === 'full'} // Disable if full payment is selected
+                  required={formData.paymentOption !== 'full'} // Make required only if not full payment
+                />
+              </div>
+
+          
 
           {/* Product Name */}
           <div className="mb-4">
@@ -179,17 +302,17 @@ const EditSalesRecordModal = ({ showModal, setShowModal, record, handleUpdate })
             )}
           </div>
 
-          <div className="flex justify-end mt-4">
+          <div className="flex  mt-8">
             <button
               type="button"
-              className="mr-2 px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
+              className="mr-2 px-4 py-2  text-purple-700 rounded-md border-purple-700 border-2 w-1/2"
               onClick={closeModal}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2  text-white rounded-md bg-purple-800 hover:bg-purple-950"
+              className="px-4 py-2  text-white rounded-md bg-purple-800 hover:bg-purple-950  w-1/2 h-14"
             >
               Update
             </button>

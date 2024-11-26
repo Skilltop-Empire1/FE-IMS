@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+// import { useSelector } from 'react-redux'
 import Filter from '../../components/Filter/Filter'
+// import ConfirmationModal from '../../components/modals/ConfirmationModal'
 import StoreList from '../../components/StoreComponent/StoreList'
 import StoreDetail from '../../components/StoreComponent/StoreDetail'
 import { useLocation } from 'react-router'
 import {
   useGetLocationsQuery,
   useGetStoresQuery,
+  // useDeleteStoreMutation
 } from '../../redux/APIs/storeApi'
 
 const Stores = () => {
@@ -14,6 +16,7 @@ const Stores = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [filterCategory, setFilterCategory] = useState('all')
   const [filteredItems, setFilteredItems] = useState([])
+  // const [showModal, setShowModal] = useState(false)
 
   // Fetch locations
   const { data: locations = [], error: locationError, isLoading: locationLoading } = useGetLocationsQuery();
@@ -22,6 +25,8 @@ const Stores = () => {
   const { data: stores = [], error: storesError, isLoading: storesLoading, refetch, isFetching } = useGetStoresQuery();
   // const currentUser = useSelector((state) => state.auth.user);
   const location = useLocation()
+
+
 
   useEffect(() => {
     if (location.pathname === '/app/stores') {
@@ -32,7 +37,11 @@ const Stores = () => {
   // Handle search input
   const handleSearch = (term) => {
     setSearchTerm(term.toLowerCase());
+    
   };
+
+
+
 
   // Handle filter category
   const handleFilter = (category) => {
@@ -94,13 +103,16 @@ const Stores = () => {
              
         </div>
       ) : storesError ? (
-        <p>Error loading stores.</p>
+        <p className='text-red-500'>Error loading stores. {storesError.data?.message || "An error occurred"}</p>
       ) : (
         <StoreList onSelectStore={handleSelectedStore} items={filteredItems} />
       )}
 
       {/* Store Detail Component */}
       <StoreDetail selectedStore={selectedStore} />
+
+      
+    
      
     </div>
   );

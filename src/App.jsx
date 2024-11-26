@@ -5,10 +5,10 @@ import { NotificationProvider } from './components/Notifications/NotificationCon
 import store from './redux/store'
 import { setCredentials } from './redux/slices/AuthSlice'
 import Loader from './components/loaderElement/Loader' // Ensure this path is correct
-import Opex from './pages/accounts/opex/Opex'
-import Capex from './pages/accounts/capex/Capex'
+// import Invoice from './pages/Invoice/Invoice'
 
 // Lazy load components
+const LandingPage = lazy(() => import('./pages/landing'))
 const Login = lazy(() => import('./pages/login/Login'))
 const Signup = lazy(() => import('./pages/signup/Signup'))
 const AppLayout = lazy(() => import('./components/appLayout/AppLayout'))
@@ -16,7 +16,10 @@ const Account = lazy(() => import('./pages/accounts/Account'))
 const Home = lazy(() => import('./pages/home/Home'))
 const Categories = lazy(() => import('./pages/categories/Categories'))
 const Products = lazy(() => import('./pages/products/Products'))
+const TransferProduct = lazy(() => import('./pages/products/TransferProduct'))
+const TransferProductHistory = lazy(() => import('./pages/products/TransferProductHistory'))
 const SalesRecord = lazy(() => import('./pages/salesRecord/SalesRecord'))
+const Invoice = lazy(() => import('./pages/Invoice/Invoice'))
 const Settings = lazy(() => import('./pages/settings/Settings'))
 const Stores = lazy(() => import('./pages/stores/Stores'))
 const NotFound = lazy(() => import('./pages/notFound/NotFound'))
@@ -28,6 +31,8 @@ const MobileWarning = lazy(() => import('./pages/mobileWarning/MobileWarning'))
 const PasswordReset = lazy(() => import('./pages/Password reset/PasswordReset'))
 const AddOpex = lazy(() => import('./pages/accounts/opex/addOpex/AddOpex'))
 const AddCapex = lazy(() => import('./pages/accounts/capex/addCapex/AddCapex'))
+const Capex = lazy(() => import('./pages/accounts/capex/Capex'))
+const Opex = lazy(() => import('./pages/accounts/opex/Opex'))
 
 const PasswordConfirmation = lazy(
   () => import('./pages/Password reset/PasswordConfirmation'),
@@ -39,6 +44,14 @@ const AddSaleRecord = lazy(
 const router = createBrowserRouter([
   {
     path: '/',
+    element: (
+      <Suspense fallback={<Loader />}>
+        <LandingPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/login',
     element: (
       <Suspense fallback={<Loader />}>
         <Login />
@@ -80,11 +93,11 @@ const router = createBrowserRouter([
   {
     path: '/app',
     element: (
-      <ProtectedRoute>
+       <ProtectedRoute>
         <Suspense fallback={<Loader />}>
           <AppLayout />
         </Suspense>
-      </ProtectedRoute>
+       </ProtectedRoute>
     ),
     children: [
       {
@@ -144,10 +157,34 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: 'products/transfer/history',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <TransferProductHistory />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'products/transfer/:productId',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <TransferProduct />
+          </Suspense>
+        ),
+      },
+      {
         path: 'salesRecords',
         element: (
           <Suspense fallback={<Loader />}>
             <SalesRecord />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'invoice',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <Invoice />
           </Suspense>
         ),
       },
@@ -233,11 +270,7 @@ function App() {
     store.dispatch(setCredentials({ token }))
   }
 
-  return (
-    <NotificationProvider>
-      <RouterProvider router={router} />
-    </NotificationProvider>
-  )
+  return <RouterProvider router={router} />
 }
 
 export default App

@@ -20,7 +20,7 @@ function TopItemCategories() {
       className={style.container}
     >
       <div className={style.header}>
-        <p>Top Item Categories</p>
+        <p>Most Sold Products</p>
         <Link to="/app/salesRecords">
           <p>View All</p>
         </Link>

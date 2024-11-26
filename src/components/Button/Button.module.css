@@ -1,9 +1,9 @@
 .buttonName {
   /* width: 119px; */
-  height: 37px;
-  padding: 9px 20px;
+  height: 47px;
+  padding: 9px 30px;
   gap: 0px;
-  border-radius: 19px;
+  border-radius: 8px;
   border: 1px 0px 0px 0px;
   background-color: #6c30b6;
   border: 1px solid #e5d5f9;
@@ -15,4 +15,7 @@
   text-align: left;
   color: #fbf8ff;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

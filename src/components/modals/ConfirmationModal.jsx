@@ -3,7 +3,7 @@ const ConfirmationModal = ({ showModal, setShowModal, handleDelete, title }) => 
   
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-        <div className="bg-white shadow-lg rounded-lg w-[350px] h-[200px] p-6 relative">
+        <div className="bg-white shadow-lg rounded-lg w-[550px] h-[200px] p-6 relative">
           <h2 className="text-xl font-semibold mb-4">Are you sure you want to delete this {title}?</h2>
           <div className="flex justify-center mt-10 gap-10">
             <button

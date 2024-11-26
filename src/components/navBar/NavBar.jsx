@@ -22,8 +22,8 @@ function NavBar({ dropdownRef }) {
   const navigate = useNavigate()
   const { data: profilePic, isLoading, error } = useGetPictureQuery()
 
-  const { role } = JSON.parse(localStorage.getItem('user'))
-  const isSuperAdmin = role === 'superAdmin'
+ const  role  = JSON.parse(localStorage.getItem('user'))?.role
+  const isSuperAdmin = role && role  === 'superAdmin'
 
   const {
     notifications,
@@ -84,7 +84,7 @@ function NavBar({ dropdownRef }) {
               className="text-white relative"
               onClick={handleNotificationClick}
             >
-              <Bell size={24} style={iconStyle} className='cursor-pointer'/>
+              {/* <Bell size={24} style={iconStyle} className='cursor-pointer'/> */}
               {/* Render the notification badge */}
               {hasNewNotification && (
                 <span className="absolute top-0 right-0 block h-2 w-2 rounded-full ring-2 ring-white bg-green-500"></span>

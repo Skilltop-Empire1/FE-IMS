@@ -22,13 +22,13 @@ function Home() {
   const { data: categoryData = [] } = useGetCategoriesQuery()
 
   const { id } = JSON.parse(localStorage.getItem('user'))
-  console.log('staff id', id)
+  // console.log('staff id', id)
   const {
     data: staff,
     error: staffError,
     isLoading: staffLoading,
   } = useGetStaffByIdQuery(id)
-  console.log('staff data', staff, 'error', staffError) // Log to see if there's any error
+  // console.log('staff data', staff, 'error', staffError) // Log to see if there's any error
 
   if (isLoading) {
     return (

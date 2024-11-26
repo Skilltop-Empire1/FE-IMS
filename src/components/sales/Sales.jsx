@@ -5,6 +5,7 @@ import { useGetSalesRecordQuery } from '../../redux/APIs/salesRecordApi'
 
 function Sales() {
   const navigate = useNavigate()
+<<<<<<< HEAD
   const { data, isLoading, isError } = useGetSalesRecordQuery()
 
   // Handle loading and error states
@@ -13,6 +14,21 @@ function Sales() {
 
   // Ensure 'data' is an array
   const salesData = Array.isArray(data) ? data : []
+=======
+  const { data } = useGetSalesRecordQuery()
+  const posPayments = data
+    ?.data?.map((sale) => sale.paymentMethod === 'POS')
+    .reduce((a, b) => a + b, 0)
+  // console.log(posPayments)
+
+  const cashPayments = data
+    ?.data?.map((sale) => sale.paymentMethod === 'cash')
+    .reduce((a, b) => a + b, 0)
+
+  const transferPayments = data
+    ?.data?.map((sale) => sale.paymentMethod === 'transfer')
+    .reduce((a, b) => a + b, 0)
+>>>>>>> development
 
   // Calculate payment method counts
   const posPayments = salesData.filter(

@@ -23,6 +23,10 @@
   cursor: pointer;
 }
 
+.header:hover {
+  color: #5a18aa;
+}
+
 .salesContainer ul {
   display: flex;
   flex-direction: row;

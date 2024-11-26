@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import style from './passwordResetStyle.module.css';
 import { useChangePasswordMutation } from '../../redux/APIs/passwordResetApi';
 import { EyeIcon, EyeOff } from 'lucide-react';
-import { jwtDecode } from 'jwt-decode'; 
+import { jwtDecode } from 'jwt-decode';
 
-const LoggedReset = ({onSuccess}) => {
+const LoggedReset = ({ onSuccess }) => {
   const [email, setEmail] = useState('');
   const [oldPassword, setOldPassword] = useState('');
   const [password, setPassword] = useState('');
@@ -64,53 +64,53 @@ const LoggedReset = ({onSuccess}) => {
   };
 
   return (
-    <div className={`${style.container} mx-5 px-3 relative`}> 
-        <div className={`absolute bottom-0 text-white bg-green-400 w-full text-center ${successful}`}>Password changed successfully</div>
+    <div className={`${style.container} mx-5 px-3 relative`}>
+      <div className={`absolute bottom-0 text-white bg-green-400 w-full text-center ${successful}`}>Password changed successfully</div>
       <form onSubmit={handleSubmit} className="x-3">
         <h2 className="my-3">Set New Password</h2>
 
         <div className={`flex items-center justify-between gap-3 ${style.visi}`}>
           <input
             type={passwordVisibility ? 'text' : 'password'}
-            placeholder="Enter old password"
+            placeholder="Enter Old Password"
             value={oldPassword}
             onChange={(e) => setOldPassword(e.target.value)}
             required
           />
-          {passwordVisibility ? (
+          {/* {passwordVisibility ? (
             <EyeIcon onClick={showPassword} className={style.icon} />
           ) : (
             <EyeOff onClick={showPassword} className={style.icon} />
-          )}
+          )} */}
         </div>
         <div className={`flex items-center justify-between gap-3 ${style.visi}`}>
           <input
             type={passwordVisibility ? 'text' : 'password'}
-            placeholder="Enter password"
+            placeholder="Enter New Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          {passwordVisibility ? (
+          {/* {passwordVisibility ? (
             <EyeIcon onClick={showPassword} className={style.icon} />
           ) : (
             <EyeOff onClick={showPassword} className={style.icon} />
-          )}
+          )} */}
         </div>
 
         <div className={`flex items-center justify-between gap-3 ${style.visi}`}>
           <input
             type={passwordVisibility2 ? 'text' : 'password'}
-            placeholder="Confirm password"
+            placeholder="Confirm New Password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
-          {passwordVisibility2 ? (
+          {/* {passwordVisibility2 ? (
             <EyeIcon onClick={showPassword2} className={style.icon} />
           ) : (
             <EyeOff onClick={showPassword2} className={style.icon} />
-          )}
+          )} */}
         </div>
 
         <br />

@@ -3,9 +3,9 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const accountApi = createApi({
   reducerPath: "account",
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://be-ims.onrender.com',
+    baseURL: 'https://be-ims-production.up.railway.app/',
     prepareHeaders: (headers, { getState }) => {
-      const token = getState().auth.token || localStorage.getItem('token');
+      const token = getState().auth.token;
       console.log("token is",token);
 
       if (token) {

@@ -7,7 +7,7 @@ function StockStatus({ lowStockItems, lowStockCategories }) {
   return (
     <div className={style.container}>
       <div onClick={() => navigate('/app/products')}>
-        <h3>Stock Alert Status</h3>
+        <h3 className='hover:text-purple-800'>Stock Alert Status</h3>
       </div>
       <div className={style.contentStatus}>
         <div>

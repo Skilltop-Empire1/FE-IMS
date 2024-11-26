@@ -60,7 +60,7 @@ const LandingPage = () => {
               Streamline Your Business with Skilltop IMS
             </motion.h1>
             <motion.p className="text-center text-sm text-gray-600">
-              Take control of your business operations with Skilltop IMS—your
+              Take control of your business operations with Skilltop IMS. Your
               all-in-one business management solution. Simplify inventory
               management, automate routine tasks, and enhance customer
               satisfaction, all from one easy-to-use platform.
@@ -230,7 +230,7 @@ const LandingPage = () => {
           </h2>
           <p className="text-center text-gray-700 text-base">
             Skilltop IMS offers powerful features that let you manage your
-            business, inventory, and operations effortlessly—without the hassle
+            business, inventory, and operations effortlessly without the hassle
             of complex systems. Simplify your workflow and keep your business
             running smoothly, all in one place.
           </p>
@@ -255,7 +255,7 @@ const LandingPage = () => {
                   <p className="text-sm text-gray-700">
                     Easily set up stores and manage your business with Skilltop
                     IMS. Add products, organize categories, and streamline your
-                    workflow—no coding needed. Experience simplified business
+                    workflow no coding needed. Experience simplified business
                     management that keeps everything organized.
                   </p>
                 </div>

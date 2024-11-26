@@ -326,11 +326,10 @@ const Content = ({ selectedPlan }) => {
             </h2>
             <hr className="mb-2" />
             <p className="text-sm text-justify">
-              Payment Instructions Please note that payments are confirmed
-              manually for now. Once payment is made and confirmed your login
-              credentials will be sent to your provided email. kindly send your
-              proof of payment to our support via email or WhatsApp and we are
-              always happy to help.
+              Please note that payments are confirmed manually for now. Once
+              payment is made and confirmed your login credentials will be sent
+              to your provided email. kindly send your proof of payment to our
+              support via email or WhatsApp and we are always happy to help.
             </p>
             <p className="text-sm text-justify my-2">
               Thanks for your patronage

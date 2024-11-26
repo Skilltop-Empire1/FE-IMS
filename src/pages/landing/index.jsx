@@ -11,7 +11,7 @@ import Navbar from '../../components/Landing/Navbar'
 import ClientLogoCarousel from '../../components/Landing/ClientLogoCarousel'
 import PricingPlan from '../../components/Landing/PricingPlan'
 import { Link } from 'react-router-dom'
-// import {logo} from 
+// import {logo} from
 
 const LandingPage = () => {
   // Animation variants
@@ -191,7 +191,7 @@ const LandingPage = () => {
               <motion.button
                 className="bg-imsPurple border font-light border-imsPurple text-white px-8 py-3 rounded-md flex items-center gap-4"
                 whileHover={{ scale: 1.05 }}
-                onClick={() => handleScroll("pricing")}
+                onClick={() => handleScroll('pricing')}
               >
                 <span className="text-sm">Get Started Today</span>
                 <ArrowRight size={16} />
@@ -221,7 +221,10 @@ const LandingPage = () => {
             <ClientLogoCarousel />
           </div>
         </div>
-        <div className="flex flex-col gap-8 items-center w-full max-w-5xl px-2 mx-auto my-10" id="learnmore">
+        <div
+          className="flex flex-col gap-8 items-center w-full max-w-5xl px-2 mx-auto my-10"
+          id="learnmore"
+        >
           <h2 className="px-2 text-center text-2xl font-bold">
             Easily Manage Your Business in Real-Time with Skilltop IMS
           </h2>
@@ -303,8 +306,11 @@ const LandingPage = () => {
             </p>
             <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex flex-col items-center gap-4 mx-auto max-w-sm">
-                <img src="/images/avatar.png" className="w-16 h-16 rounded-full"/>
-                <h2 className="font-bold">Sunny Fidelis</h2>
+                <img
+                  src="/images/avatar.png"
+                  className="w-16 h-16 rounded-full"
+                />
+                <h2 className="font-bold w-full text-center">Sunny Fidelis</h2>
                 <p className="text-center text-sm">
                   Skilltop offers your business access to ease in business
                   transaction models. They're prompt and very reliable, and I
@@ -316,8 +322,13 @@ const LandingPage = () => {
                 </p>
               </div>
               <div className="flex flex-col items-center gap-4 mx-auto max-w-sm">
-                <img src="/images/avatar.png" className="w-16 h-16 rounded-full" />
-                <h2 className="font-bold">Goodness Chinaza</h2>
+                <img
+                  src="/images/avatar.png"
+                  className="w-16 h-16 rounded-full"
+                />
+                <h2 className="font-bold w-full text-center">
+                  Goodness Chinaza
+                </h2>
                 <p className="text-center text-sm">
                   Good service rendered. The ability to monitor my business
                   activities through their web application is a good one for me.
@@ -400,10 +411,13 @@ const LandingPage = () => {
           <div className="mt-4">
             <div className="col-span-2 text-center text-white px-2 mb-10">
               Haven't got your answer?{' '}
-
-              <a href="https://skilltopempire.com/contact"
+              <a
+                href="https://skilltopempire.com/contact"
                 target="_blank"
-                className="text-green-500">Contact our support now</a>
+                className="text-green-500"
+              >
+                Contact our support now
+              </a>
             </div>
           </div>
         </div>

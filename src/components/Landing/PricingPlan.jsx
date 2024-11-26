@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { motion } from 'framer-motion'
 import ModalContainer from '../../modals/ModalContainer'
 import { useCreateSubscriberDemoMutation } from '../../redux/APIs/requestDemoApi'
 
@@ -122,9 +123,23 @@ const Content = ({ selectedPlan }) => {
     subscribedPlan: selectedPlan,
   })
 
+  const [step, setStep] = useState(1)
+
   const [errors, setErrors] = useState({})
   const [success, setSuccess] = useState(null)
   const [createsubscriber, { isLoading }] = useCreateSubscriberDemoMutation()
+
+  const formVariants = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+    exit: { opacity: 0, y: -20, transition: { duration: 0.3 } },
+  }
+
+  const step2Variants = {
+    initial: { opacity: 0, x: -50 },
+    animate: { opacity: 1, x: 0, transition: { duration: 0.5 } },
+    exit: { opacity: 0, x: 50, transition: { duration: 0.3 } },
+  }
 
   // Handle input changes
   const handleInputChange = (e) => {
@@ -165,6 +180,7 @@ const Content = ({ selectedPlan }) => {
           phone: '',
           subscribedPlan: selectedPlan,
         })
+        setStep(2)
       } catch (error) {
         setErrors((prev) => ({ ...prev, apiError: error?.data }))
         console.log('Error:', error)
@@ -173,102 +189,155 @@ const Content = ({ selectedPlan }) => {
   }
 
   return (
-    <div className="max-w-lg w-full flex flex-col gap-4 items-center relative">
-      <h2 className="text-imsPurple text-xl">
-        Subscribe to a {selectedPlan} Plan
-      </h2>
-      <form
-        onSubmit={handleSubmit}
-        className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 text-black"
-      >
-        {/* Business Name */}
-        {success && <div className="text-green-400 col-span-2">{success}</div>}
-        {errors?.apiError && (
-          <div className="text-red-400 col-span-2">{errors.apiError}</div>
-        )}
-        <div className="col-span-2">
-          <label className="mb-2 block text-sm font-semibold">
-            Business Name <span className="text-red-600">*</span>
-          </label>
-          <input
-            type="text"
-            name="businessName"
-            value={formData.businessName}
-            onChange={handleInputChange}
-            placeholder="Your Business Name"
-            className="border border-gray-300 rounded-sm text-sm py-2 px-1 w-full block"
-          />
-          {errors.businessName && (
-            <p className="text-red-600 text-xs mt-1">{errors.businessName}</p>
-          )}
-        </div>
-
-        {/* Email */}
-        <div className="">
-          <label className="mb-2 block text-sm font-semibold">
-            Email Address <span className="text-red-600">*</span>
-          </label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleInputChange}
-            placeholder="your.email@example.com"
-            className="border border-gray-300 rounded-sm text-sm py-2 px-1 w-full"
-          />
-          {errors.email && (
-            <p className="text-red-600 text-xs mt-1">{errors.email}</p>
-          )}
-        </div>
-
-        {/* Phone Number */}
-        <div className="">
-          <label className="mb-2 block text-sm font-semibold">
-            Phone Number <span className="text-red-600">*</span>
-          </label>
-          <input
-            type="number"
-            name="phone"
-            value={formData.phone}
-            onChange={handleInputChange}
-            placeholder="(406) 555-0120"
-            className="border border-gray-300 rounded-sm text-sm py-2 px-1 w-full block"
-          />
-          {errors.phone && (
-            <p className="text-red-600 text-xs mt-1">{errors.phone}</p>
-          )}
-        </div>
-
-        {/* Subscribed Plan */}
-        {/* <div className="col-span-2">
-          <label className="mb-2 block text-sm font-semibold">
-            Subscribed Plan <span className="text-red-600">*</span>
-          </label>
-          <select
-            name="subscribedPlan"
-            value={formData.subscribedPlan}
-            onChange={handleInputChange}
-            className="border border-gray-300 rounded-sm text-sm py-2 px-1 w-full"
+    <div className="!max-w-xl w-full flex flex-col gap-4 items-center relative z-[9999999]">
+      {step === 1 && (
+        <motion.div
+          variants={formVariants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          className="w-full flex flex-col items-center gap-4"
+        >
+          <h2 className="text-imsPurple text-xl">
+            Subscribe to a {selectedPlan} Plan
+          </h2>
+          <form
+            onSubmit={handleSubmit}
+            className="w-full grid grid-cols-2 gap-4 text-black"
           >
-            <option value="">Select a Plan</option>
-            <option>Basic</option>
-            <option>Standard</option>
-            <option>Premium</option>
-          </select>
-          {errors.subscribedPlan && <p className="text-red-600 text-xs mt-1">{errors.subscribedPlan}</p>}
-        </div> */}
+            {/* Success and Error Messages */}
+            {success && (
+              <motion.div
+                variants={formVariants}
+                className="text-green-400 col-span-2"
+              >
+                {success}
+              </motion.div>
+            )}
+            {errors?.apiError && (
+              <motion.div
+                variants={formVariants}
+                className="text-red-400 col-span-2"
+              >
+                {errors.apiError}
+              </motion.div>
+            )}
 
-        {/* Submit Button */}
-        <div className="col-span-2 items-center justify-center py-4 flex flex-col gap-4">
-          <button
-            type="submit"
-            disabled={isLoading}
-            className={`bg-imsPurple text-white rounded px-10 text-sm py-2 ${isLoading && 'cursor-not-allowed !bg-imsLightPurple'}`}
-          >
-            {isLoading ? 'Subscribing...' : 'Subscribe'}
-          </button>
-        </div>
-      </form>
+            {/* Business Name */}
+            <motion.div variants={formVariants} className="col-span-2">
+              <label className="mb-2 block text-sm font-semibold">
+                Business Name <span className="text-red-600">*</span>
+              </label>
+              <input
+                type="text"
+                name="businessName"
+                value={formData.businessName}
+                onChange={handleInputChange}
+                placeholder="Your Business Name"
+                className="border border-gray-300 rounded-sm text-sm py-2 px-1 w-full block"
+              />
+              {errors.businessName && (
+                <p className="text-red-600 text-xs mt-1">
+                  {errors.businessName}
+                </p>
+              )}
+            </motion.div>
+
+            {/* Email */}
+            <motion.div variants={formVariants} className="col-span-2">
+              <label className="mb-2 block text-sm font-semibold">
+                Email Address <span className="text-red-600">*</span>
+              </label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                placeholder="your.email@example.com"
+                className="border border-gray-300 rounded-sm text-sm py-2 px-1 w-full"
+              />
+              {errors.email && (
+                <p className="text-red-600 text-xs mt-1">{errors.email}</p>
+              )}
+            </motion.div>
+
+            {/* Phone Number */}
+            <motion.div variants={formVariants} className="col-span-2">
+              <label className="mb-2 block text-sm font-semibold">
+                Phone Number <span className="text-red-600">*</span>
+              </label>
+              <input
+                type="number"
+                name="phone"
+                value={formData.phone}
+                onChange={handleInputChange}
+                placeholder="(406) 555-0120"
+                className="border border-gray-300 rounded-sm text-sm py-2 px-1 w-full block"
+              />
+              {errors.phone && (
+                <p className="text-red-600 text-xs mt-1">{errors.phone}</p>
+              )}
+            </motion.div>
+
+            {/* Submit Button */}
+            <motion.div
+              variants={formVariants}
+              className="col-span-2 flex flex-col items-center gap-4 py-4"
+            >
+              <button
+                type="submit"
+                disabled={isLoading}
+                className={`bg-imsPurple text-white rounded px-10 text-sm py-2 ${isLoading && 'cursor-not-allowed !bg-imsLightPurple'}`}
+              >
+                {isLoading ? 'Subscribing...' : 'Subscribe'}
+              </button>
+            </motion.div>
+          </form>
+        </motion.div>
+      )}
+
+      {step === 2 && (
+        <motion.div
+          variants={step2Variants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          className="w-full text-black flex flex-col gap-2"
+        >
+          <div>
+            <h2 className="text-imsPurple text-base mb-2 text-center">
+              Payment Details
+            </h2>
+            <hr className="mb-2" />
+            <p className="text-sm">
+              Bank: <span className="font-semibold">Zenith Bank PLC</span>
+            </p>
+            <p className="text-sm">
+              Account Number: <span className="font-semibold">1017101131</span>
+            </p>
+            <p className="text-sm">
+              Account Name:{' '}
+              <span className="font-semibold">Skilltop Empire</span>
+            </p>
+          </div>
+          <div>
+            <h2 className="text-imsPurple text-base mb-2 text-center">
+              Payment Instructions
+            </h2>
+            <hr className="mb-2" />
+            <p className="text-sm text-justify">
+              Payment Instructions Please note that payments are confirmed
+              manually for now. Once payment is made and confirmed your login
+              credentials will be sent to your provided email. kindly send your
+              proof of payment to our support via email or WhatsApp and we are
+              always happy to help.
+            </p>
+            <p className="text-sm text-justify my-2">
+              Thanks for your patronage
+            </p>
+          </div>
+        </motion.div>
+      )}
     </div>
   )
 }

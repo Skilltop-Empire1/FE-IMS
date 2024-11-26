@@ -104,13 +104,13 @@ function Account() {
     return <div>Loading data, please wait...</div>
   }
 
-  if (productError) {
-    return <div>Error fetching product data: {productError.message}</div>
-  }
+  // if (productError) {
+  //   return <div>Error fetching product data: {productError.message}</div>
+  // }
 
-  if (salesError) {
-    return <div>Error fetching sales data: {salesError.message}</div>
-  }
+  // if (salesError) {
+  //   return <div>Error fetching sales data: {salesError.message}</div>
+  // }
 
   return (
     <div ref={printRef} className={style.container}>

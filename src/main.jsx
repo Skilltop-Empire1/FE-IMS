@@ -5,12 +5,15 @@ import './index.css'
 import { Provider } from 'react-redux'
 import store from './redux/store.js'
 import ErrorBoundary from './ErrorBoundary/ErrorBoundary.jsx'
+import { ModalProvider } from './context/ModalContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ErrorBoundary>
       <Provider store={store}>
-        <App />
+        <ModalProvider>
+          <App />
+        </ModalProvider>
       </Provider>
     </ErrorBoundary>
   </StrictMode>,

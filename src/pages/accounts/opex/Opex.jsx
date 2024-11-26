@@ -4,12 +4,33 @@ import style from './Opex.module.css'
 import { Search } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { useGetOpexQuery } from '../../../redux/APIs/accountApi'
+import ViewOpexModal from '../../../modals/viewModal/ViewOpexModal'
+import { useModal } from '../../../context/ModalContext'
+import EditOpexModal from '../../../modals/editModal/EditOpexModal'
+import DeleteModal from '../../../modals/deleteModal/DeleteModal'
+import ModalContainer from '../../../modals/ModalContainer'
 
 function Opex() {
-  const { data: opexData, isLoading, isError } = useGetOpexQuery()
+  const { data: opexData = [], isLoading, isError } = useGetOpexQuery()
   const navigate = useNavigate()
 
-  // Initialize headers and state
+  const [modalType, setModalType] = useState(null)
+  const [activeItem, setActiveItem] = useState(null)
+  const [modalProps, setModalProps] = useState({})
+
+  const openModal =
+    (type, props = {}) =>
+    () => {
+      setModalType(type)
+      setModalProps(props)
+      console.log('modal props ', props)
+    }
+
+  const closeModal = () => {
+    setModalType(null)
+    setActiveItem(null)
+  }
+
   const headers = [
     'OPEX Category',
     'Expense Description',
@@ -19,50 +40,12 @@ function Opex() {
     'Action',
   ]
 
-  const [data, setData] = useState([])
-  const [searchTerm, setSearchTerm] = useState('')
+  // const handleView = (item) => {
+  //   openModal(<ViewOpexModal />, item)
+  //   console.log('ciew click detected', item)
+  //   // setActiveActionCell(null)
+  // }
 
-  // Handle search term change
-  const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value)
-  }
-
-  // Filter data based on search term
-  const filterData = (data, searchTerm) => {
-    return data.filter(
-      (item) =>
-        item.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.description.toLowerCase().includes(searchTerm.toLowerCase()),
-    )
-  }
-
-  // Calculate total OPEX amount and update the data with percentage and MOM change
-  const calculatePercentagesAndMOM = (opexData) => {
-    const totalAmount = opexData.reduce((total, item) => total + item.amount, 0)
-
-    return opexData.map((item) => {
-      const percentage =
-        totalAmount > 0 ? ((item.amount / totalAmount) * 100).toFixed(2) : 0
-      const momChange = 'N/A' // Placeholder for MOM change (could be implemented with actual data)
-      return { ...item, percentage: `${percentage}%`, momChange }
-    })
-  }
-
-  // Only update state when opexData is valid and calculate total OPEX data
-  useEffect(() => {
-    if (opexData && Array.isArray(opexData)) {
-      const processedData = calculatePercentagesAndMOM(opexData)
-      setData(processedData)
-    }
-  }, [opexData])
-
-  // Filter data on search term change
-  useEffect(() => {
-    const filteredData = filterData(data, searchTerm)
-    setData(filteredData)
-  }, [searchTerm, data])
-
-  // Render each row of the table
   const renderRow = (item) => (
     <tr key={item.expendId}>
       <td>{item.category}</td>
@@ -70,15 +53,6 @@ function Opex() {
       <td>{item.amount}</td>
       <td>{item.percentage}</td>
       <td>{item.momChange}</td>
-      <td>
-        <button
-          onClick={() =>
-            navigate(`/app/accounts/opex/edit-opex/${item.expendId}`)
-          }
-        >
-          Edit
-        </button>
-      </td>
     </tr>
   )
 
@@ -86,9 +60,9 @@ function Opex() {
     return <div>Loading...</div>
   }
 
-  if (isError) {
-    return <div>Error loading data</div>
-  }
+  // if (isError) {
+  //   return <div>Error loading data</div>
+  // }
 
   return (
     <div className={style.container}>
@@ -101,8 +75,8 @@ function Opex() {
               <input
                 type="text"
                 placeholder="Search by category or description"
-                value={searchTerm}
-                onChange={handleSearchChange}
+                // value={searchTerm}
+                // onChange={handleSearchChange}
               />
             </div>
             <button onClick={() => navigate('/app/accounts/opex/add-opex')}>
@@ -115,20 +89,29 @@ function Opex() {
       <div>
         <Table
           renderRow={renderRow}
+          getId={(item) => item.expendId}
+          data={opexData}
           headers={headers}
-          data={data}
-          totalAmount={data.reduce((sum, item) => sum + item.amount, 0)}
-          totalPercentOpex={data.reduce(
-            (sum, item) => sum + parseFloat(item.percentage.replace('%', '')),
-            0,
-          )}
-          totalMomChange={data.reduce(
-            (sum, item) =>
-              sum + (item.momChange === 'N/A' ? 0 : item.momChange),
-            0,
-          )}
+          handleEdit={openModal('opex-edit', 'item')}
+          handleDelete={openModal('opex-delete')}
+          handleView={(item) => void openModal('opex-view', item)}
         />
       </div>
+      <ModalContainer
+        isOpen={modalType === 'opex-edit'}
+        onClose={closeModal}
+        content={<EditOpexModal />}
+      />
+      <ModalContainer
+        isOpen={modalType === 'opex-view'}
+        onClose={closeModal}
+        content={<ViewOpexModal formData={modalProps} />}
+      />
+      <ModalContainer
+        isOpen={modalType === 'delete'}
+        onClose={closeModal}
+        content={<DeleteModal />}
+      />
     </div>
   )
 }

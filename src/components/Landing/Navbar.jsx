@@ -74,7 +74,7 @@ const Navbar = () => {
               Videos
             </a>
           </motion.div>
-         
+
           <div
             className="relative cursor-pointer"
             onClick={() => toggleDropdown(!isOpen)} // Open on hover
@@ -213,56 +213,63 @@ const Navbar = () => {
             >
               Support
             </motion.li> */}
-             <div
-            className="relative cursor-pointer w-full"
-            onClick={() => toggleDropdown(!isOpen)} // Open on hover
-            // onMouseLeave={() => toggleDropdown(false)} // Close on mouse leave
-          >
-            {/* Support Menu Item */}
-            <motion.div
-              whileHover={{ scale: 1.1 }}
-              className="cursor-pointer block w-full border-b text-center py-4"
+            <div
+              className="relative cursor-pointer w-full"
+              onClick={() => toggleDropdown(!isOpen)} // Open on hover
+              // onMouseLeave={() => toggleDropdown(false)} // Close on mouse leave
             >
-              Support
-            </motion.div>
-
-            {/* Dropdown Menu */}
-            {isOpen && (
-              <motion.ul
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="absolute left-0 mt-2 w-full bg-white border rounded-md shadow-lg"
+              {/* Support Menu Item */}
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                className="cursor-pointer block w-full border-b text-center py-4"
               >
-                <li className="hover:bg-gray-100 py-2 px-4 text-sm">
-                  <a
-                    href="mailto:support@skilltopims.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-black block text-center py-1"
-                  >
-                    Email
-                  </a>
-                </li>
-                <li className="hover:bg-gray-100 py-2 px-4 text-sm">
-                  <a
-                    href="https://wa.me/+2348062675088"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-black block text-center py-1"
-                  >
-                    Whatsapp
-                  </a>
-                </li>
-              </motion.ul>
-            )}
-          </div>
+                Support
+              </motion.div>
+
+              {/* Dropdown Menu */}
+              {isOpen && (
+                <motion.ul
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="absolute left-[2rem] right-[2rem] -mt-2 0 w-[calc(100%-4rem)] bg-imsPurple border rounded-md shadow-lg"
+                >
+                  <li className="hover:bg-gray-100 py-2 px-4 text-sm">
+                    <a
+                      href="mailto:support@skilltopims.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className=" block text-center py-1"
+                    >
+                      Email
+                    </a>
+                  </li>
+                  <hr />
+                  <li className="hover:bg-gray-100 py-2 px-4 text-sm">
+                    <a
+                      href="https://wa.me/+2348062675088"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className=" block text-center py-1"
+                    >
+                      Whatsapp
+                    </a>
+                  </li>
+                </motion.ul>
+              )}
+            </div>
             <motion.li
               whileHover={{ scale: 1.1 }} // Add hover animation
               className="cursor-pointer block w-full border-b text-center py-4"
               // onClick={() => handleScroll(item.id)} // Call handleScroll with the ID
             >
-              Contact
+              <a
+                href="https://skilltopempire.com/contact"
+                target="_blank"
+                className="text-inherit block"
+              >
+                Contact
+              </a>
             </motion.li>
           </ul>
           <motion.button

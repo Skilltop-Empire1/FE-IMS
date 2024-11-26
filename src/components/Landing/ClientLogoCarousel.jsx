@@ -32,14 +32,10 @@ const ClientLogoCarousel = () => {
         {logos.map((logo) => (
           <SwiperSlide key={logo.id}>
             <motion.div
-              className="flex justify-center items-center p-4 h-36 w-20 md:w-36 border-2"
+              className="flex justify-center items-center p-4 h-56 md:h-36 w-full md:w-36 md:border-2"
               whileHover={{ scale: 1.1 }}
             >
-              <img
-                src={logo.src}
-                alt={logo.alt}
-                className="w-full"
-              />
+              <img src={logo.src} alt={logo.alt} className=" w-56 md:w-full" />
             </motion.div>
           </SwiperSlide>
         ))}

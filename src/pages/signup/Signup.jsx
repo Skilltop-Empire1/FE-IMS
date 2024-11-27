@@ -113,7 +113,7 @@ function Signup() {
       <div className={style.right}>
         <h2>Have an account?</h2>
         <h3>Continue your journey in one click</h3>
-        <Link to="/" className={style.toSignUp}>
+        <Link to="/login" className={style.toSignUp}>
           <button className={style.button}>Sign In</button>
         </Link>
       </div>

@@ -323,7 +323,7 @@ const LandingPage = () => {
               </div>
               <div className="flex flex-col items-center gap-4 mx-auto max-w-sm">
                 <img
-                  src="/images/avatar.png"
+                  src="/images/femaleavatar.jpg"
                   className="w-16 h-16 rounded-full"
                 />
                 <h2 className="font-bold w-full text-center">
@@ -400,9 +400,12 @@ const LandingPage = () => {
                 </h3>
                 <p className="text-green-500">
                   You can get started by contacting us at +234-806-2675-088 or
-                  visiting our website at skilltopempire.com. We will provide a
-                  detailed guide and set up a demo tailored to your business
-                  needs.
+                  visiting our website at{' '}
+                  <a href="https://skilltopempire.com" target="_blank">
+                    skilltopempire.com.
+                  </a>{' '}
+                  We will provide a detailed guide and set up a demo tailored to
+                  your business needs.
                 </p>
               </div>
             </div>

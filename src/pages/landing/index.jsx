@@ -57,13 +57,14 @@ const LandingPage = () => {
         >
           <div className="w-full flex items-center justify-center px-2 gap-4 mx-auto flex-col max-w-xl py-24 min-h-[400px]">
             <motion.h1 className="text-center text-3xl md:text-4xl">
-              Streamline Your Business with Skilltop IMS
+              Manage your Business with Skilltop IMS
             </motion.h1>
             <motion.p className="text-center text-sm text-gray-600">
-              Take control of your business operations with Skilltop IMS. Your
-              all-in-one business management solution. Simplify inventory
-              management, automate routine tasks, and enhance customer
-              satisfaction, all from one easy-to-use platform.
+              Take control of your Business Operations with Skilltop IMS—your
+              all-in-one Business Management Solution. Simplify Management of
+              Inventory, Products, Sales, Staffing, Expenses, Invoicing,
+              Automate Routine Tasks and Enhance Customer Satisfaction; all from
+              one easy-to-use platform
             </motion.p>
             <div className="justify-between md:justify-center flex items-center w-full md:w-auto gap-4 mt-10">
               <motion.button
@@ -323,7 +324,7 @@ const LandingPage = () => {
               </div>
               <div className="flex flex-col items-center gap-4 mx-auto max-w-sm">
                 <img
-                  src="/images/avatar.png"
+                  src="/images/femaleavatar.jpg"
                   className="w-16 h-16 rounded-full"
                 />
                 <h2 className="font-bold w-full text-center">
@@ -400,9 +401,12 @@ const LandingPage = () => {
                 </h3>
                 <p className="text-green-500">
                   You can get started by contacting us at +234-806-2675-088 or
-                  visiting our website at skilltopempire.com. We will provide a
-                  detailed guide and set up a demo tailored to your business
-                  needs.
+                  visiting our website at{' '}
+                  <a href="https://skilltopempire.com" target="_blank">
+                    skilltopempire.com.
+                  </a>{' '}
+                  We will provide a detailed guide and set up a demo tailored to
+                  your business needs.
                 </p>
               </div>
             </div>

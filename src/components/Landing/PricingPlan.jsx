@@ -199,7 +199,8 @@ const Content = ({ selectedPlan }) => {
           className="w-full flex flex-col items-center gap-4"
         >
           <h2 className="text-imsPurple text-xl">
-            Subscribe to a {selectedPlan} Plan
+            Subscribe to {selectedPlan == 'Annual' ? 'an' : 'a'} {selectedPlan}{' '}
+            Plan
           </h2>
           <form
             onSubmit={handleSubmit}

@@ -37,7 +37,9 @@ function Signup() {
   return (
     <div className={style.body}>
       <div className={style.left}>
+      <img src="/images/logo.png" alt="ims-logo" className=" md:w-28 md:hidden " />
         <h2>Create Account</h2>
+        <h3>Create an account</h3>
         <div className={style.login}>
           {isSuccess && <p style={{ color: 'green' }}>{data?.msg} 😊</p>}
           {error && (
@@ -102,6 +104,10 @@ function Signup() {
               </button>
             </div>
           </form>
+            <p className='mt-4 text-[#aba3d5] flex justify-center'>Already have an account?</p>
+            <Link to="/login" className={style.toSignUp}>
+              <button className={style.button}>Sign In</button>
+            </Link>
         </div>
       </div>
       <div className={style.right}>

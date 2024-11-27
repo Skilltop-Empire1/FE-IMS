@@ -1,6 +1,7 @@
 .table {
   width: 100%;
   text-align: left;
+  margin-top: 1.5rem;
 }
 
 .table tr {
@@ -12,12 +13,27 @@
   line-height: 1.75rem;
   text-align: left;
   padding: 0.625rem 0rem;
+  max-width: 50px;
+  white-space: normal;
+  overflow-wrap: break-word;
 }
+
+.table thead {
+  border: 1px solid #bdbdbd;
+}
+
+.table thead:first-child {
+  padding-left: 1rem;
+}
+
 .table td {
   padding: 0.625rem 0rem;
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: 500;
   line-height: 1.75rem;
+  max-width: 80px;
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 
 .table tfoot td {
@@ -27,7 +43,56 @@
   text-align: left;
 }
 
+.ActionCell {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.ActionCell:hover {
+  color: #8315db;
+}
+
 .buttonRow {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  list-style: none;
+  background: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  margin: 0;
+  padding: 0;
+  width: 120px;
+}
+
+.buttonRow li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.buttonRow li {
+  padding: 0.5rem;
+  cursor: pointer;
+  text-align: center;
+}
+
+.buttonRow li:hover {
+  background: #8315db;
+  color: #fff;
+}
+
+.buttonRow hr {
+  border: 0;
+  height: 1px;
+  background: #ddd;
+}
+
+/* .buttonRow {
   position: absolute;
   z-index: 1000;
   background-color: #fff;
@@ -39,21 +104,22 @@
   gap: 0.5rem;
   right: 0.625rem;
   box-shadow: 0rem 0.25rem 0.25rem 0rem #00000040;
-}
 
-.buttonRow li {
+} */
+
+/* .buttonRow li {
   display: flex;
   flex-direction: row;
   gap: 0.625rem;
   align-items: center;
-}
+} */
 
-.buttonRow span {
+/* .buttonRow span {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.75rem;
   text-align: left;
-}
+} */
 
 .pageIndex {
   display: flex;
@@ -69,3 +135,124 @@
   gap: 0.625rem;
   border: 0.0625rem solid #e0e0e0;
 }
+
+/* .table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+  text-align: left;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.table th,
+.table td {
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+}
+
+.table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.ActionCell {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.ActionCell:hover {
+  color: #007bff;
+}
+
+.buttonRow {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  list-style: none;
+  background: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  margin: 0;
+  padding: 0;
+  width: 120px;
+}
+
+.buttonRow li {
+  padding: 0.5rem;
+  cursor: pointer;
+  text-align: center;
+}
+
+.buttonRow li:hover {
+  background: #007bff;
+  color: #fff;
+}
+
+.buttonRow hr {
+  border: 0;
+  height: 1px;
+  background: #ddd;
+}
+
+.pageIndex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.pagination {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.pageButton,
+.pageNextButton {
+  padding: 0.5rem 0.75rem;
+  background: #fff;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pageButton:disabled,
+.pageNextButton:disabled {
+  background: #f9f9f9;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.pageButton:hover,
+.pageNextButton:hover:not(:disabled) {
+  background: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
+
+.activePageButton {
+  background: #007bff;
+  color: #fff;
+  border: 1px solid #007bff;
+}
+
+.error {
+  color: red;
+  font-size: 1rem;
+  margin-top: 1rem;
+  text-align: center;
+} */

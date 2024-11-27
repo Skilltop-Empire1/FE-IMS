@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './ViewModal.module.css' // You may want to rename this CSS file as well
 
-function ViewOpexModal({ formData, openEditModal }) {
+function ViewOpexModal({ formData, openEditModal, closeModal }) {
   return (
     <div className={styles.container}>
       <h3 className={styles.formTitle}>View Operational Expenses</h3>
@@ -52,14 +52,8 @@ function ViewOpexModal({ formData, openEditModal }) {
           </div>
         </div>
         <div className={styles.actionContainer}>
-          <div>
-            <p>
-              <input type="checkbox" disabled /> Add another expense
-            </p>
-          </div>
-
           <div className={styles.actionBtn}>
-            <button>Cancel</button>
+            <button onClick={closeModal}>Cancel</button>
             <button onClick={openEditModal}>Edit</button>
           </div>
         </div>

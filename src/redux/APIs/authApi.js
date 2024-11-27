@@ -1,16 +1,17 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { logout as logoutAction, setCredentials } from '../slices/AuthSlice'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { logout as logoutAction, setCredentials } from '../slices/AuthSlice';
 
 export const authApi = createApi({
   reducerPath: 'passwordReset',
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://be-ims-production.up.railway.app/',
     prepareHeaders: (headers, { getState }) => {
-      const token = getState().auth.token
+      // Fallback to localStorage if token is not in Redux
+      const token = getState().auth.token || localStorage.getItem('token');
       if (token) {
-        headers.set('Authorization', `Bearer ${token}`)
+        headers.set('Authorization', `Bearer ${token}`);
       }
-      return headers
+      return headers;
     },
   }),
 
@@ -22,6 +23,7 @@ export const authApi = createApi({
         body: userData,
       }),
     }),
+
     login: builder.mutation({
       query: (credentials) => ({
         url: '/api/IMS/user/login',
@@ -35,17 +37,19 @@ export const authApi = createApi({
             id: response.id,
             role: response.role,
             email: response.email,
-            username: response.username
-          };        }
-        throw new Error('Token missing in response')
+            username: response.username,
+          };
+        }
+        throw new Error('Token missing in response');
       },
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
-          const { data: token } = await queryFulfilled
-
-          dispatch(setCredentials({ token }))
+          const { data } = await queryFulfilled;
+          // Save token and user info to localStorage and Redux
+          localStorage.setItem('token', data.token);
+          dispatch(setCredentials(data));
         } catch (err) {
-          console.error('Login failed:', err)
+          console.error('Login failed:', err);
         }
       },
     }),
@@ -53,6 +57,7 @@ export const authApi = createApi({
     fetchUser: builder.query({
       query: () => 'user',
     }),
+
     logout: builder.mutation({
       query: () => ({
         url: '/api/IMS/user/logout',
@@ -60,19 +65,23 @@ export const authApi = createApi({
       }),
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
-          await queryFulfilled
-          dispatch(logoutAction())
+          await queryFulfilled;
+          // Clear token from Redux and localStorage
+          localStorage.removeItem('token');
+          dispatch(logoutAction());
         } catch (err) {
-          console.error('Logout failed:', err)
+          console.error('Logout failed:', err);
         }
       },
     }),
   }),
-})
+});
 
 export const {
   useSignupMutation,
   useLoginMutation,
   useFetchUserQuery,
   useLogoutMutation,
-} = authApi
+} = authApi;
+
+export default authApi;

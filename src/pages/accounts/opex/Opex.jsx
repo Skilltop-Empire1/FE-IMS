@@ -1,14 +1,51 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useMemo } from 'react'
 import Table from '../../../components/expenseTable/Table'
 import style from './Opex.module.css'
 import { Search } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
-import ModalContainer from '../../../modals/ModalContainer'
 import { useGetOpexQuery } from '../../../redux/APIs/accountApi'
+import ViewOpexModal from '../../../modals/viewModal/ViewOpexModal'
+import EditOpexModal from '../../../modals/editModal/EditOpexModal'
+import DeleteModal from '../../../modals/deleteModal/DeleteModal'
+import ModalContainer from '../../../modals/ModalContainer'
+
+// Modal Types Constants
+const MODAL_TYPES = {
+  VIEW: 'opex-view',
+  EDIT: 'opex-edit',
+  DELETE: 'delete',
+}
 
 function Opex() {
-  const { data: opexData, isLoading } = useGetOpexQuery() // Fetch the data
+  const { data: opexData = [], isLoading, isError } = useGetOpexQuery()
   const navigate = useNavigate()
+
+  const [modalType, setModalType] = useState(null)
+  const [activeItem, setActiveItem] = useState(null)
+  const [searchQuery, setSearchQuery] = useState('') // State for search query
+
+  const openModal = (type, item = null) => {
+    setModalType(type)
+    setActiveItem(item)
+  }
+
+  const closeModal = () => {
+    setModalType(null)
+    setActiveItem(null)
+  }
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value)
+  }
+
+  // Memoize filtered data to avoid unnecessary recalculations
+  const filteredData = useMemo(() => {
+    return opexData.filter(
+      (item) =>
+        item.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.description.toLowerCase().includes(searchQuery.toLowerCase()),
+    )
+  }, [opexData, searchQuery])
 
   const headers = [
     'OPEX Category',
@@ -19,71 +56,23 @@ function Opex() {
     'Action',
   ]
 
-  // Sample data (for fallback if API request fails)
-  const fallbackData = [
-    {
-      id: 1,
-      category: 'Rent',
-      description: 'Office rent',
-      amount: 1000,
-      percentage: '10%',
-      momChange: '5%',
-    },
-    {
-      id: 2,
-      category: 'Salaries',
-      description: 'Employee salaries',
-      amount: 5000,
-      percentage: '50%',
-      momChange: '-2%',
-    },
-  ]
-
-  // State to hold the filtered data and search input
-  const [data, setData] = useState(fallbackData)
-  const [searchTerm, setSearchTerm] = useState('')
-
-  // Handle search term change
-  const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value)
-  }
-
-  // Filter the data based on the search term
-  const filterData = (data, searchTerm) => {
-    return data.filter(
-      (item) =>
-        item.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.description.toLowerCase().includes(searchTerm.toLowerCase()),
-    )
-  }
-
-  // Update the data when the search term changes
-  useEffect(() => {
-    if (opexData) {
-      setData(opexData)
-    }
-  }, [opexData])
-
-  useEffect(() => {
-    // Filter data every time the search term changes
-    const filteredData = filterData(opexData || fallbackData, searchTerm)
-    setData(filteredData)
-  }, [searchTerm, opexData])
-
-  // Render each row in the table
   const renderRow = (item) => (
     <>
       <td>{item.category}</td>
       <td>{item.description}</td>
       <td>{item.amount}</td>
       <td>{item.percentage}</td>
-      <td>{item.momChange}</td>
-      <td>{item.action}</td>
+      <td>{item.monthChange}</td>
     </>
   )
 
-  // Generate unique ID for each row
-  const getId = (item) => item.id
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+
+  if (isError) {
+    return <div>Error loading data. Please try again later.</div>
+  }
 
   return (
     <div className={style.container}>
@@ -95,12 +84,16 @@ function Opex() {
               <Search color="#6D6D6D" size="24px" />
               <input
                 type="text"
+                value={searchQuery} // Bind the input to searchQuery
+                onChange={handleSearchChange} // Update the search query on change
                 placeholder="Search by category or description"
-                value={searchTerm}
-                onChange={handleSearchChange}
+                aria-label="Search expenses" // Accessibility improvement
               />
             </div>
-            <button onClick={() => navigate('/app/accounts/opex/add-opex')}>
+            <button
+              className={style.addButton} // Styled for prominence
+              onClick={() => navigate('/app/accounts/opex/add-opex')}
+            >
               + Add Expense
             </button>
           </div>
@@ -108,13 +101,42 @@ function Opex() {
       </div>
 
       <div>
+        {filteredData.length === 0 && (
+          <div>No expenses found for the search criteria.</div>
+        )}
         <Table
           renderRow={renderRow}
+          getId={(item) => item.expendId}
+          data={filteredData} // Use the filtered data for the table
           headers={headers}
-          data={data}
-          getId={getId}
+          handleEdit={(item) => openModal(MODAL_TYPES.EDIT, item)} // Pass the correct modal type for edit
+          handleDelete={(item) => openModal(MODAL_TYPES.DELETE, item)} // Pass the correct modal type for delete
+          handleView={(item) => openModal(MODAL_TYPES.VIEW, item)} // Pass the correct modal type for view
         />
       </div>
+
+      {/* Modal containers */}
+      <ModalContainer
+        isOpen={modalType === MODAL_TYPES.EDIT}
+        onClose={closeModal}
+        content={<EditOpexModal closeModal={closeModal} item={activeItem} />}
+      />
+      <ModalContainer
+        isOpen={modalType === MODAL_TYPES.VIEW}
+        onClose={closeModal}
+        content={
+          <ViewOpexModal
+            openEditModal={(item) => openModal(MODAL_TYPES.EDIT, item)}
+            closeModal={closeModal}
+            formData={activeItem}
+          />
+        }
+      />
+      <ModalContainer
+        isOpen={modalType === MODAL_TYPES.DELETE}
+        onClose={closeModal}
+        content={<DeleteModal item={activeItem} />}
+      />
     </div>
   )
 }

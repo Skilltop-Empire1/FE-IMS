@@ -104,13 +104,13 @@ function Account() {
     return <div>Loading data, please wait...</div>
   }
 
-  if (productError) {
-    return <div>Error fetching product data: {productError.message}</div>
-  }
+  // if (productError) {
+  //   return <div>Error fetching product data: {productError.message}</div>
+  // }
 
-  if (salesError) {
-    return <div>Error fetching sales data: {salesError.message}</div>
-  }
+  // if (salesError) {
+  //   return <div>Error fetching sales data: {salesError.message}</div>
+  // }
 
   return (
     <div ref={printRef} className={style.container}>
@@ -155,7 +155,11 @@ function Account() {
         <div className={style.selectOptions}>
           <div className={style.selectBox}>
             <p>Product Name</p>
-            <select onChange={handleSelectProduct} value={selectedProducts} disabled>
+            <select
+              onChange={handleSelectProduct}
+              value={selectedProducts}
+              disabled
+            >
               <option value="">Select Product</option>
               {category.map((item) => (
                 <option key={item} value={item}>
@@ -169,21 +173,18 @@ function Account() {
 
       <div className={style.accountSummary}>
         <AccountSummary
-          percentageIncrease="1.4%"
           summaryName="Stock Value"
           summaryValue={formatNaira(stockValue.toFixed(2))}
           summaryStyle={style.summaryContainer}
           valueStyle={style.valueStyle}
         />
         <AccountSummary
-          percentageIncrease="2%"
           summaryName="Total Sales"
           summaryValue={formatNaira(totalSales.toFixed(2))}
           summaryStyle={style.summaryContainer}
           valueStyle={style.valueStyle}
         />
         <AccountSummary
-          percentageIncrease="1.6%"
           summaryName="Sum Total"
           summaryValue={formatNaira(sumTotal.toFixed(2))}
           summaryStyle={style.summaryContainer}
@@ -196,7 +197,7 @@ function Account() {
         </div>
         <div className={style.expenditures}>
           <ExpenseButton
-            // handleClick={() => navigate('/app/accounts/opex')}
+            handleClick={() => navigate('/app/accounts/opex')}
             name="OPEX"
           />
           <ExpenseButton

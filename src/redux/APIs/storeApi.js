@@ -5,7 +5,7 @@ export const storesApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://be-ims-production.up.railway.app/',
     prepareHeaders: (headers, { getState }) => {
-      const token = getState().auth.token
+      const token = getState().auth.token || localStorage.getItem('token');
 
       // console.log('Token in state:', token);
       if (token) {

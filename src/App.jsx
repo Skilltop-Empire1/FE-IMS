@@ -17,7 +17,9 @@ const Home = lazy(() => import('./pages/home/Home'))
 const Categories = lazy(() => import('./pages/categories/Categories'))
 const Products = lazy(() => import('./pages/products/Products'))
 const TransferProduct = lazy(() => import('./pages/products/TransferProduct'))
-const TransferProductHistory = lazy(() => import('./pages/products/TransferProductHistory'))
+const TransferProductHistory = lazy(
+  () => import('./pages/products/TransferProductHistory'),
+)
 const SalesRecord = lazy(() => import('./pages/salesRecord/SalesRecord'))
 const Invoice = lazy(() => import('./pages/Invoice/Invoice'))
 const Settings = lazy(() => import('./pages/settings/Settings'))
@@ -93,11 +95,11 @@ const router = createBrowserRouter([
   {
     path: '/app',
     element: (
-       <ProtectedRoute>
+      <ProtectedRoute>
         <Suspense fallback={<Loader />}>
           <AppLayout />
         </Suspense>
-       </ProtectedRoute>
+      </ProtectedRoute>
     ),
     children: [
       {
@@ -133,7 +135,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'accounts/opex/add-capex',
+        path: 'accounts/opex/add-opex',
         element: (
           <Suspense fallback={<Loader />}>
             <AddOpex />

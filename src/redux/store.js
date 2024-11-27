@@ -31,6 +31,7 @@ const store = configureStore({
     [passwordReset.reducerPath]: passwordReset.reducer, //  passwordReset API reducer
     [profilePictureApi.reducerPath]: profilePictureApi.reducer,
     [requestDemoApi.reducerPath]: requestDemoApi.reducer,
+    [accountApi.reducerPath]: accountApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
@@ -42,7 +43,8 @@ const store = configureStore({
       .concat(salesRecordApi.middleware) //salesRecordApi middleware
       .concat(passwordReset.middleware) //passwordReset middleware
       .concat(profilePictureApi.middleware)
-      .concat(requestDemoApi.middleware),
+      .concat(requestDemoApi.middleware)
+      .concat(accountApi.middleware),
 })
 
 export default store

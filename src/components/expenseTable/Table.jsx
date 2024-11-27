@@ -1,19 +1,41 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import style from './Table.module.css'
-import { MoreHorizontal } from 'lucide-react'
+import { Eye, MoreHorizontal, Pen, Printer, Trash2 } from 'lucide-react'
 import Loader from '../loaderElement/Loader'
-import { useModal } from '../../context/ModalContext'
+import ModalContainer from '../../modals/ModalContainer'
+import EditOpexModal from '../../modals/editModal/EditOpexModal'
+import ViewOpexModal from '../../modals/viewModal/ViewOpexModal'
+import DeleteModal from '../../modals/deleteModal/DeleteModal'
+
+// Modal Types Constants
+const MODAL_TYPES = {
+  VIEW: 'opex-view',
+  EDIT: 'opex-edit',
+  DELETE: 'delete',
+}
 
 const ActionCell = React.forwardRef(
   ({ item, onView, onEdit, onDelete, onPrint }, ref) => (
     <ul ref={ref} className={style.buttonRow}>
-      <li onClick={() => onView(item)}>View</li>
+      <li onClick={() => onView(item)}>
+        <Eye size={16} style={{ marginRight: '8px' }} />
+        <span>View</span>
+      </li>
       <hr />
-      <li onClick={() => onEdit(item)}>Edit</li>
+      <li onClick={() => onEdit(item)}>
+        <Pen size={16} style={{ marginRight: '8px' }} />
+        <span>Edit</span>
+      </li>
       <hr />
-      <li onClick={() => onPrint(item)}>Print</li>
+      <li onClick={() => onPrint(item)}>
+        <Printer size={16} style={{ marginRight: '8px' }} />
+        <span>Print</span>
+      </li>
       <hr />
-      <li onClick={() => onDelete(item)}>Delete</li>
+      <li onClick={() => onDelete(item)}>
+        <Trash2 size={16} style={{ marginRight: '8px', color: 'red' }} />
+        <span>Delete</span>
+      </li>
     </ul>
   ),
 )
@@ -22,33 +44,34 @@ function Table({
   headers,
   data,
   itemsPerPage = 5,
-  handleView,
-  handleEdit,
-  handleDelete,
-  handlePrint,
   isLoading,
   renderRow,
   error,
   getId,
+  handleEdit,
+  handleView,
+  handleDelete,
 }) {
   const [currentPage, setCurrentPage] = useState(1)
   const [activeActionCell, setActiveActionCell] = useState(null)
-  const { openModal, closeModal } = useModal()
+  const [modalType, setModalType] = useState(null)
+  const [activeItem, setActiveItem] = useState(null)
+
   const actionDropDownRef = useRef(null)
   const actionIconRef = useRef(null)
 
-  const handleClickOutsideDropdown = (event) => {
-    if (
-      actionDropDownRef.current &&
-      !actionDropDownRef.current.contains(event.target) &&
-      actionIconRef.current &&
-      !actionIconRef.current.contains(event.target)
-    ) {
-      setActiveActionCell(null)
-    }
-  }
-
   useEffect(() => {
+    const handleClickOutsideDropdown = (event) => {
+      if (
+        actionDropDownRef.current &&
+        !actionDropDownRef.current.contains(event.target) &&
+        actionIconRef.current &&
+        !actionIconRef.current.contains(event.target)
+      ) {
+        setActiveActionCell(null)
+      }
+    }
+
     document.addEventListener('click', handleClickOutsideDropdown)
     return () => {
       document.removeEventListener('click', handleClickOutsideDropdown)
@@ -65,24 +88,6 @@ function Table({
       setCurrentPage(pageNumber)
     }
   }
-
-  // const handleEdit = (item) => {
-  //   openModal(editModal, item)
-  //   setActiveActionCell(null)
-  // }
-  // const handleView = (item) => {
-  //   openModal(viewModal, item)
-  //   console.log('ciew click detected', item)
-  //   setActiveActionCell(null)
-  // }
-  // const handleDelete = (item) => {
-  //   openModal(deleteModal, item)
-  //   setActiveActionCell(null)
-  // }
-  // const handlePrint = (id) => {
-  //   console.log('Print action for id:', id)
-  //   setActiveActionCell(null)
-  // }
 
   const toggleActionCell = (itemId) => {
     setActiveActionCell((prev) => (prev === itemId ? null : itemId))
@@ -115,9 +120,6 @@ function Table({
                       handleView,
                       handleEdit,
                       handleDelete,
-                      handlePrint,
-                      setActiveActionCell,
-                      activeActionCell,
                     })
                   ) : (
                     <>
@@ -149,8 +151,9 @@ function Table({
                           onView={handleView}
                           onEdit={handleEdit}
                           onDelete={handleDelete}
-                          onPrint={handlePrint}
-                          // ref={actionDropDownRef}
+                          onPrint={() =>
+                            console.log('Print action for id:', itemId)
+                          }
                         />
                       )}
                     </div>
@@ -171,14 +174,14 @@ function Table({
             disabled={currentPage === 1}
             className={style.pageButton}
           >
-            &lt;&lt; {/* First */}
+            &lt;&lt;
           </button>
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
             className={style.pageNextButton}
           >
-            &lt; {/* Previous */}
+            &lt;
           </button>
           {Array.from({ length: totalPages }, (_, index) => (
             <button
@@ -196,17 +199,33 @@ function Table({
             disabled={currentPage === totalPages}
             className={style.pageNextButton}
           >
-            &gt; {/* Next */}
+            &gt;
           </button>
           <button
             onClick={() => handlePageChange(totalPages)}
             disabled={currentPage === totalPages}
             className={style.pageButton}
           >
-            &gt;&gt; {/* Last */}
+            &gt;&gt;
           </button>
         </div>
       </div>
+
+      <ModalContainer
+        isOpen={modalType === MODAL_TYPES.EDIT}
+        onClose={() => setModalType(null)}
+        content={<EditOpexModal item={activeItem} />}
+      />
+      <ModalContainer
+        isOpen={modalType === MODAL_TYPES.VIEW}
+        onClose={() => setModalType(null)}
+        content={<ViewOpexModal formData={activeItem} />}
+      />
+      <ModalContainer
+        isOpen={modalType === MODAL_TYPES.DELETE}
+        onClose={() => setModalType(null)}
+        content={<DeleteModal item={activeItem} />}
+      />
     </>
   )
 }

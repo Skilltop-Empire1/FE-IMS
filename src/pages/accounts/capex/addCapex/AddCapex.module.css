@@ -8,6 +8,7 @@
   font-weight: 700;
   line-height: 3rem;
   text-align: left;
+  margin-bottom: 1.5rem;
 }
 
 .formRow {
@@ -46,6 +47,8 @@
 
 .formGroup input {
   height: 3rem;
+  width: 25rem;
+
   padding: 0.625rem;
   gap: 23.9375rem;
   border-radius: 0.5rem;
@@ -59,4 +62,57 @@
   gap: 10px;
   border-radius: 8px;
   border: 1px solid #3d3d3d;
+}
+
+.actionButtonContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+  margin-top: 4.8125rem;
+  gap: 8rem;
+}
+
+.checkboxGroup {
+  display: flex;
+  flex-direction: row;
+  gap: 0.625rem;
+}
+
+.checkboxGroup input {
+  width: 1.5831rem;
+  height: 1.5831rem;
+  border: 1.5px solid #8315db;
+}
+
+.actionBtns {
+  display: flex;
+  flex-direction: row;
+  gap: 2.0625rem;
+}
+
+.actionBtns button {
+  width: 16.0625rem;
+  height: 3.75rem;
+  padding: 1rem 4.25rem;
+  gap: 0.625rem;
+  border-radius: 0.5rem;
+  border: 0.0625rem solid #8315db;
+  box-shadow: 0rem 0rem 0.0625rem 0rem #171a1f12;
+  box-shadow: 0rem 0rem 0.125rem 0rem #171a1f1f;
+}
+
+.buttonCancel {
+  background-color: #ffff;
+  color: #8315db;
+}
+
+.buttonSubmit {
+  background-color: #8315db;
+  color: #ffff;
+}
+
+.preview {
+  width: 12.5rem;
+  height: 12.5rem;
 }

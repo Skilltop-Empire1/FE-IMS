@@ -51,6 +51,7 @@ function Table({
   handleEdit,
   handleView,
   handleDelete,
+  totalAmount,
 }) {
   const [currentPage, setCurrentPage] = useState(1)
   const [activeActionCell, setActiveActionCell] = useState(null)
@@ -163,6 +164,10 @@ function Table({
             })}
         </tbody>
       </table>
+      <div className={style.totalAmount}>
+        <p>Total CAPEX</p>
+        <p>{totalAmount}</p>
+      </div>
       <div className={style.pageIndex}>
         <p>
           Showing {indexOfFirstItem + 1} to{' '}

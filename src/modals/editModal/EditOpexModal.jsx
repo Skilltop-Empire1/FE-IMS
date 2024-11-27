@@ -1,61 +1,77 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from './EditModal.module.css'
+import { useUpdateOpexMutation } from '../../redux/APIs/accountApi'
 
-function EditOpexModal({ closeModal }) {
-  const [formData, setFormData] = useState({
-    expenseType: '',
-    paymentMethod: '',
-    expenseDescription: '',
-    vendor: '',
-    amount: '',
-    note: '',
-    date: '',
-    image: null,
-  })
+const initialData = {
+  expenseType: '',
+  paymentMethod: '',
+  description: '',
+  vendor: '',
+  amount: '',
+  notes: '',
+  dateOfExpense: '',
+  receipt: null,
+}
+
+function EditOpexModal({ closeModal, editData }) {
+  const [formData, setFormData] = useState(initialData)
+  const [successMessage, setSuccessMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+
+  const [updateOpex] = useUpdateOpexMutation()
+
+  // Populate form data with editData on load
+  useEffect(() => {
+    if (editData) {
+      setFormData({ ...initialData, ...editData })
+    }
+  }, [editData])
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target
-    if (type === 'file') {
-      setFormData({
-        ...formData,
-        [name]: files[0],
-      })
-    } else {
-      setFormData({
-        ...formData,
-        [name]: value,
-      })
-    }
+    setFormData({
+      ...formData,
+      [name]: type === 'file' ? files[0] : value,
+    })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    const {
-      expenseType,
-      paymentMethod,
-      expenseDescription,
-      amount,
-      date,
-      image,
-    } = formData
-    if (
-      !expenseType ||
-      !paymentMethod ||
-      !expenseDescription ||
-      !amount ||
-      !date ||
-      !image
-    ) {
-      alert('Please fill out all required fields')
-      return
+    setIsLoading(true)
+    setErrorMessage('')
+    setSuccessMessage('')
+
+    try {
+      const payload = new FormData()
+      Object.entries(formData).forEach(([key, value]) => {
+        payload.append(key, value)
+      })
+
+      // Call the API
+      await updateOpex({ data: payload, id: formData.expendId }).unwrap()
+      setSuccessMessage('Operational expense updated successfully!')
+
+      // Auto-close the modal after success
+      setTimeout(() => {
+        closeModal()
+      }, 2000)
+    } catch (err) {
+      setErrorMessage('An error occurred while updating the expense.')
+      console.error(err)
+    } finally {
+      setIsLoading(false)
     }
-    console.log(formData)
   }
 
   return (
     <div className={styles.container}>
       <h3 className={styles.formTitle}>Update Operational Expenses</h3>
       <form onSubmit={handleSubmit}>
+        {successMessage && (
+          <p className={styles.successText}>{successMessage}</p>
+        )}
+        {errorMessage && <p className={styles.errorText}>{errorMessage}</p>}
         <div className={styles.formRow}>
           <div className={styles.formColumn}>
             <div className={styles.formGroup}>
@@ -65,10 +81,9 @@ function EditOpexModal({ closeModal }) {
               <select
                 name="expenseType"
                 id="expenseType"
-                value={formData.expenseType}
+                value={formData.expenseType || ''}
                 onChange={handleChange}
                 className={styles.select}
-                required
               >
                 <option value="">Select Expense</option>
                 <option value="rent">Rent</option>
@@ -79,16 +94,15 @@ function EditOpexModal({ closeModal }) {
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor="expenseDescription" className={styles.label}>
+              <label htmlFor="description" className={styles.label}>
                 Expense Description
               </label>
               <textarea
-                name="expenseDescription"
-                id="expenseDescription"
-                value={formData.expenseDescription}
+                name="description"
+                id="description"
+                value={formData.description || ''}
                 onChange={handleChange}
                 className={styles.textarea}
-                required
                 placeholder="Enter expense description"
               />
             </div>
@@ -101,22 +115,21 @@ function EditOpexModal({ closeModal }) {
                 type="number"
                 name="amount"
                 id="amount"
-                value={formData.amount}
+                value={formData.amount || ''}
                 onChange={handleChange}
                 className={styles.input}
-                required
                 placeholder="Enter amount"
               />
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor="note" className={styles.label}>
-                Note
+              <label htmlFor="notes" className={styles.label}>
+                Notes
               </label>
               <textarea
-                name="note"
-                id="note"
-                value={formData.note}
+                name="notes"
+                id="notes"
+                value={formData.notes || ''}
                 onChange={handleChange}
                 className={styles.textarea}
                 placeholder="Additional notes or comments"
@@ -132,10 +145,9 @@ function EditOpexModal({ closeModal }) {
               <select
                 name="paymentMethod"
                 id="paymentMethod"
-                value={formData.paymentMethod}
+                value={formData.paymentMethod || ''}
                 onChange={handleChange}
                 className={styles.select}
-                required
               >
                 <option value="">Select Payment Method</option>
                 <option value="pos">POS</option>
@@ -146,13 +158,13 @@ function EditOpexModal({ closeModal }) {
 
             <div className={styles.formGroup}>
               <label htmlFor="vendor" className={styles.label}>
-                Vendor/Payee (optional)
+                Vendor/Payee
               </label>
               <input
                 type="text"
                 name="vendor"
                 id="vendor"
-                value={formData.vendor}
+                value={formData.vendor || ''}
                 onChange={handleChange}
                 className={styles.input}
                 placeholder="Enter vendor/payee name"
@@ -160,41 +172,45 @@ function EditOpexModal({ closeModal }) {
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor="date" className={styles.label}>
-                Date
+              <label htmlFor="dateOfExpense" className={styles.label}>
+                Date of Expense
               </label>
               <input
                 type="date"
-                name="date"
-                id="date"
-                value={formData.date}
+                name="dateOfExpense"
+                id="dateOfExpense"
+                value={formData.dateOfExpense || ''}
                 onChange={handleChange}
                 className={styles.input}
-                required
               />
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor="image" className={styles.label}>
-                Image
+              <label htmlFor="receipt" className={styles.label}>
+                Receipt
               </label>
               <input
                 type="file"
-                name="image"
-                id="image"
+                name="receipt"
+                id="receipt"
                 onChange={handleChange}
                 className={styles.input}
-                required
               />
             </div>
           </div>
         </div>
 
         <div className={styles.actionContainer}>
-          <div className={styles.actionBtn}>
-            <button onClick={closeModal}>Cancel</button>
-            <button type="submit">Update</button>
-          </div>
+          <button type="button" onClick={closeModal} className={styles.button}>
+            Cancel
+          </button>
+          <button
+            type="submit"
+            disabled={isLoading}
+            className={`${styles.button} ${styles.submitButton}`}
+          >
+            {isLoading ? 'Updating...' : 'Update'}
+          </button>
         </div>
       </form>
     </div>

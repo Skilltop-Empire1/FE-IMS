@@ -10,11 +10,11 @@ import { NotificationProvider } from './components/Notifications/NotificationCon
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ErrorBoundary>
-    <NotificationProvider>
-    <Provider store={store}>
-      <App />
-    </Provider>
-    </NotificationProvider>
+      <NotificationProvider>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </NotificationProvider>
     </ErrorBoundary>
   </StrictMode>,
 )

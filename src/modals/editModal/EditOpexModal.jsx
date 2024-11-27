@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styles from './EditModal.module.css'
 
-function EditOpexModal() {
+function EditOpexModal({ closeModal }) {
   const [formData, setFormData] = useState({
     expenseType: '',
     paymentMethod: '',
@@ -54,7 +54,7 @@ function EditOpexModal() {
 
   return (
     <div className={styles.container}>
-      <h3 className={styles.formTitle}>Add Operational Expenses</h3>
+      <h3 className={styles.formTitle}>Update Operational Expenses</h3>
       <form onSubmit={handleSubmit}>
         <div className={styles.formRow}>
           <div className={styles.formColumn}>
@@ -189,16 +189,12 @@ function EditOpexModal() {
             </div>
           </div>
         </div>
-        <div>
-          <input type="checkbox" />
-          <label htmlFor="">Add another expense</label>
-        </div>
-        <div>
-          <button type="clear">Cancel</button>
 
-          <button type="submit" className={styles.button}>
-            Submit
-          </button>
+        <div className={styles.actionContainer}>
+          <div className={styles.actionBtn}>
+            <button onClick={closeModal}>Cancel</button>
+            <button type="submit">Update</button>
+          </div>
         </div>
       </form>
     </div>

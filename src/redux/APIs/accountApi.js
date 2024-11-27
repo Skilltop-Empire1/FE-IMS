@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const accountApi = createApi({
   reducerPath: "account",
   baseQuery: fetchBaseQuery({
-    baseURL: 'https://be-ims-production.up.railway.app/',
+    baseUrl: 'https://be-ims-production.up.railway.app/',
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.token;
       console.log("token is",token);
@@ -21,10 +21,10 @@ const accountApi = createApi({
       }),
     }),
     updateOpex: builder.mutation({
-      query: (account) => ({
+      query: (data) => ({
         url: '/api/IMS/',
         method: 'PUT',
-        body: JSON.stringify(account),
+        body: data
       }),
       invalidatesTags: ['account'],
     }),
@@ -36,15 +36,16 @@ const accountApi = createApi({
       invalidatesTags: ['account'],
     }),
     addOpex: builder.mutation({
-      query: (account) => ({
-        url: '/api/IMS/',
+      query: ({type, data}) => ({
+        url: '/api/IMS/expenditure/create',
         method: 'POST',
-        body: JSON.stringify(account),
+        body: data,
+        type
       }),
     }),
     getCapex: builder.query({
       query: () => ({
-        url: '/api/IMS/',
+        url: '/api/IMS/expenditure/list?capex=true',
       }),
     }),
     updateCapex: builder.mutation({
@@ -63,10 +64,11 @@ const accountApi = createApi({
       invalidatesTags: ['account'],
     }),
     addCapex: builder.mutation({
-      query: (account) => ({
-        url: '/api/IMS/',
+      query: ({data, type}) => ({
+        url: '/api/IMS/expenditure/create',
         method: 'POST',
-        body: JSON.stringify(account),
+        body: data,
+        type
       }),
     }),
   }),

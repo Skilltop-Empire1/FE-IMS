@@ -1,71 +1,97 @@
 import React, { useState } from 'react'
 import styles from './AddOpex.module.css'
+import { useAddOpexMutation } from '../../../../redux/APIs/accountApi'
+import { useNavigate } from 'react-router-dom'
+import Loader from '../../../../components/loaderElement/Loader'
 
-function Opex() {
-  const [formData, setFormData] = useState({
-    expenseType: '',
+function AddOpex() {
+  const defaultFormData = {
+    category: '',
     paymentMethod: '',
-    expenseDescription: '',
+    description: '',
     vendor: '',
     amount: '',
-    note: '',
-    date: '',
-    image: null,
-  })
+    notes: '',
+    dateOfExpense: '',
+    receipt: null,
+    type: 'OPEX',
+  }
+
+  const [addAnother, setAddAnother] = useState(false)
+  const [successMessage, setSuccessMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
+  const [formData, setFormData] = useState(defaultFormData)
+  const [preview, setPreview] = useState(null)
+
+  const navigate = useNavigate()
+  const [addOpex, { isError, isLoading, isSuccess }] = useAddOpexMutation()
+
+  const handleCheckboxChange = () => setAddAnother((prev) => !prev)
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target
     if (type === 'file') {
-      setFormData({
-        ...formData,
-        [name]: files[0],
-      })
+      setFormData({ ...formData, [name]: files[0] })
+      setPreview(URL.createObjectURL(files[0]))
     } else {
-      setFormData({
-        ...formData,
-        [name]: value,
-      })
+      setFormData({ ...formData, [name]: value })
     }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    const {
-      expenseType,
-      paymentMethod,
-      expenseDescription,
-      amount,
-      date,
-      image,
-    } = formData
+    const { category, paymentMethod, description, amount, dateOfExpense } =
+      formData
     if (
-      !expenseType ||
+      !category ||
       !paymentMethod ||
-      !expenseDescription ||
+      !description ||
       !amount ||
-      !date ||
-      !image
+      !dateOfExpense
     ) {
-      alert('Please fill out all required fields')
+      setErrorMessage('Please fill out all required fields.')
       return
     }
-    console.log(formData)
+
+    const formDataToSubmit = new FormData()
+    Object.entries(formData).forEach(([key, value]) => {
+      formDataToSubmit.append(key, value)
+    })
+
+    try {
+      await addOpex({ data: formDataToSubmit, type: 'OPEX' }).unwrap()
+      setSuccessMessage('Operational expense added successfully.')
+      setTimeout(() => setSuccessMessage(''), 3000)
+
+      if (addAnother) {
+        setFormData(defaultFormData)
+        setPreview(null)
+      } else {
+        navigate('/app/accounts/')
+      }
+    } catch (err) {
+      setErrorMessage(err?.data?.message || 'Failed to add expense.')
+    }
   }
 
   return (
     <div className={styles.container}>
+      {isLoading && <Loader />}
+      {isError && <p className={styles.error}>{errorMessage}</p>}
+      {isSuccess && <p className={styles.success}>{successMessage}</p>}
+
       <h3 className={styles.formTitle}>Add Operational Expenses</h3>
       <form onSubmit={handleSubmit}>
         <div className={styles.formRow}>
           <div className={styles.formColumn}>
             <div className={styles.formGroup}>
-              <label htmlFor="expenseType" className={styles.label}>
+              <label htmlFor="category" className={styles.label}>
                 Expense Type
               </label>
               <select
-                name="expenseType"
-                id="expenseType"
-                value={formData.expenseType}
+                name="category"
+                id="category"
+                value={formData.category}
                 onChange={handleChange}
                 className={styles.select}
                 required
@@ -79,13 +105,13 @@ function Opex() {
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor="expenseDescription" className={styles.label}>
-                Expense Description
+              <label htmlFor="description" className={styles.label}>
+                Description
               </label>
               <textarea
-                name="expenseDescription"
-                id="expenseDescription"
-                value={formData.expenseDescription}
+                name="description"
+                id="description"
+                value={formData.description}
                 onChange={handleChange}
                 className={styles.textarea}
                 required
@@ -110,13 +136,13 @@ function Opex() {
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor="note" className={styles.label}>
-                Note
+              <label htmlFor="notes" className={styles.label}>
+                notes
               </label>
               <textarea
-                name="note"
-                id="note"
-                value={formData.note}
+                name="notes"
+                id="notes"
+                value={formData.notes}
                 onChange={handleChange}
                 className={styles.textarea}
                 placeholder="Additional notes or comments"
@@ -160,14 +186,14 @@ function Opex() {
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor="date" className={styles.label}>
-                Date
+              <label htmlFor="dateOfExpense" className={styles.label}>
+                Acquisition Date
               </label>
               <input
                 type="date"
-                name="date"
-                id="date"
-                value={formData.date}
+                name="dateOfExpense"
+                id="dateOfExpense"
+                value={formData.dateOfExpense}
                 onChange={handleChange}
                 className={styles.input}
                 required
@@ -175,34 +201,53 @@ function Opex() {
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor="image" className={styles.label}>
-                Image
+              <label htmlFor="receipt" className={styles.label}>
+                receipt
               </label>
               <input
                 type="file"
-                name="image"
-                id="image"
+                name="receipt"
+                id="receipt"
                 onChange={handleChange}
                 className={styles.input}
                 required
               />
+              {preview && (
+                <div className={styles.preview}>
+                  <img src={preview} alt="Preview" />
+                </div>
+              )}
             </div>
           </div>
         </div>
-        <div>
-          <input type="checkbox" />
-          <label htmlFor="">Add another expense</label>
-        </div>
-        <div>
-          <button type="clear">Cancel</button>
+        <div className={styles.actionButtonContainer}>
+          <div className={styles.checkboxGroup}>
+            <input
+              type="checkbox"
+              name="addAnother"
+              checked={addAnother}
+              onChange={handleCheckboxChange}
+            />
+            <label>Add another CAPEX item</label>
+          </div>
 
-          <button type="submit" className={styles.button}>
-            Submit
-          </button>
+          <div className={styles.actionBtns}>
+            <button
+              type="button"
+              className={styles.buttonCancel}
+              onClick={() => navigate('/app/accounts/')}
+            >
+              Cancel
+            </button>
+
+            <button type="submit" className={styles.buttonSubmit}>
+              Submit
+            </button>
+          </div>
         </div>
       </form>
     </div>
   )
 }
 
-export default Opex
+export default AddOpex

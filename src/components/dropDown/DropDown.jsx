@@ -19,10 +19,6 @@ function DropDown({ dropdownRef }) {
   const [activeItem, setActiveItem] = useState(null)
   const [showFullId, setShowFullId] = useState(false)
 
-  const slicedId = id.slice(0, 5)
-
-  const dispatch = useDispatch()
-
   const openModal = (type) => () => {
     setModalType(type)
     setActiveItem(type)
@@ -32,6 +28,10 @@ function DropDown({ dropdownRef }) {
     setModalType(null)
     setActiveItem(null)
   }
+
+  const slicedId = id.slice(0, 5)
+
+  const dispatch = useDispatch()
 
   const handleLogout = async () => {
     dispatch(logout())

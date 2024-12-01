@@ -21,16 +21,16 @@ const accountApi = createApi({
       }),
     }),
     updateOpex: builder.mutation({
-      query: (data) => ({
-        url: '/api/IMS/',
+      query: ({data, id}) => ({
+        url: `/api/IMS/expenditure/${id}`,
         method: 'PUT',
         body: data
       }),
       invalidatesTags: ['account'],
     }),
-    deleteOpex: builder.mutation({
-      query: () => ({
-        url: '/api/IMS/',
+    deleteData: builder.mutation({
+      query: (id) => ({
+        url: `/api/IMS/expenditure/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['account'],
@@ -56,13 +56,7 @@ const accountApi = createApi({
       }),
       invalidatesTags: ['account'],
     }),
-    deleteCapex: builder.mutation({
-      query: () => ({
-        url: '/api/IMS/',
-        method: 'DELETE',
-      }),
-      invalidatesTags: ['account'],
-    }),
+
     addCapex: builder.mutation({
       query: ({data, type}) => ({
         url: '/api/IMS/expenditure/create',
@@ -77,12 +71,11 @@ const accountApi = createApi({
 export const {
   useGetOpexQuery,
   useUpdateOpexMutation,
-  useDeleteOpexMutation,
   useAddOpexMutation,
   useGetCapexQuery,
   useUpdateCapexMutation,
-  useDeleteCapexMutation,
   useAddCapexMutation,
+  useDeleteDataMutation
 } = accountApi;
 
 export default accountApi;

@@ -86,7 +86,7 @@ function AddOpex() {
           <div className={styles.formColumn}>
             <div className={styles.formGroup}>
               <label htmlFor="category" className={styles.label}>
-                Expense Type
+                Expense Type*
               </label>
               <select
                 name="category"
@@ -106,7 +106,7 @@ function AddOpex() {
 
             <div className={styles.formGroup}>
               <label htmlFor="description" className={styles.label}>
-                Description
+                Description*
               </label>
               <textarea
                 name="description"
@@ -121,7 +121,7 @@ function AddOpex() {
 
             <div className={styles.formGroup}>
               <label htmlFor="amount" className={styles.label}>
-                Amount
+                Amount*
               </label>
               <input
                 type="number"
@@ -153,7 +153,7 @@ function AddOpex() {
           <div className={styles.formColumn}>
             <div className={styles.formGroup}>
               <label htmlFor="paymentMethod" className={styles.label}>
-                Payment Method
+                Payment Method*
               </label>
               <select
                 name="paymentMethod"
@@ -187,7 +187,7 @@ function AddOpex() {
 
             <div className={styles.formGroup}>
               <label htmlFor="dateOfExpense" className={styles.label}>
-                Acquisition Date
+                Acquisition Date*
               </label>
               <input
                 type="date"

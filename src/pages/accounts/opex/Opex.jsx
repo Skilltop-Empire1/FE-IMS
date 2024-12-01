@@ -9,7 +9,6 @@ import EditOpexModal from '../../../modals/editModal/EditOpexModal'
 import DeleteModal from '../../../modals/deleteModal/DeleteModal'
 import ModalContainer from '../../../modals/ModalContainer'
 
-// Modal Types Constants
 const MODAL_TYPES = {
   VIEW: 'opex-view',
   EDIT: 'opex-edit',
@@ -22,7 +21,7 @@ function Opex() {
 
   const [modalType, setModalType] = useState(null)
   const [activeItem, setActiveItem] = useState(null)
-  const [searchQuery, setSearchQuery] = useState('') // State for search query
+  const [searchQuery, setSearchQuery] = useState('')
 
   const openModal = (type, item = null) => {
     setModalType(type)
@@ -38,7 +37,6 @@ function Opex() {
     setSearchQuery(e.target.value)
   }
 
-  // Memoize filtered data to avoid unnecessary recalculations
   const filteredData = useMemo(() => {
     return opexData.filter(
       (item) =>
@@ -56,15 +54,23 @@ function Opex() {
     'Action',
   ]
 
-  const renderRow = (item) => (
-    <>
-      <td>{item.category}</td>
-      <td>{item.description}</td>
-      <td>{item.amount}</td>
-      <td>{item.percentage}</td>
-      <td>{item.monthChange}</td>
-    </>
-  )
+  const totalAmount = opexData.reduce((acc, item) => {
+    return acc + item.amount
+  }, 0)
+
+  const renderRow = (item) => {
+    const percentOfTotalCapex = ((item.amount / totalAmount) * 100).toFixed(2)
+
+    return (
+      <>
+        <td>{item.category}</td>
+        <td>{item.description}</td>
+        <td>{item.amount}</td>
+        <td>{percentOfTotalCapex}%</td>
+        <td>{item.monthChange}</td>
+      </>
+    )
+  }
 
   if (isLoading) {
     return <div>Loading...</div>
@@ -107,11 +113,12 @@ function Opex() {
         <Table
           renderRow={renderRow}
           getId={(item) => item.expendId}
-          data={filteredData} // Use the filtered data for the table
+          data={filteredData}
           headers={headers}
-          handleEdit={(item) => openModal(MODAL_TYPES.EDIT, item)} // Pass the correct modal type for edit
-          handleDelete={(item) => openModal(MODAL_TYPES.DELETE, item)} // Pass the correct modal type for delete
-          handleView={(item) => openModal(MODAL_TYPES.VIEW, item)} // Pass the correct modal type for view
+          handleEdit={(item) => openModal(MODAL_TYPES.EDIT, item)}
+          handleDelete={(item) => openModal(MODAL_TYPES.DELETE, item)}
+          handleView={(item) => openModal(MODAL_TYPES.VIEW, item)}
+          totalAmount={totalAmount}
         />
       </div>
 
@@ -119,7 +126,9 @@ function Opex() {
       <ModalContainer
         isOpen={modalType === MODAL_TYPES.EDIT}
         onClose={closeModal}
-        content={<EditOpexModal closeModal={closeModal} item={activeItem} />}
+        content={
+          <EditOpexModal closeModal={closeModal} editData={activeItem} />
+        }
       />
       <ModalContainer
         isOpen={modalType === MODAL_TYPES.VIEW}
@@ -135,7 +144,9 @@ function Opex() {
       <ModalContainer
         isOpen={modalType === MODAL_TYPES.DELETE}
         onClose={closeModal}
-        content={<DeleteModal item={activeItem} />}
+        content={
+          <DeleteModal recordToDelete={activeItem} closeModal={closeModal} />
+        }
       />
     </div>
   )

@@ -47,6 +47,10 @@ function Capex() {
     )
   }, [capexData, searchQuery])
 
+  const totalAmount = capexData.reduce((acc, item) => {
+    return acc + item.amount
+  }, 0)
+
   const headers = [
     'CAPEX Categories',
     'Item/Asset Description',
@@ -58,17 +62,30 @@ function Capex() {
     'Action',
   ]
 
-  const renderRow = (item) => (
-    <>
-      <td>{item.category}</td>
-      <td>{item.description}</td>
-      <td>{item.amount}</td>
-      <td>{item.percentage}</td>
-      <td>{item.dateOfExpense}</td>
-      <td>{item.expectedLifespan}</td>
-      <td>{item.annualDepreciation}</td>
-    </>
-  )
+  const renderRow = (item) => {
+    const formattedDate = new Date(item.dateOfExpense).toLocaleDateString(
+      'en-GB',
+      {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      },
+    )
+
+    const percentOfTotalCapex = ((item.amount / totalAmount) * 100).toFixed(2)
+
+    return (
+      <>
+        <td>{item.category}</td>
+        <td>{item.description}</td>
+        <td>{item.amount}</td>
+        <td>{percentOfTotalCapex}%</td>
+        <td>{formattedDate}</td>
+        <td>{item.expectedLifespan}</td>
+        <td>{item.annualDepreciation}</td>
+      </>
+    )
+  }
 
   if (isLoading) {
     return <div>Loading...</div>
@@ -77,10 +94,6 @@ function Capex() {
   if (isError) {
     return <div>Error loading data. Please try again later.</div>
   }
-
-  // if (filteredData.length === 0) {
-  //   return <div>No capital expenses found for the search criteria.</div>
-  // }
 
   return (
     <div className={style.container}>
@@ -110,6 +123,7 @@ function Capex() {
 
       <div>
         <Table
+          totalAmount={totalAmount}
           renderRow={renderRow}
           getId={(item) => item.expendId}
           data={filteredData} // Use the filtered data for the table
@@ -124,7 +138,9 @@ function Capex() {
       <ModalContainer
         isOpen={modalType === MODAL_TYPES.EDIT}
         onClose={closeModal}
-        content={<EditCapexModal closeModal={closeModal} item={activeItem} />}
+        content={
+          <EditCapexModal closeModal={closeModal} editData={activeItem} />
+        }
       />
       <ModalContainer
         isOpen={modalType === MODAL_TYPES.VIEW}
@@ -140,7 +156,7 @@ function Capex() {
       <ModalContainer
         isOpen={modalType === MODAL_TYPES.DELETE}
         onClose={closeModal}
-        content={<DeleteModal item={activeItem} />}
+        content={<DeleteModal recordToDelete={activeItem} />}
       />
     </div>
   )

@@ -1,79 +1,94 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from './EditModal.module.css'
+import { useUpdateCapexMutation } from '../../redux/APIs/accountApi'
 
-function EditCapexModal({ item, onClose }) {
-  const [formData, setFormData] = useState({
-    capitalItem: item.capitalItem || '',
-    paymentMethod: item.paymentMethod || '',
-    description: item.description || '',
-    vendor: item.vendor || '',
-    amount: item.amount || '',
-    note: item.note || '',
-    purchaseDate: item.purchaseDate || '',
-    image: item.image || null,
-  })
+const initialData = {
+  category: '',
+  description: '',
+  amount: '',
+  dateOfExpense: '',
+  expectedLifeSpan: '',
+  annualDepreciation: '',
+  vendor: '',
+  notes: '',
+  receipt: null,
+}
+
+function EditCapexModal({ closeModal, editData }) {
+  const [formData, setFormData] = useState(initialData)
+  const [successMessage, setSuccessMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+
+  const [updateCapex] = useUpdateCapexMutation()
+
+  useEffect(() => {
+    if (editData) {
+      setFormData({ ...initialData, ...editData })
+    }
+  }, [editData])
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target
-    if (type === 'file') {
-      setFormData({
-        ...formData,
-        [name]: files[0],
-      })
-    } else {
-      setFormData({
-        ...formData,
-        [name]: value,
-      })
-    }
+    setFormData({
+      ...formData,
+      [name]: type === 'file' ? files[0] : value,
+    })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    const {
-      capitalItem,
-      paymentMethod,
-      description,
-      amount,
-      purchaseDate,
-      image,
-    } = formData
-    if (
-      !capitalItem ||
-      !paymentMethod ||
-      !description ||
-      !amount ||
-      !purchaseDate ||
-      !image
-    ) {
-      alert('Please fill out all required fields')
-      return
+    setIsLoading(true)
+    setErrorMessage('')
+    setSuccessMessage('')
+
+    try {
+      const payload = new FormData()
+      Object.entries(formData).forEach(([key, value]) => {
+        payload.append(key, value)
+      })
+
+      await updateCapex({ data: payload, id: formData.capexId }).unwrap()
+      setSuccessMessage('Capital expense updated successfully!')
+
+      setTimeout(() => {
+        closeModal()
+      }, 2000)
+    } catch (err) {
+      setErrorMessage('An error occurred while updating the capital expense.')
+      console.error(err)
+    } finally {
+      setIsLoading(false)
     }
-    // Process the updated form data here, such as updating state or making an API call
-    console.log(formData)
-    onClose() // Close the modal after submission
   }
 
   return (
     <div className={styles.container}>
-      <h3 className={styles.formTitle}>Edit Capital Expenditure</h3>
+      <h3 className={styles.formTitle}>Update Capital Expenses</h3>
       <form onSubmit={handleSubmit}>
+        {successMessage && (
+          <p className={styles.successText}>{successMessage}</p>
+        )}
+        {errorMessage && <p className={styles.errorText}>{errorMessage}</p>}
         <div className={styles.formRow}>
           <div className={styles.formColumn}>
             <div className={styles.formGroup}>
-              <label htmlFor="capitalItem" className={styles.label}>
-                Capital Item
+              <label htmlFor="category" className={styles.label}>
+                Category
               </label>
-              <input
-                type="text"
-                name="capitalItem"
-                id="capitalItem"
-                value={formData.capitalItem}
+              <select
+                name="category"
+                id="category"
+                value={formData.category || ''}
                 onChange={handleChange}
-                className={styles.input}
-                required
-                placeholder="Enter capital item"
-              />
+                className={styles.select}
+              >
+                <option value="">Select Category</option>
+                <option value="equipment">Equipment</option>
+                <option value="building">Building</option>
+                <option value="vehicle">Vehicle</option>
+                <option value="other">Other</option>
+              </select>
             </div>
 
             <div className={styles.formGroup}>
@@ -83,11 +98,10 @@ function EditCapexModal({ item, onClose }) {
               <textarea
                 name="description"
                 id="description"
-                value={formData.description}
+                value={formData.description || ''}
                 onChange={handleChange}
                 className={styles.textarea}
-                required
-                placeholder="Enter item description"
+                placeholder="Enter description"
               />
             </div>
 
@@ -99,106 +113,113 @@ function EditCapexModal({ item, onClose }) {
                 type="number"
                 name="amount"
                 id="amount"
-                value={formData.amount}
+                value={formData.amount || ''}
                 onChange={handleChange}
                 className={styles.input}
-                required
                 placeholder="Enter amount"
               />
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor="note" className={styles.label}>
-                Note
+              <label htmlFor="expectedLifeSpan" className={styles.label}>
+                Expected Lifespan (years)
               </label>
-              <textarea
-                name="note"
-                id="note"
-                value={formData.note}
+              <input
+                type="number"
+                name="expectedLifeSpan"
+                id="expectedLifeSpan"
+                value={formData.expectedLifeSpan || ''}
                 onChange={handleChange}
-                className={styles.textarea}
-                placeholder="Additional notes or comments"
+                className={styles.input}
+                placeholder="Enter expected lifespan"
               />
             </div>
           </div>
 
           <div className={styles.formColumn}>
             <div className={styles.formGroup}>
-              <label htmlFor="paymentMethod" className={styles.label}>
-                Payment Method
+              <label htmlFor="annualDepreciation" className={styles.label}>
+                Annual Depreciation
               </label>
-              <select
-                name="paymentMethod"
-                id="paymentMethod"
-                value={formData.paymentMethod}
+              <input
+                type="number"
+                name="annualDepreciation"
+                id="annualDepreciation"
+                value={formData.annualDepreciation || ''}
                 onChange={handleChange}
-                className={styles.select}
-                required
-              >
-                <option value="">Select Payment Method</option>
-                <option value="pos">POS</option>
-                <option value="transfer">Transfer</option>
-                <option value="loan">Loan</option>
-                <option value="leasing">Leasing</option>
-              </select>
+                className={styles.input}
+                placeholder="Enter annual depreciation"
+              />
             </div>
 
             <div className={styles.formGroup}>
               <label htmlFor="vendor" className={styles.label}>
-                Vendor/Payee (optional)
+                Vendor
               </label>
               <input
                 type="text"
                 name="vendor"
                 id="vendor"
-                value={formData.vendor}
+                value={formData.vendor || ''}
                 onChange={handleChange}
                 className={styles.input}
-                placeholder="Enter vendor/payee name"
+                placeholder="Enter vendor name"
               />
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor="purchaseDate" className={styles.label}>
-                Purchase Date
+              <label htmlFor="dateOfExpense" className={styles.label}>
+                Date of Expense
               </label>
               <input
                 type="date"
-                name="purchaseDate"
-                id="purchaseDate"
-                value={formData.purchaseDate}
+                name="dateOfExpense"
+                id="dateOfExpense"
+                value={formData.dateOfExpense || ''}
                 onChange={handleChange}
                 className={styles.input}
-                required
               />
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor="image" className={styles.label}>
-                Image (Invoice or Receipt)
+              <label htmlFor="notes" className={styles.label}>
+                Notes
+              </label>
+              <textarea
+                name="notes"
+                id="notes"
+                value={formData.notes || ''}
+                onChange={handleChange}
+                className={styles.textarea}
+                placeholder="Additional notes or comments"
+              />
+            </div>
+
+            <div className={styles.formGroup}>
+              <label htmlFor="receipt" className={styles.label}>
+                Receipt
               </label>
               <input
                 type="file"
-                name="image"
-                id="image"
+                name="receipt"
+                id="receipt"
                 onChange={handleChange}
                 className={styles.input}
-                required
               />
             </div>
           </div>
         </div>
 
-        <div className={styles.formActions}>
-          <button
-            type="button"
-            onClick={onClose}
-            className={styles.cancelButton}
-          >
+        <div className={styles.actionContainer}>
+          <button type="button" onClick={closeModal} className={styles.button}>
             Cancel
           </button>
-          <button type="submit" className={styles.submitButton}>
-            Save Changes
+          <button
+            type="submit"
+            disabled={isLoading}
+            className={`${styles.button} ${styles.submitButton}`}
+          >
+            {isLoading ? 'Updating...' : 'Update'}
           </button>
         </div>
       </form>

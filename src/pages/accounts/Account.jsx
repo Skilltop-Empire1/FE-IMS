@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import AccountSummary from '../../components/accountSummary/AccountSummary'
 import Button from '../../components/Button/Button'
 import style from './Account.module.css'
@@ -7,8 +7,15 @@ import { useGetProductsQuery } from '../../redux/APIs/productApi'
 import { useGetSalesRecordQuery } from '../../redux/APIs/salesRecordApi'
 import { formatNaira } from '../../utils/nairaSign'
 import ExpenseButton from '../../components/expenseButton/ExpenseButton'
-import usePrint from '../../utilities/usePrint'
 import { useNavigate } from 'react-router-dom'
+import {
+  PDFDownloadLink,
+  Page,
+  Text,
+  View,
+  Document,
+  StyleSheet,
+} from '@react-pdf/renderer'
 
 function Account() {
   const [startDuration, setStartDuration] = useState(months[0])
@@ -19,23 +26,19 @@ function Account() {
 
   const navigate = useNavigate()
 
-  const { printRef, triggerPrint } = usePrint()
-
-  const printPage = () => {
-    triggerPrint()
-    console.log('i got clicked')
-  }
-
   const {
     data: productData = [],
     error: productError,
     isLoading: productLoading,
   } = useGetProductsQuery()
+
   const {
-    data: salesData = [],
+    data: dataFromSales,
     error: salesError,
     isLoading: salesLoading,
   } = useGetSalesRecordQuery()
+
+  const salesData = dataFromSales?.data || []
 
   const category = productData?.map((item) => item.name) || []
   const currentYear = new Date().getFullYear()
@@ -104,16 +107,52 @@ function Account() {
     return <div>Loading data, please wait...</div>
   }
 
-  // if (productError) {
-  //   return <div>Error fetching product data: {productError.message}</div>
-  // }
+  if (productError || salesError) {
+    return <div>Error fetching data. Please try again later.</div>
+  }
 
-  // if (salesError) {
-  //   return <div>Error fetching sales data: {salesError.message}</div>
-  // }
+  const pdfStyles = StyleSheet.create({
+    page: {
+      padding: 20,
+    },
+    header: {
+      fontSize: 18,
+      marginBottom: 10,
+      textAlign: 'center',
+    },
+    section: {
+      marginBottom: 10,
+    },
+    text: {
+      fontSize: 14,
+      marginBottom: 5,
+    },
+  })
+
+  const PdfDocument = () => (
+    <Document>
+      <Page size="A4" style={pdfStyles.page}>
+        <Text style={pdfStyles.header}>Accounts Summary</Text>
+        <View style={pdfStyles.section}>
+          <Text style={pdfStyles.text}>
+            Stock Value: {formatNaira(stockValue.toFixed(2))}
+          </Text>
+          <Text style={pdfStyles.text}>
+            Total Sales: {formatNaira(totalSales.toFixed(2))}
+          </Text>
+          <Text style={pdfStyles.text}>
+            Sum Total: {formatNaira(sumTotal.toFixed(2))}
+          </Text>
+        </View>
+        <Text>
+          Duration: {startDuration} to {endDuration}, {currentYear}
+        </Text>
+      </Page>
+    </Document>
+  )
 
   return (
-    <div ref={printRef} className={style.container}>
+    <div className={style.container}>
       <div className={style.header}>
         <h3>Accounts</h3>
       </div>
@@ -158,7 +197,7 @@ function Account() {
             <select
               onChange={handleSelectProduct}
               value={selectedProducts}
-              disabled
+              disabled={productData.length === 0}
             >
               <option value="">Select Product</option>
               {category.map((item) => (
@@ -211,8 +250,19 @@ function Account() {
         <p>Revenue Breakdown</p>
       </div>
 
-      <div className={style.btn}>
-        <Button onClick={printPage} buttonName="Export" />
+      <div className={style.btnContainer}>
+        <PDFDownloadLink
+          document={<PdfDocument />}
+          fileName="accounts-summary.pdf"
+        >
+          {({ loading }) =>
+            loading ? (
+              <Button className={style.btn} buttonName="Generating PDF..." />
+            ) : (
+              <Button className={style.btn} buttonName="Download PDF" />
+            )
+          }
+        </PDFDownloadLink>
       </div>
     </div>
   )

@@ -4,4 +4,13 @@
   padding: 10px;
   border-radius: 8px;
   border: 1px solid #4f4f4f;
+  background-color: #ffffff;
+  color: #4f4f4f;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #8315db;
+  color: #ffffff;
+  border-color: #8315db;
 }

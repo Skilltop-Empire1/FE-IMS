@@ -139,5 +139,13 @@
 .breakdown p {
 }
 
+.btnContainer {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+
 .btn {
+  width: 225px;
+  height: 38px;
 }

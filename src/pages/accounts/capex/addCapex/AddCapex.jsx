@@ -74,7 +74,6 @@ function AddCapex() {
     }
   }
 
-  // Clean up preview URL when the component unmounts or a new image is uploaded
   useEffect(() => {
     return () => {
       if (preview) URL.revokeObjectURL(preview)
@@ -92,7 +91,7 @@ function AddCapex() {
           <div className={styles.formColumn}>
             <div className={styles.formGroup}>
               <label htmlFor="category" className={styles.label}>
-                CAPEX Category
+                CAPEX Category*
               </label>
               <select
                 name="category"
@@ -112,7 +111,7 @@ function AddCapex() {
 
             <div className={styles.formGroup}>
               <label htmlFor="description" className={styles.label}>
-                Item/Asset Description
+                Item/Asset Description*
               </label>
               <textarea
                 name="description"
@@ -127,7 +126,7 @@ function AddCapex() {
 
             <div className={styles.formGroup}>
               <label htmlFor="amount" className={styles.label}>
-                Amount
+                Amount*
               </label>
               <input
                 type="number"
@@ -152,7 +151,6 @@ function AddCapex() {
                 value={formData.vendor}
                 onChange={handleChange}
                 className={styles.input}
-                required
                 placeholder="Enter vendor name"
               />
             </div>
@@ -167,7 +165,6 @@ function AddCapex() {
                 value={formData.dateOfExpense}
                 onChange={handleChange}
                 className={styles.input}
-                required
               />
             </div>
           </div>
@@ -184,7 +181,6 @@ function AddCapex() {
                 value={formData.expectedLifespan}
                 onChange={handleChange}
                 className={styles.input}
-                required
                 placeholder="Enter Expected Lifespan"
               />
             </div>
@@ -199,7 +195,6 @@ function AddCapex() {
                 value={formData.annualDepreciation}
                 onChange={handleChange}
                 className={styles.input}
-                required
                 placeholder="Enter depreciation rate"
               />
             </div>
@@ -227,7 +222,6 @@ function AddCapex() {
                 id="receipt"
                 onChange={handleChange}
                 className={styles.input}
-                required
               />
               {preview && (
                 <div className={styles.preview}>

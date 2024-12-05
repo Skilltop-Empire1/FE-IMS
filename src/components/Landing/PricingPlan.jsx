@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import ModalContainer from '../../modals/ModalContainer'
-import { useCreateSubscriberDemoMutation } from '../../redux/APIs/requestDemoApi'
+import { useCreateSubscriberDemoMutation } from '../../redux/requestDemoApi'
 
 const PricingPlan = () => {
   const plans = [
     {
       title: 'Monthly',
       price: '₦25,000',
+      amount: 25000,
       info: 'Monthly Plan (30/31 Days)',
       buttonText: 'Get Started',
       features: [
@@ -20,6 +21,7 @@ const PricingPlan = () => {
     {
       title: 'Annual',
       price: '₦250,000',
+      amount: 250000,
       info: 'Yearly Plan  (12 Months)',
       buttonText: 'Get Started',
       features: [
@@ -35,6 +37,7 @@ const PricingPlan = () => {
       title: 'Premium',
       price: 'Custom Pricing',
       info: 'VIP Plan',
+      amount: 0,
       buttonText: 'Get Started',
       features: [
         'All Yearly Plan Features',
@@ -117,16 +120,18 @@ export default PricingPlan
 
 const Content = ({ selectedPlan }) => {
   const [formData, setFormData] = useState({
-    businessName: '',
+    name: '',
     email: '',
     phone: '',
-    subscribedPlan: selectedPlan,
+    subs: selectedPlan,
+    amount: 0,
   })
 
   const [step, setStep] = useState(1)
 
   const [errors, setErrors] = useState({})
   const [success, setSuccess] = useState(null)
+  const [loading, setLoading] = useState(false)
   const [createsubscriber, { isLoading }] = useCreateSubscriberDemoMutation()
 
   const formVariants = {
@@ -150,12 +155,10 @@ const Content = ({ selectedPlan }) => {
   // Validate form
   const validateForm = () => {
     const newErrors = {}
-    if (!formData.businessName)
-      newErrors.businessName = 'Business Name is required'
+    if (!formData.name) newErrors.name = 'Business Name is required'
     if (!formData.email) newErrors.email = 'Email is required'
     if (!formData.phone) newErrors.phone = 'Phone Number is required'
-    if (!formData.subscribedPlan)
-      newErrors.subscribedPlan = 'Subscribed Plan is required'
+    if (!formData.subs) newErrors.subs = 'Subscribed Plan is required'
     return newErrors
   }
 
@@ -169,21 +172,39 @@ const Content = ({ selectedPlan }) => {
       setSuccess(null)
       setErrors({})
       console.log('Form submitted:', formData)
+      let amount = 0
+      if (formData.subs == 'Monthly') {
+        amount = 25000
+      } else if (formData.subs == 'Annual') {
+        amount = 250000
+      } else {
+        amount = 0
+      }
+
+      // console.log({ subs: formData.subs, amount })
+      // return
       try {
+        setLoading(true)
         setErrors((prev) => ({ ...prev, apiError: null }))
-        const response = await createsubscriber(formData).unwrap()
+        const response = await createsubscriber({
+          ...formData,
+          amount,
+        }).unwrap()
         console.log({ response })
         setSuccess(response?.msg)
         setFormData({
-          businessName: '',
+          name: '',
           email: '',
           phone: '',
-          subscribedPlan: selectedPlan,
+          subs: selectedPlan,
+          amount: 0,
         })
         setStep(2)
       } catch (error) {
         setErrors((prev) => ({ ...prev, apiError: error?.data }))
         console.log('Error:', error)
+      } finally {
+        setLoading(false)
       }
     }
   }
@@ -231,16 +252,14 @@ const Content = ({ selectedPlan }) => {
               </label>
               <input
                 type="text"
-                name="businessName"
-                value={formData.businessName}
+                name="name"
+                value={formData.name}
                 onChange={handleInputChange}
                 placeholder="Your Business Name"
                 className="border border-gray-300 rounded-sm text-sm py-2 px-1 w-full block"
               />
-              {errors.businessName && (
-                <p className="text-red-600 text-xs mt-1">
-                  {errors.businessName}
-                </p>
+              {errors.name && (
+                <p className="text-red-600 text-xs mt-1">{errors.name}</p>
               )}
             </motion.div>
 

@@ -3,7 +3,7 @@ import { Menu, X } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import ModalContainer from '../../modals/ModalContainer'
-import { useCreateRequestDemoMutation } from '../../redux/APIs/requestDemoApi'
+import { useCreateRequestDemoMutation } from '../../redux/requestDemoApi'
 
 const Navbar = () => {
   // State to track the mobile menu visibility

@@ -1,17 +1,17 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const passwordReset = createApi({
   reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({ 
-    baseUrl: 'https://be-ims.onrender.com' ,
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'https://be-ims.onrender.com',
     prepareHeaders: (headers, { getState }) => {
-      const token = getState().auth.token || localStorage.getItem('token');
+      const token = getState().auth.token || localStorage.getItem('token')
 
       // console.log('Token in state:', token);
       if (token) {
-        headers.set('Authorization', `Bearer ${token}`); // Attach the token to the header
+        headers.set('Authorization', `Bearer ${token}`) // Attach the token to the header
       }
-      return headers;
+      return headers
     },
   }),
   endpoints: (builder) => ({
@@ -29,7 +29,7 @@ export const passwordReset = createApi({
         body: payload,
       }),
     }),
-     changePassword: builder.mutation({
+    changePassword: builder.mutation({
       query: (payload) => ({
         url: '/api/IMS/user/change-password',
         method: 'PUT', // or 'POST' depending on your server
@@ -37,6 +37,10 @@ export const passwordReset = createApi({
       }),
     }),
   }),
-});
+})
 
-export const { useRequestPasswordResetMutation, useResetPasswordMutation, useChangePasswordMutation } = passwordReset;
+export const {
+  useRequestPasswordResetMutation,
+  useResetPasswordMutation,
+  useChangePasswordMutation,
+} = passwordReset

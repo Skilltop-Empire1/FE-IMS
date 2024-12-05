@@ -11,6 +11,7 @@ import {
   FileText,
   User,
   Settings,
+  DollarSign,
   PlusCircle,
   UserPlus,
 } from 'lucide-react'
@@ -23,8 +24,8 @@ Modal.setAppElement('#root')
 function SideBar() {
   const [modalIsOpen, setModalIsOpen] = useState(false)
 
-  const  role  = JSON.parse(localStorage.getItem('user'))?.role
-  const isSuperAdmin = role && role  === 'superAdmin'
+  const role = JSON.parse(localStorage.getItem('user'))?.role
+  const isSuperAdmin = role && role === 'superAdmin'
 
   const dispatch = useDispatch()
 
@@ -115,6 +116,19 @@ function SideBar() {
             >
               <Settings className={style.iconStyle} />
               <span>Settings</span>
+            </NavLink>
+          </li>
+        )}
+        {isSuperAdmin && (
+          <li>
+            <NavLink
+              to="/app/subscriber-payment"
+              className={({ isActive }) =>
+                isActive ? style.activeLink : undefined
+              }
+            >
+              <DollarSign className={style.iconStyle} />
+              <span>Subscription</span>
             </NavLink>
           </li>
         )}

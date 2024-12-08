@@ -221,11 +221,11 @@ const Table2 = ({ status, date, api = [], deleted, updated, view, runPrint, prin
                       <Edit2Icon size={20} className={style.icon2} />
                       Edit
                     </p>
-                    <hr />
+                    {/* <hr />
                     <p className="flex gap-3 text-sm ">
                       <Printer size={20} className={style.icon2} />
                       Print
-                    </p>
+                    </p> */}
                     <hr />
                     <p
                       onClick={() => deleted(product.saleId)}

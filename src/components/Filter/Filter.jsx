@@ -33,8 +33,8 @@ const Filter = ({
 
   return (
     <div className={` ${style.body}`}>
-      <div className='flex justify-between items-center px-4'>
-        <div className={style.left}>
+      <div className='flex  items-center'>
+        <div className={`${style.left}  w-[40%]`}>
           <h2>{title}</h2>
         </div>
         <div className={`flex ${style.right}`}>

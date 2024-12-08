@@ -45,6 +45,22 @@ const AddSaleRecord = () => {
   const [currentAmount, setCurrentAmount] = useState("");
   const [currentAmount2, setCurrentAmount2] = useState("");
   const [nextDueDate, setNextDueDate] = useState("");
+  const [previousPaymentOption, setPreviousPaymentOption] = useState("");
+
+
+  const handlePaymentOptionChange = (e) => {
+    setPreviousPaymentOption(paymentOption); // Store the current value as the previous one
+    setPaymentOption(e.target.value); // Update the payment option
+  };
+
+  
+  const closeModalByX = () => {
+    setPaymentOption(previousPaymentOption); // Reset to the previous state
+    setShowFullPaymentModal(false);
+    setShowCreditSalesModal(false);
+    setShowPartPaymentModal(false);
+  };
+  
 
 
   const handleChange = (event) => {
@@ -246,7 +262,7 @@ const handleChange2 = (event) => {
             <select
               className={style.input}
               value={paymentOption}
-              onChange={(e) => setPaymentOption(e.target.value)}
+              onChange={handlePaymentOptionChange}
               required
             >
               <option value="">Select payment option</option>
@@ -387,7 +403,7 @@ const handleChange2 = (event) => {
               <div className='bg-white w-96 px-10 py-6 rounded-md'>
                 <div className='flex justify-between'>
                   <h2 className='font-bold text-2xl'>Full Payment</h2>
-                  <p onClick={closeModal} className="cursor-pointer">X</p>
+                  <h5 onClick={closeModalByX} className="cursor-pointer text-red-500">X</h5>
                 </div>
 
 
@@ -448,7 +464,7 @@ const handleChange2 = (event) => {
               <div className='bg-white w-96 px-10 py-6 rounded-md'>
                 <div className='flex justify-between'>
                   <h2 className='font-bold text-2xl'>Credit Sales</h2>
-                  <p onClick={closeModal} className="cursor-pointer">X</p>
+                  <h5 onClick={closeModalByX} className="cursor-pointer text-red-500">X</h5>
                 </div>
 
 
@@ -482,9 +498,8 @@ const handleChange2 = (event) => {
               <div className='bg-white w-96 px-10 py-6 rounded-md h-[80%] overflow-y-auto'>
                 <div className='flex justify-between'>
                   <h2 className='font-bold text-2xl'>Part Payment</h2>
-                  <p onClick={closeModal}className="cursor-pointer">X</p>
+                  <h5 onClick={closeModalByX} className="cursor-pointer text-red-500">X</h5>
                 </div>
-
 
                 <div className={style.methods}>
                   <h3>Payment Method</h3>

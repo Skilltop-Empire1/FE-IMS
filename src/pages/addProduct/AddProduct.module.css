@@ -4,7 +4,6 @@
 }
 
 .title {
-  font-family:;
   font-size: clamp(1.5rem, 0.2951vw + 1.8111rem, 2.18rem);
   font-weight: bolder;
   line-height: 48px;

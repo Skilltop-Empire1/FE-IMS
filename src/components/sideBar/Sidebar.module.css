@@ -11,6 +11,15 @@
   position: fixed;
 }
 
+.closeMenu {
+  display: none;
+  color: #fff;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  cursor: pointer;
+}
+
 .navContainer li {
   margin-bottom: 14px;
 }
@@ -102,4 +111,14 @@
 .modalButtons button:last-child {
   background-color: #7d2ce0;
   color: #fff;
+}
+
+@media (max-width: 768px) {
+  .closeMenu {
+    display: block;
+  }
+
+  .navContainer {
+    padding-top: 65px;
+  }
 }

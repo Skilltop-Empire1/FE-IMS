@@ -35,20 +35,20 @@ function Sales() {
       </div>
       <ul>
         <li>
-          <span>{posPayments}</span>
           <span>POS</span>
+          <span>{posPayments}</span>
         </li>
         <li>
-          <span>{transferPayments}</span>
           <span>Transfers</span>
+          <span>{transferPayments}</span>
         </li>
         <li>
-          <span>{cashPayments}</span>
           <span>Cash</span>
+          <span>{cashPayments}</span>
         </li>
         <li>
-          <span>{totalPayments}</span>
           <span>Total</span>
+          <span>{totalPayments}</span>
         </li>
       </ul>
     </div>

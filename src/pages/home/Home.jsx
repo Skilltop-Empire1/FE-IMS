@@ -14,6 +14,7 @@ import { useGetProductsQuery } from '../../redux/APIs/productApi'
 import { Rings } from 'react-loader-spinner'
 import { useGetCategoriesQuery } from '../../redux/categoryApi'
 import { useGetStaffByIdQuery } from '../../redux/staffApi'
+import { Printer } from 'lucide-react'
 
 function Home() {
   const { data: storeData = [] } = useGetStoresQuery()
@@ -29,7 +30,9 @@ function Home() {
     isLoading: staffLoading,
   } = useGetStaffByIdQuery(id)
   // console.log('staff data', staff, 'error', staffError) // Log to see if there's any error
-
+  const handlePrint = () => {
+    window.print()
+  }
   if (isLoading) {
     return (
       <div
@@ -112,7 +115,10 @@ function Home() {
       </div>
 
       <div className={style.btn}>
-        <Button buttonName="Export" />
+        <button onClick={handlePrint}>
+          <Printer size={16} />
+          <span>Print</span>
+        </button>
       </div>
     </div>
   )

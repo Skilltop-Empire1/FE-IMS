@@ -8,38 +8,120 @@
   line-height: 44px;
   text-align: left;
 }
+
 .cardsContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%; /* Set to 100% to take full width */
+  height: auto; /* Let the height adjust according to the content */
+  padding: 6px 0; /* Adjust padding for smaller screens */
+  gap: 16px; /* Add gap between cards */
+  border-radius: 8px;
+}
+
+.cards {
+  flex: 1 1 calc(33.333% - 16px); /* Cards take up 1/3 of the width minus the gap */
+}
+
+.cards:hover {
+  transform: scale(1.02);
+}
+
+.saleAndCatgoryContainer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 957px;
-  height: 152px;
-  top: 180px;
-  left: 26px;
-  padding: 6px 390px 6px 6px;
-  gap: 0px;
-  border-radius: 8px;
-  opacity: 0px;
-  background-color: #f2f0f3;
-}
-.saleAndCatgoryContainer {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
   margin-top: 24px;
+  gap: 20px;
+  width: 100%;
 }
 
 .stockStatusAndStoreList {
   display: flex;
   flex-direction: row;
   margin-top: 19px;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 16px;
 }
 
 .btn {
   margin-top: 19px;
-  text-align: right;
   display: flex;
-  justify-content: flex-end;
-  align-items: end;
+  flex-direction: row;
+  justify-content: right;
+  align-items: center;
+}
+
+.btn button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 245px;
+  height: 48px;
+  padding: 10px;
+  gap: 16px;
+  background-color: #8315db;
+  justify-content: center;
+  color: #fff;
+}
+
+.btn button:hover {
+  background-color: #fff;
+  color: #8315db;
+  transition:
+    background-color 0.3s ease-in-out,
+    color 0.3s ease-in-out;
+  border: solid 1px #8315db;
+}
+
+/* Media Queries for Responsiveness */
+
+/* For screens smaller than 768px (tablets and mobile phones) */
+@media (max-width: 768px) {
+  .saleAndCatgoryContainer {
+    flex-wrap: wrap;
+  }
+  .header h3 {
+  }
+
+  .cardsContainer {
+  }
+
+  .cards {
+  }
+
+  .stockStatusAndStoreList {
+    flex-wrap: wrap;
+  }
+
+  .btn {
+  }
+}
+
+/* For screens smaller than 480px (mobile phones) */
+@media (max-width: 480px) {
+  .btn button {
+    width: 100%;
+    border-radius: 8px;
+  }
+  .header h3 {
+  }
+
+  .cardsContainer {
+  }
+
+  .cards {
+  }
+
+  .stockStatusAndStoreList {
+  }
+
+  .btn {
+  }
 }

@@ -21,7 +21,7 @@ import Logout from '../../modals/logout/Logout'
 
 Modal.setAppElement('#root')
 
-function SideBar() {
+function SideBar({ closeMenu }) {
   const [modalIsOpen, setModalIsOpen] = useState(false)
 
   const role = JSON.parse(localStorage.getItem('user'))?.role
@@ -37,7 +37,10 @@ function SideBar() {
   }
 
   return (
-    <nav className={style.navContainer}>
+    <nav className={`${style.navContainer}`}>
+      <div onClick={closeMenu} className={style.closeMenu}>
+        <p>X</p>
+      </div>
       <ul>
         <li>
           <NavLink

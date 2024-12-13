@@ -1,9 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 import style from './Main.module.css'
+import { Menu } from 'lucide-react'
 
-function Main({ children }) {
-  // return <div className="flex-grow p-4 mt-20 ml-72">{children}</div>
-  return <div className={style.mainContainer}>{children}</div>
+function Main({ children, toggleMenu }) {
+  return (
+    <div className={style.mainContainer}>
+      {' '}
+      <button
+        className={style.hamburger}
+        onClick={toggleMenu}
+        aria-label="Toggle menu"
+      >
+        <Menu size={32} />
+      </button>
+      {children}
+    </div>
+  )
 }
 
 export default Main

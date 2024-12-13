@@ -8,3 +8,13 @@
   flex-direction: row;
   margin-top: 60px;
 }
+
+@media (max-width: 768px) {
+  .sideNav {
+    display: none;
+  }
+
+  .sideNav.show {
+    display: flex;
+  }
+}

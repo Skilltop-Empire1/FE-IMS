@@ -1,3 +1,4 @@
+/* Default styles for desktop-first layout */
 .navContainer {
   display: flex;
   flex-direction: row;
@@ -6,11 +7,10 @@
   padding: 11px;
   position: fixed;
   background-color: #f4f3f3;
-  width: 100vw;
+  width: 100%;
   padding: 6px 20px;
   height: 55px;
   box-shadow: 0px 0px 1px 0px #171a1f12;
-
   box-shadow: 0px 0px 2px 0px #171a1f1f;
 }
 
@@ -65,4 +65,75 @@
 
 .navContainer button {
   cursor: pointer;
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+  .leftNavs {
+    gap: 60px; /* Reduce the space between left navigation items */
+  }
+
+  .leftNavs li {
+    margin-right: 40px; /* Reduce margin for smaller screens */
+  }
+}
+
+@media (max-width: 768px) {
+  /* Stack the navigation items vertically on medium screens */
+  .navContainer {
+    padding: 10px;
+    height: auto;
+  }
+
+  .leftNavs {
+    gap: 20px;
+    margin-bottom: 10px; /* Add space below the logo and search bar */
+  }
+
+  .leftNavs li {
+    margin-right: 0;
+  }
+
+  .rightNavs {
+    align-items: flex-start; /* Align right items vertically on small screens */
+  }
+
+  .rightNavs li {
+    margin-left: 0;
+    margin-bottom: 10px; /* Space out profile and settings */
+  }
+
+  .profileImage {
+    width: 35px; /* Reduce the profile image size */
+  }
+}
+
+@media (max-width: 480px) {
+  /* Stack all elements and adjust for small screens */
+  .navContainer {
+    padding: 8px;
+    height: auto;
+  }
+
+  .leftNavs {
+    gap: 15px;
+    margin-bottom: 10px;
+  }
+
+  .rightNavs {
+    gap: 15px; /* More space between profile, settings, and notifications */
+  }
+
+  .profileImage {
+    width: 30px; /* Make the profile image smaller for mobile */
+  }
+
+  .navContainer img {
+    max-height: 30px; /* Reduce the logo size for small screens */
+  }
+
+  .rightNavs li {
+    margin-left: 0;
+    margin-bottom: 8px; /* Add space between profile, settings, etc. */
+  }
 }

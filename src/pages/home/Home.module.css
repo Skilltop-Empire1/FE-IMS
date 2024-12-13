@@ -8,32 +8,45 @@
   line-height: 44px;
   text-align: left;
 }
+
 .cardsContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%; /* Set to 100% to take full width */
+  height: auto; /* Let the height adjust according to the content */
+  padding: 6px 10px; /* Adjust padding for smaller screens */
+  gap: 16px; /* Add gap between cards */
+  border-radius: 8px;
+}
+
+.cards {
+  flex: 1 1 calc(33.333% - 16px); /* Cards take up 1/3 of the width minus the gap */
+  min-width: 280px; /* Minimum width for cards */
+}
+
+.cards:hover {
+  transform: scale(1.02);
+}
+
+.saleAndCatgoryContainer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 957px;
-  height: 152px;
-  top: 180px;
-  left: 26px;
-  padding: 6px 390px 6px 6px;
-  gap: 0px;
-  border-radius: 8px;
-  opacity: 0px;
-  background-color: #f2f0f3;
-}
-.saleAndCatgoryContainer {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
   margin-top: 24px;
+  gap: 20px;
+  width: 100%;
 }
 
 .stockStatusAndStoreList {
   display: flex;
   flex-direction: row;
   margin-top: 19px;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  gap: 20px;
 }
 
 .btn {
@@ -42,4 +55,44 @@
   display: flex;
   justify-content: flex-end;
   align-items: end;
+}
+
+/* Media Queries for Responsiveness */
+
+/* For screens smaller than 768px (tablets and mobile phones) */
+@media (max-width: 768px) {
+  .header h3 {
+  }
+
+  .cardsContainer {
+  }
+
+  .cards {
+  }
+
+  .saleAndCatgoryContainer,
+  .stockStatusAndStoreList {
+  }
+
+  .btn {
+  }
+}
+
+/* For screens smaller than 480px (mobile phones) */
+@media (max-width: 480px) {
+  .header h3 {
+  }
+
+  .cardsContainer {
+  }
+
+  .cards {
+  }
+
+  .saleAndCatgoryContainer,
+  .stockStatusAndStoreList {
+  }
+
+  .btn {
+  }
 }

@@ -34,3 +34,32 @@
   line-height: 22px;
   text-align: center;
 }
+
+@media (max-width: 768px) {
+  .cardContainer {
+    width: 185px;
+    height: 194px;
+  }
+}
+
+@media (max-width: 414px) {
+  .cardContainer {
+    width: 85px;
+    height: 154px;
+  }
+
+  .cardContainer h4 {
+    font-size: 16px;
+    line-height: 48px;
+  }
+
+  .cardContainer .qty {
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  .cardName {
+    font-size: 12px;
+    font-weight: 500;
+  }
+}

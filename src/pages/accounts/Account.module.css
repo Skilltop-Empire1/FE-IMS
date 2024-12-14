@@ -15,17 +15,26 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  /* flex-wrap: wrap; */
+  gap: 32px;
+  width: 100%;
 }
 
 .durationContainer {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 1rem;
+  width: 100%;
 }
 
 .selectOptions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
 }
 
 /* .selectOptions select {
@@ -43,7 +52,7 @@
 }
 
 .selectBox select {
-  width: 11.4375rem;
+  width: 183px;
   height: 3rem;
   padding: 0.625rem;
   border-radius: 0.5rem;
@@ -57,10 +66,12 @@
 .accountSummary {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
-  gap: 9.375rem;
   align-items: center;
   margin-top: 2rem;
+  justify-content: space-between;
+  width: 100%;
+  /* flex-wrap: wrap; */
+  margin: 3.125rem 0;
 }
 
 .summaryContainer {
@@ -75,8 +86,11 @@
   margin-bottom: 1.5rem;
 }
 
-.accountSummary {
-  margin-bottom: 3.125rem;
+.durationStatement {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 28px;
+  text-align: center;
 }
 
 .accountSummary .valueStyle {
@@ -143,9 +157,62 @@
   display: flex;
   justify-content: right;
   align-items: center;
+  width: 100%;
 }
 
 .btn {
   width: 225px;
-  height: 38px;
+  height: 48px;
+}
+
+.btn:hover {
+  background-color: #fff;
+  color: #7d2ce0;
+  border: 1px solid #7d2ce0;
+}
+
+@media (max-width: 768px) {
+  /* .selectBox select {
+    width: 183px;
+    font-size: small;
+  } */
+
+  .selectOptionsContainer {
+    flex-wrap: wrap;
+  }
+
+  .durationContainer {
+    gap: 8px;
+  }
+
+  .durationStatement {
+    font-size: medium;
+    text-align: left;
+  }
+
+  .expenditures {
+    gap: 3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .selectBox select {
+    width: 140px;
+    font-size: small;
+  }
+
+  .selectBox option {
+    font-size: x-small;
+  }
+  .accountSummary {
+  }
+
+  .btnContainer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn {
+    width: 100%;
+  }
 }

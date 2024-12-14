@@ -29,7 +29,6 @@ function Home() {
     error: staffError,
     isLoading: staffLoading,
   } = useGetStaffByIdQuery(id)
-  // console.log('staff data', staff, 'error', staffError) // Log to see if there's any error
   const handlePrint = () => {
     window.print()
   }

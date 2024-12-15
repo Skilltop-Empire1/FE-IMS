@@ -1,4 +1,4 @@
-import React, { Children, useEffect, useRef } from 'react'
+import React, { Children, useEffect, useRef, useState } from 'react'
 import NavBar from '../navBar/NavBar'
 import SideBar from '../sideBar/SideBar'
 import { Outlet } from 'react-router-dom'
@@ -10,7 +10,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { hideDropdown } from '../../redux/slices/dropdownSlice'
 
 function AppLayout() {
-  // useRedirectOnMobile() //commented out for backwards compatibility during development
+  const [isShowMenu, setIsShowMenu] = useState(false)
+  const toggleMenu = () => {
+    console.log('toggleMenu active', isShowMenu)
+    setIsShowMenu(!isShowMenu)
+  }
+  const closeMenu = () => {
+    setIsShowMenu(false)
+  }
+
   const dispatch = useDispatch()
   const dropdownRef = useRef(null)
   useEffect(() => {
@@ -32,10 +40,10 @@ function AppLayout() {
           <NavBar dropdownRef={dropdownRef} />
         </div>
         <div className={style.main}>
-          <div className="side-nav">
-            <SideBar />
+          <div className={`${style.sideNav} ${isShowMenu ? style.show : ''}`}>
+            <SideBar closeMenu={closeMenu} />
           </div>
-          <Main>
+          <Main toggleMenu={toggleMenu}>
             <Outlet />
           </Main>
         </div>

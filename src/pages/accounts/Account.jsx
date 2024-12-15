@@ -169,7 +169,7 @@ function Account() {
               ))}
             </select>
           </div>
-          <div>
+          <div className={style.paragraph}>
             <p>To</p>
           </div>
           <div className={style.selectBox}>
@@ -184,14 +184,14 @@ function Account() {
             </select>
           </div>
         </div>
-        {startDuration && endDuration && (
-          <p>
-            {startDuration} <span>{currentYear}</span> to {endDuration}{' '}
-            <span>{currentYear}</span>
-          </p>
-        )}
 
         <div className={style.selectOptions}>
+          {startDuration && endDuration && (
+            <p className={style.durationStatement}>
+              {startDuration} <span>{currentYear}</span> to {endDuration}{' '}
+              <span>{currentYear}</span>
+            </p>
+          )}
           <div className={style.selectBox}>
             <p>Product Name</p>
             <select

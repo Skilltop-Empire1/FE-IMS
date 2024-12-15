@@ -51,7 +51,7 @@ const Login = () => {
   return (
     <div className={style.body}>
       <div className={style.left}>
-        <img src="/images/logo.png" alt="ims-logo" className=" md:w-28 md:hidden " />
+        <img src="/images/logo.png" alt="ims-logo" className=" lg:w-28 lg:hidden " />
         <h2>Welcome back</h2>
         <h3>Login</h3>
         <form onSubmit={handleSubmit} className={style.form}>

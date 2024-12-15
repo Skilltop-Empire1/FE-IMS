@@ -149,3 +149,20 @@
     font-weight: 300;
     font-size: 14px;
 }
+
+@media (max-width: 600px) {
+    .grid {
+      display: block;
+    }
+  
+    .input {
+      width: 100% !important;
+    }
+  }
+  
+  @media (max-width: 1024px) {
+  
+    .input {
+      width: 90%;
+    }
+  }

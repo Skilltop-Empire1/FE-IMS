@@ -47,7 +47,7 @@ const StoreDetail = ({ selectedStore, onClose }) => {
   };
 
   return (
-    <div className={`mt-11 ${style.box}`}>
+    <div className={`my-11  ${style.box}`}>
       {selectedStore ? (
         <div>
           <h3>{selectedStore.location}</h3>

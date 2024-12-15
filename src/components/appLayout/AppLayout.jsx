@@ -35,7 +35,6 @@ function AppLayout() {
           <div className="side-nav">
             <SideBar />
           </div>
-
           <Main>
             <Outlet />
           </Main>

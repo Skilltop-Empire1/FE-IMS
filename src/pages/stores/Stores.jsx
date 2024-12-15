@@ -82,7 +82,7 @@ const Stores = () => {
   }
 
   return (
-    <div>
+    <div className='w-[100%] px-3'>
       {/* Filter Component */}
       <Filter
         handleSearch={handleSearch}
@@ -96,7 +96,7 @@ const Stores = () => {
 
       {/* Store List Component */}
       {storesLoading || isFetching ? (
-         <div className='animate-pulse flex gap-4'>
+         <div className='animate-pulse flex flex-wrap gap-4'>
           {Array(3).fill().map((_, i) => (        
             <div key={i} className='h-44 w-44 bg-slate-300 rounded-3xl'></div>
           ))}

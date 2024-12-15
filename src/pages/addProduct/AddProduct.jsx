@@ -121,7 +121,7 @@ const AddProduct = () => {
 
 
   return (
-    <div className={`${style.body} relative`}>
+    <div className={`${style.body} relative w-[100%]`}>
       <div className="absolute w-full ease-in-out duration-300">
         <p className={`text-center bg-green-400 py-3 ${success}`} style={{ color: '#fff' }}>
           Product saved successfully

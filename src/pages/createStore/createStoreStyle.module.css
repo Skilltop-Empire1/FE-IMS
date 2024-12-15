@@ -61,3 +61,20 @@
 .check:checked::before {
   content: '\2713';
 }
+
+@media (max-width: 600px) {
+  .form {
+    display: block;
+  }
+
+  .input {
+    width: 100%  !important;
+  }
+}
+
+@media (max-width: 1024px) {
+
+  .input {
+    width: 90%;
+  }
+}

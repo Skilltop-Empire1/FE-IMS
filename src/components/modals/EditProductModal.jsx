@@ -84,7 +84,7 @@ const EditProductModal = ({
     <div>
       {showUpdateModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white w-full max-w-2xl max-h-[600px] rounded-lg shadow-lg p-6 space-y-4 overflow-y-auto">
+          <div className="bg-white w-11/12 max-w-2xl max-h-[600px] rounded-lg shadow-lg p-6 space-y-4 overflow-y-auto">
             <h2 className="text-xl font-semibold text-gray-800">
               Edit Product
             </h2>
@@ -128,14 +128,15 @@ const EditProductModal = ({
                 <label className="block text-sm font-medium text-gray-700">
                   Product Photo
                 </label>
-                <div className="flex items-center space-x-4">
+                <div className="lg:flex items-center space-x-4">
                   {/* File Input */}
                   <input
                     type="file"
                     name="prodPhoto"
                     onChange={handleInputChange}
-                    className="mt-1 block px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    className="mt-1 w-full block px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   />
+                  
                   {/* Existing/Preview Image */}
                   {previewImage && (
                     <img
@@ -145,6 +146,7 @@ const EditProductModal = ({
                     />
                   )}
                 </div>
+                
                 {productToUpdate?.prodPhoto && !previewImage && (
                   <p className="text-xs text-gray-500 mt-1">
                     Current Image: {productToUpdate.prodPhoto}

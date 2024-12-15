@@ -219,7 +219,7 @@ const handleChange2 = (event) => {
     }
 
   return (
-    <div className={`${style.body} relative`}>
+    <div className={`${style.body} relative w-full`}>
       <div className='absolute w-full ease-in-out duration-300'>
         <p className={`text-center bg-green-400 py-3 ${success}`} style={{ color: '#fff' }}>Record saved successfully</p>
       </div>
@@ -370,7 +370,7 @@ const handleChange2 = (event) => {
                 <label htmlFor="check">Add another record</label>
               </div>
               <div className={style.cont}>
-                <div className="flex justify-between items-center mt-8 w-11/12">
+                <div className="flex justify-between items-center mt-8 ">
                   <button className={style.submit2} disabled={isLoading}>
                     Cancel
                   </button>
@@ -400,7 +400,7 @@ const handleChange2 = (event) => {
             <div className={style.fullPayment}>
 
 
-              <div className='bg-white w-96 px-10 py-6 rounded-md'>
+              <div className='bg-white md:w-96 px-10 py-6 rounded-md w-11/12 '>
                 <div className='flex justify-between'>
                   <h2 className='font-bold text-2xl'>Full Payment</h2>
                   <h5 onClick={closeModalByX} className="cursor-pointer text-red-500">X</h5>
@@ -461,7 +461,7 @@ const handleChange2 = (event) => {
             <div className={style.fullPayment}>
 
 
-              <div className='bg-white w-96 px-10 py-6 rounded-md'>
+              <div className='bg-white md:w-96 w-11/12 px-10 py-6 rounded-md'>
                 <div className='flex justify-between'>
                   <h2 className='font-bold text-2xl'>Credit Sales</h2>
                   <h5 onClick={closeModalByX} className="cursor-pointer text-red-500">X</h5>
@@ -495,7 +495,7 @@ const handleChange2 = (event) => {
             <div className={style.fullPayment}>
 
 
-              <div className='bg-white w-96 px-10 py-6 rounded-md h-[80%] overflow-y-auto'>
+              <div className='bg-white md:w-96 w-11/12 px-10 py-6 rounded-md h-[80%] overflow-y-auto'>
                 <div className='flex justify-between'>
                   <h2 className='font-bold text-2xl'>Part Payment</h2>
                   <h5 onClick={closeModalByX} className="cursor-pointer text-red-500">X</h5>

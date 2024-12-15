@@ -153,7 +153,7 @@ const SalesRecord = () => {
 
 
   return (
-    <div>
+    <div className='w-[100%] px-3'>
       <Filter
         handleSearch={handleSearch}
         handleFilter={handleFilter}

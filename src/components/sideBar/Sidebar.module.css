@@ -9,6 +9,7 @@
   flex-direction: column;
   justify-content: space-between;
   position: fixed;
+  z-index: 10;
 }
 
 .closeMenu {
@@ -53,13 +54,26 @@
   align-items: center;
   justify-content: start;
   margin-top: 40px;
+  width: 100%;
 }
 
 .logoutButton {
   background-color: #7d2ce0 !important;
+  border: 1px solid #fff;
+  border-radius: 10px;
   font-size: 16px !important;
   font-weight: 400 !important;
   color: #fff !important;
+  height: 48px;
+  padding: 10px 16px;
+  width: 150px;
+  font-weight: 500;
+}
+
+.logoutButton:hover {
+  background-color: #fff !important;
+  color: #7d2ce0 !important;
+  border: 1px solid #7d2ce0 !important;
 }
 
 .modal {

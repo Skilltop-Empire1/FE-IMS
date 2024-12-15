@@ -160,11 +160,14 @@ function SideBar({ closeMenu }) {
           </NavLink>
         </li>
         <li className={style.logout}>
-          <Button
+          <button onClick={openModal} className={style.logoutButton}>
+            Logout
+          </button>
+          {/* <Button
             onClick={openModal}
             className={style.logoutButton}
             buttonName="Logout"
-          />
+          /> */}
         </li>
       </ul>
       <Modal

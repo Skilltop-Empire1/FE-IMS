@@ -118,3 +118,34 @@
   width: 12.5rem;
   height: 12.5rem;
 }
+
+@media (max-width: 768px) {
+  .formRow {
+    flex-direction: column;
+  }
+
+  .actionButtonContainer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+
+  .checkboxGroup input {
+    text-align: left;
+  }
+
+  .actionBtns {
+    justify-content: space-between;
+  }
+
+  .actionBtns button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .actionBtns button {
+    width: 60%;
+    padding: 1rem 2.25rem;
+  }
+}

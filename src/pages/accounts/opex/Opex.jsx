@@ -82,27 +82,27 @@ function Opex() {
 
   return (
     <div className={style.container}>
-      <div>
-        <div className={style.titleContainer}>
-          <h3>Opex Expense Record</h3>
-          <div className={style.searchContainer}>
-            <div className={style.searchBar}>
-              <Search color="#6D6D6D" size="24px" />
-              <input
-                type="text"
-                value={searchQuery} // Bind the input to searchQuery
-                onChange={handleSearchChange} // Update the search query on change
-                placeholder="Search by category or description"
-                aria-label="Search expenses" // Accessibility improvement
-              />
-            </div>
-            <button
-              className={style.addButton} // Styled for prominence
-              onClick={() => navigate('/app/accounts/opex/add-opex')}
-            >
-              + Add Expense
-            </button>
+      <div className={style.titleContainer}>
+        <div className={style.header}>
+          <h3>OPEX Record</h3>
+        </div>
+        <div className={style.searchContainer}>
+          <div className={style.searchBar}>
+            <Search color="#6D6D6D" size="24px" />
+            <input
+              type="text"
+              value={searchQuery} // Bind the input to searchQuery
+              onChange={handleSearchChange} // Update the search query on change
+              placeholder="Search by category or description"
+              aria-label="Search expenses" // Accessibility improvement
+            />
           </div>
+          <button
+            className={style.addButton} // Styled for prominence
+            onClick={() => navigate('/app/accounts/opex/add-opex')}
+          >
+            + Add Expense
+          </button>
         </div>
       </div>
 

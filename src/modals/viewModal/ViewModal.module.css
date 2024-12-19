@@ -85,7 +85,7 @@
 .actionBtn button {
   width: 200px;
   height: 60px;
-  padding: 16px 68px 16px 68px;
+  padding: 16px 68px;
   border-radius: 8px;
 }
 
@@ -96,9 +96,43 @@
   box-shadow: 0px 0px 2px 0px #171a1f1f;
 }
 
+.actionBtn button:hover {
+  box-shadow: 0px 0px 5px 0px rgba(131, 21, 219, 0.5);
+  transform: scale(1.05); /* Slightly enlarge the button on hover */
+}
+
 .actionBtn button:last-child {
   background: #8315db;
   box-shadow: 0px 0px 1px 0px #171a1f12;
   box-shadow: 0px 0px 2px 0px #171a1f1f;
   color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 100%;
+    height: 65vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: 100%;
+  }
+  .formRow {
+    flex-direction: column;
+  }
+
+  .actionContainer {
+    width: 100%;
+  }
+
+  .actionBtn button {
+    width: 140px;
+    padding: 0 32px;
+  }
+
+  .formTitle {
+    font-size: 1.5rem;
+  }
 }

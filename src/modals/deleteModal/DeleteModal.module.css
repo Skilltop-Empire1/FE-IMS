@@ -54,3 +54,21 @@
 .deleteBtn:hover {
   background-color: #c0392b; /* Darker red on hover */
 }
+
+@media (max-width: 768px) {
+  .deleteModal {
+    width: 65vw;
+    height: 30vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .deleteModal {
+    width: 100%;
+    height: 30vh;
+  }
+
+  .deleteMessage {
+    font-size: 14px;
+  }
+}

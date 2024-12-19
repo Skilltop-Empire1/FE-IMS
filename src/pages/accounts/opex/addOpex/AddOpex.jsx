@@ -80,7 +80,7 @@ function AddOpex() {
       {isError && <p className={styles.error}>{errorMessage}</p>}
       {isSuccess && <p className={styles.success}>{successMessage}</p>}
 
-      <h3 className={styles.formTitle}>Add Operational Expenses</h3>
+      <h3 className={styles.formTitle}>Add Operational Expenses (OPEX)</h3>
       <form onSubmit={handleSubmit}>
         <div className={styles.formRow}>
           <div className={styles.formColumn}>

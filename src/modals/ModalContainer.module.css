@@ -8,6 +8,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 20;
 }
 
 .modalContent {
@@ -15,6 +16,7 @@
   padding: 2rem;
   border-radius: 8px;
   position: relative;
+  overflow-y: auto;
 }
 
 .closeButton {
@@ -26,4 +28,14 @@
   font-size: 1.5rem;
   cursor: pointer;
   color: black;
+}
+
+@media (max-width: 480px) {
+  .modalContent {
+    overflow-y: auto;
+    padding-bottom: 32px;
+  }
+  .modalContent {
+    width: 95%;
+  }
 }

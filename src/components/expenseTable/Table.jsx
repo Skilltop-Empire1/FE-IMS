@@ -102,68 +102,70 @@ function Table({
           {error.message || 'Failed to fetch data.'}
         </p>
       )}
-      <table className={style.table}>
-        <thead>
-          <tr>
-            {headers.map((header, index) => (
-              <th key={index}>{header}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {data &&
-            currentItems.map((item) => {
-              const itemId = getId(item)
-              return (
-                <tr key={itemId}>
-                  {renderRow ? (
-                    renderRow(item, {
-                      handleView,
-                      handleEdit,
-                      handleDelete,
-                    })
-                  ) : (
-                    <>
-                      <td>{item.name}</td>
-                      <td>{item.hod}</td>
-                      <td>{item.noOfStaff}</td>
-                      <td>{item.location}</td>
-                      <td>{item.bedCapacity}</td>
-                      <td>{item.specialty}</td>
-                      <td>{item.equipment.join(', ')}</td>
-                    </>
-                  )}
-                  <td>
-                    <div
-                      ref={actionIconRef}
-                      className={style.ActionCell}
-                      onClick={() => toggleActionCell(itemId)}
-                      aria-label="More actions"
-                      role="button"
-                      tabIndex="0"
-                      onKeyDown={(e) =>
-                        e.key === 'Enter' && toggleActionCell(itemId)
-                      }
-                    >
-                      <MoreHorizontal size={24} color="currentColor" />
-                      {activeActionCell === itemId && (
-                        <ActionCell
-                          item={item}
-                          onView={handleView}
-                          onEdit={handleEdit}
-                          onDelete={handleDelete}
-                          onPrint={() =>
-                            console.log('Print action for id:', itemId)
-                          }
-                        />
-                      )}
-                    </div>
-                  </td>
-                </tr>
-              )
-            })}
-        </tbody>
-      </table>
+      <div className={style.tableContainer}>
+        <table className={style.table}>
+          <thead>
+            <tr>
+              {headers.map((header, index) => (
+                <th key={index}>{header}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {data &&
+              currentItems.map((item) => {
+                const itemId = getId(item)
+                return (
+                  <tr key={itemId}>
+                    {renderRow ? (
+                      renderRow(item, {
+                        handleView,
+                        handleEdit,
+                        handleDelete,
+                      })
+                    ) : (
+                      <>
+                        <td>{item.name}</td>
+                        <td>{item.hod}</td>
+                        <td>{item.noOfStaff}</td>
+                        <td>{item.location}</td>
+                        <td>{item.bedCapacity}</td>
+                        <td>{item.specialty}</td>
+                        <td>{item.equipment.join(', ')}</td>
+                      </>
+                    )}
+                    <td>
+                      <div
+                        ref={actionIconRef}
+                        className={style.ActionCell}
+                        onClick={() => toggleActionCell(itemId)}
+                        aria-label="More actions"
+                        role="button"
+                        tabIndex="0"
+                        onKeyDown={(e) =>
+                          e.key === 'Enter' && toggleActionCell(itemId)
+                        }
+                      >
+                        <MoreHorizontal size={24} color="currentColor" />
+                        {activeActionCell === itemId && (
+                          <ActionCell
+                            item={item}
+                            onView={handleView}
+                            onEdit={handleEdit}
+                            onDelete={handleDelete}
+                            onPrint={() =>
+                              console.log('Print action for id:', itemId)
+                            }
+                          />
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                )
+              })}
+          </tbody>
+        </table>
+      </div>
       <div className={style.totalAmount}>
         <p>Total CAPEX</p>
         <p>{totalAmount}</p>

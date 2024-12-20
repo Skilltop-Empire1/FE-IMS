@@ -4,7 +4,7 @@ import styles from './ViewModal.module.css' // You can reuse the same CSS file
 function ViewCapexModal({ formData, openEditModal, onClose }) {
   return (
     <div className={styles.container}>
-      <h3 className={styles.formTitle}>View Capital Expenditure (Capex)</h3>
+      <h3 className={styles.formTitle}>View Capital Expenditure</h3>
       <div>
         <div className={styles.formRow}>
           <div className={styles.formColumn}>

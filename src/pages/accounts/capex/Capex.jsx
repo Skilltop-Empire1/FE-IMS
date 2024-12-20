@@ -99,7 +99,10 @@ function Capex() {
     <div className={style.container}>
       <div>
         <div className={style.titleContainer}>
-          <h3>Capex Expense Record</h3>
+          <div className={style.header}>
+            {' '}
+            <h3>CAPEX Record</h3>
+          </div>
           <div className={style.searchContainer}>
             <div className={style.searchBar}>
               <Search color="#6D6D6D" size="24px" />

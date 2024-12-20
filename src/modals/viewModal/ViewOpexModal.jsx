@@ -4,7 +4,7 @@ import styles from './ViewModal.module.css' // You may want to rename this CSS f
 function ViewOpexModal({ formData, openEditModal, closeModal }) {
   return (
     <div className={styles.container}>
-      <h3 className={styles.formTitle}>View Operational Expenses</h3>
+      <h3 className={styles.formTitle}>View OPEX</h3>
       <div>
         <div className={styles.formRow}>
           <div className={styles.formColumn}>

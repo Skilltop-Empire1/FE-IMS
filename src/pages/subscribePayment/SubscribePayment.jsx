@@ -17,7 +17,7 @@ const SubscribePayment = () => {
     }
   }, [token, navigate])
   return (
-    <div>
+    <div className="">
       <SubscriberListTable />
     </div>
   )

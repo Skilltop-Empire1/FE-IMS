@@ -1,15 +1,8 @@
 import React, { useState } from 'react'
-import {
-  useUpdateStaffMutation,
-  useUpdateStaffPermissionMutation,
-} from '../../redux/staffApi'
-import moment from 'moment'
-import { capitalizedWords } from '../../utils/helpers'
-import EditStaffModal from '../modals/EditStaffModal'
 import { useGetRequestDemoQuery } from '../../redux/requestDemoApi'
 import EditSubscriptionModal from '../modals/EditSubscriptionModal'
 
-const StaffTableSkeleton = () => (
+const SubscriptionTableSkeleton = () => (
   <div className="animate-pulse">
     {Array.from({ length: 5 }).map((_, index) => (
       <div key={index} className="h-10 bg-gray-200 rounded mb-4" />
@@ -19,8 +12,6 @@ const StaffTableSkeleton = () => (
 
 const SubscriberListTable = () => {
   const [subscriptionInfo, setStaffInfo] = useState(null)
-  const [role, setRole] = useState('') // State for selected role
-  const [permissions, setPermissions] = useState([]) // State for permissions
   const [showEditSubscriptionModal, setShowEditStaffModal] = useState(false)
   const [currentPage, setCurrentPage] = useState(1) // Page state for pagination
   const pageSize = 10 // Set page size
@@ -31,57 +22,8 @@ const SubscriberListTable = () => {
     error: subscriberDataError,
     refetch,
   } = useGetRequestDemoQuery({ page: currentPage, limit: pageSize })
-  const [updateStaff] = useUpdateStaffMutation() // Mutation hook for updating staff
-  const [
-    updateStaffPermission,
-    { isLoading: isLoadingMutation, isSuccess, isError, error },
-  ] = useUpdateStaffPermissionMutation() // Mutation hook for updating staff permission
 
   console.log({ subscriberData })
-  const getStatusBadgeColor = (status) => {
-    switch (status) {
-      case 'active':
-        return 'bg-green-200 text-green-800'
-      case 'pending':
-        return 'bg-yellow-200 text-yellow-800'
-      case 'inactive':
-        return 'bg-red-200 text-red-800'
-      default:
-        return 'bg-gray-200 text-gray-800'
-    }
-  }
-
-  const handleStaffSelect = (staff) => {
-    if (subscriptionInfo?.staffId === subscriber.staffId) {
-      setStaffInfo(null) // Uncheck if already selected
-      setRole('')
-      setPermissions([])
-    } else {
-      setStaffInfo(staff) // Select the new staff member
-      setRole(subscriber.role)
-      setPermissions(staff?.permissions)
-    }
-  }
-
-  const handleRoleChange = (newRole) => {
-    setRole(newRole)
-  }
-
-  const handleUpdateRole = async () => {
-    if (subscriptionInfo) {
-      await updateStaff({ staffId: subscriptionInfo.staffId, role }) // Update the role
-      refetch() // Refetch staff data after update
-    }
-  }
-  const handleUpdatePermission = async () => {
-    if (subscriptionInfo) {
-      let data = await updateStaffPermission({
-        id: subscriptionInfo.staffId,
-        permissions: { permissions },
-      }) // Update the role
-      refetch() // Refetch staff data after update
-    }
-  }
 
   const editSubscription = (staff) => {
     setStaffInfo(staff)
@@ -97,22 +39,14 @@ const SubscriberListTable = () => {
     setCurrentPage(newPage)
   }
 
-  // Handle permissions change
-  const handlePermissionsChange = (updatedPermissions) => {
-    setPermissions(updatedPermissions)
-    // if (onPermissionsChange) {
-    //   onPermissionsChange(updatedPermissions) // Pass updated permissions back to the parent
-    // }
-  }
-
   const totalPages = subscriberData?.pagination?.totalPages || 1
 
   return (
     <div className="py-5 bg-white">
       {/* {JSON.stringify(subscriptionInfo)} */}
-      <div className="container mx-auto p-4">
+      <div className="container mx-auto md:p-4">
         {isLoading || subscriberDataError ? (
-          <StaffTableSkeleton />
+          <SubscriptionTableSkeleton />
         ) : (
           <div className="overflow-x-auto">
             <table className="min-w-full bg-white">
@@ -142,7 +76,7 @@ const SubscriberListTable = () => {
                       colSpan="8"
                       className="py-2 px-4 text-center text-sm text-gray-500"
                     >
-                      No staff members found.
+                      No subscription history yet.
                     </td>
                   </tr>
                 ) : (

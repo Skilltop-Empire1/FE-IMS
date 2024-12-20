@@ -7,29 +7,28 @@ import { Link } from 'react-router-dom'
 
 function Signup() {
   const navigate = useNavigate()
+  const [responseError, setResponseError] = useState()
   const [signup, { isLoading, error, data, isSuccess }] = useSignupMutation()
   const [passwordVisibility, setPasswordVisibility] = useState(false)
 
   const handleSubmit = async (e) => {
+    setResponseError()
     e.preventDefault()
     const formData = new FormData(e.target)
     const userData = {
       userName: formData.get('username'),
       email: formData.get('email'),
       password: formData.get('password'),
-      signupCode: formData.get('signupCode'),
+      code: formData.get('signupCode'),
     }
 
-    console.log({ userData })
-    return
-
     try {
-      await signup(userData).unwrap()
-
+      const response = await signup(userData).unwrap()
       setTimeout(() => {
         navigate('/')
       }, 3000)
     } catch (err) {
+      setResponseError(err.data.msg)
       console.error('Signup failed:', err)
     }
   }
@@ -44,10 +43,11 @@ function Signup() {
         <img
           src="/images/logo.png"
           alt="ims-logo"
-          className=" md:w-28 md:hidden "
+          className="md:w-28 md:hidden "
         />
         <h2>Create Account</h2>
         <h3>Create an account</h3>
+
         <div className={style.login}>
           {isSuccess && <p style={{ color: 'green' }}>{data?.msg} 😊</p>}
           {error && (
@@ -57,6 +57,8 @@ function Signup() {
               😔
             </p>
           )}
+          {responseError && <div className="text-red-500">{responseError}</div>}
+
           <form onSubmit={handleSubmit} className={style.form}>
             <div className={style.name}>
               <div className={style.input}>

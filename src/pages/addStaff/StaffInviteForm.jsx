@@ -24,7 +24,7 @@ const StaffInviteForm = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [username, setUsername] = useState('')
-  const [role, setRole] = useState('') // State for selected role
+  const [role, setRole] = useState('Manager') // State for selected role
   const [permissions, setPermissions] = useState([]) // State for permissions
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState({})
@@ -44,12 +44,21 @@ const StaffInviteForm = () => {
       permissions,
     })
 
+    console.log({
+      email,
+      password,
+      username,
+      role, // Include role in validation
+      permissions,
+    })
     if (!validationResult.success) {
       const fieldErrors = validationResult.error.format()
+      console.log({ fieldErrors })
       setErrors(fieldErrors)
       return
     }
-
+    console.log('got there')
+    return
     try {
       setLoading(true)
       // Call the mutation with form data
@@ -75,8 +84,8 @@ const StaffInviteForm = () => {
   }
 
   return (
-    <div className="bg-white shadow-lg rounded-lg p-6">
-      <form onSubmit={handleSubmit}>
+    <div className="bg-white shadow-lg rounded-lg md:p-6">
+      <form onSubmit={handleSubmit} className="">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Username */}
           <div>

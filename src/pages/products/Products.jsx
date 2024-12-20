@@ -224,7 +224,7 @@ const SalesRecord = () => {
   }, [location.pathname, refetch]);
 
   return (
-    <div>
+    <div className='px-3 w-[100%]'>
       {/* Filter Section */}
       <Filter
         handleSearch={handleSearch}

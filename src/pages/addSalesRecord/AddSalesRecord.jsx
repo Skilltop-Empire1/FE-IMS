@@ -45,6 +45,22 @@ const AddSaleRecord = () => {
   const [currentAmount, setCurrentAmount] = useState("");
   const [currentAmount2, setCurrentAmount2] = useState("");
   const [nextDueDate, setNextDueDate] = useState("");
+  const [previousPaymentOption, setPreviousPaymentOption] = useState("");
+
+
+  const handlePaymentOptionChange = (e) => {
+    setPreviousPaymentOption(paymentOption); // Store the current value as the previous one
+    setPaymentOption(e.target.value); // Update the payment option
+  };
+
+  
+  const closeModalByX = () => {
+    setPaymentOption(previousPaymentOption); // Reset to the previous state
+    setShowFullPaymentModal(false);
+    setShowCreditSalesModal(false);
+    setShowPartPaymentModal(false);
+  };
+  
 
 
   const handleChange = (event) => {
@@ -193,16 +209,19 @@ const handleChange2 = (event) => {
       } else if (err?.error) {
         setFormError(err.error)
         // alert(err.error)
-      } else {
-        setFormError('An unexpected error occurred. Please try again.')
+      } else if (err?.data?.message) {
+        setFormError(err.data.message)
       }
+      else {
+          setFormError('An unexpected error occurred. Please try again.')
+        }
     }
-  }
+    }
 
   return (
-    <div className={`${style.body} relative`}>
+    <div className={`${style.body} relative w-full`}>
       <div className='absolute w-full ease-in-out duration-300'>
-        <p className={`text-center bg-green-400 py-3 ${success}`} style={{ color: '#fff' }}>record saved successfully</p>
+        <p className={`text-center bg-green-400 py-3 ${success}`} style={{ color: '#fff' }}>Record saved successfully</p>
       </div>
       <div className={style.top}>
         <h2 className={style.title}>Add Sales Record</h2>
@@ -243,7 +262,7 @@ const handleChange2 = (event) => {
             <select
               className={style.input}
               value={paymentOption}
-              onChange={(e) => setPaymentOption(e.target.value)}
+              onChange={handlePaymentOptionChange}
               required
             >
               <option value="">Select payment option</option>
@@ -351,7 +370,7 @@ const handleChange2 = (event) => {
                 <label htmlFor="check">Add another record</label>
               </div>
               <div className={style.cont}>
-                <div className="flex justify-between items-center mt-8 w-11/12">
+                <div className="flex justify-between items-center mt-8 ">
                   <button className={style.submit2} disabled={isLoading}>
                     Cancel
                   </button>
@@ -361,7 +380,12 @@ const handleChange2 = (event) => {
                 </div>
               </div>
             
-            {error && <p className="error mt-5 text-red-500">{error.data?.message }</p>}
+              {formError && (
+                  <p className="error-message text-red-500">
+                      {formError}
+                  </p>
+              )}
+             
          </div>
 
 
@@ -376,10 +400,10 @@ const handleChange2 = (event) => {
             <div className={style.fullPayment}>
 
 
-              <div className='bg-white w-96 px-10 py-6 rounded-md'>
+              <div className='bg-white md:w-96 px-10 py-6 rounded-md w-11/12 '>
                 <div className='flex justify-between'>
                   <h2 className='font-bold text-2xl'>Full Payment</h2>
-                  <p onClick={closeModal} className="cursor-pointer">X</p>
+                  <h5 onClick={closeModalByX} className="cursor-pointer text-red-500">X</h5>
                 </div>
 
 
@@ -437,10 +461,10 @@ const handleChange2 = (event) => {
             <div className={style.fullPayment}>
 
 
-              <div className='bg-white w-96 px-10 py-6 rounded-md'>
+              <div className='bg-white md:w-96 w-11/12 px-10 py-6 rounded-md'>
                 <div className='flex justify-between'>
                   <h2 className='font-bold text-2xl'>Credit Sales</h2>
-                  <p onClick={closeModal} className="cursor-pointer">X</p>
+                  <h5 onClick={closeModalByX} className="cursor-pointer text-red-500">X</h5>
                 </div>
 
 
@@ -471,12 +495,11 @@ const handleChange2 = (event) => {
             <div className={style.fullPayment}>
 
 
-              <div className='bg-white w-96 px-10 py-6 rounded-md h-[80%] overflow-y-auto'>
+              <div className='bg-white md:w-96 w-11/12 px-10 py-6 rounded-md h-[80%] overflow-y-auto'>
                 <div className='flex justify-between'>
                   <h2 className='font-bold text-2xl'>Part Payment</h2>
-                  <p onClick={closeModal}className="cursor-pointer">X</p>
+                  <h5 onClick={closeModalByX} className="cursor-pointer text-red-500">X</h5>
                 </div>
-
 
                 <div className={style.methods}>
                   <h3>Payment Method</h3>

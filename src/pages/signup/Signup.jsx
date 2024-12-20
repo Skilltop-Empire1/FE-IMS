@@ -17,7 +17,11 @@ function Signup() {
       userName: formData.get('username'),
       email: formData.get('email'),
       password: formData.get('password'),
+      signupCode: formData.get('signupCode'),
     }
+
+    console.log({ userData })
+    return
 
     try {
       await signup(userData).unwrap()
@@ -37,7 +41,13 @@ function Signup() {
   return (
     <div className={style.body}>
       <div className={style.left}>
+        <img
+          src="/images/logo.png"
+          alt="ims-logo"
+          className=" md:w-28 md:hidden "
+        />
         <h2>Create Account</h2>
+        <h3>Create an account</h3>
         <div className={style.login}>
           {isSuccess && <p style={{ color: 'green' }}>{data?.msg} 😊</p>}
           {error && (
@@ -69,17 +79,17 @@ function Signup() {
                 required
               />
             </div>
-            <div className={style.input2}>
+            <div className={style.input}>
               <label htmlFor="password">Password</label>
               <br />
               <div
-                className={`flex items-center justify-between gap-3 ${style.sum}`}
+                className={`flex items-center justify-between gap-3 py-2 ${style.sum}`}
               >
-              
                 <input
-                  type={passwordVisibility ? 'text' : 'password'}     
+                  type={passwordVisibility ? 'text' : 'password'}
                   name="password"
                   placeholder="Enter password"
+                  className="border-2 !border-l-0 !border-r-0  !rounded-none flex-grow"
                   required
                 />
                 {passwordVisibility ? (
@@ -87,9 +97,17 @@ function Signup() {
                 ) : (
                   <EyeOff onClick={showPassword} className={style.icon} />
                 )}
-                
-              
+              </div>
             </div>
+            <div className={style.input}>
+              <label htmlFor="email">Signup Code</label>
+              <br />
+              <input
+                type="text"
+                name="signupCode"
+                placeholder="Enter Signup Code"
+                required
+              />
             </div>
             {error && <p className={style.error}>{error.message}</p>}{' '}
             <div className={style.submit}>
@@ -102,12 +120,18 @@ function Signup() {
               </button>
             </div>
           </form>
+          <p className="mt-4 text-[#aba3d5] flex justify-center">
+            Already have an account?
+          </p>
+          <Link to="/login" className={style.toSignUp}>
+            <button className={style.button}>Sign In</button>
+          </Link>
         </div>
       </div>
       <div className={style.right}>
         <h2>Have an account?</h2>
         <h3>Continue your journey in one click</h3>
-        <Link to="/" className={style.toSignUp}>
+        <Link to="/login" className={style.toSignUp}>
           <button className={style.button}>Sign In</button>
         </Link>
       </div>

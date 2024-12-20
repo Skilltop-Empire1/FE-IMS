@@ -11,7 +11,7 @@ import Navbar from '../../components/Landing/Navbar'
 import ClientLogoCarousel from '../../components/Landing/ClientLogoCarousel'
 import PricingPlan from '../../components/Landing/PricingPlan'
 import { Link } from 'react-router-dom'
-// import {logo} from 
+// import {logo} from
 
 const LandingPage = () => {
   // Animation variants
@@ -57,13 +57,14 @@ const LandingPage = () => {
         >
           <div className="w-full flex items-center justify-center px-2 gap-4 mx-auto flex-col max-w-xl py-24 min-h-[400px]">
             <motion.h1 className="text-center text-3xl md:text-4xl">
-              Streamline Your Business with Skilltop IMS
+              Manage your Business with Skilltop IMS
             </motion.h1>
             <motion.p className="text-center text-sm text-gray-600">
-              Take control of your business operations with Skilltop IMS—your
-              all-in-one business management solution. Simplify inventory
-              management, automate routine tasks, and enhance customer
-              satisfaction, all from one easy-to-use platform.
+              Take control of your Business Operations with Skilltop IMS—your
+              all-in-one Business Management Solution. Simplify Management of
+              Inventory, Products, Sales, Staffing, Expenses, Invoicing,
+              Automate Routine Tasks and Enhance Customer Satisfaction; all from
+              one easy-to-use platform
             </motion.p>
             <div className="justify-between md:justify-center flex items-center w-full md:w-auto gap-4 mt-10">
               <motion.button
@@ -191,7 +192,7 @@ const LandingPage = () => {
               <motion.button
                 className="bg-imsPurple border font-light border-imsPurple text-white px-8 py-3 rounded-md flex items-center gap-4"
                 whileHover={{ scale: 1.05 }}
-                onClick={() => handleScroll("pricing")}
+                onClick={() => handleScroll('pricing')}
               >
                 <span className="text-sm">Get Started Today</span>
                 <ArrowRight size={16} />
@@ -221,13 +222,16 @@ const LandingPage = () => {
             <ClientLogoCarousel />
           </div>
         </div>
-        <div className="flex flex-col gap-8 items-center w-full max-w-5xl px-2 mx-auto my-10" id="learnmore">
+        <div
+          className="flex flex-col gap-8 items-center w-full max-w-5xl px-2 mx-auto my-10"
+          id="learnmore"
+        >
           <h2 className="px-2 text-center text-2xl font-bold">
             Easily Manage Your Business in Real-Time with Skilltop IMS
           </h2>
           <p className="text-center text-gray-700 text-base">
             Skilltop IMS offers powerful features that let you manage your
-            business, inventory, and operations effortlessly—without the hassle
+            business, inventory, and operations effortlessly without the hassle
             of complex systems. Simplify your workflow and keep your business
             running smoothly, all in one place.
           </p>
@@ -252,7 +256,7 @@ const LandingPage = () => {
                   <p className="text-sm text-gray-700">
                     Easily set up stores and manage your business with Skilltop
                     IMS. Add products, organize categories, and streamline your
-                    workflow—no coding needed. Experience simplified business
+                    workflow no coding needed. Experience simplified business
                     management that keeps everything organized.
                   </p>
                 </div>
@@ -303,8 +307,11 @@ const LandingPage = () => {
             </p>
             <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex flex-col items-center gap-4 mx-auto max-w-sm">
-                <img src="/images/testimony.png" />
-                <h2 className="font-bold">Sunny Fidelis</h2>
+                <img
+                  src="/images/avatar.png"
+                  className="w-16 h-16 rounded-full"
+                />
+                <h2 className="font-bold w-full text-center">Sunny Fidelis</h2>
                 <p className="text-center text-sm">
                   Skilltop offers your business access to ease in business
                   transaction models. They're prompt and very reliable, and I
@@ -316,8 +323,13 @@ const LandingPage = () => {
                 </p>
               </div>
               <div className="flex flex-col items-center gap-4 mx-auto max-w-sm">
-                <img src="/images/testimony.png" />
-                <h2 className="font-bold">Goodness Chinaza</h2>
+                <img
+                  src="/images/femaleavatar.jpg"
+                  className="w-16 h-16 rounded-full"
+                />
+                <h2 className="font-bold w-full text-center">
+                  Goodness Chinaza
+                </h2>
                 <p className="text-center text-sm">
                   Good service rendered. The ability to monitor my business
                   activities through their web application is a good one for me.
@@ -389,9 +401,12 @@ const LandingPage = () => {
                 </h3>
                 <p className="text-green-500">
                   You can get started by contacting us at +234-806-2675-088 or
-                  visiting our website at skilltopempire.com. We will provide a
-                  detailed guide and set up a demo tailored to your business
-                  needs.
+                  visiting our website at{' '}
+                  <a href="https://skilltopempire.com" target="_blank">
+                    skilltopempire.com.
+                  </a>{' '}
+                  We will provide a detailed guide and set up a demo tailored to
+                  your business needs.
                 </p>
               </div>
             </div>
@@ -400,10 +415,13 @@ const LandingPage = () => {
           <div className="mt-4">
             <div className="col-span-2 text-center text-white px-2 mb-10">
               Haven't got your answer?{' '}
-
-              <a href="https://skilltopempire.com/contact"
+              <a
+                href="https://skilltopempire.com/contact"
                 target="_blank"
-                className="text-green-500">Contact our support now</a>
+                className="text-green-500"
+              >
+                Contact our support now
+              </a>
             </div>
           </div>
         </div>

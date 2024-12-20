@@ -11,6 +11,7 @@ import {
   FileText,
   User,
   Settings,
+  DollarSign,
   PlusCircle,
   UserPlus,
 } from 'lucide-react'
@@ -118,6 +119,19 @@ function SideBar({ closeMenu }) {
             >
               <Settings className={style.iconStyle} />
               <span>Settings</span>
+            </NavLink>
+          </li>
+        )}
+        {isSuperAdmin && (
+          <li>
+            <NavLink
+              to="/app/subscriber-payment"
+              className={({ isActive }) =>
+                isActive ? style.activeLink : undefined
+              }
+            >
+              <DollarSign className={style.iconStyle} />
+              <span>Subscription</span>
             </NavLink>
           </li>
         )}

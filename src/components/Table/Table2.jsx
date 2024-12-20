@@ -154,9 +154,9 @@ const Table2 = ({ status, date, api = [], deleted, updated, view, runPrint, prin
   });
 
   return (
-    <div className="pt-3">
-      <div className="flex justify-between items-center">
-      </div>
+    <div className="pt-3 w-[100%]">
+      <div className="w-[100%] overflow-x-auto">
+      
       <table className={style.table}>
         <thead>
           <tr className={style.tr}>
@@ -221,11 +221,11 @@ const Table2 = ({ status, date, api = [], deleted, updated, view, runPrint, prin
                       <Edit2Icon size={20} className={style.icon2} />
                       Edit
                     </p>
-                    <hr />
+                    {/* <hr />
                     <p className="flex gap-3 text-sm ">
                       <Printer size={20} className={style.icon2} />
                       Print
-                    </p>
+                    </p> */}
                     <hr />
                     <p
                       onClick={() => deleted(product.saleId)}
@@ -241,7 +241,7 @@ const Table2 = ({ status, date, api = [], deleted, updated, view, runPrint, prin
           ))}
         </tbody>
       </table>
-
+      </div>
       <div className={`${style.pagination}`}>
         {/* Pagination buttons */}
         <div>
@@ -251,7 +251,7 @@ const Table2 = ({ status, date, api = [], deleted, updated, view, runPrint, prin
           of {api.length} entries (Filtered from {api.length} total entries)
         </span>
         </div>
-        <div className={`${style.pagination}`}>
+        <div className={`${style.directions}`}>
              <button
                 onClick={() => goToPage(1)}
                 className={style.pageButton}

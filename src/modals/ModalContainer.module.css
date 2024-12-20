@@ -17,6 +17,7 @@
   border-radius: 8px;
   position: relative;
   overflow-y: auto;
+  z-index: 9999999 !important;
 }
 
 .closeButton {

@@ -4,7 +4,7 @@ import { logout as logoutAction, setCredentials } from '../slices/AuthSlice';
 export const authApi = createApi({
   reducerPath: 'passwordReset',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://be-ims-production.up.railway.app/',
+    baseUrl: 'https://be-ims.onrender.com',
     prepareHeaders: (headers, { getState }) => {
       // Fallback to localStorage if token is not in Redux
       const token = getState().auth.token || localStorage.getItem('token');

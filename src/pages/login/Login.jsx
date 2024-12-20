@@ -51,7 +51,9 @@ const Login = () => {
   return (
     <div className={style.body}>
       <div className={style.left}>
+        <img src="/images/logo.png" alt="ims-logo" className=" lg:w-28 lg:hidden " />
         <h2>Welcome back</h2>
+        <h3>Login</h3>
         <form onSubmit={handleSubmit} className={style.form}>
           <div className={style.input}>
             <label htmlFor="email">Email</label>
@@ -82,6 +84,9 @@ const Login = () => {
                 <EyeOff onClick={showPassword} className={style.icon}/>
               )}
             </div>
+            <Link to="/passwordReset" className={style.forgot2}>
+              Forgot your password?
+            </Link>
           </div>
           <div className={style.submit}>
             <button
@@ -96,6 +101,10 @@ const Login = () => {
             Forgot your password?
           </Link>
         </form>
+        <p className='mt-4 text-[#aba3d5]'>Don't have an account?</p>
+        <Link to="/signup" className={style.toSignUp}>
+          <button className={style.button}>Sign Up</button>
+        </Link>
       </div>
       <div className={style.right}>
         <h2>Don't have an account?</h2>

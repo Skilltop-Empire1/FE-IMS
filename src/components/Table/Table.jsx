@@ -9,7 +9,8 @@ import clsx from 'clsx'
 const Table = ({ status, date, api, prod, deleted, updated }) => {
   // console.log({ api })
   return (
-    <div className="pt-3">
+   <div className='pt-3 w-[100%]'>
+     <div className=" overflow-x-auto w-[100%]">
       <table className={style.table}>
         <thead>
           <tr className={`${style.tr}`}>
@@ -108,6 +109,7 @@ const Table = ({ status, date, api, prod, deleted, updated }) => {
         </tbody>
       </table>
     </div>
+   </div>
   )
 }
 

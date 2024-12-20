@@ -15,6 +15,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  width: 50%;
 }
 
 .right {
@@ -24,9 +25,6 @@
   flex-direction: column;
 }
 
-.left {
-  width: 50%;
-}
 
 .right {
   width: 50%;
@@ -132,11 +130,24 @@
     cursor: pointer;
     transition: .2s ease-in-out;
     margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .button2:hover {
   background-color: #7d2ce0;
   color: #fff;
+}
+
+
+
+.left h3, p {
+  display: none;
+}
+
+.left .toSignUp {
+  display: none;
 }
 
 .submit {
@@ -174,4 +185,107 @@
 
 .icon {
     color: #d1d0d0;
+}
+
+.forgot2 {
+  display: none;
+}
+
+@media only screen and (max-width: 1023px) {
+  .right {
+    display: none;
+  }
+
+  .left {
+    width: 100%;
+    padding: 0 10px;
+  }
+
+  .left h2 {
+    display: none;
+  }
+
+  .left h3 {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 29.05px;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: #6D6D6D;    
+
+  }
+
+  .form {
+    width: 100%;
+  }
+
+  .input, .input2 label {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.36px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+  }
+
+  .body input {
+    height: 40px;
+  }
+
+  .sum {
+    height: 40px;
+  }
+
+  .sum input {
+    border-top: 1px  solid #bea3de;
+    border-bottom: 1px  solid #bea3de;
+   }
+
+  .input {
+    margin: 10px  0;
+  }
+
+  .input input {
+    margin: 10px 0;
+  }
+  
+  .sum {
+    margin: 10px 0;
+  }
+
+  .submit button {
+    height: 50px;
+    padding: 10px 0px 0px 0px;
+    opacity: 0px;
+    font-size: 16px;
+    background-color: #7d2ce0;
+    color: #fff;
+    margin-top: 70px;
+  }
+
+  .forgot2 {
+    display: flex;
+    justify-content: end;
+    color: #aba3d5;
+  }
+
+  .forgot {
+    display: none;
+  }
+
+  .body {
+    overflow: auto;
+  }
+
+  .toSignUp {
+    margin-top: 30px;
+  }
+  .left h3, p {
+    display: flex;
+  }
+  
+  .left .toSignUp {
+    display: block;
+  }
 }

@@ -130,8 +130,9 @@
     height: 30px;
     width: 100%;
     padding: 5px;
-    color: #c4c4c4;
 }
+
+
 
 .textInput input:focus {
     border: 1px solid #3D3D3D;
@@ -148,3 +149,20 @@
     font-weight: 300;
     font-size: 14px;
 }
+
+@media (max-width: 600px) {
+    .grid {
+      display: block;
+    }
+  
+    .input {
+      width: 100% !important;
+    }
+  }
+  
+  @media (max-width: 1024px) {
+  
+    .input {
+      width: 90%;
+    }
+  }

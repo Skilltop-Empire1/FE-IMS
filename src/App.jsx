@@ -35,6 +35,9 @@ const AddOpex = lazy(() => import('./pages/accounts/opex/addOpex/AddOpex'))
 const AddCapex = lazy(() => import('./pages/accounts/capex/addCapex/AddCapex'))
 const Capex = lazy(() => import('./pages/accounts/capex/Capex'))
 const Opex = lazy(() => import('./pages/accounts/opex/Opex'))
+const SubscribePayment = lazy(
+  () => import('./pages/subscribePayment/SubscribePayment'),
+)
 
 const PasswordConfirmation = lazy(
   () => import('./pages/Password reset/PasswordConfirmation'),
@@ -254,6 +257,14 @@ const router = createBrowserRouter([
           </Suspense>
         ),
       },
+      {
+        path: 'subscriber-payment',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <SubscribePayment />
+          </Suspense>
+        ),
+      },
     ],
   },
   {
@@ -268,6 +279,7 @@ const router = createBrowserRouter([
 
 function App() {
   const token = localStorage.getItem('token')
+  console.log({ token })
   if (token) {
     store.dispatch(setCredentials({ token }))
   }

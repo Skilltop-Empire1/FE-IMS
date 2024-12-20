@@ -1,5 +1,6 @@
 .table {
   width: 100%;
+  border-collapse: collapse;
 }
 
 .tr th {
@@ -45,6 +46,10 @@
   align-items: center;
 }
 
+.directions {
+  display: flex;
+}
+
 .pagination button {
   color: #171A1F;
   font-size: 16px;
@@ -84,6 +89,7 @@
 .action {
   /* top: 1px; */
   position: absolute;
+  right: 10px;
   background-color: #fff;
   padding: 10px ;
   display: flex;
@@ -104,6 +110,12 @@
 
 .actionMama:hover {
   cursor: pointer;
+}
+
+.actionMama {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .action p:hover {
@@ -132,4 +144,15 @@
 
 .icon2 {
   font-size: 250px;
+}
+
+@media (max-width: 1023px) {
+  .table th, td {
+    padding: 8px 12px;
+    text-align: left;
+  }
+
+  .pagination {
+    display: block;
+  }
 }
